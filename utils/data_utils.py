@@ -210,3 +210,11 @@ def optimize_dtypes(df, category_threshold=0.5, datetime_threshold=0.8):
                 continue
 
     return df_optimized
+
+
+def skewness(df):
+    """
+    Calculate the skewness of each column in the DataFrame.
+    """
+    skewness = df.skew().reset_index().rename(columns={"index": "Column", 0: "Skew"})
+    return skewness
