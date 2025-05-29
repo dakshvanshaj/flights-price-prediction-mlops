@@ -260,3 +260,45 @@ def barplot_univariate(
 
         plt.show()
         plt.close()
+
+
+def pairplots(df, color="#0060ff", save_dir=None):
+    """
+    Generates a pair plot (scatter matrix) for all numerical columns in the dataframe.
+    Optionally saves the plot in the specified directory and displays it.
+
+    Parameters:
+        df (pd.DataFrame): The flights dataframe.
+        color (str, optional): Color for the plots.
+        save_dir (str or None): Directory to save the plot. If None, plot is not saved.
+    """
+    # Select only numerical columns
+    num_df = df.select_dtypes(include="number")
+    if num_df.shape[1] < 2:
+        print("Not enough numerical columns for a pairplot. Skipping.")
+        return
+
+    sns.set(style="ticks")
+    pair_grid = sns.pairplot(
+        num_df,
+        diag_kind="kde",
+        plot_kws={"color": color, "edgecolor": "black", "alpha": 0.6},
+    )
+    pair_grid.fig.suptitle(
+        "Pair Plot (Scatter Matrix) of Numerical Features",
+        fontsize=20,
+        fontweight="bold",
+        color="#333333",
+        y=1.02,
+    )
+    plt.tight_layout()
+
+    if save_dir is not None:
+        save_dir = os.path.join(save_dir, "flights_pairplot")
+        os.makedirs(save_dir, exist_ok=True)
+        filename = os.path.join(save_dir, "pairplot.png")
+        plt.savefig(filename, dpi=300, bbox_inches="tight")
+        print(f"Saved pair plot to {filename}")
+
+    plt.show()
+    plt.close()
