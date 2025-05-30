@@ -302,3 +302,319 @@ def pairplots(df, color="#0060ff", save_dir=None):
 
     plt.show()
     plt.close()
+
+
+def boxplot_bivariate(
+    df, cat_cols, num_cols, color="#0060ff", save_dir=None, rotation=30
+):
+    """
+    Plots box plots for each combination of categorical and numerical columns in flights data.
+    Annotates each box with its median value.
+    Optionally saves each plot in the specified directory and displays them.
+
+    Parameters:
+        df (pd.DataFrame): The flights dataframe.
+        cat_cols (list): List of categorical columns for x-axis.
+        num_cols (list): List of numerical columns for y-axis.
+        color (str, optional): Box color.
+        save_dir (str or None): Directory to save plots. If None, plots are not saved.
+        rotation (int, optional): Degrees to rotate x-axis tick labels.
+    """
+    sns.set_theme(style="darkgrid", font_scale=1.2)
+    if save_dir is not None:
+        save_dir = os.path.join(save_dir, "flights_boxplots_cat_num")
+        os.makedirs(save_dir, exist_ok=True)
+
+    for cat_col in cat_cols:
+        if cat_col not in df.columns or not (
+            pd.api.types.is_categorical_dtype(df[cat_col])
+            or pd.api.types.is_object_dtype(df[cat_col])
+        ):
+            print(f"Column '{cat_col}' is not categorical or not found. Skipping.")
+            continue
+        for num_col in num_cols:
+            if num_col not in df.columns or not pd.api.types.is_numeric_dtype(
+                df[num_col]
+            ):
+                print(f"Column '{num_col}' is not numeric or not found. Skipping.")
+                continue
+
+            plt.figure(figsize=(14, 8))
+            ax = sns.boxplot(
+                x=df[cat_col],
+                y=df[num_col],
+                color=color,
+                linewidth=1.5,
+                fliersize=5,
+                boxprops=dict(alpha=0.7, edgecolor="black"),
+                medianprops=dict(color="#ff6600", linewidth=2),
+            )
+            plt.title(
+                f"Box Plot of {num_col} by {cat_col}",
+                fontsize=20,
+                fontweight="bold",
+                color="#333333",
+            )
+            plt.xlabel(cat_col, fontsize=16, color="#555555")
+            plt.ylabel(num_col, fontsize=16, color="#555555")
+            plt.tick_params(axis="both", which="major", labelsize=14, colors="#777777")
+            plt.xticks(rotation=rotation)
+            plt.grid(True, alpha=0.3)
+            plt.tight_layout()
+
+            # Add median annotations
+            medians = df.groupby(cat_col, observed=False)[num_col].median()
+            for i, category in enumerate(medians.index):
+                median_val = medians[category]
+                ax.annotate(
+                    f"{median_val:.2f}",
+                    xy=(i, median_val),
+                    xytext=(0, 10),
+                    textcoords="offset points",
+                    ha="center",
+                    va="bottom",
+                    fontsize=13,
+                    fontweight="bold",
+                    color="#ff6600",
+                    bbox=dict(
+                        boxstyle="round,pad=0.2",
+                        fc="white",
+                        ec="#ff6600",
+                        lw=1,
+                        alpha=0.7,
+                    ),
+                )
+
+            if save_dir is not None:
+                filename = os.path.join(save_dir, f"{num_col}_by_{cat_col}.png")
+                plt.savefig(filename, dpi=300, bbox_inches="tight")
+                print(f"Saved box plot for {num_col} by {cat_col} to {filename}")
+
+            plt.show()
+            plt.close()
+
+
+def barplot_bivariate(
+    df,
+    cat_cols,
+    num_cols,
+    aggfunc="mean",
+    palette=None,
+    color="#0060ff",
+    save_dir=None,
+    rotation=30,
+):
+    """
+    Plots bar plots for each combination of categorical and numerical columns in flights data.
+    Annotates each bar with its aggregated value (mean, median, mode, sum, etc.).
+    Optionally saves each plot in the specified directory and displays them.
+
+    Parameters:
+        df (pd.DataFrame): The flights dataframe.
+        cat_cols (list): List of categorical columns for x-axis.
+        num_cols (list): List of numerical columns for y-axis.
+        aggfunc (str, optional): Aggregation function ('mean', 'median', 'mode', 'sum', etc.).
+        palette (str or None, optional): Color palette for the bars. If None, all bars are the same color.
+        color (str, optional): Single color for all bars if palette is None.
+        save_dir (str or None): Directory to save plots. If None, plots are not saved.
+        rotation (int, optional): Degrees to rotate x-axis tick labels.
+    """
+    sns.set_theme(style="darkgrid", font_scale=1.2)
+    if save_dir is not None:
+        save_dir = os.path.join(save_dir, "flights_barplots_cat_num")
+        os.makedirs(save_dir, exist_ok=True)
+
+    for cat_col in cat_cols:
+        if cat_col not in df.columns or not (
+            pd.api.types.is_categorical_dtype(df[cat_col])
+            or pd.api.types.is_object_dtype(df[cat_col])
+        ):
+            print(f"Column '{cat_col}' is not categorical or not found. Skipping.")
+            continue
+        for num_col in num_cols:
+            if num_col not in df.columns or not pd.api.types.is_numeric_dtype(
+                df[num_col]
+            ):
+                print(f"Column '{num_col}' is not numeric or not found. Skipping.")
+                continue
+
+            # Handle 'mode' aggregation
+            if aggfunc == "mode":
+                agg_df = (
+                    df.groupby(cat_col, observed=False)[num_col]
+                    .agg(
+                        lambda x: x.mode().iloc[0]
+                        if not x.mode().empty
+                        else float("nan")
+                    )
+                    .reset_index()
+                )
+            else:
+                agg_df = (
+                    df.groupby(cat_col, observed=False)[num_col]
+                    .agg(aggfunc)
+                    .reset_index()
+                )
+
+            plt.figure(figsize=(14, 8))
+            barplot_kwargs = dict(
+                data=agg_df,
+                x=cat_col,
+                y=num_col,
+                order=agg_df[cat_col],
+            )
+            if palette is not None:
+                barplot_kwargs.update(dict(hue=cat_col, palette=palette, legend=False))
+            else:
+                barplot_kwargs.update(dict(color=color))
+
+            ax = sns.barplot(**barplot_kwargs)
+
+            plt.title(
+                f"{aggfunc.capitalize()} of {num_col} by {cat_col}",
+                fontsize=20,
+                fontweight="bold",
+                color="#333333",
+            )
+            plt.xlabel(cat_col, fontsize=16, color="#555555")
+            plt.ylabel(
+                f"{aggfunc.capitalize()} of {num_col}", fontsize=16, color="#555555"
+            )
+            plt.tick_params(axis="both", which="major", labelsize=14, colors="#777777")
+            plt.xticks(rotation=rotation)
+            plt.grid(True, alpha=0.3)
+            plt.tight_layout()
+
+            # Annotate bars with values
+            for bar, value in zip(ax.patches, agg_df[num_col]):
+                ax.annotate(
+                    f"{value:.2f}",
+                    (bar.get_x() + bar.get_width() / 2, bar.get_height()),
+                    ha="center",
+                    va="bottom",
+                    fontsize=13,
+                    fontweight="bold",
+                    color="#ff6600",
+                    xytext=(0, 8),
+                    textcoords="offset points",
+                    bbox=dict(
+                        boxstyle="round,pad=0.2",
+                        fc="white",
+                        ec="#ff6600",
+                        lw=1,
+                        alpha=0.7,
+                    ),
+                )
+
+            if save_dir is not None:
+                filename = os.path.join(
+                    save_dir, f"{aggfunc}_{num_col}_by_{cat_col}.png"
+                )
+                plt.savefig(filename, dpi=300, bbox_inches="tight")
+                print(
+                    f"Saved bar plot for {aggfunc} of {num_col} by {cat_col} to {filename}"
+                )
+
+            plt.show()
+            plt.close()
+
+
+from matplotlib.ticker import MaxNLocator
+
+
+def lineplots(
+    df,
+    date_parts=["year", "month", "day_name"],
+    numeric_cols=None,
+    color_palette=None,
+    save_dir=None,
+    figsize=(14, 8),
+):
+    """
+    Generates line plots between date parts (year, month, day_name) and specified numerical columns.
+    Optionally saves each plot in the specified directory and displays them.
+
+    Parameters:
+        df (pd.DataFrame): The dataframe containing the data.
+        date_parts (list): List of date part columns to use (default: ['year', 'month', 'day_name']).
+        numeric_cols (list): List of numerical columns to plot against date parts.
+        color_palette (list or None): List of colors for different numeric columns.
+        save_dir (str or None): Directory to save plots. If None, plots are not saved.
+        figsize (tuple): Figure size for the plots.
+    """
+    sns.set_theme(style="darkgrid", font_scale=1.2)
+    if numeric_cols is None:
+        numeric_cols = df.select_dtypes(include="number").columns.tolist()
+    if color_palette is None:
+        color_palette = sns.color_palette("husl", len(numeric_cols))
+
+    if save_dir is not None:
+        save_dir = os.path.join(save_dir, "date_numeric_lineplots")
+        os.makedirs(save_dir, exist_ok=True)
+
+    for part in date_parts:
+        if part not in df.columns:
+            print(f"Column '{part}' not found in DataFrame. Skipping.")
+            continue
+
+        plt.figure(figsize=figsize)
+        if part == "day_name":
+            weekday_order = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+            ]
+            grouped = df.groupby(part)[numeric_cols].mean().reindex(weekday_order)
+        else:
+            grouped = df.groupby(part)[numeric_cols].mean().sort_index()
+
+        for i, col in enumerate(numeric_cols):
+            plt.plot(
+                grouped.index,
+                grouped[col],
+                marker="o",
+                linewidth=2.5,
+                markersize=8,
+                label=col,
+                color=color_palette[i],
+            )
+            for x, y in zip(grouped.index, grouped[col]):
+                plt.annotate(
+                    f"{y:.2f}",
+                    (x, y),
+                    textcoords="offset points",
+                    xytext=(0, 10),
+                    ha="center",
+                    fontweight="bold",
+                    fontsize=9,
+                    color=color_palette[i],
+                )
+
+        plt.title(
+            f"Average {', '.join(numeric_cols)} by {part.capitalize()}",
+            fontsize=18,
+            fontweight="bold",
+        )
+        plt.xlabel(part.capitalize(), fontsize=14)
+        plt.ylabel("Average Value", fontsize=14)
+        if part != "day_name":
+            plt.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+        else:
+            plt.xticks(rotation=45, ha="right")
+        plt.legend(fontsize=12)
+        plt.grid(True, alpha=0.3)
+        plt.tight_layout()
+
+        if save_dir is not None:
+            filename = os.path.join(
+                save_dir, f"lineplot_{part}_vs_{'_'.join(numeric_cols)}.png"
+            )
+            plt.savefig(filename, dpi=300, bbox_inches="tight")
+            print(f"Saved plot: {filename}")
+
+        plt.show()
+        plt.close()
