@@ -278,13 +278,13 @@ def pairplots(df, color="#0060ff", save_dir=None):
         print("Not enough numerical columns for a pairplot. Skipping.")
         return
 
-    sns.set(style="ticks")
+    sns.set_theme(style="ticks")
     pair_grid = sns.pairplot(
         num_df,
         diag_kind="kde",
         plot_kws={"color": color, "edgecolor": "black", "alpha": 0.6},
     )
-    pair_grid.fig.suptitle(
+    pair_grid.figure.suptitle(
         "Pair Plot (Scatter Matrix) of Numerical Features",
         fontsize=20,
         fontweight="bold",
@@ -299,6 +299,64 @@ def pairplots(df, color="#0060ff", save_dir=None):
         filename = os.path.join(save_dir, "pairplot.png")
         plt.savefig(filename, dpi=300, bbox_inches="tight")
         print(f"Saved pair plot to {filename}")
+
+    plt.show()
+    plt.close()
+
+
+def correlation_heatmap(
+    df,
+    cols=None,
+    annot=True,
+    cmap="Blues",
+    save_dir=None,
+    filename="correlation_heatmap.png",
+    figsize=(8, 6),
+):
+    """
+    Plots a heatmap of the correlation matrix for the specified columns of a DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The DataFrame.
+        cols (list or None): List of columns to include. If None, uses all numeric columns.
+        annot (bool): Whether to annotate the heatmap with correlation values.
+        cmap (str): Colormap for the heatmap.
+        save_dir (str or None): Directory to save the plot. If None, plot is not saved.
+        filename (str): Name of the saved file.
+        figsize (tuple): Figure size.
+    """
+    if cols is None:
+        data = df.select_dtypes(include="number")
+    else:
+        data = df[cols]
+
+    if data.shape[1] < 2:
+        print("Not enough columns for a correlation heatmap. Skipping.")
+        return
+
+    corr = data.corr()
+
+    plt.figure(figsize=figsize)
+    sns.heatmap(
+        corr,
+        annot=annot,
+        cmap=cmap,
+        fmt=".2f",
+        linewidths=0.5,
+        cbar=True,
+        square=True,
+        annot_kws={"size": 12, "weight": "bold", "color": "#333333"},
+    )
+    plt.title("Correlation Heatmap", fontsize=16, fontweight="bold", color="#333333")
+    plt.xticks(fontsize=12, color="#555555")
+    plt.yticks(fontsize=12, color="#555555")
+    plt.tight_layout()
+
+    if save_dir is not None:
+        os.makedirs(save_dir, exist_ok=True)
+        path = os.path.join(save_dir, filename)
+        plt.savefig(path, dpi=300, bbox_inches="tight")
+        print(f"Saved correlation heatmap to {path}")
 
     plt.show()
     plt.close()
@@ -568,9 +626,13 @@ def lineplots(
                 "Saturday",
                 "Sunday",
             ]
-            grouped = df.groupby(part)[numeric_cols].mean().reindex(weekday_order)
+            grouped = (
+                df.groupby(part, observed=False)[numeric_cols]
+                .mean()
+                .reindex(weekday_order)
+            )
         else:
-            grouped = df.groupby(part)[numeric_cols].mean().sort_index()
+            grouped = df.groupby(part, observed=False)[numeric_cols].mean().sort_index()
 
         for i, col in enumerate(numeric_cols):
             plt.plot(
