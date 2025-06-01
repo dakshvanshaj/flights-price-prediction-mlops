@@ -1,26 +1,25 @@
 import pandas as pd
 from ydata_profiling import ProfileReport
 from ydata_profiling.config import Settings
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import seaborn as sns
+import warnings
 
 
-# Checking duplicate values
 def check_duplicates(df):
     """
-    Check for duplicate rows in the DataFrame and return the number of duplicates.
+    Check for duplicate rows in the DataFrame and print the percentage of duplicates.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        None
     """
     duplicate_rows = df.duplicated().sum()
     duplicate_percentage = duplicate_rows / len(df) * 100
     print(f"Percentage of rows involved in duplication: {duplicate_percentage:.2f}%")
-    return
 
 
-# Automated eda generator
 def generate_eda_report(
     df,
     report_title="EDA Report",
@@ -29,48 +28,49 @@ def generate_eda_report(
     explorative=False,
 ):
     """
-    Generate an EDA report for the given DataFrame and save it to an HTML file.
+    Generate and save an automated EDA report for the given DataFrame.
 
     Parameters:
-    df (pd.DataFrame): The DataFrame to analyze.
-    report_title (str): The title of the report.
-    save_path (str): The path where the report will be saved.
-    """
+        df (pd.DataFrame): DataFrame to analyze.
+        report_title (str): Title of the report.
+        save_path (str): File path to save the HTML report.
+        minimal (bool): Whether to generate a minimal report.
+        explorative (bool): Whether to generate an explorative report.
 
-    # Generate the report
+    Returns:
+        None
+    """
     try:
         profile = ProfileReport(
             df, title=report_title, explorative=explorative, minimal=minimal
         )
-
     except Exception as e:
         print(f"Error generating EDA report: {e}")
+        return
 
-    # Save the report to an HTML file
     try:
-        # remove unnecessary multiple progress bars
-        Settings().progress_bar = False
+        Settings().progress_bar = False  # Disable multiple progress bars
         profile.to_file(save_path)
         print(f"EDA report saved to {save_path}")
     except Exception as e:
         print(f"Error saving EDA report: {e}")
-    return
 
 
 def get_date_stats(date_series, series_name="Date Column"):
     """
-    Prints and returns basic statistics for a date column.
-    Args:
-        date_series (pd.Series): The pandas Series containing date information.
-        series_name (str): Name of the series for print statements.
+    Compute and print basic statistics for a date column.
+
+    Parameters:
+        date_series (pd.Series): Series containing date values.
+        series_name (str): Name of the series for display.
+
     Returns:
-        dict: A dictionary containing basic date statistics.
+        None
     """
-    # Ensure input is a pandas Series and convert to datetime
     dates = pd.to_datetime(date_series, errors="coerce").dropna()
     if dates.empty:
         print(f"No valid dates found in {series_name}.")
-        return {}
+        return
 
     stats = {
         "min_date": dates.min(),
@@ -91,15 +91,21 @@ def get_date_stats(date_series, series_name="Date Column"):
     print("\nMonth counts:\n", stats["month_counts"])
     print(f"\nUnique year-months: {stats['unique_year_months']}")
     print("--- End of Stats ---")
-    return
 
 
 def count_rows_between_dates(df, date_col, start_date, end_date):
     """
-    Counts rows in df[date_col] between start_date and end_date (inclusive).
-    Also prints the percentage of total rows in this interval.
+    Count rows in a DataFrame where date_col is between start_date and end_date (inclusive).
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+        date_col (str): Name of the date column.
+        start_date (str or datetime): Start date.
+        end_date (str or datetime): End date.
+
+    Returns:
+        int: Number of rows in the date range.
     """
-    # Ensure datetime
     df = df.copy()
     df[date_col] = pd.to_datetime(df[date_col], errors="coerce")
     mask = (df[date_col] >= pd.to_datetime(start_date)) & (
@@ -116,7 +122,13 @@ def count_rows_between_dates(df, date_col, start_date, end_date):
 
 def check_missing(df):
     """
-    Check for missing values in the DataFrame and return a DataFrame with the results.
+    Check for missing values in the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame with counts and percentages of missing values per column.
     """
     missing = df.isnull().sum()
     missing_percentage = (missing / len(df)) * 100
@@ -126,27 +138,17 @@ def check_missing(df):
     return missing_df
 
 
-import warnings
-
-
 def optimize_dtypes(df, category_threshold=0.5, datetime_threshold=0.8):
     """
-    Optimize the data types of DataFrame columns to reduce memory usage,
-    including conversion of integers, floats, objects (to category/date), and datetimes.
+    Optimize DataFrame column data types to reduce memory usage.
 
     Parameters:
-    -----------
-    df : pandas.DataFrame
-        The DataFrame to optimize
-    category_threshold : float
-        Max ratio of unique/total values to convert object to category
-    datetime_threshold : float
-        Min ratio of valid datetimes to convert object to datetime
+        df (pd.DataFrame): Input DataFrame.
+        category_threshold (float): Max ratio of unique/total values to convert object to category.
+        datetime_threshold (float): Min ratio of valid datetimes to convert object to datetime.
 
     Returns:
-    --------
-    pandas.DataFrame
-        A copy of the DataFrame with optimized data types
+        pd.DataFrame: Copy of DataFrame with optimized data types.
     """
     df_optimized = df.copy()
 
@@ -190,7 +192,6 @@ def optimize_dtypes(df, category_threshold=0.5, datetime_threshold=0.8):
         num_unique = df_optimized[col].nunique(dropna=False)
         num_total = len(df_optimized[col])
 
-        # Attempt datetime conversion
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             try:
@@ -202,7 +203,6 @@ def optimize_dtypes(df, category_threshold=0.5, datetime_threshold=0.8):
             except Exception:
                 pass
 
-        # Convert to category if unique/total ratio < threshold
         if num_unique / num_total < category_threshold:
             try:
                 df_optimized[col] = df_optimized[col].astype("category")
@@ -214,7 +214,13 @@ def optimize_dtypes(df, category_threshold=0.5, datetime_threshold=0.8):
 
 def skewness(df):
     """
-    Calculate the skewness of each column in the DataFrame.
+    Calculate skewness for each numerical column in the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame with columns and their skewness values.
     """
-    skewness = df.skew().reset_index().rename(columns={"index": "Column", 0: "Skew"})
-    return skewness
+    skewness_df = df.skew().reset_index().rename(columns={"index": "Column", 0: "Skew"})
+    return skewness_df
