@@ -1,68 +1,135 @@
 import great_expectations as gx
 
-context = gx.get_context(mode="file", project_root_dir="../Great_Expectations")
 
-source_folder = "../data"
-data_source_name = "flights"
-asset_name = "flights_data"
-batch_definition_name = "flights_main"
-path_to_batch_file = "flights.csv"
+def get_ge_context(project_root_dir: str):
+    """
+    Initialize and return Great Expectations context.
 
-# Retrieve existing data source to avoid duplicate creation
-existing_datasources = context.list_datasources()
-data_source = None
+    Args:
+        project_root_dir: Path to the GE project root directory.
 
-for ds_config in existing_datasources:
-    if ds_config["name"] == data_source_name:
-        print(f"Using existing data source: {data_source_name}")
-        data_source = context.get_datasource(data_source_name)
-        break
+    Returns:
+        Great Expectations DataContext object.
+    """
+    return gx.get_context(mode="file", project_root_dir=project_root_dir)
 
-# Create data source if not found (first-time setup)
-if data_source is None:
+
+def get_or_create_datasource(context, data_source_name: str, base_directory: str):
+    """
+    Retrieve existing data source by name or create a new pandas filesystem data source.
+
+    Args:
+        context: Great Expectations DataContext.
+        data_source_name: Name of the data source.
+        base_directory: Base directory path for the data source.
+
+    Returns:
+        DataSource object.
+    """
+    existing_datasources = context.list_datasources()
+    for ds_config in existing_datasources:
+        if ds_config["name"] == data_source_name:
+            print(f"Using existing data source: {data_source_name}")
+            return context.get_datasource(data_source_name)
+
     print(f"Initializing new data source: {data_source_name}")
     try:
         data_source = context.data_sources.add_pandas_filesystem(
-            name=data_source_name, base_directory=source_folder
+            name=data_source_name, base_directory=base_directory
         )
         print("Data source created successfully")
+        return data_source
     except Exception as e:
         print(f"Failed to create data source: {e}")
         raise
 
-# Configure CSV asset for the training data pipeline
-try:
-    file_csv_asset = data_source.add_csv_asset(name=asset_name)
-    print(f"CSV asset '{asset_name}' configured")
-except Exception as e:
-    print(f"Asset creation failed, attempting to retrieve existing: {e}")
+
+def get_or_create_csv_asset(data_source, asset_name: str):
+    """
+    Retrieve existing CSV asset or create a new one in the data source.
+
+    Args:
+        data_source: Great Expectations DataSource object.
+        asset_name: Name of the CSV asset.
+
+    Returns:
+        CSV asset object.
+    """
+    # Try to get existing asset first
     try:
         file_csv_asset = data_source.get_asset(asset_name)
         print(f"Using existing asset: {asset_name}")
-    except Exception as retrieval_error:
-        print(f"Asset retrieval failed: {retrieval_error}")
+        return file_csv_asset
+    except Exception:
+        # If not found, create new asset
+        try:
+            file_csv_asset = data_source.add_csv_asset(name=asset_name)
+            print(f"CSV asset '{asset_name}' created")
+            return file_csv_asset
+        except Exception as e:
+            print(f"Failed to create asset '{asset_name}': {e}")
+            raise
+
+
+def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: str):
+    """
+    Create batch definition for a specific file and load the batch.
+
+    Args:
+        file_csv_asset: CSV asset object.
+        batch_definition_name: Name for the batch definition.
+        path_to_batch_file: Path to the CSV file.
+
+    Returns:
+        Loaded batch dataset.
+    """
+    print(f"Loading training batch: {path_to_batch_file}")
+
+    try:
+        # Try to get existing batch definition
+        batch_definition = file_csv_asset.get_batch_definition(batch_definition_name)
+        print(
+            f"Batch definition '{batch_definition_name}' already exists. Using existing one."
+        )
+    except Exception:
+        # If not found, create new batch definition
+        batch_definition = file_csv_asset.add_batch_definition_path(
+            name=batch_definition_name, path=path_to_batch_file
+        )
+        print(f"Batch definition '{batch_definition_name}' created.")
+
+    try:
+        batch = batch_definition.get_batch()
+        print("Training batch loaded successfully")
+        print("Sample data preview:")
+        print(batch.head())
+        return batch
+    except FileNotFoundError:
+        print(f"Training file not found: {path_to_batch_file}")
+        print("Ensure data pipeline has generated the required training file")
+        raise
+    except Exception as e:
+        print(f"Batch loading failed: {e}")
+        print("Check data source configuration and file permissions")
         raise
 
 
-# Create batch definition for specific training file
-print(f"Loading training batch: {path_to_batch_file}")
+# Example usage:
+if __name__ == "__main__":
+    root_dir = "../Great_Expectations"
+    source_name = "flights"
+    base_dir = "../data"
+    asset_name = "flights_data"
+    batch_name = "flights_main"
+    batch_path = "flights.csv"
 
-try:
-    batch_definition = file_csv_asset.add_batch_definition_path(
-        name=batch_definition_name, path=path_to_batch_file
+    context = get_ge_context(project_root_dir=root_dir)
+    data_source = get_or_create_datasource(
+        context, data_source_name=source_name, base_directory=base_dir
     )
-    batch = batch_definition.get_batch()
-
-    # Validate batch loaded successfully for pipeline health check
-    print("Training batch loaded successfully")
-    print("Sample data preview:")
-    print(batch.head())
-
-except FileNotFoundError:
-    print(f"Training file not found: {path_to_batch_file}")
-    print("Ensure data pipeline has generated the required training file")
-    raise
-except Exception as e:
-    print(f"Batch loading failed: {e}")
-    print("Check data source configuration and file permissions")
-    raise
+    csv_asset = get_or_create_csv_asset(data_source, asset_name=asset_name)
+    batch = load_batch(
+        csv_asset,
+        batch_definition_name=batch_name,
+        path_to_batch_file=batch_path,
+    )
