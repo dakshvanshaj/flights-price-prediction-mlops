@@ -1,0 +1,20 @@
+{
+  "expectations": [
+    {
+      "id": "0c3d30ce-ba5d-4f3f-beb6-4c3ba987746c",
+      "kwargs": {
+        "column": "price",
+        "max_value": 2000.0,
+        "min_value": 1.0
+      },
+      "meta": {},
+      "type": "expect_column_max_to_be_between"
+    }
+  ],
+  "id": "f4f85050-8e8d-44c1-ac83-ae4016083294",
+  "meta": {
+    "great_expectations_version": "1.4.5"
+  },
+  "name": "flights_expectations_suite",
+  "notes": null
+}
