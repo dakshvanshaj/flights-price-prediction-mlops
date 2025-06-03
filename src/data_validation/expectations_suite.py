@@ -1,66 +1,53 @@
 import great_expectations as gx
-from great_expectations import expectations as gxe
-
-# Import your functions from load_data.py (adjust the import path as needed)
-from load_data import (
-    get_ge_context,
-    get_or_create_datasource,
-    get_or_create_csv_asset,
-    load_batch,
-)
-
-root_dir = "./great_Expectations"
-source_name = "flights"
-base_dir = "../../data"  # go two folders above and then data
-asset_name = "flights_data"
-batch_name = "flights_main"
-batch_path = "flights.csv"
-
-# Load GE context
-context = get_ge_context(project_root_dir=root_dir)
-
-# Get or create data source
-data_source = get_or_create_datasource(
-    context, data_source_name=source_name, base_directory=base_dir
-)
-
-# Get or create CSV asset
-csv_asset = get_or_create_csv_asset(data_source, asset_name=asset_name)
-
-# Load batch
-batch = load_batch(
-    csv_asset,
-    batch_definition_name=batch_name,
-    path_to_batch_file=batch_path,
-)
-
-# Create a expectations suite
-suite_name = "flights_expectations_suite"
-suite = gx.ExpectationSuite(name=suite_name)
-
-try:
-    # get expecations duite from data context
-    suite = context.suites.get(name="flights_expectations_suite")
 
 
-except Exception:
-    # add expectations suite to data context object
-    suite = context.suites.add(suite)
+def get_or_create_expectation_suite(context, suite_name: str):
+    """
+    Retrieve an existing expectation suite by name or create a new one.
 
-# define a expectation
-column = "price"
-min_value = 1
-max_value = 2000
-strict_max = False
-strict_min = False
+    Args:
+        context: Great Expectations DataContext.
+        suite_name: Name of the expectation suite.
 
-range_expectation = gxe.ExpectColumnMaxToBeBetween(
-    column=column,
-    min_value=min_value,
-    max_value=max_value,
-    strict_max=strict_max,
-    strict_min=strict_min,
-)
+    Returns:
+        ExpectationSuite object.
+    """
+    try:
+        suite = context.suites.get(name=suite_name)
+        print(f"Loaded existing expectation suite: {suite_name}")
+    except Exception:
+        suite = gx.ExpectationSuite(name=suite_name)
+        context.suites.add(suite)
+        print(f"Created new expectation suite: {suite_name}")
+    return suite
 
-# takes in an instance of an Expectation and adds it to the Expectation Suite's configuraton:
-suite.add_expectation(range_expectation)
+
+def expect_column_max_to_be_between(
+    suite,
+    column: str,
+    min_value,
+    max_value,
+    strict_max: bool = False,
+    strict_min: bool = False,
+):
+    """
+    Add an ExpectColumnMaxToBeBetween expectation instance to the suite.
+
+    Args:
+        suite: ExpectationSuite object.
+        column: Column name.
+        min_value: Minimum allowed max value or parameter dict.
+        max_value: Maximum allowed max value or parameter dict.
+        strict_max: Whether max value must be strictly less than max_value.
+        strict_min: Whether max value must be strictly greater than min_value.
+    """
+    expectation = gx.expectations.ExpectColumnMaxToBeBetween(
+        column=column,
+        min_value=min_value,
+        max_value=max_value,
+        strict_max=strict_max,
+        strict_min=strict_min,
+    )
+    suite.add_expectation(expectation)
+    print(f"Added ExpectColumnMaxToBeBetween for column '{column}'")
+    return expectation  # Return the instance for saving
