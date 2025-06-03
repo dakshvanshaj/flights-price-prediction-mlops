@@ -1,4 +1,5 @@
 import great_expectations as gx
+from great_expectations import expectations as gxe
 
 
 def get_ge_context(project_root_dir: str):
@@ -83,7 +84,7 @@ def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: s
     Returns:
         Loaded batch dataset.
     """
-    print(f"Loading training batch: {path_to_batch_file}")
+    print(f"Loading batch: {path_to_batch_file}")
 
     try:
         # Try to get existing batch definition
@@ -100,18 +101,44 @@ def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: s
 
     try:
         batch = batch_definition.get_batch()
-        print("Training batch loaded successfully")
+        print("Batch loaded successfully")
         print("Sample data preview:")
         print(batch.head())
         return batch
     except FileNotFoundError:
-        print(f"Training file not found: {path_to_batch_file}")
+        print(f"Batch file not found: {path_to_batch_file}")
         print("Ensure data pipeline has generated the required training file")
         raise
     except Exception as e:
         print(f"Batch loading failed: {e}")
         print("Check data source configuration and file permissions")
         raise
+
+
+def expect_column_max_to_be_between(
+    batch, column: str, min_value=1, max_value=2000, strict_max=False, strict_min=False
+):
+    """
+    Add an expectation that the max value of a column is between min_value and max_value.
+
+    Args:
+        batch: Great Expectations batch or dataset object.
+        column: Column name to validate.
+        min_value: Minimum allowed max value.
+        max_value: Maximum allowed max value.
+
+    Returns:
+        Validation result dictionary.
+    """
+    range_expectation = gxe.ExpectColumnMaxToBeBetween(
+        column=column,
+        min_value=min_value,
+        max_value=max_value,
+        strict_max=strict_max,
+        strict_min=strict_min,
+    )
+
+    return batch.validate(range_expectation)
 
 
 # Example usage:
@@ -133,3 +160,5 @@ if __name__ == "__main__":
         batch_definition_name=batch_name,
         path_to_batch_file=batch_path,
     )
+    validate_range = expect_column_max_to_be_between(batch, "price", 1, 1000)
+    print(validate_range)
