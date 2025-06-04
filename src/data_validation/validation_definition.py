@@ -1,12 +1,16 @@
 import great_expectations as gx
 
 
-# Create a ValidationDefinition object but do not add it to the context yet
-def create_validation_definition(
+import great_expectations as gx
+from great_expectations.exceptions import DataContextError
+
+
+def get_or_create_validation_definition(
     context, batch_definition, expectation_suite, definition_name
 ):
     """
-    Create a ValidationDefinition object.
+    Retrieve an existing ValidationDefinition by name from the context,
+    or create a new one if it does not exist.
 
     Args:
         context: Great Expectations DataContext.
@@ -18,13 +22,20 @@ def create_validation_definition(
         ValidationDefinition object.
     """
     try:
+        validation_definition = context.validation_definitions.get(definition_name)
+        print(f"Loaded existing validation definition: {definition_name}")
+    except DataContextError:
+        print(
+            f"Validation definition '{definition_name}' not found. Creating a new one."
+        )
         validation_definition = gx.ValidationDefinition(
             data=batch_definition, suite=expectation_suite, name=definition_name
         )
-        return validation_definition
     except Exception as e:
-        print(f"Error creating validation definition '{definition_name}': {e}")
+        print(f"Error retrieving validation definition '{definition_name}': {e}")
         raise
+
+    return validation_definition
 
 
 # Add a ValidationDefinition object to the Great Expectations context
@@ -45,30 +56,6 @@ def add_validation_definition_to_context(context, validation_definition):
         return added_definition
     except Exception as e:
         print(f"Error adding validation definition '{validation_definition.name}': {e}")
-        raise
-
-
-# Retrieve an existing ValidationDefinition by name from the context
-def get_validation_definition(context, validation_definition_name):
-    """
-    Retrieve an existing ValidationDefinition by name from the context.
-
-    Args:
-        context: Great Expectations DataContext.
-        validation_definition_name: Name of the validation definition.
-
-    Returns:
-        ValidationDefinition object if found, else None.
-    """
-    try:
-        return context.validation_definitions.get(validation_definition_name)
-    except KeyError:
-        print(f"Validation definition '{validation_definition_name}' not found.")
-        return None
-    except Exception as e:
-        print(
-            f"Error retrieving validation definition '{validation_definition_name}': {e}"
-        )
         raise
 
 
