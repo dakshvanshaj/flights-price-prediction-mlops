@@ -72,9 +72,11 @@ def get_or_create_csv_asset(data_source, asset_name: str):
             raise
 
 
-def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: str):
+def get_or_create_batch_definition(
+    file_csv_asset, batch_definition_name: str, path_to_batch_file: str
+):
     """
-    Create batch definition for a specific file and load the batch.
+    Create or load a batch definition for a specific file.
 
     Args:
         file_csv_asset: CSV asset object.
@@ -82,10 +84,8 @@ def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: s
         path_to_batch_file: Path to the CSV file.
 
     Returns:
-        Loaded batch dataset.
+        BatchDefinition object.
     """
-    print(f"Loading batch: {path_to_batch_file}")
-
     try:
         # Try to get existing batch definition
         batch_definition = file_csv_asset.get_batch_definition(batch_definition_name)
@@ -98,7 +98,19 @@ def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: s
             name=batch_definition_name, path=path_to_batch_file
         )
         print(f"Batch definition '{batch_definition_name}' created.")
+    return batch_definition
 
+
+def load_batch_from_definition(batch_definition):
+    """
+    Load a batch dataset from a given batch definition.
+
+    Args:
+        batch_definition: BatchDefinition object.
+
+    Returns:
+        Loaded batch dataset.
+    """
     try:
         batch = batch_definition.get_batch()
         print("Batch loaded successfully")
@@ -106,7 +118,7 @@ def load_batch(file_csv_asset, batch_definition_name: str, path_to_batch_file: s
         print(batch.head())
         return batch
     except FileNotFoundError:
-        print(f"Batch file not found: {path_to_batch_file}")
+        print(f"Batch file not found: {batch_definition.path}")
         print("Ensure data pipeline has generated the required training file")
         raise
     except Exception as e:
@@ -155,10 +167,7 @@ if __name__ == "__main__":
         context, data_source_name=source_name, base_directory=base_dir
     )
     csv_asset = get_or_create_csv_asset(data_source, asset_name=asset_name)
-    batch = load_batch(
-        csv_asset,
-        batch_definition_name=batch_name,
-        path_to_batch_file=batch_path,
-    )
+    batch_definition = get_or_create_batch_definition(csv_asset, batch_name, batch_path)
+    batch = load_batch_from_definition(batch_definition)
     validate_range = expect_column_max_to_be_between(batch, "price", 1, 1800)
     print(validate_range)
