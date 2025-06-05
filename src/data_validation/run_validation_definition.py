@@ -1,34 +1,39 @@
 from expectations_suite import get_or_create_expectation_suite
-
 from validation_definition import (
     get_or_create_validation_definition,
     run_validation,
 )
-
-from utils import initialize_ge_components
+from utils import setup_logger, initialize_ge_components
 from config import (
-    ROOT_DIR,
+    GE_ROOT_DIR,
     SOURCE_NAME,
-    BASE_DIR,
+    DATA_BASE_DIR,
     ASSET_NAME,
     BATCH_NAME,
     BATCH_PATH,
     SUITE_NAME,
     VALIDATION_DEFINITION_NAME,
     BATCH_PARAMETERS,
+    VAL_DEF_LOGS,
 )
+import logging
 
 
 def main():
+    # Setup logger basic configuration
+    setup_logger(verbose=False, log_file=VAL_DEF_LOGS, mode="w")
+    logger = logging.getLogger(__name__)
+
     # Load data context, data, asset, batch def and batch from utils.py
     context, data_source, csv_asset, batch_definition, batch = initialize_ge_components(
-        ROOT_DIR,
+        GE_ROOT_DIR,
         SOURCE_NAME,
-        BASE_DIR,
+        DATA_BASE_DIR,
         ASSET_NAME,
         BATCH_NAME,
         BATCH_PATH,
     )
+
     # Try to get existing expectation_suite
     expectation_suite = get_or_create_expectation_suite(context, SUITE_NAME)
 
@@ -40,8 +45,7 @@ def main():
     # Run validation with batch parameters
     results = run_validation(validation_definition, BATCH_PARAMETERS)
 
-    # Print results
-    print(results)
+    logger.info(f"Validation results: {results}")
 
 
 if __name__ == "__main__":
