@@ -1,33 +1,37 @@
-from load_data import (
-    get_ge_context,
-    get_or_create_datasource,
-    get_or_create_csv_asset,
-    get_or_create_batch_definition,
-    load_batch_from_definition,
-)
 from expectations_suite import (
     get_or_create_expectation_suite,
     expect_column_max_to_be_between,
 )
+from utils import initialize_ge_components
+from config import (
+    ROOT_DIR,
+    SOURCE_NAME,
+    BASE_DIR,
+    ASSET_NAME,
+    BATCH_NAME,
+    BATCH_PATH,
+    SUITE_NAME,
+)
 
 
 def main():
-    root_dir = "./great_expectations"
-    source_name = "flights"
-    base_dir = "../../data"
-    asset_name = "flights_data"
-    batch_name = "flights_main"
-    batch_path = "flights.csv"
-    suite_name = "flights_expectations_suite"
+    # Initialize GE components using config values
+    context, data_source, csv_asset, batch_definition, batch = initialize_ge_components(
+        ROOT_DIR,
+        SOURCE_NAME,
+        BASE_DIR,
+        ASSET_NAME,
+        BATCH_NAME,
+        BATCH_PATH,
+    )
 
-    context = get_ge_context(project_root_dir=root_dir)
-    data_source = get_or_create_datasource(context, source_name, base_dir)
-    csv_asset = get_or_create_csv_asset(data_source, asset_name)
-    batch_definition = get_or_create_batch_definition(csv_asset, batch_name, batch_path)
-    batch = load_batch_from_definition(batch_definition)
-    suite = get_or_create_expectation_suite(context, suite_name)
+    # Get or create expectation suite
+    suite = get_or_create_expectation_suite(context, SUITE_NAME)
 
+    # Add expectation on 'price' column
     expect_column_max_to_be_between(suite, "price", 1, 2000)
+
+    print(f"Expectation suite '{SUITE_NAME}' updated.")
 
 
 if __name__ == "__main__":
