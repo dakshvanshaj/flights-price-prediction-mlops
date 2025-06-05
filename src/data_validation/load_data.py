@@ -1,5 +1,9 @@
+import logging
 import great_expectations as gx
 from great_expectations import expectations as gxe
+
+# create a logger object
+logger = logging.getLogger(__name__)
 
 
 def get_ge_context(project_root_dir: str):
@@ -12,6 +16,7 @@ def get_ge_context(project_root_dir: str):
     Returns:
         Great Expectations DataContext object.
     """
+    logger.info(f"Initializing GE context with root dir: {project_root_dir}")
     return gx.get_context(mode="file", project_root_dir=project_root_dir)
 
 
@@ -30,18 +35,18 @@ def get_or_create_datasource(context, data_source_name: str, base_directory: str
     existing_datasources = context.list_datasources()
     for ds_config in existing_datasources:
         if ds_config["name"] == data_source_name:
-            print(f"Using existing data source: {data_source_name}")
-            return context.get_datasource(data_source_name)
+            logger.info(f"Using existing data source: {data_source_name}")
+            return context.data_sources.get(data_source_name)
 
-    print(f"Initializing new data source: {data_source_name}")
+    logger.info(f"Initializing new data source: {data_source_name}")
     try:
         data_source = context.data_sources.add_pandas_filesystem(
             name=data_source_name, base_directory=base_directory
         )
-        print("Data source created successfully")
+        logger.info("Data source created successfully")
         return data_source
     except Exception as e:
-        print(f"Failed to create data source: {e}")
+        logger.error(f"Failed to create data source: {e}")
         raise
 
 
@@ -56,19 +61,17 @@ def get_or_create_csv_asset(data_source, asset_name: str):
     Returns:
         CSV asset object.
     """
-    # Try to get existing asset first
     try:
         file_csv_asset = data_source.get_asset(asset_name)
-        print(f"Using existing asset: {asset_name}")
+        logger.info(f"Using existing asset: {asset_name}")
         return file_csv_asset
     except Exception:
-        # If not found, create new asset
         try:
             file_csv_asset = data_source.add_csv_asset(name=asset_name)
-            print(f"CSV asset '{asset_name}' created")
+            logger.info(f"CSV asset '{asset_name}' created")
             return file_csv_asset
         except Exception as e:
-            print(f"Failed to create asset '{asset_name}': {e}")
+            logger.error(f"Failed to create asset '{asset_name}': {e}")
             raise
 
 
@@ -87,17 +90,15 @@ def get_or_create_batch_definition(
         BatchDefinition object.
     """
     try:
-        # Try to get existing batch definition
         batch_definition = file_csv_asset.get_batch_definition(batch_definition_name)
-        print(
+        logger.info(
             f"Batch definition '{batch_definition_name}' already exists. Using existing one."
         )
     except Exception:
-        # If not found, create new batch definition
         batch_definition = file_csv_asset.add_batch_definition_path(
             name=batch_definition_name, path=path_to_batch_file
         )
-        print(f"Batch definition '{batch_definition_name}' created.")
+        logger.info(f"Batch definition '{batch_definition_name}' created.")
     return batch_definition
 
 
@@ -113,17 +114,16 @@ def load_batch_from_definition(batch_definition):
     """
     try:
         batch = batch_definition.get_batch()
-        print("Batch loaded successfully")
-        print("Sample data preview:")
-        print(batch.head())
+        logger.info("Batch loaded successfully")
+        logger.info(f"Sample data preview:\n{batch.head()}")
         return batch
     except FileNotFoundError:
-        print(f"Batch file not found: {batch_definition.path}")
-        print("Ensure data pipeline has generated the required training file")
+        logger.error(f"Batch file not found: {batch_definition.path}")
+        logger.error("Ensure data pipeline has generated the required training file")
         raise
     except Exception as e:
-        print(f"Batch loading failed: {e}")
-        print("Check data source configuration and file permissions")
+        logger.error(f"Batch loading failed: {e}")
+        logger.error("Check data source configuration and file permissions")
         raise
 
 
@@ -150,24 +150,6 @@ def expect_column_max_to_be_between(
         strict_min=strict_min,
     )
 
-    return batch.validate(range_expectation)
-
-
-# Example usage:
-if __name__ == "__main__":
-    root_dir = "./great_Expectations"
-    source_name = "flights"
-    base_dir = "../../data"  # go two folders above and then data
-    asset_name = "flights_data"
-    batch_name = "flights_main"
-    batch_path = "flights.csv"
-
-    context = get_ge_context(project_root_dir=root_dir)
-    data_source = get_or_create_datasource(
-        context, data_source_name=source_name, base_directory=base_dir
-    )
-    csv_asset = get_or_create_csv_asset(data_source, asset_name=asset_name)
-    batch_definition = get_or_create_batch_definition(csv_asset, batch_name, batch_path)
-    batch = load_batch_from_definition(batch_definition)
-    validate_range = expect_column_max_to_be_between(batch, "price", 1, 1800)
-    print(validate_range)
+    result = batch.validate(range_expectation)
+    logger.info(f"Validation result for column '{column}': {result}")
+    return result
