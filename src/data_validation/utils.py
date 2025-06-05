@@ -5,6 +5,25 @@ from load_data import (
     get_or_create_batch_definition,
     load_batch_from_definition,
 )
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def setup_logger(verbose: bool = True):
+    """
+    Configure logger level based on verbose flag.
+    Call this once at the start of your app.
+    """
+    level = logging.DEBUG if verbose else logging.INFO
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(funcName)s() - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        filename="./logs/run_expectations_suite.log",
+        filemode="w",
+    )
+    logger.info(f"Logger initialized. Verbose mode: {verbose}")
 
 
 def initialize_ge_components(
