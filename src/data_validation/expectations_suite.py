@@ -1,4 +1,7 @@
+import logging
 import great_expectations as gx
+
+logger = logging.getLogger(__name__)
 
 
 def get_or_create_expectation_suite(context, suite_name: str):
@@ -14,11 +17,11 @@ def get_or_create_expectation_suite(context, suite_name: str):
     """
     try:
         suite = context.suites.get(name=suite_name)
-        print(f"Loaded existing expectation suite: {suite_name}")
+        logger.info(f"Loaded existing expectation suite: {suite_name}")
     except Exception:
         suite = gx.ExpectationSuite(name=suite_name)
         context.suites.add(suite)
-        print(f"Created new expectation suite: {suite_name}")
+        logger.info(f"Created new expectation suite: {suite_name}")
     return suite
 
 
@@ -49,5 +52,5 @@ def expect_column_max_to_be_between(
         strict_min=strict_min,
     )
     suite.add_expectation(expectation)
-    print(f"Added ExpectColumnMaxToBeBetween for column '{column}'")
+    logger.info(f"Added ExpectColumnMaxToBeBetween for column '{column}'")
     return expectation  # Return the instance for saving
