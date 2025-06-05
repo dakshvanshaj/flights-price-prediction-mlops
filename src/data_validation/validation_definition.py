@@ -1,5 +1,8 @@
+import logging
 import great_expectations as gx
 from great_expectations.exceptions import DataContextError
+
+logger = logging.getLogger(__name__)
 
 
 def get_or_create_validation_definition(
@@ -20,16 +23,16 @@ def get_or_create_validation_definition(
     """
     try:
         validation_definition = context.validation_definitions.get(definition_name)
-        print(f"Loaded existing validation definition: {definition_name}")
+        logger.info(f"Loaded existing validation definition: {definition_name}")
     except DataContextError:
-        print(
+        logger.info(
             f"Validation definition '{definition_name}' not found. Creating a new one."
         )
         validation_definition = gx.ValidationDefinition(
             data=batch_definition, suite=expectation_suite, name=definition_name
         )
     except Exception as e:
-        print(f"Error retrieving validation definition '{definition_name}': {e}")
+        logger.error(f"Error retrieving validation definition '{definition_name}': {e}")
         raise
 
     return validation_definition
@@ -49,10 +52,14 @@ def add_validation_definition_to_context(context, validation_definition):
     """
     try:
         added_definition = context.validation_definitions.add(validation_definition)
-        print(f"Validation definition '{validation_definition.name}' added to context.")
+        logger.info(
+            f"Validation definition '{validation_definition.name}' added to context."
+        )
         return added_definition
     except Exception as e:
-        print(f"Error adding validation definition '{validation_definition.name}': {e}")
+        logger.error(
+            f"Error adding validation definition '{validation_definition.name}': {e}"
+        )
         raise
 
 
@@ -74,5 +81,5 @@ def run_validation(validation_definition, batch_parameters):
         )
         return validation_results
     except Exception as e:
-        print(f"Error running validation: {e}")
+        logger.error(f"Error running validation: {e}")
         raise
