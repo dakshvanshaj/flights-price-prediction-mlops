@@ -37,7 +37,7 @@ def main():
     # Add expectation on 'price' column
     # More will be added here
     # we will also handle case when we may already hav expectation added
-    expect_column_max_to_be_between(suite, "price", 1, 2000)
+    expect_column_max_to_be_between(suite, "price", 1, 1500)
 
     logger.info(f"Expectation suite '{SUITE_NAME}' updated.")
 
