@@ -1,49 +1,44 @@
-import great_expectations as gx
-from create_validation_definitions import validation_definition_list
-from actions import action_list
-from utils import setup_logger, initialize_ge_components
-from config import (
-    GE_ROOT_DIR,
-    SOURCE_NAME,
-    DATA_BASE_DIR,
-    ASSET_NAME,
-    BATCH_NAME,
-    BATCH_PATH,
-)
 import logging
+import great_expectations as gx
 
-# Initialize context
-# Initialize GE components using config values
-context, data_source, csv_asset, batch_definition, batch = initialize_ge_components(
-    GE_ROOT_DIR,
-    SOURCE_NAME,
-    DATA_BASE_DIR,
-    ASSET_NAME,
-    BATCH_NAME,
-    BATCH_PATH,
-)
+logger = logging.getLogger(__name__)
 
-# Get validation definitions and actions
-validation_definitions = validation_definition_list()
-actions = action_list()
 
-# Define checkpoint name
-checkpoint_name = "datavalidationcheckpoint"
-
-# Create checkpoint
-checkpoint = gx.Checkpoint(
-    name=checkpoint_name,
-    validation_definitions=validation_definitions,
-    actions=actions,
+def get_or_create_checkpoint(
+    context,
+    checkpoint_name: str,
+    validation_definitions,
+    actions,
     result_format={"result_format": "COMPLETE"},
-)
+):
+    """
+    Retrieve an existing checkpoint by name or create and register a new one.
 
-# Add checkpoint to context
-context.checkpoints.add(checkpoint)
+    Args:
+        context: Great Expectations DataContext.
+        checkpoint_name: Name of the checkpoint.
+        validation_definitions: List of ValidationDefinition objects.
+        actions: List of Action objects.
+        result_format: Dict specifying result format for validation results.
 
-# Retrieve checkpoint
-checkpoint = context.checkpoints.get(checkpoint_name)
-
-# Run checkpoint
-result = checkpoint.run()
-print(result)
+    Returns:
+        Checkpoint object.
+    """
+    try:
+        checkpoint = context.checkpoints.get(checkpoint_name)
+        logger.info(f"Loaded existing checkpoint: {checkpoint_name}")
+    except Exception as e:
+        logger.warning(
+            f"Checkpoint '{checkpoint_name}' not found. Creating new one. Error: {e}"
+        )
+        checkpoint = gx.Checkpoint(
+            name=checkpoint_name,
+            validation_definitions=validation_definitions,
+            actions=actions,
+            result_format=result_format,
+        )
+        context.checkpoints.add(checkpoint)
+        logger.info(
+            f"Created and registered new checkpoint to context: {checkpoint_name}"
+        )
+    return checkpoint
