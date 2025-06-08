@@ -9,6 +9,16 @@
       },
       "meta": {},
       "type": "expect_column_max_to_be_between"
+    },
+    {
+      "id": "f50d6dd9-c52f-428d-aca8-71001f7becf3",
+      "kwargs": {
+        "column": "price",
+        "max_value": 1500.0,
+        "min_value": 1.0
+      },
+      "meta": {},
+      "type": "expect_column_max_to_be_between"
     }
   ],
   "id": "f4f85050-8e8d-44c1-ac83-ae4016083294",
