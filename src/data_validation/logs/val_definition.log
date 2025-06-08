@@ -1,23 +1,24 @@
-2025-06-05 21:27:37 - root - INFO - utils.py:41 - setup_logger() - Logger initialized. Verbose: False, Log file: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\logs\val_definition.log, Mode: w
-2025-06-05 21:27:37 - load_data - INFO - load_data.py:19 - get_ge_context() - Initializing GE context with root dir: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\great_Expectations
-2025-06-05 21:27:37 - great_expectations.data_context.data_context.file_data_context - INFO - file_data_context.py:218 - _load_fluent_config() - FileDataContext loading fluent config
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.config - INFO - config.py:191 - _load_datasource_subtype() - Loading 'datasources' ->
+2025-06-08 14:20:57 - root - INFO - utils.py:41 - setup_logger() - Logger initialized. Verbose: False, Log file: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\logs\val_definition.log, Mode: w
+2025-06-08 14:20:57 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:23 - main() - Initializing Great Expectations components...
+2025-06-08 14:20:57 - load_data - INFO - load_data.py:19 - get_ge_context() - Initializing GE context with root dir: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\great_Expectations
+2025-06-08 14:20:57 - great_expectations.data_context.data_context.file_data_context - INFO - file_data_context.py:218 - _load_fluent_config() - FileDataContext loading fluent config
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.config - INFO - config.py:191 - _load_datasource_subtype() - Loading 'datasources' ->
 [{'assets': [...],
   'base_directory': '..\\..\\data',
   'id': '92948673-b801-45a3-919c-05cd1d70b9d4',
   'name': 'flights',
   'type': 'pandas_filesystem'}]
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - FileDataAsset.dict() - missing `config_provider`, skipping config substitution
-2025-06-05 21:27:37 - great_expectations.data_context.data_context.abstract_data_context - INFO - abstract_data_context.py:2474 - _attach_fluent_config_datasources_and_build_data_connectors() - Loaded 'flights' from fluent config
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - CSVAsset.dict() - missing `config_provider`, skipping config substitution
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - PandasFilesystemDatasource.dict() - missing `config_provider`, skipping config substitution
-2025-06-05 21:27:37 - load_data - INFO - load_data.py:38 - get_or_create_datasource() - Using existing data source: flights
-2025-06-05 21:27:37 - load_data - INFO - load_data.py:66 - get_or_create_csv_asset() - Using existing asset: flights_data
-2025-06-05 21:27:37 - load_data - INFO - load_data.py:94 - get_or_create_batch_definition() - Batch definition 'flights_main' already exists. Using existing one.
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: None was parsed to: slice(0, None, None)
-2025-06-05 21:27:37 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: slice(0, None, None) was parsed to: slice(0, None, None)
-2025-06-05 21:27:38 - load_data - INFO - load_data.py:117 - load_batch_from_definition() - Batch loaded successfully
-2025-06-05 21:27:38 - load_data - INFO - load_data.py:118 - load_batch_from_definition() - Sample data preview:
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - FileDataAsset.dict() - missing `config_provider`, skipping config substitution
+2025-06-08 14:20:57 - great_expectations.data_context.data_context.abstract_data_context - INFO - abstract_data_context.py:2474 - _attach_fluent_config_datasources_and_build_data_connectors() - Loaded 'flights' from fluent config
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - CSVAsset.dict() - missing `config_provider`, skipping config substitution
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.fluent_base_model - INFO - fluent_base_model.py:271 - dict() - PandasFilesystemDatasource.dict() - missing `config_provider`, skipping config substitution
+2025-06-08 14:20:57 - load_data - INFO - load_data.py:38 - get_or_create_datasource() - Using existing data source: flights
+2025-06-08 14:20:57 - load_data - INFO - load_data.py:66 - get_or_create_csv_asset() - Using existing asset: flights_data
+2025-06-08 14:20:57 - load_data - INFO - load_data.py:94 - get_or_create_batch_definition() - Batch definition 'flights_main' already exists. Using existing one.
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: None was parsed to: slice(0, None, None)
+2025-06-08 14:20:57 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: slice(0, None, None) was parsed to: slice(0, None, None)
+2025-06-08 14:20:58 - load_data - INFO - load_data.py:117 - load_batch_from_definition() - Batch loaded successfully
+2025-06-08 14:20:58 - load_data - INFO - load_data.py:118 - load_batch_from_definition() - Sample data preview:
    travelCode  userCode                from                  to  flightType  \
 0           0         0         Recife (PE)  Florianopolis (SC)  firstClass   
 1           0         0  Florianopolis (SC)         Recife (PE)  firstClass   
@@ -31,75 +32,10 @@
 2  1487.52  1.66    637.56      CloudFy  10/03/2019  
 3  1127.36  1.66    637.56      CloudFy  10/04/2019  
 4  1684.05  2.16    830.86      CloudFy  10/10/2019  
-2025-06-05 21:27:38 - expectations_suite - INFO - expectations_suite.py:20 - get_or_create_expectation_suite() - Loaded existing expectation suite: flights_expectations_suite
-2025-06-05 21:27:38 - validation_definition - INFO - validation_definition.py:26 - get_or_create_validation_definition() - Loaded existing validation definition: flights_validation_definition
-2025-06-05 21:27:38 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: None was parsed to: slice(0, None, None)
-2025-06-05 21:27:38 - great_expectations.datasource.fluent.data_connector.batch_filter - INFO - batch_filter.py:243 - parse_batch_slice() - batch_slice: slice(0, None, None) was parsed to: slice(0, None, None)
-2025-06-05 21:27:39 - __main__ - INFO - <ipython-input-2-12e67be646fb>:48 - main() - Validation results: {
-  "success": true,
-  "results": [
-    {
-      "success": true,
-      "expectation_config": {
-        "type": "expect_column_max_to_be_between",
-        "kwargs": {
-          "batch_id": "flights-flights_data",
-          "column": "price",
-          "min_value": 1.0,
-          "max_value": 2000.0
-        },
-        "meta": {},
-        "id": "0c3d30ce-ba5d-4f3f-beb6-4c3ba987746c"
-      },
-      "result": {
-        "observed_value": 1754.17
-      },
-      "meta": {},
-      "exception_info": {
-        "raised_exception": false,
-        "exception_traceback": null,
-        "exception_message": null
-      }
-    }
-  ],
-  "suite_name": "flights_expectations_suite",
-  "suite_parameters": {},
-  "statistics": {
-    "evaluated_expectations": 1,
-    "successful_expectations": 1,
-    "unsuccessful_expectations": 0,
-    "success_percent": 100.0
-  },
-  "meta": {
-    "great_expectations_version": "1.4.5",
-    "batch_spec": {
-      "path": "..\\..\\data\\flights.csv",
-      "reader_method": "read_csv",
-      "reader_options": {}
-    },
-    "batch_markers": {
-      "ge_load_time": "20250605T155738.408985Z",
-      "pandas_data_fingerprint": "fdeedabd1577dea415cced385c57410a"
-    },
-    "active_batch_definition": {
-      "datasource_name": "flights",
-      "data_connector_name": "fluent",
-      "data_asset_name": "flights_data",
-      "batch_identifiers": {
-        "path": "flights.csv"
-      },
-      "batching_regex": "(?P<path>flights.csv$)"
-    },
-    "validation_id": "f3778b6a-6be2-4b22-a91c-0636de06a986",
-    "checkpoint_id": null,
-    "run_id": {
-      "run_name": null,
-      "run_time": "2025-06-05T21:27:39.047771+05:30"
-    },
-    "validation_time": "2025-06-05T15:57:39.047771+00:00",
-    "batch_parameters": {
-      "path": "flights.csv"
-    }
-  },
-  "id": null
-}
+2025-06-08 14:20:58 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:32 - main() - Great Expectations components initialized.
+2025-06-08 14:20:58 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:34 - main() - Getting or creating expectation suite: flights_expectations_suite
+2025-06-08 14:20:58 - expectations_suite - INFO - expectations_suite.py:20 - get_or_create_expectation_suite() - Loaded existing expectation suite: flights_expectations_suite
+2025-06-08 14:20:58 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:36 - main() - Expectation suite 'flights_expectations_suite' ready.
+2025-06-08 14:20:58 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:38 - main() - Getting or creating validation definition: flights_validation_definition
+2025-06-08 14:20:58 - validation_definition - INFO - validation_definition.py:26 - get_or_create_validation_definition() - Loaded existing validation definition: flights_validation_definition
+2025-06-08 14:20:58 - __main__ - INFO - <ipython-input-1-5dfeddba11d5>:44 - main() - Validation definition 'flights_validation_definition' ready.
