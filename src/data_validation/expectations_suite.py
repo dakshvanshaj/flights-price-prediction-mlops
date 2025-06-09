@@ -5,16 +5,6 @@ logger = logging.getLogger(__name__)
 
 
 def get_or_create_expectation_suite(context, suite_name: str):
-    """
-    Retrieve an existing expectation suite by name or create a new one.
-
-    Args:
-        context: Great Expectations DataContext.
-        suite_name: Name of the expectation suite.
-
-    Returns:
-        ExpectationSuite object.
-    """
     try:
         suite = context.suites.get(name=suite_name)
         logger.info(f"Loaded existing expectation suite: {suite_name}")
@@ -25,32 +15,41 @@ def get_or_create_expectation_suite(context, suite_name: str):
     return suite
 
 
-def expect_column_max_to_be_between(
-    suite,
-    column: str,
-    min_value,
-    max_value,
-    strict_max: bool = False,
-    strict_min: bool = False,
-):
-    """
-    Add an ExpectColumnMaxToBeBetween expectation instance to the suite.
+def remove_expectation(suite, expectation_id: str):
+    try:
+        removed = suite.remove_expectation(id=expectation_id)
+        if removed:
+            logger.info(f"Removed expectation with ID '{expectation_id}'.")
+        else:
+            logger.warning(
+                f"No expectation found with ID '{expectation_id}' to remove."
+            )
+        return removed
+    except Exception as e:
+        logger.error(f"Error removing expectation with ID '{expectation_id}': {e}")
+        return False
 
-    Args:
-        suite: ExpectationSuite object.
-        column: Column name.
-        min_value: Minimum allowed max value or parameter dict.
-        max_value: Maximum allowed max value or parameter dict.
-        strict_max: Whether max value must be strictly less than max_value.
-        strict_min: Whether max value must be strictly greater than min_value.
-    """
-    expectation = gx.expectations.ExpectColumnMaxToBeBetween(
-        column=column,
-        min_value=min_value,
-        max_value=max_value,
-        strict_max=strict_max,
-        strict_min=strict_min,
+
+def upsert_expectation(suite, expectation):
+    if not hasattr(expectation, "id") or expectation.id is None:
+        raise ValueError("Expectation must have a unique 'id' for upsertion.")
+
+    existing = next(
+        (exp for exp in suite.expectations if exp.id == expectation.id), None
     )
+
+    if existing:
+        if existing.dict() == expectation.dict():
+            logger.info(
+                f"Expectation '{expectation.id}' already exists with same parameters. Skipping."
+            )
+            return existing
+        else:
+            suite.remove_expectation(id=expectation.id)
+            logger.info(
+                f"Expectation '{expectation.id}' existed but had different parameters. Replacing."
+            )
+
     suite.add_expectation(expectation)
-    logger.info(f"Added ExpectColumnMaxToBeBetween for column '{column}'")
-    return expectation  # Return the instance for saving
+    logger.info(f"Added/Updated expectation with ID '{expectation.id}'")
+    return expectation
