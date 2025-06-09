@@ -1,4 +1,0 @@
-2025-06-09 15:19:42 - root - INFO - utils.py:41 - setup_logger() - Logger initialized. Verbose: True, Log file: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\logs\Config_paths.log, Mode: w
-2025-06-09 15:19:42 - config - DEBUG - config.py:28 - <module>() - Current file absolute path: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\config.py
-2025-06-09 15:19:42 - config - DEBUG - config.py:29 - <module>() - Project root directory: C:\Users\dave\Desktop\Flights_Mlops
-2025-06-09 15:19:42 - config - DEBUG - config.py:35 - <module>() - Great Expectations root directory: C:\Users\dave\Desktop\Flights_Mlops\src\data_validation\great_expectations
