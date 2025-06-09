@@ -31,7 +31,7 @@ logger.debug(f"Project root directory: {PROJECT_ROOT}")
 # Configuration for variable parameters
 
 # Great Expectations project root directory
-GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_Expectations"
+GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 logger.debug(f"Great Expectations root directory: {GE_ROOT_DIR}")
 
 # Data source and asset names
