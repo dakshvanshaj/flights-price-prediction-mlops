@@ -125,31 +125,3 @@ def load_batch_from_definition(batch_definition):
         logger.error(f"Batch loading failed: {e}")
         logger.error("Check data source configuration and file permissions")
         raise
-
-
-def expect_column_max_to_be_between(
-    batch, column: str, min_value=1, max_value=2000, strict_max=False, strict_min=False
-):
-    """
-    Add an expectation that the max value of a column is between min_value and max_value.
-
-    Args:
-        batch: Great Expectations batch or dataset object.
-        column: Column name to validate.
-        min_value: Minimum allowed max value.
-        max_value: Maximum allowed max value.
-
-    Returns:
-        Validation result dictionary.
-    """
-    range_expectation = gxe.ExpectColumnMaxToBeBetween(
-        column=column,
-        min_value=min_value,
-        max_value=max_value,
-        strict_max=strict_max,
-        strict_min=strict_min,
-    )
-
-    result = batch.validate(range_expectation)
-    logger.info(f"Validation result for column '{column}': {result}")
-    return result
