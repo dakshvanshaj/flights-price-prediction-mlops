@@ -1,5 +1,9 @@
 import logging
-from expectations_suite import get_or_create_expectation_suite, upsert_expectation
+from expectations_suite import (
+    get_or_create_expectation_suite,
+    upsert_expectation,
+    delete_expectation,
+)
 from expectations import price_range_expectation
 from utils import setup_logger, initialize_ge_components
 from config import (
@@ -29,6 +33,12 @@ def main():
 
     logger.info(f"Expectation suite '{SUITE_NAME}' updated successfully.")
 
+    return suite
+
 
 if __name__ == "__main__":
-    main()
+    suite = main()
+
+    # expectation = price_range_expectation()
+    # delete_expectation(suite, expectation)
+    # suite.delete_expectation(suite.expectations[0])
