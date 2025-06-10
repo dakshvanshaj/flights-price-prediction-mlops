@@ -1,16 +1,16 @@
 import logging
 import great_expectations as gx
-from great_expectations.exceptions import DataContextError
+# from great_expectations.exceptions import DataContextError
 
 logger = logging.getLogger(__name__)
 
 
-def get_or_create_validation_definition(
+def get_or_create_and_add_validation_definition(
     context, batch_definition, expectation_suite, definition_name
 ):
     """
-    Retrieve an existing ValidationDefinition by name from the context,
-    or create a new one if it does not exist.
+    Retrieve an existing ValidationDefinition from the context by name,
+    or create a new one and add it to the context if it doesn't exist.
 
     Args:
         context: Great Expectations DataContext.
@@ -19,46 +19,33 @@ def get_or_create_validation_definition(
         definition_name: Name for the validation definition.
 
     Returns:
-        ValidationDefinition object.
+        ValidationDefinition object from the context.
     """
     try:
         validation_definition = context.validation_definitions.get(definition_name)
         logger.info(f"Loaded existing validation definition: {definition_name}")
-    except DataContextError:
+        return validation_definition
+    except gx.core.context.DataContextError:
         logger.info(
             f"Validation definition '{definition_name}' not found. Creating a new one."
         )
-        validation_definition = gx.ValidationDefinition(
-            data=batch_definition, suite=expectation_suite, name=definition_name
-        )
-    except Exception as e:
-        logger.error(f"Error retrieving validation definition '{definition_name}': {e}")
-        raise
-
-    return validation_definition
-
-
-# Add a ValidationDefinition object to the Great Expectations context
-def add_validation_definition_to_context(context, validation_definition):
-    """
-    Add a ValidationDefinition to the context's validation definitions.
-
-    Args:
-        context: Great Expectations DataContext.
-        validation_definition: ValidationDefinition object to add.
-
-    Returns:
-        The added ValidationDefinition object.
-    """
-    try:
-        added_definition = context.validation_definitions.add(validation_definition)
-        logger.info(
-            f"Validation definition '{validation_definition.name}' added to context."
-        )
-        return added_definition
+        try:
+            validation_definition = gx.ValidationDefinition(
+                data=batch_definition, suite=expectation_suite, name=definition_name
+            )
+            context.validation_definitions.add(validation_definition)
+            logger.info(
+                f"Validation definition '{definition_name}' created and added to context."
+            )
+            return validation_definition
+        except Exception as e:
+            logger.error(
+                f"Failed to create or add validation definition '{definition_name}': {e}"
+            )
+            raise
     except Exception as e:
         logger.error(
-            f"Error adding validation definition '{validation_definition.name}': {e}"
+            f"Unexpected error retrieving validation definition '{definition_name}': {e}"
         )
         raise
 
