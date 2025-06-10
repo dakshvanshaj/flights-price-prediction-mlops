@@ -2,7 +2,7 @@ import logging
 from utils import setup_logger, initialize_ge_components
 from create_validation_definitions import validation_definition_list
 from actions import action_list
-from testcheckpoints import get_or_create_checkpoint
+from checkpoints import get_or_create_checkpoint
 
 from config import (
     GE_ROOT_DIR,
