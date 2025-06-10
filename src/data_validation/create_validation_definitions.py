@@ -1,5 +1,5 @@
 from expectations_suite import get_or_create_expectation_suite
-from validation_definition import get_or_create_validation_definition
+from validation_definition import get_or_create_and_add_validation_definition
 from utils import setup_logger, initialize_ge_components
 from config import (
     GE_ROOT_DIR,
@@ -38,9 +38,11 @@ def validation_definition_list():
     logger.info(
         f"Getting or creating validation definition: {VALIDATION_DEFINITION_NAME}"
     )
-    validation_definition = get_or_create_validation_definition(
+    # create and add validation definition to context
+    validation_definition = get_or_create_and_add_validation_definition(
         context, batch_definition, expectation_suite, VALIDATION_DEFINITION_NAME
     )
+
     logger.info(f"Validation definition '{VALIDATION_DEFINITION_NAME}' ready.")
 
     # Return a list of validation definitions for the Checkpoint to run
