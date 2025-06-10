@@ -1,6 +1,6 @@
 import logging
 import great_expectations as gx
-from great_expectations import expectations as gxe
+
 
 # create a logger object
 logger = logging.getLogger(__name__)
