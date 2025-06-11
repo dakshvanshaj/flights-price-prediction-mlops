@@ -1,5 +1,5 @@
 import sys
-from load_data import (
+from src.data_validation.load_data import (
     get_ge_context,
     get_or_create_datasource,
     get_or_create_csv_asset,
@@ -38,7 +38,7 @@ def setup_logger(verbose: bool = True, log_file: str = "app.log", mode: str = "w
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
 
-    logger.info(
+    logger.debug(
         f"Logger initialized. Verbose: {verbose}, Log file: {log_file}, Mode: {mode}"
     )
 
