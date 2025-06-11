@@ -1,40 +1,17 @@
-from expectations_suite import get_or_create_expectation_suite
-from validation_definition import get_or_create_and_add_validation_definition
-from utils import setup_logger, initialize_ge_components
-from config import (
-    GE_ROOT_DIR,
-    SOURCE_NAME,
-    DATA_BASE_DIR,
-    ASSET_NAME,
-    BATCH_NAME,
-    BATCH_PATH,
-    SUITE_NAME,
-    VALIDATION_DEFINITION_NAME,
-    VAL_DEF_LOGS,
-)
+# In src/data_validation/create_validation_definitions.py
 import logging
+from src.data_validation.validation_definition import (
+    get_or_create_and_add_validation_definition,
+)
+from src.data_validation.config import VALIDATION_DEFINITION_NAME
+
+logger = logging.getLogger(__name__)
 
 
-def validation_definition_list():
-    # Setup logger basic configuration
-    setup_logger(verbose=False, log_file=VAL_DEF_LOGS, mode="w")
-    logger = logging.getLogger(__name__)
-
-    logger.info("Initializing Great Expectations components...")
-    context, data_source, csv_asset, batch_definition, batch = initialize_ge_components(
-        GE_ROOT_DIR,
-        SOURCE_NAME,
-        DATA_BASE_DIR,
-        ASSET_NAME,
-        BATCH_NAME,
-        BATCH_PATH,
-    )
-    logger.info("Great Expectations components initialized.")
-
-    logger.info(f"Getting or creating expectation suite: {SUITE_NAME}")
-    expectation_suite = get_or_create_expectation_suite(context, SUITE_NAME)
-    logger.info(f"Expectation suite '{SUITE_NAME}' ready.")
-
+def validation_definition_list(context, batch_definition, expectation_suite):
+    """
+    Takes context, batch_definition, and suite to create a ValidationDefinition.
+    """
     logger.info(
         f"Getting or creating validation definition: {VALIDATION_DEFINITION_NAME}"
     )
@@ -42,12 +19,7 @@ def validation_definition_list():
     validation_definition = get_or_create_and_add_validation_definition(
         context, batch_definition, expectation_suite, VALIDATION_DEFINITION_NAME
     )
-
     logger.info(f"Validation definition '{VALIDATION_DEFINITION_NAME}' ready.")
 
     # Return a list of validation definitions for the Checkpoint to run
     return [validation_definition]
-
-
-if __name__ == "__main__":
-    validation_definition_list()
