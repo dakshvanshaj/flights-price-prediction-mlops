@@ -1,45 +1,20 @@
 import logging
-from utils import setup_logger, initialize_ge_components
-from create_validation_definitions import validation_definition_list
-from actions import action_list
-from checkpoints import get_or_create_checkpoint
-
-from config import (
-    GE_ROOT_DIR,
-    SOURCE_NAME,
-    DATA_BASE_DIR,
-    ASSET_NAME,
-    BATCH_NAME,
-    BATCH_PATH,
-    CHECKPOINT_NAME,
-    CHECKPOINTS_LOGS,
-)
+from src.data_validation.actions import action_list
+from src.data_validation.checkpoints import get_or_create_checkpoint
+from src.data_validation.config import CHECKPOINT_NAME
+from src.data_validation.create_validation_definitions import validation_definition_list
 
 logger = logging.getLogger(__name__)
 
 
-def run_data_validation_checkpoint():
+def run_data_validation_checkpoint(context, batch_definition, expectation_suite):
     """
-    Initialize GE context, get or create checkpoint, run it, and log results.
-
-    Returns:
-        checkpoint_result: Result object from checkpoint.run()
+    Takes GE components, creates a checkpoint, runs it, and returns the result.
     """
-
-    # Initialize GE components using config values
-    context, data_source, csv_asset, batch_definition, batch = initialize_ge_components(
-        GE_ROOT_DIR,
-        SOURCE_NAME,
-        DATA_BASE_DIR,
-        ASSET_NAME,
-        BATCH_NAME,
-        BATCH_PATH,
-    )
-
-    logger.info("Great Expectations context initialized.")
-
     # Prepare validation definitions and actions
-    validation_definitions = validation_definition_list()
+    validation_definitions = validation_definition_list(
+        context, batch_definition, expectation_suite
+    )
     actions = action_list()
 
     # Get or create checkpoint
@@ -52,18 +27,8 @@ def run_data_validation_checkpoint():
     logger.info(f"Checkpoint '{checkpoint.name}' ready to run.")
 
     # Run checkpoint
-    try:
-        result = checkpoint.run()
-        logger.info(f"Checkpoint '{checkpoint.name}' run completed successfully.")
-        logger.info(result)
-        logger.info(f"Validation success: {result}")
-        return result
-    except Exception as e:
-        logger.error(f"Error running checkpoint '{checkpoint.name}': {e}")
-        raise
+    logger.info("Running checkpoint...")
+    result = checkpoint.run()
+    logger.info(f"Checkpoint run completed. Success: {result.success}")
 
-
-if __name__ == "__main__":
-    # Setup basic logging config
-    setup_logger(verbose=True, log_file=CHECKPOINTS_LOGS, mode="w")
-    run_data_validation_checkpoint()
+    return result
