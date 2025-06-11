@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from utils import setup_logger
+# from src.data_validation.utils import setup_logger
 
 # Resolve the absolute path of this config file
 current_abs_path = Path(__file__).resolve()
@@ -11,7 +11,7 @@ PROJECT_ROOT = current_abs_path.parent.parent.parent
 # Setup logger for this module
 logger = logging.getLogger(__name__)
 CONFIG_LOGS = PROJECT_ROOT / "src" / "data_validation" / "logs" / "Config_paths.log"
-setup_logger(verbose=True, log_file=CONFIG_LOGS, mode="w")
+
 
 # You can configure logging handlers here or configure it in your main script
 if not logger.hasHandlers():
@@ -61,3 +61,8 @@ CHECKPOINTS_LOGS = (
 
 # Names for checkpoints
 CHECKPOINT_NAME = "data_validation_checkpoint"
+
+# validatio pipeline logs
+VALIDATION_PIPELINE_LOGS = (
+    PROJECT_ROOT / "src" / "data_validation" / "logs" / "data_validation_pipeline.log"
+)
