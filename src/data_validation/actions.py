@@ -26,7 +26,3 @@ def action_list():
         # ),
     ]
     return actions
-
-
-if __name__ == "__main__":
-    action_list
