@@ -1,0 +1,2190 @@
+travelCode,userCode,from,to,flightType,price,time,distance,agency,date
+96359,952,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-01
+591,4,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-01
+102708,1019,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-01
+101259,1004,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-01
+19010,186,Recife (PE),Sao Paulo (SP),economic,513.06,1.26,486.52,CloudFy,2022-12-01
+120691,1196,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-01
+9286,93,Brasilia (DF),Rio de Janeiro (RJ),firstClass,539.39,0.48,183.37,FlyingDrops,2022-12-01
+59007,573,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-01
+92662,914,Florianopolis (SC),Rio de Janeiro (RJ),economic,313.62,1.21,466.3,CloudFy,2022-12-01
+73696,714,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-01
+60879,587,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-01
+86565,852,Natal (RN),Salvador (BH),firstClass,1744.87,1.85,710.57,FlyingDrops,2022-12-01
+123537,1222,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-01
+62900,612,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-01
+72585,705,Sao Paulo (SP),Brasilia (DF),premium,586.06,0.67,257.81,Rainbow,2022-12-01
+92124,908,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-01
+34531,329,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-01
+77893,756,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1041.65,0.86,331.89,FlyingDrops,2022-12-01
+14915,148,Recife (PE),Aracaju (SE),economic,663.23,1.44,555.74,Rainbow,2022-12-01
+111731,1105,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-01
+11840,115,Aracaju (SE),Sao Paulo (SP),economic,446.73,1.02,392.76,Rainbow,2022-12-01
+92463,912,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-01
+71312,690,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-01
+111533,1104,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-01
+30136,287,Brasilia (DF),Rio de Janeiro (RJ),premium,440.69,0.48,183.37,Rainbow,2022-12-01
+86164,848,Sao Paulo (SP),Recife (PE),firstClass,1533.42,1.26,486.52,CloudFy,2022-12-01
+24337,237,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-01
+1604,13,Brasilia (DF),Campo Grande (MS),economic,629.54,0.72,277.7,Rainbow,2022-12-01
+87562,864,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1183.57,1.55,597.61,CloudFy,2022-12-01
+50528,491,Campo Grande (MS),Recife (PE),economic,674.16,1.39,535.4,Rainbow,2022-12-01
+2459,21,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-01
+8996,90,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-01
+114167,1135,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-01
+12331,119,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-01
+78673,763,Sao Paulo (SP),Campo Grande (MS),firstClass,595.09,0.44,168.22,Rainbow,2022-12-01
+18653,183,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-01
+34132,326,Aracaju (SE),Natal (RN),firstClass,598.61,0.46,176.33,CloudFy,2022-12-01
+40382,389,Recife (PE),Salvador (BH),economic,861.68,2.05,788.55,Rainbow,2022-12-01
+59345,575,Campo Grande (MS),Salvador (BH),firstClass,1114.75,1.36,522.34,Rainbow,2022-12-01
+28787,274,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-01
+106422,1056,Florianopolis (SC),Salvador (BH),firstClass,1692.64,2.44,937.77,FlyingDrops,2022-12-01
+28178,268,Brasilia (DF),Sao Paulo (SP),economic,533.8,0.67,257.81,Rainbow,2022-12-01
+103433,1026,Florianopolis (SC),Sao Paulo (SP),firstClass,738.8,1.46,562.14,Rainbow,2022-12-01
+120870,1197,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-01
+115423,1147,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-01
+99971,992,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-01
+37968,362,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-01
+51773,502,Campo Grande (MS),Brasilia (DF),firstClass,949.99,0.72,277.7,CloudFy,2022-12-01
+126626,1252,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-01
+49217,482,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1614.7,2.09,806.48,CloudFy,2022-12-01
+131464,1293,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-01
+103026,1022,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-01
+114441,1138,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-01
+42377,412,Aracaju (SE),Brasilia (DF),economic,472.72,1.11,425.98,CloudFy,2022-12-01
+127477,1257,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-01
+12951,126,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1189.86,1.55,597.61,Rainbow,2022-12-01
+89115,879,Sao Paulo (SP),Salvador (BH),firstClass,1400.35,1.04,401.66,Rainbow,2022-12-01
+37664,357,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-01
+81202,789,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-01
+47645,461,Campo Grande (MS),Rio de Janeiro (RJ),economic,946.55,2.09,806.48,Rainbow,2022-12-01
+52969,512,Campo Grande (MS),Salvador (BH),economic,621.36,1.36,522.34,CloudFy,2022-12-01
+4070,40,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-01
+88932,878,Natal (RN),Brasilia (DF),firstClass,1192.62,1.43,550.69,FlyingDrops,2022-12-01
+100722,1001,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-01
+89518,882,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-01
+97421,962,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-01
+1342,11,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-01
+23999,234,Brasilia (DF),Rio de Janeiro (RJ),premium,457.95,0.48,183.37,CloudFy,2022-12-01
+5741,56,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-01
+392,3,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-01
+115600,1148,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-01
+71515,693,Natal (RN),Aracaju (SE),economic,361.68,0.46,176.33,CloudFy,2022-12-01
+60488,584,Campo Grande (MS),Rio de Janeiro (RJ),economic,972.12,2.09,806.48,CloudFy,2022-12-01
+91108,898,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-01
+29830,284,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-01
+135827,1335,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-01
+49391,483,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-01
+14699,146,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-01
+41840,407,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-01
+43951,430,Brasilia (DF),Sao Paulo (SP),economic,538.95,0.67,257.81,CloudFy,2022-12-01
+121684,1205,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-01
+65301,634,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-01
+134636,1323,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-01
+91338,900,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-01
+87175,859,Natal (RN),Aracaju (SE),firstClass,611.59,0.46,176.33,FlyingDrops,2022-12-01
+91744,905,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-01
+45862,447,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-01
+67405,652,Aracaju (SE),Natal (RN),firstClass,598.61,0.46,176.33,CloudFy,2022-12-01
+115965,1150,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-01
+45665,445,Aracaju (SE),Salvador (BH),premium,1288.79,2.16,830.86,CloudFy,2022-12-01
+124443,1228,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-01
+49830,486,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-01
+13254,129,Recife (PE),Natal (RN),firstClass,633.71,0.58,222.67,FlyingDrops,2022-12-01
+68073,659,Natal (RN),Aracaju (SE),premium,451.41,0.46,176.33,CloudFy,2022-12-01
+74968,727,Aracaju (SE),Sao Paulo (SP),economic,446.73,1.02,392.76,Rainbow,2022-12-01
+59886,580,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-01
+68922,666,Aracaju (SE),Recife (PE),firstClass,1088.87,1.44,555.74,FlyingDrops,2022-12-01
+113595,1127,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-01
+35732,341,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-01
+39522,381,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-01
+115798,1149,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-01
+60317,583,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1614.7,2.09,806.48,CloudFy,2022-12-01
+29531,281,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-01
+121383,1203,Florianopolis (SC),Salvador (BH),firstClass,1692.64,2.44,937.77,FlyingDrops,2022-12-01
+14507,145,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-01
+90764,896,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-01
+27619,264,Aracaju (SE),Sao Paulo (SP),firstClass,756.3,1.02,392.76,FlyingDrops,2022-12-01
+128856,1269,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-01
+81508,793,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-01
+37390,355,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-01
+131264,1290,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-01
+20214,195,Recife (PE),Rio de Janeiro (RJ),premium,1351.89,2.3,885.57,Rainbow,2022-12-01
+58626,571,Campo Grande (MS),Natal (RN),firstClass,749.85,0.65,250.68,FlyingDrops,2022-12-01
+40084,387,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-01
+108350,1074,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-01
+46058,448,Aracaju (SE),Salvador (BH),premium,1288.79,2.16,830.86,CloudFy,2022-12-01
+33548,322,Brasilia (DF),Rio de Janeiro (RJ),firstClass,539.39,0.48,183.37,FlyingDrops,2022-12-01
+76566,744,Natal (RN),Campo Grande (MS),premium,660.25,0.65,250.68,Rainbow,2022-12-01
+32239,308,Recife (PE),Natal (RN),firstClass,669.83,0.58,222.67,CloudFy,2022-12-01
+110233,1091,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-01
+127146,1255,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-01
+3338,32,Recife (PE),Campo Grande (MS),firstClass,1110.76,1.39,535.4,CloudFy,2022-12-01
+43249,422,Recife (PE),Campo Grande (MS),premium,832.77,1.39,535.4,Rainbow,2022-12-01
+79018,766,Natal (RN),Salvador (BH),premium,1315.97,1.85,710.57,Rainbow,2022-12-01
+24856,241,Aracaju (SE),Sao Paulo (SP),economic,446.73,1.02,392.76,Rainbow,2022-12-01
+61632,601,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-01
+54724,533,Campo Grande (MS),Natal (RN),firstClass,732.89,0.65,250.68,CloudFy,2022-12-01
+47832,462,Campo Grande (MS),Natal (RN),economic,467.6,0.65,250.68,CloudFy,2022-12-01
+93504,922,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-01
+55908,544,Campo Grande (MS),Rio de Janeiro (RJ),economic,972.12,2.09,806.48,CloudFy,2022-12-01
+53465,516,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-01
+70674,684,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-01
+25728,247,Brasilia (DF),Sao Paulo (SP),firstClass,904.0,0.67,257.81,FlyingDrops,2022-12-01
+48800,478,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-01
+35246,337,Recife (PE),Rio de Janeiro (RJ),premium,1270.03,2.3,885.57,CloudFy,2022-12-01
+94887,936,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-01
+15650,155,Brasilia (DF),Salvador (BH),economic,958.15,1.76,676.56,CloudFy,2022-12-01
+65125,633,Campo Grande (MS),Rio de Janeiro (RJ),economic,946.55,2.09,806.48,Rainbow,2022-12-01
+70500,683,Sao Paulo (SP),Rio de Janeiro (RJ),premium,846.03,0.86,331.89,CloudFy,2022-12-01
+81860,796,Sao Paulo (SP),Brasilia (DF),economic,389.47,0.67,257.81,CloudFy,2022-12-01
+77488,752,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-01
+39843,384,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-01
+32546,312,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1189.86,1.55,597.61,Rainbow,2022-12-01
+83791,820,Sao Paulo (SP),Aracaju (SE),economic,722.74,1.02,392.76,CloudFy,2022-12-01
+22443,219,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-01
+66113,641,Campo Grande (MS),Natal (RN),premium,652.47,0.65,250.68,CloudFy,2022-12-01
+988,8,Brasilia (DF),Salvador (BH),firstClass,1665.24,1.76,676.56,Rainbow,2022-12-01
+126825,1253,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-01
+66298,642,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-01
+16101,158,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-01
+134164,1320,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-01
+109686,1086,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-01
+130773,1286,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-01
+61397,599,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-01
+21800,212,Brasilia (DF),Sao Paulo (SP),premium,698.1,0.67,257.81,CloudFy,2022-12-01
+16901,168,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-01
+109937,1089,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-01
+17477,174,Brasilia (DF),Natal (RN),economic,791.66,1.43,550.69,CloudFy,2022-12-01
+82143,798,Natal (RN),Rio de Janeiro (RJ),economic,755.71,1.55,595.03,Rainbow,2022-12-01
+58826,572,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-01
+11315,111,Recife (PE),Sao Paulo (SP),firstClass,954.78,1.26,486.52,FlyingDrops,2022-12-01
+67027,650,Sao Paulo (SP),Salvador (BH),firstClass,1306.8,1.04,401.66,CloudFy,2022-12-01
+73869,715,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-01
+101072,1003,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-01
+35912,342,Brasilia (DF),Natal (RN),economic,726.19,1.43,550.69,Rainbow,2022-12-01
+94532,933,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-01
+79423,772,Sao Paulo (SP),Salvador (BH),premium,1118.61,1.04,401.66,CloudFy,2022-12-01
+131661,1295,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-01
+5312,52,Aracaju (SE),Recife (PE),firstClass,1119.47,1.44,555.74,Rainbow,2022-12-01
+26275,251,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-01
+127871,1260,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-01
+93190,919,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-01
+103895,1029,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-01
+82815,808,Sao Paulo (SP),Brasilia (DF),premium,586.06,0.67,257.81,Rainbow,2022-12-01
+8470,82,Brasilia (DF),Natal (RN),economic,726.19,1.43,550.69,Rainbow,2022-12-01
+44792,436,Brasilia (DF),Salvador (BH),firstClass,1724.49,1.76,676.56,FlyingDrops,2022-12-01
+11503,112,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-01
+46812,454,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-01
+6685,64,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-01
+78062,757,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-01
+100905,1002,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-01
+116553,1155,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-01
+95274,940,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-01
+83443,814,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-01
+6046,60,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-01
+66706,646,Campo Grande (MS),Rio de Janeiro (RJ),economic,946.55,2.09,806.48,Rainbow,2022-12-01
+20042,194,Brasilia (DF),Rio de Janeiro (RJ),premium,440.69,0.48,183.37,Rainbow,2022-12-01
+105108,1041,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-01
+132257,1302,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-01
+30582,290,Brasilia (DF),Natal (RN),firstClass,1313.76,1.43,550.69,CloudFy,2022-12-01
+68435,662,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-01
+109032,1080,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-01
+93829,925,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-01
+40582,390,Brasilia (DF),Recife (PE),premium,559.13,0.63,242.21,Rainbow,2022-12-01
+92861,915,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-01
+10488,105,Aracaju (SE),Natal (RN),premium,427.25,0.46,176.33,Rainbow,2022-12-01
+4250,41,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-01
+38952,372,Aracaju (SE),Sao Paulo (SP),firstClass,756.3,1.02,392.76,FlyingDrops,2022-12-01
+53929,521,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-01
+38773,371,Brasilia (DF),Salvador (BH),premium,1346.6,1.76,676.56,CloudFy,2022-12-01
+35435,338,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-01
+109337,1083,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-01
+98267,973,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-01
+22152,216,Aracaju (SE),Salvador (BH),firstClass,1714.75,2.16,830.86,FlyingDrops,2022-12-01
+67216,651,Sao Paulo (SP),Natal (RN),firstClass,943.18,0.85,327.55,FlyingDrops,2022-12-01
+64331,625,Campo Grande (MS),Natal (RN),firstClass,749.85,0.65,250.68,FlyingDrops,2022-12-01
+62363,607,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-01
+118208,1170,Florianopolis (SC),Salvador (BH),firstClass,1630.75,2.44,937.77,Rainbow,2022-12-01
+19454,189,Recife (PE),Brasilia (DF),firstClass,697.22,0.63,242.21,FlyingDrops,2022-12-01
+26553,254,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-01
+103241,1024,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-01
+104766,1039,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-01
+24587,239,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-01
+94175,930,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-01
+32054,307,Brasilia (DF),Sao Paulo (SP),firstClass,992.17,0.67,257.81,Rainbow,2022-12-01
+123233,1220,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-01
+107548,1066,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-01
+100492,998,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-01
+9467,94,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1189.86,1.55,597.61,Rainbow,2022-12-01
+56105,545,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-01
+130089,1280,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-01
+116736,1156,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-01
+132516,1305,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-01
+101457,1005,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-01
+52026,504,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-01
+56936,553,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-01
+98558,975,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-01
+37026,352,Recife (PE),Salvador (BH),firstClass,1484.94,2.05,788.55,CloudFy,2022-12-01
+56739,552,Campo Grande (MS),Recife (PE),firstClass,1185.95,1.39,535.4,Rainbow,2022-12-01
+99166,981,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-01
+135523,1332,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-01
+80129,779,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-01
+124773,1231,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-01
+120344,1193,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-01
+64945,632,Campo Grande (MS),Sao Paulo (SP),firstClass,684.65,0.44,168.22,FlyingDrops,2022-12-01
+119842,1188,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-01
+130271,1281,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-01
+128688,1268,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-01
+61857,603,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-01
+94342,931,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-01
+117747,1165,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-01
+94532,933,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-02
+68435,662,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-02
+5312,52,Recife (PE),Aracaju (SE),firstClass,1181.19,1.44,555.74,Rainbow,2022-12-02
+74968,727,Sao Paulo (SP),Aracaju (SE),economic,647.9,1.02,392.76,Rainbow,2022-12-02
+5741,56,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-02
+115600,1148,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-02
+18653,183,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-02
+94175,930,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-02
+94342,931,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-02
+66706,646,Rio de Janeiro (RJ),Campo Grande (MS),economic,849.52,2.09,806.48,Rainbow,2022-12-02
+64331,625,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-02
+59345,575,Salvador (BH),Campo Grande (MS),firstClass,961.85,1.36,522.34,Rainbow,2022-12-02
+2459,21,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-02
+35246,337,Rio de Janeiro (RJ),Recife (PE),premium,1333.52,2.3,885.57,CloudFy,2022-12-02
+14699,146,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-02
+94887,936,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-02
+8996,90,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-02
+67405,652,Natal (RN),Aracaju (SE),firstClass,576.66,0.46,176.33,CloudFy,2022-12-02
+15650,155,Salvador (BH),Brasilia (DF),economic,587.85,1.76,676.56,CloudFy,2022-12-02
+50528,491,Recife (PE),Campo Grande (MS),economic,615.59,1.39,535.4,Rainbow,2022-12-02
+70500,683,Rio de Janeiro (RJ),Sao Paulo (SP),premium,645.44,0.86,331.89,CloudFy,2022-12-02
+120691,1196,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-02
+46812,454,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-02
+24587,239,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-02
+32054,307,Sao Paulo (SP),Brasilia (DF),firstClass,824.31,0.67,257.81,Rainbow,2022-12-02
+14915,148,Aracaju (SE),Recife (PE),economic,602.49,1.44,555.74,Rainbow,2022-12-02
+130089,1280,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-02
+1604,13,Campo Grande (MS),Brasilia (DF),economic,517.82,0.72,277.7,Rainbow,2022-12-02
+98558,975,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-02
+24337,237,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-02
+30136,287,Rio de Janeiro (RJ),Brasilia (DF),premium,435.67,0.48,183.37,Rainbow,2022-12-02
+100722,1001,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-02
+100905,1002,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-02
+6046,60,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-02
+86164,848,Recife (PE),Sao Paulo (SP),firstClass,883.63,1.26,486.52,CloudFy,2022-12-02
+96359,952,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-02
+98267,973,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-02
+55908,544,Rio de Janeiro (RJ),Campo Grande (MS),economic,882.99,2.09,806.48,CloudFy,2022-12-02
+91338,900,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-02
+20214,195,Rio de Janeiro (RJ),Recife (PE),premium,1306.26,2.3,885.57,Rainbow,2022-12-02
+127477,1257,Rio de Janeiro (RJ),Florianopolis (SC),premium,708.27,1.21,466.3,CloudFy,2022-12-02
+58826,572,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-02
+37390,355,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-02
+67027,650,Salvador (BH),Sao Paulo (SP),firstClass,590.98,1.04,401.66,CloudFy,2022-12-02
+82815,808,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-02
+22443,219,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-02
+91108,898,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-02
+89518,882,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-02
+127871,1260,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-02
+109032,1080,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-02
+108350,1074,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-02
+79018,766,Salvador (BH),Natal (RN),premium,1001.42,1.85,710.57,Rainbow,2022-12-02
+49217,482,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1512.09,2.09,806.48,CloudFy,2022-12-02
+32239,308,Natal (RN),Recife (PE),firstClass,744.11,0.58,222.67,CloudFy,2022-12-02
+35435,338,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-02
+93190,919,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-02
+115965,1150,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-02
+131464,1293,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-03
+42377,412,Brasilia (DF),Aracaju (SE),economic,654.88,1.11,425.98,CloudFy,2022-12-03
+95274,940,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-03
+47645,461,Rio de Janeiro (RJ),Campo Grande (MS),economic,849.52,2.09,806.48,Rainbow,2022-12-03
+99166,981,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-03
+40382,389,Salvador (BH),Recife (PE),economic,751.37,2.05,788.55,Rainbow,2022-12-03
+61857,603,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-03
+61632,601,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-03
+88932,878,Brasilia (DF),Natal (RN),firstClass,1433.35,1.43,550.69,FlyingDrops,2022-12-03
+4070,40,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-03
+52969,512,Salvador (BH),Campo Grande (MS),economic,534.41,1.36,522.34,CloudFy,2022-12-03
+66298,642,Aracaju (SE),Campo Grande (MS),economic,743.54,1.69,650.1,Rainbow,2022-12-03
+48800,478,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-03
+103026,1022,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-03
+103433,1026,Sao Paulo (SP),Florianopolis (SC),firstClass,1718.28,1.46,562.14,Rainbow,2022-12-03
+82143,798,Rio de Janeiro (RJ),Natal (RN),economic,670.29,1.55,595.03,Rainbow,2022-12-03
+124443,1228,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-03
+35912,342,Natal (RN),Brasilia (DF),economic,686.79,1.43,550.69,Rainbow,2022-12-03
+34132,326,Natal (RN),Aracaju (SE),firstClass,576.66,0.46,176.33,CloudFy,2022-12-03
+39843,384,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-03
+49830,486,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-03
+43951,430,Sao Paulo (SP),Brasilia (DF),economic,389.47,0.67,257.81,CloudFy,2022-12-03
+83791,820,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-03
+40084,387,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-03
+135827,1335,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-03
+43249,422,Campo Grande (MS),Recife (PE),premium,991.22,1.39,535.4,Rainbow,2022-12-03
+27619,264,Sao Paulo (SP),Aracaju (SE),firstClass,1269.73,1.02,392.76,FlyingDrops,2022-12-03
+87175,859,Aracaju (SE),Natal (RN),firstClass,577.71,0.46,176.33,FlyingDrops,2022-12-03
+9467,94,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1386.46,1.55,597.61,Rainbow,2022-12-03
+116736,1156,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-03
+19010,186,Sao Paulo (SP),Recife (PE),economic,829.91,1.26,486.52,CloudFy,2022-12-03
+111731,1105,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-03
+73696,714,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-03
+71312,690,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-03
+120344,1193,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-03
+20042,194,Rio de Janeiro (RJ),Brasilia (DF),premium,435.67,0.48,183.37,Rainbow,2022-12-03
+30582,290,Natal (RN),Brasilia (DF),firstClass,1300.53,1.43,550.69,CloudFy,2022-12-03
+62363,607,Aracaju (SE),Campo Grande (MS),economic,743.54,1.69,650.1,Rainbow,2022-12-03
+53929,521,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-03
+11503,112,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-03
+90764,896,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-03
+93504,922,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-03
+3338,32,Campo Grande (MS),Recife (PE),firstClass,1244.73,1.39,535.4,CloudFy,2022-12-03
+106422,1056,Salvador (BH),Florianopolis (SC),firstClass,1616.44,2.44,937.77,FlyingDrops,2022-12-03
+119842,1188,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-03
+38773,371,Salvador (BH),Brasilia (DF),premium,836.89,1.76,676.56,CloudFy,2022-12-03
+104766,1039,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-03
+24856,241,Sao Paulo (SP),Aracaju (SE),economic,647.9,1.02,392.76,Rainbow,2022-12-03
+103895,1029,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-03
+126825,1253,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-03
+79423,772,Salvador (BH),Sao Paulo (SP),premium,531.49,1.04,401.66,CloudFy,2022-12-03
+11315,111,Sao Paulo (SP),Recife (PE),firstClass,1464.89,1.26,486.52,FlyingDrops,2022-12-03
+32546,312,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1386.46,1.55,597.61,Rainbow,2022-12-03
+14507,145,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-03
+92662,914,Rio de Janeiro (RJ),Florianopolis (SC),economic,533.69,1.21,466.3,CloudFy,2022-12-03
+87562,864,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1446.4,1.55,597.61,CloudFy,2022-12-03
+93829,925,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-03
+132516,1305,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-04
+38952,372,Sao Paulo (SP),Aracaju (SE),firstClass,1269.73,1.02,392.76,FlyingDrops,2022-12-04
+16101,158,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-04
+60879,587,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-04
+28178,268,Sao Paulo (SP),Brasilia (DF),economic,393.84,0.67,257.81,Rainbow,2022-12-04
+111533,1104,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-04
+78062,757,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-04
+99971,992,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-04
+10488,105,Natal (RN),Aracaju (SE),premium,479.37,0.46,176.33,Rainbow,2022-12-04
+26553,254,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-04
+77893,756,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,753.78,0.86,331.89,FlyingDrops,2022-12-04
+81202,789,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-04
+71515,693,Aracaju (SE),Natal (RN),economic,332.1,0.46,176.33,CloudFy,2022-12-04
+34531,329,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-04
+12951,126,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1386.46,1.55,597.61,Rainbow,2022-12-04
+37664,357,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-04
+101457,1005,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-04
+51773,502,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-04
+59886,580,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-04
+113595,1127,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-04
+53465,516,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-04
+45862,447,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-04
+73869,715,Campo Grande (MS),Natal (RN),firstClass,749.85,0.65,250.68,FlyingDrops,2022-12-04
+121684,1205,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-04
+121383,1203,Salvador (BH),Florianopolis (SC),firstClass,1616.44,2.44,937.77,FlyingDrops,2022-12-04
+109686,1086,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-04
+130271,1281,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-04
+16901,168,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-04
+62900,612,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-04
+29531,281,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-04
+1342,11,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-04
+128688,1268,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-04
+134164,1320,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-04
+128856,1269,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-04
+81508,793,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-04
+58626,571,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-04
+115423,1147,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-04
+28787,274,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-04
+59007,573,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-04
+64945,632,Sao Paulo (SP),Campo Grande (MS),firstClass,668.19,0.44,168.22,FlyingDrops,2022-12-04
+86565,852,Salvador (BH),Natal (RN),firstClass,1241.04,1.85,710.57,FlyingDrops,2022-12-04
+65301,634,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-04
+102708,1019,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-04
+54724,533,Natal (RN),Campo Grande (MS),firstClass,953.32,0.65,250.68,CloudFy,2022-12-04
+105108,1041,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-04
+11840,115,Sao Paulo (SP),Aracaju (SE),economic,647.9,1.02,392.76,Rainbow,2022-12-04
+89115,879,Salvador (BH),Sao Paulo (SP),firstClass,667.0,1.04,401.66,Rainbow,2022-12-04
+9286,93,Rio de Janeiro (RJ),Brasilia (DF),firstClass,591.19,0.48,183.37,FlyingDrops,2022-12-04
+130773,1286,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-04
+123233,1220,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-04
+6685,64,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-04
+39522,381,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-04
+70674,684,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-04
+68922,666,Recife (PE),Aracaju (SE),firstClass,1300.81,1.44,555.74,FlyingDrops,2022-12-04
+72585,705,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-04
+131264,1290,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-04
+41840,407,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-04
+29830,284,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-04
+81860,796,Brasilia (DF),Sao Paulo (SP),economic,538.95,0.67,257.81,CloudFy,2022-12-04
+45665,445,Salvador (BH),Aracaju (SE),premium,1209.04,2.16,830.86,CloudFy,2022-12-04
+61397,599,Salvador (BH),Campo Grande (MS),economic,494.29,1.36,522.34,Rainbow,2022-12-05
+114167,1135,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-05
+4250,41,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-05
+25728,247,Sao Paulo (SP),Brasilia (DF),firstClass,727.31,0.67,257.81,FlyingDrops,2022-12-05
+56739,552,Recife (PE),Campo Grande (MS),firstClass,1069.12,1.39,535.4,Rainbow,2022-12-05
+22152,216,Salvador (BH),Aracaju (SE),firstClass,1581.59,2.16,830.86,FlyingDrops,2022-12-05
+46058,448,Salvador (BH),Aracaju (SE),premium,1209.04,2.16,830.86,CloudFy,2022-12-05
+37968,362,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-05
+17477,174,Natal (RN),Brasilia (DF),economic,697.51,1.43,550.69,CloudFy,2022-12-05
+78673,763,Campo Grande (MS),Sao Paulo (SP),firstClass,644.16,0.44,168.22,Rainbow,2022-12-05
+49391,483,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-05
+67216,651,Natal (RN),Sao Paulo (SP),firstClass,1142.29,0.85,327.55,FlyingDrops,2022-12-05
+12331,119,Natal (RN),Aracaju (SE),economic,301.61,0.46,176.33,Rainbow,2022-12-05
+47832,462,Natal (RN),Campo Grande (MS),economic,546.04,0.65,250.68,CloudFy,2022-12-05
+116553,1155,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-05
+60488,584,Rio de Janeiro (RJ),Campo Grande (MS),economic,882.99,2.09,806.48,CloudFy,2022-12-05
+60317,583,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1512.09,2.09,806.48,CloudFy,2022-12-05
+56105,545,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-05
+115798,1149,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-05
+127146,1255,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-05
+107548,1066,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-05
+135523,1332,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-05
+110233,1091,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-05
+8470,82,Natal (RN),Brasilia (DF),economic,686.79,1.43,550.69,Rainbow,2022-12-05
+35732,341,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-05
+92861,915,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-05
+26275,251,Natal (RN),Aracaju (SE),economic,301.61,0.46,176.33,Rainbow,2022-12-05
+131661,1295,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-05
+80129,779,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-05
+21800,212,Sao Paulo (SP),Brasilia (DF),premium,602.12,0.67,257.81,CloudFy,2022-12-05
+13254,129,Natal (RN),Recife (PE),firstClass,694.42,0.58,222.67,FlyingDrops,2022-12-05
+23999,234,Rio de Janeiro (RJ),Brasilia (DF),premium,503.26,0.48,183.37,CloudFy,2022-12-05
+66113,641,Natal (RN),Campo Grande (MS),premium,748.52,0.65,250.68,CloudFy,2022-12-05
+988,8,Salvador (BH),Brasilia (DF),firstClass,1040.84,1.76,676.56,Rainbow,2022-12-05
+37026,352,Salvador (BH),Recife (PE),firstClass,1440.02,2.05,788.55,CloudFy,2022-12-05
+120870,1197,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-05
+68073,659,Aracaju (SE),Natal (RN),premium,535.95,0.46,176.33,CloudFy,2022-12-05
+591,4,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-05
+109937,1089,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-05
+126626,1252,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-05
+83443,814,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-05
+101072,1003,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-05
+52026,504,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-05
+392,3,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-05
+77488,752,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-05
+100492,998,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-05
+124773,1231,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-05
+92124,908,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-05
+118208,1170,Salvador (BH),Florianopolis (SC),firstClass,1654.09,2.44,937.77,Rainbow,2022-12-05
+44792,436,Salvador (BH),Brasilia (DF),firstClass,1020.08,1.76,676.56,FlyingDrops,2022-12-05
+103241,1024,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-05
+65125,633,Rio de Janeiro (RJ),Campo Grande (MS),economic,849.52,2.09,806.48,Rainbow,2022-12-05
+33548,322,Rio de Janeiro (RJ),Brasilia (DF),firstClass,591.19,0.48,183.37,FlyingDrops,2022-12-05
+117747,1165,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-05
+123537,1222,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-05
+92463,912,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-05
+97421,962,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-05
+91744,905,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-05
+101259,1004,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-05
+76566,744,Campo Grande (MS),Natal (RN),premium,541.59,0.65,250.68,Rainbow,2022-12-05
+56936,553,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-05
+109337,1083,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-05
+40582,390,Recife (PE),Brasilia (DF),premium,638.63,0.63,242.21,Rainbow,2022-12-05
+132257,1302,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-05
+134636,1323,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-05
+19454,189,Brasilia (DF),Recife (PE),firstClass,691.39,0.63,242.21,FlyingDrops,2022-12-05
+114441,1138,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-05
+45666,445,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-08
+9468,94,Brasilia (DF),Salvador (BH),firstClass,1685.23,1.76,676.56,CloudFy,2022-12-08
+77894,756,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-08
+98559,975,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-08
+62901,612,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-08
+6047,60,Brasilia (DF),Rio de Janeiro (RJ),firstClass,539.39,0.48,183.37,FlyingDrops,2022-12-08
+123538,1222,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-08
+116737,1156,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-08
+50529,491,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-08
+32055,307,Aracaju (SE),Sao Paulo (SP),firstClass,730.43,1.02,392.76,CloudFy,2022-12-08
+72586,705,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-08
+24588,239,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-08
+46813,454,Campo Grande (MS),Salvador (BH),firstClass,1052.6,1.36,522.34,FlyingDrops,2022-12-08
+53466,516,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-08
+15651,155,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-08
+70501,683,Sao Paulo (SP),Salvador (BH),firstClass,1427.22,1.04,401.66,FlyingDrops,2022-12-08
+14916,148,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-08
+105109,1041,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-08
+11504,112,Recife (PE),Aracaju (SE),economic,663.23,1.44,555.74,Rainbow,2022-12-08
+8471,82,Brasilia (DF),Salvador (BH),economic,958.15,1.76,676.56,CloudFy,2022-12-08
+131265,1290,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-08
+101458,1005,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-08
+59008,573,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-08
+116554,1155,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-08
+19011,186,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-08
+393,3,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-08
+102709,1019,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-08
+98268,973,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-08
+103027,1022,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-08
+92464,912,Florianopolis (SC),Salvador (BH),firstClass,1630.75,2.44,937.77,Rainbow,2022-12-08
+111534,1104,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-08
+4251,41,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-08
+80130,779,Sao Paulo (SP),Rio de Janeiro (RJ),economic,625.5,0.86,331.89,Rainbow,2022-12-08
+592,4,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-08
+56740,552,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-08
+53930,521,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-08
+86165,848,Sao Paulo (SP),Recife (PE),economic,829.91,1.26,486.52,CloudFy,2022-12-08
+60880,587,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-08
+38953,372,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-08
+67217,651,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1092.94,0.86,331.89,CloudFy,2022-12-08
+1605,13,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-08
+92125,908,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-08
+92862,915,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-08
+130272,1281,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-08
+128689,1268,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-08
+34532,329,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-08
+20043,194,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-08
+9287,93,Recife (PE),Aracaju (SE),firstClass,1181.19,1.44,555.74,Rainbow,2022-12-08
+24338,237,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-08
+22153,216,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-08
+26554,254,Aracaju (SE),Recife (PE),firstClass,1124.11,1.44,555.74,CloudFy,2022-12-08
+30137,287,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-08
+120345,1193,Florianopolis (SC),Salvador (BH),firstClass,1692.64,2.44,937.77,FlyingDrops,2022-12-08
+68436,662,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-08
+62364,607,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-08
+86566,852,Aracaju (SE),Natal (RN),economic,332.1,0.46,176.33,CloudFy,2022-12-08
+73697,714,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-08
+111732,1105,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-08
+92663,914,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-08
+30583,290,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-08
+127147,1255,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-08
+77489,752,Sao Paulo (SP),Natal (RN),firstClass,932.87,0.85,327.55,Rainbow,2022-12-08
+54725,533,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-08
+101073,1003,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-08
+124774,1231,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-08
+35436,338,Recife (PE),Rio de Janeiro (RJ),economic,908.93,2.3,885.57,Rainbow,2022-12-08
+64946,632,Campo Grande (MS),Recife (PE),firstClass,1185.95,1.39,535.4,Rainbow,2022-12-08
+109033,1080,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-08
+83444,814,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-08
+109338,1083,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-08
+19455,189,Aracaju (SE),Salvador (BH),firstClass,1684.05,2.16,830.86,CloudFy,2022-12-08
+56937,553,Campo Grande (MS),Recife (PE),economic,674.16,1.39,535.4,Rainbow,2022-12-08
+119843,1188,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-08
+66707,646,Campo Grande (MS),Recife (PE),economic,674.16,1.39,535.4,Rainbow,2022-12-08
+94343,931,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-08
+35247,337,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-08
+76567,744,Natal (RN),Salvador (BH),firstClass,1641.56,1.85,710.57,Rainbow,2022-12-08
+38774,371,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-08
+65126,633,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-08
+64332,625,Campo Grande (MS),Recife (PE),economic,659.43,1.39,535.4,CloudFy,2022-12-08
+46059,448,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-08
+58627,571,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-08
+94533,933,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-08
+61633,601,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-08
+132258,1302,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-08
+95275,940,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-08
+40583,390,Recife (PE),Rio de Janeiro (RJ),economic,908.93,2.3,885.57,Rainbow,2022-12-08
+6686,64,Recife (PE),Campo Grande (MS),economic,563.71,1.39,535.4,CloudFy,2022-12-08
+52027,504,Campo Grande (MS),Recife (PE),premium,959.91,1.39,535.4,CloudFy,2022-12-08
+130090,1280,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-08
+99167,981,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-08
+61858,603,Campo Grande (MS),Sao Paulo (SP),firstClass,684.65,0.44,168.22,FlyingDrops,2022-12-08
+118209,1170,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-08
+70675,684,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-08
+44793,436,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-08
+108351,1074,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-08
+16902,168,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-08
+82816,808,Natal (RN),Aracaju (SE),economic,361.68,0.46,176.33,CloudFy,2022-12-08
+66299,642,Campo Grande (MS),Sao Paulo (SP),firstClass,620.16,0.44,168.22,CloudFy,2022-12-08
+117748,1165,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-08
+33549,322,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-08
+78063,757,Sao Paulo (SP),Florianopolis (SC),firstClass,1666.23,1.46,562.14,FlyingDrops,2022-12-08
+94888,936,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-08
+103242,1024,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-08
+48801,478,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-08
+25729,247,Aracaju (SE),Salvador (BH),economic,964.83,2.16,830.86,CloudFy,2022-12-08
+24857,241,Recife (PE),Campo Grande (MS),economic,563.71,1.39,535.4,CloudFy,2022-12-08
+103896,1029,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-08
+37027,352,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-08
+21801,212,Recife (PE),Sao Paulo (SP),firstClass,883.63,1.26,486.52,CloudFy,2022-12-08
+39844,384,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-08
+109938,1089,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-08
+5313,52,Recife (PE),Rio de Janeiro (RJ),firstClass,1611.14,2.3,885.57,Rainbow,2022-12-08
+58827,572,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-08
+67028,650,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1092.94,0.86,331.89,CloudFy,2022-12-08
+26276,251,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-08
+93191,919,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-08
+82144,798,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-08
+131662,1295,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-08
+32240,308,Recife (PE),Aracaju (SE),firstClass,1300.81,1.44,555.74,FlyingDrops,2022-12-08
+135524,1332,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-08
+40085,387,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-08
+110234,1091,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-08
+55909,544,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-08
+43250,422,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-08
+47833,462,Campo Grande (MS),Sao Paulo (SP),firstClass,684.65,0.44,168.22,FlyingDrops,2022-12-08
+56106,545,Campo Grande (MS),Salvador (BH),firstClass,1114.75,1.36,522.34,Rainbow,2022-12-08
+107549,1066,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-08
+83792,820,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-08
+81861,796,Sao Paulo (SP),Campo Grande (MS),firstClass,595.09,0.44,168.22,Rainbow,2022-12-08
+79019,766,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1041.65,0.86,331.89,FlyingDrops,2022-12-08
+16102,158,Recife (PE),Rio de Janeiro (RJ),premium,1351.89,2.3,885.57,Rainbow,2022-12-08
+32547,312,Recife (PE),Brasilia (DF),economic,439.38,0.63,242.21,Rainbow,2022-12-08
+104767,1039,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-08
+73870,715,Sao Paulo (SP),Salvador (BH),economic,743.6,1.04,401.66,Rainbow,2022-12-08
+123234,1220,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-08
+79424,772,Aracaju (SE),Recife (PE),firstClass,1088.87,1.44,555.74,FlyingDrops,2022-12-08
+11316,111,Recife (PE),Sao Paulo (SP),economic,545.95,1.26,486.52,Rainbow,2022-12-08
+17478,174,Brasilia (DF),Rio de Janeiro (RJ),firstClass,539.39,0.48,183.37,FlyingDrops,2022-12-08
+61398,599,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-08
+49392,483,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-08
+134165,1320,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-08
+109687,1086,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-08
+132517,1305,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-08
+93830,925,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-08
+126826,1253,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-08
+93505,922,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-08
+3339,32,Recife (PE),Salvador (BH),premium,1242.65,2.05,788.55,CloudFy,2022-12-08
+35913,342,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-08
+66114,641,Campo Grande (MS),Salvador (BH),firstClass,1052.6,1.36,522.34,FlyingDrops,2022-12-08
+989,8,Aracaju (SE),Sao Paulo (SP),economic,446.73,1.02,392.76,Rainbow,2022-12-08
+127872,1260,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-08
+130774,1286,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-08
+11841,115,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-08
+10489,105,Recife (PE),Campo Grande (MS),economic,615.59,1.39,535.4,Rainbow,2022-12-08
+67406,652,Natal (RN),Rio de Janeiro (RJ),firstClass,1375.48,1.55,595.03,FlyingDrops,2022-12-08
+115601,1148,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-08
+35733,341,Recife (PE),Natal (RN),economic,360.22,0.58,222.67,Rainbow,2022-12-08
+24000,234,Aracaju (SE),Campo Grande (MS),firstClass,1376.09,1.69,650.1,FlyingDrops,2022-12-08
+43952,430,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-08
+134637,1323,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-08
+99972,992,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-08
+115424,1147,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-08
+20215,195,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-08
+37969,362,Aracaju (SE),Campo Grande (MS),economic,743.54,1.69,650.1,Rainbow,2022-12-08
+28179,268,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-08
+106423,1056,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-08
+28788,274,Aracaju (SE),Campo Grande (MS),economic,743.54,1.69,650.1,Rainbow,2022-12-08
+115966,1150,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-08
+120871,1197,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-08
+14700,146,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-08
+59346,575,Campo Grande (MS),Recife (PE),firstClass,1185.95,1.39,535.4,Rainbow,2022-12-08
+18654,183,Brasilia (DF),Salvador (BH),premium,1268.97,1.76,676.56,Rainbow,2022-12-08
+40383,389,Recife (PE),Sao Paulo (SP),economic,545.95,1.26,486.52,Rainbow,2022-12-08
+65302,634,Campo Grande (MS),Brasilia (DF),firstClass,949.99,0.72,277.7,CloudFy,2022-12-08
+41841,407,Recife (PE),Natal (RN),premium,474.6,0.58,222.67,CloudFy,2022-12-08
+13255,129,Recife (PE),Aracaju (SE),firstClass,1166.1,1.44,555.74,CloudFy,2022-12-08
+74969,727,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-08
+34133,326,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1183.57,1.55,597.61,CloudFy,2022-12-08
+81509,793,Aracaju (SE),Natal (RN),premium,535.95,0.46,176.33,CloudFy,2022-12-08
+124444,1228,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-08
+128857,1269,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-08
+27620,264,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-08
+60489,584,Campo Grande (MS),Rio de Janeiro (RJ),economic,946.55,2.09,806.48,Rainbow,2022-12-08
+90765,896,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-08
+37391,355,Aracaju (SE),Natal (RN),premium,427.25,0.46,176.33,Rainbow,2022-12-08
+121384,1203,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-08
+71516,693,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1183.57,1.55,597.61,CloudFy,2022-12-08
+49831,486,Campo Grande (MS),Recife (PE),firstClass,1185.95,1.39,535.4,Rainbow,2022-12-08
+87563,864,Sao Paulo (SP),Recife (PE),firstClass,1464.89,1.26,486.52,FlyingDrops,2022-12-08
+29532,281,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-08
+91109,898,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-08
+60318,583,Campo Grande (MS),Sao Paulo (SP),firstClass,644.16,0.44,168.22,Rainbow,2022-12-08
+68923,666,Natal (RN),Rio de Janeiro (RJ),firstClass,1375.48,1.55,595.03,FlyingDrops,2022-12-08
+113596,1127,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-08
+29831,284,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-08
+5742,56,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-08
+39523,381,Brasilia (DF),Salvador (BH),economic,921.08,1.76,676.56,Rainbow,2022-12-08
+68074,659,Natal (RN),Recife (PE),firstClass,806.91,0.58,222.67,Rainbow,2022-12-08
+14508,145,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-08
+121685,1205,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-08
+103434,1026,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-08
+89116,879,Natal (RN),Rio de Janeiro (RJ),economic,774.57,1.55,595.03,CloudFy,2022-12-08
+47646,461,Campo Grande (MS),Salvador (BH),premium,826.72,1.36,522.34,CloudFy,2022-12-08
+135828,1335,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-08
+1343,11,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-08
+97422,962,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-08
+89519,882,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-08
+127478,1257,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-08
+12952,126,Brasilia (DF),Salvador (BH),firstClass,1665.24,1.76,676.56,Rainbow,2022-12-08
+49218,482,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-08
+37665,357,Brasilia (DF),Natal (RN),firstClass,1433.35,1.43,550.69,FlyingDrops,2022-12-08
+88933,878,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-08
+4071,40,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-08
+91745,905,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-08
+12332,119,Aracaju (SE),Natal (RN),firstClass,549.96,0.46,176.33,Rainbow,2022-12-08
+52970,512,Campo Grande (MS),Natal (RN),economic,411.05,0.65,250.68,Rainbow,2022-12-08
+126627,1252,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-08
+81203,789,Aracaju (SE),Rio de Janeiro (RJ),premium,930.12,1.55,597.61,Rainbow,2022-12-08
+51774,502,Campo Grande (MS),Natal (RN),economic,411.05,0.65,250.68,Rainbow,2022-12-08
+100723,1001,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-08
+114442,1138,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-08
+45863,447,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-08
+87176,859,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-08
+114168,1135,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-08
+101260,1004,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-08
+42378,412,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-08
+91339,900,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-08
+8997,90,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-08
+131465,1293,Florianopolis (SC),Sao Paulo (SP),firstClass,738.8,1.46,562.14,Rainbow,2022-12-08
+120692,1196,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-08
+2460,21,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-08
+48801,478,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-09
+60318,583,Sao Paulo (SP),Campo Grande (MS),firstClass,595.09,0.44,168.22,Rainbow,2022-12-09
+124444,1228,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-09
+66299,642,Sao Paulo (SP),Campo Grande (MS),firstClass,563.0,0.44,168.22,CloudFy,2022-12-09
+43250,422,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-09
+121384,1203,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-09
+116554,1155,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-09
+29532,281,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-09
+24588,239,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-09
+70501,683,Salvador (BH),Sao Paulo (SP),firstClass,676.46,1.04,401.66,FlyingDrops,2022-12-09
+128689,1268,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-09
+20043,194,Campo Grande (MS),Brasilia (DF),firstClass,949.99,0.72,277.7,CloudFy,2022-12-09
+126627,1252,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-09
+46813,454,Salvador (BH),Campo Grande (MS),firstClass,980.4,1.36,522.34,FlyingDrops,2022-12-09
+10489,105,Campo Grande (MS),Recife (PE),economic,674.16,1.39,535.4,Rainbow,2022-12-09
+2460,21,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-09
+61633,601,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-09
+83792,820,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-09
+127478,1257,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-09
+103896,1029,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-09
+32547,312,Brasilia (DF),Recife (PE),economic,421.2,0.63,242.21,Rainbow,2022-12-09
+59346,575,Recife (PE),Campo Grande (MS),firstClass,1069.12,1.39,535.4,Rainbow,2022-12-09
+70675,684,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-09
+38774,371,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-09
+120871,1197,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-09
+12332,119,Natal (RN),Aracaju (SE),firstClass,611.4,0.46,176.33,Rainbow,2022-12-09
+28788,274,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-09
+76567,744,Salvador (BH),Natal (RN),firstClass,1195.57,1.85,710.57,Rainbow,2022-12-09
+78063,757,Florianopolis (SC),Sao Paulo (SP),firstClass,762.89,1.46,562.14,FlyingDrops,2022-12-09
+77489,752,Natal (RN),Sao Paulo (SP),firstClass,1148.78,0.85,327.55,Rainbow,2022-12-09
+123234,1220,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-09
+93830,925,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-09
+56937,553,Recife (PE),Campo Grande (MS),economic,615.59,1.39,535.4,Rainbow,2022-12-09
+3339,32,Salvador (BH),Recife (PE),premium,1016.53,2.05,788.55,CloudFy,2022-12-09
+134165,1320,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-09
+49218,482,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-09
+4071,40,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-09
+68074,659,Recife (PE),Natal (RN),firstClass,628.96,0.58,222.67,Rainbow,2022-12-09
+94888,936,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-09
+26276,251,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-09
+93191,919,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-09
+47646,461,Salvador (BH),Campo Grande (MS),premium,684.85,1.36,522.34,CloudFy,2022-12-09
+130774,1286,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-09
+26554,254,Recife (PE),Aracaju (SE),firstClass,1166.1,1.44,555.74,CloudFy,2022-12-09
+68436,662,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-09
+62364,607,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-09
+91109,898,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-09
+86566,852,Natal (RN),Aracaju (SE),economic,361.68,0.46,176.33,CloudFy,2022-12-09
+80130,779,Rio de Janeiro (RJ),Sao Paulo (SP),economic,452.56,0.86,331.89,Rainbow,2022-12-09
+87176,859,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-09
+14700,146,Sao Paulo (SP),Brasilia (DF),premium,586.06,0.67,257.81,Rainbow,2022-12-09
+50529,491,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-09
+134637,1323,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-09
+43952,430,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-09
+14916,148,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-09
+41841,407,Natal (RN),Recife (PE),premium,563.23,0.58,222.67,CloudFy,2022-12-09
+86165,848,Recife (PE),Sao Paulo (SP),economic,513.06,1.26,486.52,CloudFy,2022-12-09
+30137,287,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-09
+91745,905,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-09
+24338,237,Natal (RN),Aracaju (SE),economic,301.61,0.46,176.33,Rainbow,2022-12-09
+67406,652,Rio de Janeiro (RJ),Natal (RN),firstClass,1187.1,1.55,595.03,FlyingDrops,2022-12-09
+115966,1150,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-09
+71516,693,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1446.4,1.55,597.61,CloudFy,2022-12-09
+53930,521,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-09
+135828,1335,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-09
+15651,155,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-10
+59008,573,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-10
+5313,52,Rio de Janeiro (RJ),Recife (PE),firstClass,1617.81,2.3,885.57,Rainbow,2022-12-10
+6686,64,Campo Grande (MS),Recife (PE),economic,659.43,1.39,535.4,CloudFy,2022-12-10
+37969,362,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-10
+58827,572,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-10
+989,8,Sao Paulo (SP),Aracaju (SE),economic,647.9,1.02,392.76,Rainbow,2022-12-10
+100723,1001,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-10
+58627,571,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-10
+12952,126,Salvador (BH),Brasilia (DF),firstClass,1040.84,1.76,676.56,Rainbow,2022-12-10
+32240,308,Aracaju (SE),Recife (PE),firstClass,1088.87,1.44,555.74,FlyingDrops,2022-12-10
+83444,814,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-10
+73870,715,Salvador (BH),Sao Paulo (SP),economic,381.39,1.04,401.66,Rainbow,2022-12-10
+81861,796,Campo Grande (MS),Sao Paulo (SP),firstClass,644.16,0.44,168.22,Rainbow,2022-12-10
+18654,183,Salvador (BH),Brasilia (DF),premium,882.86,1.76,676.56,Rainbow,2022-12-10
+35913,342,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-10
+79424,772,Recife (PE),Aracaju (SE),firstClass,1300.81,1.44,555.74,FlyingDrops,2022-12-10
+135524,1332,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-10
+120692,1196,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-10
+131265,1290,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-10
+592,4,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-10
+5742,56,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-10
+35733,341,Natal (RN),Recife (PE),economic,406.36,0.58,222.67,Rainbow,2022-12-10
+114168,1135,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-10
+127147,1255,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-10
+120345,1193,Salvador (BH),Florianopolis (SC),firstClass,1616.44,2.44,937.77,FlyingDrops,2022-12-10
+92862,915,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-10
+128857,1269,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-10
+17478,174,Rio de Janeiro (RJ),Brasilia (DF),firstClass,591.19,0.48,183.37,FlyingDrops,2022-12-10
+89519,882,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-10
+74969,727,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-10
+51774,502,Natal (RN),Campo Grande (MS),economic,470.16,0.65,250.68,Rainbow,2022-12-10
+11316,111,Sao Paulo (SP),Recife (PE),economic,827.12,1.26,486.52,Rainbow,2022-12-10
+42378,412,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-10
+19011,186,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-10
+30583,290,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-10
+64946,632,Recife (PE),Campo Grande (MS),firstClass,1069.12,1.39,535.4,Rainbow,2022-12-10
+98559,975,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-10
+60880,587,Salvador (BH),Campo Grande (MS),premium,774.52,1.36,522.34,Rainbow,2022-12-10
+73697,714,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-10
+16102,158,Rio de Janeiro (RJ),Recife (PE),premium,1306.26,2.3,885.57,Rainbow,2022-12-10
+66707,646,Recife (PE),Campo Grande (MS),economic,615.59,1.39,535.4,Rainbow,2022-12-10
+52027,504,Recife (PE),Campo Grande (MS),premium,793.15,1.39,535.4,CloudFy,2022-12-10
+95275,940,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-10
+13255,129,Aracaju (SE),Recife (PE),firstClass,1124.11,1.44,555.74,CloudFy,2022-12-10
+37391,355,Natal (RN),Aracaju (SE),premium,479.37,0.46,176.33,Rainbow,2022-12-10
+37027,352,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-10
+121685,1205,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-10
+82144,798,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-10
+8997,90,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-10
+109338,1083,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-10
+101260,1004,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-10
+117748,1165,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-10
+45863,447,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-10
+106423,1056,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-10
+99972,992,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-10
+34133,326,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1446.4,1.55,597.61,CloudFy,2022-12-11
+1605,13,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-11
+39844,384,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-11
+55909,544,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-11
+65126,633,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-11
+24000,234,Campo Grande (MS),Aracaju (SE),firstClass,1473.41,1.69,650.1,FlyingDrops,2022-12-11
+82816,808,Aracaju (SE),Natal (RN),economic,332.1,0.46,176.33,CloudFy,2022-12-11
+20215,195,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-11
+56106,545,Salvador (BH),Campo Grande (MS),firstClass,961.85,1.36,522.34,Rainbow,2022-12-11
+1343,11,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-11
+56740,552,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-11
+93505,922,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-11
+66114,641,Salvador (BH),Campo Grande (MS),firstClass,980.4,1.36,522.34,FlyingDrops,2022-12-11
+109938,1089,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-11
+16902,168,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-11
+87563,864,Recife (PE),Sao Paulo (SP),firstClass,954.78,1.26,486.52,FlyingDrops,2022-12-11
+29831,284,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-11
+9468,94,Salvador (BH),Brasilia (DF),firstClass,1032.4,1.76,676.56,CloudFy,2022-12-11
+109687,1086,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-11
+28179,268,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-11
+45666,445,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-11
+103242,1024,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-11
+46059,448,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-11
+114442,1138,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-11
+8471,82,Salvador (BH),Brasilia (DF),economic,587.85,1.76,676.56,CloudFy,2022-12-11
+116737,1156,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-11
+19455,189,Salvador (BH),Aracaju (SE),firstClass,1531.92,2.16,830.86,CloudFy,2022-12-11
+130272,1281,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-11
+92464,912,Salvador (BH),Florianopolis (SC),firstClass,1654.09,2.44,937.77,Rainbow,2022-12-11
+103434,1026,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-11
+49831,486,Recife (PE),Campo Grande (MS),firstClass,1069.12,1.39,535.4,Rainbow,2022-12-11
+35247,337,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-11
+126826,1253,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-11
+47833,462,Sao Paulo (SP),Campo Grande (MS),firstClass,668.19,0.44,168.22,FlyingDrops,2022-12-11
+107549,1066,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-11
+34532,329,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-11
+110234,1091,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-11
+53466,516,Salvador (BH),Campo Grande (MS),economic,494.29,1.36,522.34,Rainbow,2022-12-11
+44793,436,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-11
+113596,1127,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-11
+89116,879,Rio de Janeiro (RJ),Natal (RN),economic,677.1,1.55,595.03,CloudFy,2022-12-11
+40383,389,Sao Paulo (SP),Recife (PE),economic,827.12,1.26,486.52,Rainbow,2022-12-11
+123538,1222,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-11
+119843,1188,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-11
+124774,1231,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-11
+77894,756,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-11
+94533,933,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-11
+99167,981,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-11
+118209,1170,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-11
+108351,1074,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-11
+35436,338,Rio de Janeiro (RJ),Recife (PE),economic,932.59,2.3,885.57,Rainbow,2022-12-11
+104767,1039,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-12
+102709,1019,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-12
+393,3,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-12
+132517,1305,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-12
+38953,372,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-12
+49392,483,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-12
+88933,878,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-12
+62901,612,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-12
+9287,93,Aracaju (SE),Recife (PE),firstClass,1119.47,1.44,555.74,Rainbow,2022-12-12
+33549,322,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-12
+111534,1104,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-12
+52970,512,Natal (RN),Campo Grande (MS),economic,470.16,0.65,250.68,Rainbow,2022-12-12
+64332,625,Recife (PE),Campo Grande (MS),economic,563.71,1.39,535.4,CloudFy,2022-12-12
+91339,900,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-12
+131465,1293,Sao Paulo (SP),Florianopolis (SC),firstClass,1718.28,1.46,562.14,Rainbow,2022-12-12
+130090,1280,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-12
+98268,973,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-12
+14508,145,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-12
+11504,112,Aracaju (SE),Recife (PE),economic,602.49,1.44,555.74,Rainbow,2022-12-12
+40583,390,Rio de Janeiro (RJ),Recife (PE),economic,932.59,2.3,885.57,Rainbow,2022-12-12
+101458,1005,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-12
+4251,41,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-12
+37665,357,Natal (RN),Brasilia (DF),firstClass,1192.62,1.43,550.69,FlyingDrops,2022-12-12
+32055,307,Sao Paulo (SP),Aracaju (SE),firstClass,1186.15,1.02,392.76,CloudFy,2022-12-12
+115424,1147,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-12
+94343,931,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-12
+60489,584,Rio de Janeiro (RJ),Campo Grande (MS),economic,849.52,2.09,806.48,Rainbow,2022-12-12
+90765,896,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-12
+6047,60,Rio de Janeiro (RJ),Brasilia (DF),firstClass,591.19,0.48,183.37,FlyingDrops,2022-12-12
+27620,264,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-12
+105109,1041,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-12
+103027,1022,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-12
+22153,216,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-12
+111732,1105,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-12
+72586,705,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-12
+81509,793,Natal (RN),Aracaju (SE),premium,451.41,0.46,176.33,CloudFy,2022-12-12
+132258,1302,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-12
+39523,381,Salvador (BH),Brasilia (DF),economic,609.83,1.76,676.56,Rainbow,2022-12-12
+65302,634,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-12
+61858,603,Sao Paulo (SP),Campo Grande (MS),firstClass,668.19,0.44,168.22,FlyingDrops,2022-12-12
+24857,241,Campo Grande (MS),Recife (PE),economic,659.43,1.39,535.4,CloudFy,2022-12-12
+61398,599,Salvador (BH),Campo Grande (MS),premium,774.52,1.36,522.34,Rainbow,2022-12-12
+79019,766,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,753.78,0.86,331.89,FlyingDrops,2022-12-12
+97422,962,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-12
+25729,247,Salvador (BH),Aracaju (SE),economic,811.73,2.16,830.86,CloudFy,2022-12-12
+21801,212,Sao Paulo (SP),Recife (PE),firstClass,1533.42,1.26,486.52,CloudFy,2022-12-12
+11841,115,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-12
+92125,908,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-12
+115601,1148,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-12
+127872,1260,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-12
+54725,533,Salvador (BH),Campo Grande (MS),premium,774.52,1.36,522.34,Rainbow,2022-12-12
+67217,651,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,701.43,0.86,331.89,CloudFy,2022-12-12
+67028,650,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,701.43,0.86,331.89,CloudFy,2022-12-12
+131662,1295,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-12
+101073,1003,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-12
+40085,387,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-12
+92663,914,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-12
+68923,666,Rio de Janeiro (RJ),Natal (RN),firstClass,1187.1,1.55,595.03,FlyingDrops,2022-12-12
+81203,789,Rio de Janeiro (RJ),Aracaju (SE),premium,1098.93,1.55,597.61,Rainbow,2022-12-12
+109033,1080,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-12
+109034,1080,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-15
+1344,11,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-15
+109339,1083,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-15
+70676,684,Aracaju (SE),Salvador (BH),firstClass,1714.75,2.16,830.86,FlyingDrops,2022-12-15
+8998,90,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1183.57,1.55,597.61,CloudFy,2022-12-15
+83445,814,Natal (RN),Salvador (BH),firstClass,1641.56,1.85,710.57,Rainbow,2022-12-15
+9288,93,Brasilia (DF),Sao Paulo (SP),economic,533.8,0.67,257.81,Rainbow,2022-12-15
+124775,1231,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-15
+77490,752,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-15
+49219,482,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-15
+108352,1074,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-15
+48802,478,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-15
+123539,1222,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-15
+81204,789,Sao Paulo (SP),Florianopolis (SC),firstClass,1718.28,1.46,562.14,Rainbow,2022-12-15
+50530,491,Campo Grande (MS),Salvador (BH),firstClass,1114.75,1.36,522.34,Rainbow,2022-12-15
+135525,1332,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-15
+6687,64,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-15
+89117,879,Aracaju (SE),Salvador (BH),economic,964.83,2.16,830.86,CloudFy,2022-12-15
+11842,115,Recife (PE),Aracaju (SE),firstClass,1300.81,1.44,555.74,FlyingDrops,2022-12-15
+118210,1170,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-15
+135829,1335,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-15
+130091,1280,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-15
+40584,390,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-15
+114443,1138,Florianopolis (SC),Sao Paulo (SP),premium,554.87,1.46,562.14,CloudFy,2022-12-15
+95276,940,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-15
+132259,1302,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-15
+126628,1252,Florianopolis (SC),Natal (RN),premium,1114.55,1.84,709.37,Rainbow,2022-12-15
+42379,412,Brasilia (DF),Sao Paulo (SP),premium,698.1,0.67,257.81,CloudFy,2022-12-15
+68437,662,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-15
+52028,504,Campo Grande (MS),Natal (RN),premium,541.59,0.65,250.68,Rainbow,2022-12-15
+10490,105,Brasilia (DF),Salvador (BH),firstClass,1685.23,1.76,676.56,CloudFy,2022-12-15
+16903,168,Aracaju (SE),Natal (RN),premium,427.25,0.46,176.33,Rainbow,2022-12-15
+121686,1205,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-15
+12953,126,Brasilia (DF),Campo Grande (MS),premium,851.15,0.72,277.7,Rainbow,2022-12-15
+72587,705,Sao Paulo (SP),Salvador (BH),firstClass,1427.22,1.04,401.66,FlyingDrops,2022-12-15
+88934,878,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-15
+58628,571,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1754.17,2.09,806.48,Rainbow,2022-12-15
+47647,461,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-15
+120693,1196,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-15
+94534,933,Florianopolis (SC),Recife (PE),economic,674.52,1.76,676.53,CloudFy,2022-12-15
+61634,601,Campo Grande (MS),Brasilia (DF),firstClass,949.99,0.72,277.7,CloudFy,2022-12-15
+4072,40,Recife (PE),Rio de Janeiro (RJ),economic,910.7,2.3,885.57,CloudFy,2022-12-15
+77895,756,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-15
+52971,512,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-15
+33550,322,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-15
+91746,905,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-15
+94889,936,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-15
+67407,652,Sao Paulo (SP),Recife (PE),firstClass,1533.42,1.26,486.52,CloudFy,2022-12-15
+39524,381,Brasilia (DF),Sao Paulo (SP),firstClass,992.17,0.67,257.81,Rainbow,2022-12-15
+111733,1105,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-15
+14917,148,Aracaju (SE),Rio de Janeiro (RJ),economic,717.04,1.55,597.61,CloudFy,2022-12-15
+56107,545,Campo Grande (MS),Recife (PE),firstClass,1185.95,1.39,535.4,Rainbow,2022-12-15
+89520,882,Sao Paulo (SP),Natal (RN),premium,701.29,0.85,327.55,Rainbow,2022-12-15
+117749,1165,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-15
+54726,533,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-15
+49832,486,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-15
+82817,808,Aracaju (SE),Sao Paulo (SP),firstClass,756.3,1.02,392.76,FlyingDrops,2022-12-15
+37666,357,Recife (PE),Salvador (BH),economic,861.68,2.05,788.55,Rainbow,2022-12-15
+92863,915,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-15
+51775,502,Campo Grande (MS),Natal (RN),firstClass,732.89,0.65,250.68,CloudFy,2022-12-15
+124445,1228,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-15
+127479,1257,Florianopolis (SC),Natal (RN),premium,1114.55,1.84,709.37,Rainbow,2022-12-15
+5743,56,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-15
+47834,462,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-15
+68924,666,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-15
+92664,914,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-15
+43251,422,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-15
+40086,387,Brasilia (DF),Sao Paulo (SP),economic,538.95,0.67,257.81,CloudFy,2022-12-15
+34134,326,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-15
+110235,1091,Florianopolis (SC),Rio de Janeiro (RJ),economic,313.62,1.21,466.3,CloudFy,2022-12-15
+81862,796,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1016.89,0.86,331.89,Rainbow,2022-12-15
+91110,898,Florianopolis (SC),Rio de Janeiro (RJ),economic,317.08,1.21,466.3,Rainbow,2022-12-15
+113597,1127,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-15
+32241,308,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-15
+83793,820,Sao Paulo (SP),Aracaju (SE),firstClass,1269.73,1.02,392.76,FlyingDrops,2022-12-15
+93192,919,Florianopolis (SC),Sao Paulo (SP),firstClass,738.8,1.46,562.14,Rainbow,2022-12-15
+26277,251,Aracaju (SE),Campo Grande (MS),firstClass,1376.09,1.69,650.1,FlyingDrops,2022-12-15
+120346,1193,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-15
+29832,284,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-15
+115602,1148,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-15
+41842,407,Aracaju (SE),Brasilia (DF),premium,706.36,1.11,425.98,Rainbow,2022-12-15
+55910,544,Campo Grande (MS),Recife (PE),premium,991.22,1.39,535.4,Rainbow,2022-12-15
+5314,52,Recife (PE),Campo Grande (MS),premium,793.15,1.39,535.4,CloudFy,2022-12-15
+67029,650,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-15
+58828,572,Campo Grande (MS),Recife (PE),premium,959.91,1.39,535.4,CloudFy,2022-12-15
+67218,651,Natal (RN),Aracaju (SE),firstClass,611.59,0.46,176.33,FlyingDrops,2022-12-15
+37392,355,Brasilia (DF),Natal (RN),economic,791.66,1.43,550.69,CloudFy,2022-12-15
+15652,155,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-15
+60319,583,Campo Grande (MS),Sao Paulo (SP),firstClass,684.65,0.44,168.22,FlyingDrops,2022-12-15
+26555,254,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-15
+30584,290,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-15
+121385,1203,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-15
+116555,1155,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-15
+115967,1150,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-15
+27621,264,Brasilia (DF),Sao Paulo (SP),firstClass,893.65,0.67,257.81,CloudFy,2022-12-15
+90766,896,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-15
+6048,60,Recife (PE),Salvador (BH),premium,1249.83,2.05,788.55,Rainbow,2022-12-15
+116738,1156,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-15
+128858,1269,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-15
+60490,584,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-15
+8472,82,Aracaju (SE),Natal (RN),premium,535.95,0.46,176.33,CloudFy,2022-12-15
+68075,659,Natal (RN),Campo Grande (MS),economic,470.16,0.65,250.68,Rainbow,2022-12-15
+32056,307,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-15
+46814,454,Campo Grande (MS),Rio de Janeiro (RJ),premium,1328.88,2.09,806.48,Rainbow,2022-12-15
+394,3,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-15
+81510,793,Natal (RN),Salvador (BH),firstClass,1641.56,1.85,710.57,Rainbow,2022-12-15
+11505,112,Recife (PE),Brasilia (DF),firstClass,709.25,0.63,242.21,CloudFy,2022-12-15
+14509,145,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-15
+127148,1255,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-15
+9469,94,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-15
+87564,864,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-15
+71517,693,Sao Paulo (SP),Rio de Janeiro (RJ),economic,593.13,0.86,331.89,CloudFy,2022-12-15
+29533,281,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-15
+134638,1323,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-15
+70502,683,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-15
+4252,41,Recife (PE),Brasilia (DF),premium,573.61,0.63,242.21,CloudFy,2022-12-15
+127873,1260,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-15
+109939,1089,Florianopolis (SC),Salvador (BH),premium,1367.88,2.44,937.77,Rainbow,2022-12-15
+59009,573,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1609.81,2.09,806.48,FlyingDrops,2022-12-15
+111535,1104,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-15
+92465,912,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-15
+49393,483,Campo Grande (MS),Recife (PE),firstClass,1262.23,1.39,535.4,FlyingDrops,2022-12-15
+79425,772,Sao Paulo (SP),Aracaju (SE),premium,962.54,1.02,392.76,Rainbow,2022-12-15
+59347,575,Campo Grande (MS),Brasilia (DF),firstClass,949.99,0.72,277.7,CloudFy,2022-12-15
+120872,1197,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-15
+14701,146,Recife (PE),Rio de Janeiro (RJ),economic,908.93,2.3,885.57,Rainbow,2022-12-15
+56938,553,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-15
+32548,312,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-15
+28180,268,Aracaju (SE),Natal (RN),firstClass,577.71,0.46,176.33,FlyingDrops,2022-12-15
+92126,908,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-15
+61399,599,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-15
+11317,111,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-15
+25730,247,Recife (PE),Natal (RN),premium,488.73,0.58,222.67,Rainbow,2022-12-15
+34533,329,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-15
+86567,852,Natal (RN),Recife (PE),premium,563.23,0.58,222.67,CloudFy,2022-12-15
+126827,1253,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-15
+38775,371,Brasilia (DF),Natal (RN),economic,726.19,1.43,550.69,Rainbow,2022-12-15
+114169,1135,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-15
+30138,287,Aracaju (SE),Brasilia (DF),premium,706.36,1.11,425.98,Rainbow,2022-12-15
+35248,337,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-15
+91340,900,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-15
+76568,744,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1092.94,0.86,331.89,CloudFy,2022-12-15
+12333,119,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-15
+94344,931,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-15
+66708,646,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-15
+80131,779,Natal (RN),Sao Paulo (SP),firstClass,1020.42,0.85,327.55,CloudFy,2022-12-15
+1606,13,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-15
+28789,274,Brasilia (DF),Aracaju (SE),premium,987.07,1.11,425.98,CloudFy,2022-12-15
+78064,757,Aracaju (SE),Recife (PE),firstClass,1124.11,1.44,555.74,CloudFy,2022-12-15
+13256,129,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-15
+60881,587,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-15
+115425,1147,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-15
+16103,158,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-15
+56741,552,Campo Grande (MS),Salvador (BH),firstClass,1114.75,1.36,522.34,Rainbow,2022-12-15
+134166,1320,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-15
+990,8,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-15
+74970,727,Aracaju (SE),Recife (PE),economic,602.49,1.44,555.74,Rainbow,2022-12-15
+38954,372,Recife (PE),Rio de Janeiro (RJ),firstClass,1612.39,2.3,885.57,CloudFy,2022-12-15
+37970,362,Aracaju (SE),Natal (RN),economic,332.1,0.46,176.33,CloudFy,2022-12-15
+93506,922,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-15
+73698,714,Natal (RN),Rio de Janeiro (RJ),firstClass,1375.48,1.55,595.03,FlyingDrops,2022-12-15
+86166,848,Natal (RN),Rio de Janeiro (RJ),firstClass,1391.6,1.55,595.03,CloudFy,2022-12-15
+35734,341,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-15
+119844,1188,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-15
+40384,389,Recife (PE),Salvador (BH),firstClass,1484.94,2.05,788.55,CloudFy,2022-12-15
+593,4,Recife (PE),Sao Paulo (SP),premium,657.87,1.26,486.52,CloudFy,2022-12-15
+93831,925,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-15
+132518,1305,Florianopolis (SC),Salvador (BH),firstClass,1692.64,2.44,937.77,FlyingDrops,2022-12-15
+87177,859,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-15
+39845,384,Recife (PE),Sao Paulo (SP),premium,657.87,1.26,486.52,CloudFy,2022-12-15
+79020,766,Sao Paulo (SP),Campo Grande (MS),firstClass,563.0,0.44,168.22,CloudFy,2022-12-15
+35914,342,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-15
+109688,1086,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-15
+123235,1220,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-15
+35437,338,Recife (PE),Salvador (BH),firstClass,1484.94,2.05,788.55,CloudFy,2022-12-15
+82145,798,Aracaju (SE),Sao Paulo (SP),premium,588.14,1.02,392.76,Rainbow,2022-12-15
+37028,352,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-15
+22154,216,Brasilia (DF),Salvador (BH),economic,921.08,1.76,676.56,Rainbow,2022-12-15
+24858,241,Brasilia (DF),Rio de Janeiro (RJ),firstClass,539.39,0.48,183.37,FlyingDrops,2022-12-15
+97423,962,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-15
+103435,1026,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-15
+62365,607,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-15
+98269,973,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-15
+101261,1004,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-15
+131663,1295,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-15
+65303,634,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-15
+104768,1039,Florianopolis (SC),Natal (RN),premium,1114.55,1.84,709.37,Rainbow,2022-12-15
+100724,1001,Florianopolis (SC),Salvador (BH),firstClass,1630.75,2.44,937.77,Rainbow,2022-12-15
+20216,195,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-15
+53931,521,Campo Grande (MS),Rio de Janeiro (RJ),economic,972.12,2.09,806.48,CloudFy,2022-12-15
+61859,603,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1614.7,2.09,806.48,CloudFy,2022-12-15
+53467,516,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-15
+24339,237,Recife (PE),Rio de Janeiro (RJ),premium,1351.89,2.3,885.57,Rainbow,2022-12-15
+98560,975,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-15
+102710,1019,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-15
+66115,641,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-15
+19456,189,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-15
+65127,633,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-15
+105110,1041,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-15
+103028,1022,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-15
+43953,430,Brasilia (DF),Recife (PE),premium,568.38,0.63,242.21,CloudFy,2022-12-15
+99973,992,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-15
+24589,239,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-15
+130273,1281,Florianopolis (SC),Salvador (BH),firstClass,1630.75,2.44,937.77,Rainbow,2022-12-15
+66300,642,Campo Grande (MS),Recife (PE),firstClass,1244.73,1.39,535.4,CloudFy,2022-12-15
+2461,21,Recife (PE),Rio de Janeiro (RJ),economic,910.7,2.3,885.57,CloudFy,2022-12-15
+17479,174,Brasilia (DF),Campo Grande (MS),economic,629.54,0.72,277.7,Rainbow,2022-12-15
+101074,1003,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-15
+24001,234,Aracaju (SE),Rio de Janeiro (RJ),premium,1007.72,1.55,597.61,CloudFy,2022-12-15
+3340,32,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-15
+103243,1024,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-15
+44794,436,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-15
+64333,625,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-15
+45864,447,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-15
+62902,612,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-15
+46060,448,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-15
+99168,981,Florianopolis (SC),Rio de Janeiro (RJ),economic,317.08,1.21,466.3,Rainbow,2022-12-15
+21802,212,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1183.57,1.55,597.61,CloudFy,2022-12-15
+130775,1286,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-15
+103897,1029,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-15
+19012,186,Brasilia (DF),Natal (RN),premium,1107.52,1.43,550.69,Rainbow,2022-12-15
+131266,1290,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-15
+131466,1293,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-15
+106424,1056,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-15
+64947,632,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-15
+18655,183,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1190.94,1.55,597.61,FlyingDrops,2022-12-15
+20044,194,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-15
+101459,1005,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-15
+45667,445,Brasilia (DF),Recife (PE),economic,421.2,0.63,242.21,Rainbow,2022-12-15
+107550,1066,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-15
+78064,757,Recife (PE),Aracaju (SE),firstClass,1166.1,1.44,555.74,CloudFy,2022-12-16
+9288,93,Sao Paulo (SP),Brasilia (DF),economic,393.84,0.67,257.81,Rainbow,2022-12-16
+26277,251,Campo Grande (MS),Aracaju (SE),firstClass,1473.41,1.69,650.1,FlyingDrops,2022-12-16
+593,4,Sao Paulo (SP),Recife (PE),premium,1195.26,1.26,486.52,CloudFy,2022-12-16
+37666,357,Salvador (BH),Recife (PE),economic,751.37,2.05,788.55,Rainbow,2022-12-16
+94534,933,Recife (PE),Florianopolis (SC),economic,761.2,1.76,676.53,CloudFy,2022-12-16
+89117,879,Salvador (BH),Aracaju (SE),economic,811.73,2.16,830.86,CloudFy,2022-12-16
+99168,981,Rio de Janeiro (RJ),Florianopolis (SC),economic,519.1,1.21,466.3,Rainbow,2022-12-16
+3340,32,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-16
+79020,766,Campo Grande (MS),Sao Paulo (SP),firstClass,620.16,0.44,168.22,CloudFy,2022-12-16
+39845,384,Sao Paulo (SP),Recife (PE),premium,1195.26,1.26,486.52,CloudFy,2022-12-16
+92126,908,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-16
+16903,168,Natal (RN),Aracaju (SE),premium,479.37,0.46,176.33,Rainbow,2022-12-16
+73698,714,Rio de Janeiro (RJ),Natal (RN),firstClass,1187.1,1.55,595.03,FlyingDrops,2022-12-16
+4072,40,Rio de Janeiro (RJ),Recife (PE),economic,952.83,2.3,885.57,CloudFy,2022-12-16
+32548,312,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-16
+118210,1170,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-16
+97423,962,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-16
+59009,573,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1566.26,2.09,806.48,FlyingDrops,2022-12-16
+52028,504,Natal (RN),Campo Grande (MS),premium,660.25,0.65,250.68,Rainbow,2022-12-16
+70676,684,Salvador (BH),Aracaju (SE),firstClass,1581.59,2.16,830.86,FlyingDrops,2022-12-16
+66300,642,Recife (PE),Campo Grande (MS),firstClass,1110.76,1.39,535.4,CloudFy,2022-12-16
+49219,482,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-16
+61399,599,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-16
+64947,632,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-16
+38954,372,Rio de Janeiro (RJ),Recife (PE),firstClass,1664.01,2.3,885.57,CloudFy,2022-12-16
+119844,1188,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-16
+20044,194,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-16
+120872,1197,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-16
+70502,683,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-16
+24001,234,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-16
+12953,126,Campo Grande (MS),Brasilia (DF),premium,691.99,0.72,277.7,Rainbow,2022-12-16
+81862,796,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,714.13,0.86,331.89,Rainbow,2022-12-16
+35437,338,Salvador (BH),Recife (PE),firstClass,1440.02,2.05,788.55,CloudFy,2022-12-16
+115425,1147,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-16
+111535,1104,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-16
+34533,329,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-16
+61634,601,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-16
+53467,516,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-16
+68075,659,Campo Grande (MS),Natal (RN),economic,411.05,0.65,250.68,Rainbow,2022-12-16
+120346,1193,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-16
+101459,1005,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-16
+127148,1255,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-16
+49393,483,Recife (PE),Campo Grande (MS),firstClass,1038.95,1.39,535.4,FlyingDrops,2022-12-16
+89520,882,Natal (RN),Sao Paulo (SP),premium,879.87,0.85,327.55,Rainbow,2022-12-16
+66115,641,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-16
+12333,119,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-16
+51775,502,Natal (RN),Campo Grande (MS),firstClass,953.32,0.65,250.68,CloudFy,2022-12-16
+116555,1155,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-16
+98560,975,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-16
+113597,1127,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-16
+20216,195,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-16
+6687,64,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-16
+37970,362,Natal (RN),Aracaju (SE),economic,361.68,0.46,176.33,CloudFy,2022-12-16
+56938,553,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-16
+35914,342,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-16
+46814,454,Rio de Janeiro (RJ),Campo Grande (MS),premium,1219.71,2.09,806.48,Rainbow,2022-12-16
+126628,1252,Natal (RN),Florianopolis (SC),premium,1212.58,1.84,709.37,Rainbow,2022-12-16
+104768,1039,Natal (RN),Florianopolis (SC),premium,1212.58,1.84,709.37,Rainbow,2022-12-17
+103435,1026,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-17
+42379,412,Sao Paulo (SP),Brasilia (DF),premium,602.12,0.67,257.81,CloudFy,2022-12-17
+62902,612,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-17
+81204,789,Florianopolis (SC),Sao Paulo (SP),firstClass,738.8,1.46,562.14,Rainbow,2022-12-17
+35734,341,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-17
+92664,914,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-17
+127479,1257,Natal (RN),Florianopolis (SC),premium,1212.58,1.84,709.37,Rainbow,2022-12-17
+68437,662,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-17
+124445,1228,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-17
+86567,852,Recife (PE),Natal (RN),premium,474.6,0.58,222.67,CloudFy,2022-12-17
+8998,90,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1446.4,1.55,597.61,CloudFy,2022-12-17
+49832,486,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-17
+8472,82,Natal (RN),Aracaju (SE),premium,451.41,0.46,176.33,CloudFy,2022-12-17
+76568,744,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,701.43,0.86,331.89,CloudFy,2022-12-17
+87177,859,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-17
+67218,651,Aracaju (SE),Natal (RN),firstClass,577.71,0.46,176.33,FlyingDrops,2022-12-17
+117749,1165,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-17
+92465,912,Rio de Janeiro (RJ),Florianopolis (SC),premium,708.27,1.21,466.3,CloudFy,2022-12-17
+990,8,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-17
+18655,183,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1381.55,1.55,597.61,FlyingDrops,2022-12-17
+74970,727,Recife (PE),Aracaju (SE),economic,663.23,1.44,555.74,Rainbow,2022-12-17
+60319,583,Sao Paulo (SP),Campo Grande (MS),firstClass,668.19,0.44,168.22,FlyingDrops,2022-12-17
+59347,575,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-17
+105110,1041,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-17
+10490,105,Salvador (BH),Brasilia (DF),firstClass,1032.4,1.76,676.56,CloudFy,2022-12-17
+1344,11,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-17
+121686,1205,Rio de Janeiro (RJ),Florianopolis (SC),premium,708.27,1.21,466.3,CloudFy,2022-12-17
+101074,1003,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-17
+71517,693,Rio de Janeiro (RJ),Sao Paulo (SP),economic,446.75,0.86,331.89,CloudFy,2022-12-17
+120693,1196,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-17
+91340,900,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-17
+79425,772,Aracaju (SE),Sao Paulo (SP),premium,588.14,1.02,392.76,Rainbow,2022-12-17
+134638,1323,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-17
+88934,878,Natal (RN),Aracaju (SE),economic,301.61,0.46,176.33,Rainbow,2022-12-17
+28180,268,Natal (RN),Aracaju (SE),firstClass,611.59,0.46,176.33,FlyingDrops,2022-12-17
+109939,1089,Salvador (BH),Florianopolis (SC),premium,1336.68,2.44,937.77,Rainbow,2022-12-17
+135829,1335,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-17
+60490,584,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-17
+130091,1280,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-17
+64333,625,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-17
+33550,322,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-17
+94344,931,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-17
+109034,1080,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-17
+39524,381,Sao Paulo (SP),Brasilia (DF),firstClass,824.31,0.67,257.81,Rainbow,2022-12-17
+90766,896,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-17
+19012,186,Natal (RN),Brasilia (DF),premium,919.89,1.43,550.69,Rainbow,2022-12-17
+62365,607,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-17
+15652,155,Sao Paulo (SP),Aracaju (SE),economic,722.74,1.02,392.76,CloudFy,2022-12-17
+91110,898,Rio de Janeiro (RJ),Florianopolis (SC),economic,519.1,1.21,466.3,Rainbow,2022-12-17
+47647,461,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-17
+82817,808,Sao Paulo (SP),Aracaju (SE),firstClass,1269.73,1.02,392.76,FlyingDrops,2022-12-17
+35248,337,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-17
+45864,447,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-18
+11842,115,Aracaju (SE),Recife (PE),firstClass,1088.87,1.44,555.74,FlyingDrops,2022-12-18
+68924,666,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-18
+40384,389,Salvador (BH),Recife (PE),firstClass,1440.02,2.05,788.55,CloudFy,2022-12-18
+103897,1029,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-18
+28789,274,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-18
+91746,905,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-18
+103243,1024,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-18
+115602,1148,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-18
+45667,445,Recife (PE),Brasilia (DF),economic,439.38,0.63,242.21,Rainbow,2022-12-18
+67029,650,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-18
+14701,146,Rio de Janeiro (RJ),Recife (PE),economic,932.59,2.3,885.57,Rainbow,2022-12-18
+29533,281,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-18
+58628,571,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1518.88,2.09,806.48,Rainbow,2022-12-18
+13256,129,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-18
+109339,1083,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-18
+2461,21,Rio de Janeiro (RJ),Recife (PE),economic,952.83,2.3,885.57,CloudFy,2022-12-18
+24339,237,Rio de Janeiro (RJ),Recife (PE),premium,1306.26,2.3,885.57,Rainbow,2022-12-18
+1606,13,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-18
+56741,552,Salvador (BH),Campo Grande (MS),firstClass,961.85,1.36,522.34,Rainbow,2022-12-18
+43953,430,Recife (PE),Brasilia (DF),premium,573.61,0.63,242.21,CloudFy,2022-12-18
+128858,1269,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-18
+100724,1001,Salvador (BH),Florianopolis (SC),firstClass,1654.09,2.44,937.77,Rainbow,2022-12-18
+114443,1138,Sao Paulo (SP),Florianopolis (SC),premium,1370.17,1.46,562.14,CloudFy,2022-12-18
+16103,158,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-18
+41842,407,Brasilia (DF),Aracaju (SE),premium,965.62,1.11,425.98,Rainbow,2022-12-18
+22154,216,Salvador (BH),Brasilia (DF),economic,609.83,1.76,676.56,Rainbow,2022-12-18
+25730,247,Natal (RN),Recife (PE),premium,579.62,0.58,222.67,Rainbow,2022-12-18
+60881,587,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-18
+101261,1004,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-18
+98269,973,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-18
+37028,352,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-18
+106424,1056,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-18
+131266,1290,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-18
+4252,41,Brasilia (DF),Recife (PE),premium,568.38,0.63,242.21,CloudFy,2022-12-18
+56107,545,Recife (PE),Campo Grande (MS),firstClass,1069.12,1.39,535.4,Rainbow,2022-12-18
+14509,145,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-18
+58828,572,Recife (PE),Campo Grande (MS),premium,793.15,1.39,535.4,CloudFy,2022-12-18
+121385,1203,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-18
+32241,308,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-18
+30584,290,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-18
+27621,264,Sao Paulo (SP),Brasilia (DF),firstClass,742.94,0.67,257.81,CloudFy,2022-12-18
+72587,705,Salvador (BH),Sao Paulo (SP),firstClass,676.46,1.04,401.66,FlyingDrops,2022-12-18
+34134,326,Rio de Janeiro (RJ),Aracaju (SE),premium,1091.21,1.55,597.61,CloudFy,2022-12-18
+52971,512,Salvador (BH),Campo Grande (MS),economic,494.29,1.36,522.34,Rainbow,2022-12-18
+126827,1253,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-18
+11505,112,Brasilia (DF),Recife (PE),firstClass,804.24,0.63,242.21,CloudFy,2022-12-18
+26555,254,Sao Paulo (SP),Brasilia (DF),premium,586.06,0.67,257.81,Rainbow,2022-12-18
+17479,174,Campo Grande (MS),Brasilia (DF),economic,517.82,0.72,277.7,Rainbow,2022-12-18
+132259,1302,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-18
+38775,371,Natal (RN),Brasilia (DF),economic,686.79,1.43,550.69,Rainbow,2022-12-18
+77895,756,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-18
+83445,814,Salvador (BH),Natal (RN),firstClass,1195.57,1.85,710.57,Rainbow,2022-12-18
+19456,189,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-18
+102710,1019,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-18
+110235,1091,Rio de Janeiro (RJ),Florianopolis (SC),economic,533.69,1.21,466.3,CloudFy,2022-12-18
+83793,820,Aracaju (SE),Sao Paulo (SP),firstClass,756.3,1.02,392.76,FlyingDrops,2022-12-18
+93831,925,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-18
+77490,752,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-18
+134166,1320,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-18
+86166,848,Rio de Janeiro (RJ),Natal (RN),firstClass,1297.49,1.55,595.03,CloudFy,2022-12-19
+9469,94,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-19
+109688,1086,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-19
+66708,646,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-19
+95276,940,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-19
+14917,148,Rio de Janeiro (RJ),Aracaju (SE),economic,796.42,1.55,597.61,CloudFy,2022-12-19
+81510,793,Salvador (BH),Natal (RN),firstClass,1195.57,1.85,710.57,Rainbow,2022-12-19
+46060,448,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-19
+43251,422,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-19
+114169,1135,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-19
+87564,864,Campo Grande (MS),Sao Paulo (SP),economic,381.83,0.44,168.22,Rainbow,2022-12-19
+50530,491,Salvador (BH),Campo Grande (MS),firstClass,961.85,1.36,522.34,Rainbow,2022-12-19
+48802,478,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-19
+40584,390,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-19
+80131,779,Sao Paulo (SP),Natal (RN),firstClass,946.36,0.85,327.55,CloudFy,2022-12-19
+135525,1332,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-19
+111733,1105,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-19
+130273,1281,Salvador (BH),Florianopolis (SC),firstClass,1654.09,2.44,937.77,Rainbow,2022-12-19
+116738,1156,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-19
+24589,239,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-19
+6048,60,Salvador (BH),Recife (PE),premium,1103.23,2.05,788.55,Rainbow,2022-12-19
+115967,1150,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-19
+29832,284,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-19
+132518,1305,Salvador (BH),Florianopolis (SC),firstClass,1616.44,2.44,937.77,FlyingDrops,2022-12-19
+53931,521,Rio de Janeiro (RJ),Campo Grande (MS),economic,882.99,2.09,806.48,CloudFy,2022-12-19
+394,3,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-19
+92863,915,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-19
+32056,307,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-19
+131663,1295,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-19
+61859,603,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1512.09,2.09,806.48,CloudFy,2022-12-19
+65303,634,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-19
+40086,387,Sao Paulo (SP),Brasilia (DF),economic,389.47,0.67,257.81,CloudFy,2022-12-19
+54726,533,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-19
+127873,1260,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-19
+82145,798,Sao Paulo (SP),Aracaju (SE),premium,962.54,1.02,392.76,Rainbow,2022-12-19
+65127,633,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-19
+44794,436,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-19
+130775,1286,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-19
+103028,1022,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-19
+21802,212,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1446.4,1.55,597.61,CloudFy,2022-12-19
+124775,1231,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-19
+131466,1293,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-19
+55910,544,Recife (PE),Campo Grande (MS),premium,832.77,1.39,535.4,Rainbow,2022-12-19
+37392,355,Natal (RN),Brasilia (DF),economic,697.51,1.43,550.69,CloudFy,2022-12-19
+47834,462,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-19
+107550,1066,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-19
+30138,287,Brasilia (DF),Aracaju (SE),premium,965.62,1.11,425.98,Rainbow,2022-12-19
+11317,111,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-19
+93192,919,Sao Paulo (SP),Florianopolis (SC),firstClass,1718.28,1.46,562.14,Rainbow,2022-12-19
+24858,241,Rio de Janeiro (RJ),Brasilia (DF),firstClass,591.19,0.48,183.37,FlyingDrops,2022-12-19
+123539,1222,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-19
+99973,992,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-19
+5314,52,Campo Grande (MS),Recife (PE),premium,959.91,1.39,535.4,CloudFy,2022-12-19
+108352,1074,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-19
+5743,56,Aracaju (SE),Brasilia (DF),premium,755.62,1.11,425.98,CloudFy,2022-12-19
+93506,922,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-19
+94889,936,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-19
+123235,1220,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-19
+67407,652,Recife (PE),Sao Paulo (SP),firstClass,883.63,1.26,486.52,CloudFy,2022-12-19
+2462,21,Recife (PE),Sao Paulo (SP),economic,545.95,1.26,486.52,Rainbow,2022-12-22
+103244,1024,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-22
+81863,796,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-22
+34534,329,Recife (PE),Sao Paulo (SP),firstClass,954.78,1.26,486.52,FlyingDrops,2022-12-22
+80132,779,Aracaju (SE),Natal (RN),firstClass,598.61,0.46,176.33,CloudFy,2022-12-22
+115426,1147,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-22
+55911,544,Campo Grande (MS),Recife (PE),premium,991.22,1.39,535.4,Rainbow,2022-12-22
+9470,94,Recife (PE),Natal (RN),firstClass,633.71,0.58,222.67,FlyingDrops,2022-12-22
+113598,1127,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-22
+56939,553,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1754.17,2.09,806.48,Rainbow,2022-12-22
+37971,362,Brasilia (DF),Aracaju (SE),firstClass,1260.1,1.11,425.98,CloudFy,2022-12-22
+91341,900,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-22
+28181,268,Recife (PE),Campo Grande (MS),firstClass,1110.76,1.39,535.4,CloudFy,2022-12-22
+18656,183,Aracaju (SE),Salvador (BH),premium,1288.79,2.16,830.86,CloudFy,2022-12-22
+35249,337,Recife (PE),Brasilia (DF),premium,573.61,0.63,242.21,CloudFy,2022-12-22
+22155,216,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-22
+106425,1056,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-22
+14702,146,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-22
+59348,575,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-22
+120347,1193,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-22
+114170,1135,Florianopolis (SC),Natal (RN),economic,726.95,1.84,709.37,CloudFy,2022-12-22
+93832,925,Florianopolis (SC),Sao Paulo (SP),firstClass,762.89,1.46,562.14,FlyingDrops,2022-12-22
+6049,60,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-22
+28790,274,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-22
+67030,650,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1041.65,0.86,331.89,FlyingDrops,2022-12-22
+24002,234,Brasilia (DF),Sao Paulo (SP),premium,698.1,0.67,257.81,CloudFy,2022-12-22
+68076,659,Natal (RN),Campo Grande (MS),economic,546.04,0.65,250.68,CloudFy,2022-12-22
+12334,119,Brasilia (DF),Rio de Janeiro (RJ),premium,457.95,0.48,183.37,CloudFy,2022-12-22
+93507,922,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-22
+60320,583,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-22
+49394,483,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-22
+17480,174,Brasilia (DF),Recife (PE),premium,559.13,0.63,242.21,Rainbow,2022-12-22
+114444,1138,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-22
+5744,56,Aracaju (SE),Sao Paulo (SP),premium,630.34,1.02,392.76,CloudFy,2022-12-22
+16104,158,Aracaju (SE),Recife (PE),firstClass,1124.11,1.44,555.74,CloudFy,2022-12-22
+101262,1004,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-22
+20045,194,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-22
+97424,962,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-22
+37393,355,Brasilia (DF),Rio de Janeiro (RJ),economic,371.04,0.48,183.37,Rainbow,2022-12-22
+42380,412,Recife (PE),Sao Paulo (SP),economic,513.06,1.26,486.52,CloudFy,2022-12-22
+4073,40,Recife (PE),Natal (RN),economic,360.22,0.58,222.67,Rainbow,2022-12-22
+8473,82,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-22
+103436,1026,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-22
+8999,90,Aracaju (SE),Salvador (BH),firstClass,1714.75,2.16,830.86,FlyingDrops,2022-12-22
+27622,264,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-22
+68438,662,Natal (RN),Campo Grande (MS),premium,660.25,0.65,250.68,Rainbow,2022-12-22
+66116,641,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-22
+40087,387,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-22
+52972,512,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-22
+49220,482,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-22
+61400,599,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-22
+127874,1260,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-22
+131467,1293,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-22
+81205,789,Aracaju (SE),Salvador (BH),economic,943.36,2.16,830.86,Rainbow,2022-12-22
+21803,212,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-22
+12954,126,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-22
+24859,241,Brasilia (DF),Salvador (BH),economic,958.15,1.76,676.56,CloudFy,2022-12-22
+120873,1197,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+40385,389,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-22
+60491,584,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-22
+89118,879,Sao Paulo (SP),Rio de Janeiro (RJ),economic,593.13,0.86,331.89,CloudFy,2022-12-22
+9289,93,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-22
+14510,145,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-22
+121687,1205,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-22
+1345,11,Brasilia (DF),Rio de Janeiro (RJ),premium,457.95,0.48,183.37,CloudFy,2022-12-22
+594,4,Recife (PE),Rio de Janeiro (RJ),premium,1270.03,2.3,885.57,CloudFy,2022-12-22
+71518,693,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-22
+43954,430,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-22
+121386,1203,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-22
+53932,521,Campo Grande (MS),Natal (RN),premium,541.59,0.65,250.68,Rainbow,2022-12-22
+120694,1196,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-22
+79426,772,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-22
+132519,1305,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-22
+88935,878,Natal (RN),Campo Grande (MS),premium,748.52,0.65,250.68,CloudFy,2022-12-22
+50531,491,Campo Grande (MS),Brasilia (DF),firstClass,847.83,0.72,277.7,FlyingDrops,2022-12-22
+25731,247,Brasilia (DF),Salvador (BH),firstClass,1724.49,1.76,676.56,FlyingDrops,2022-12-22
+102711,1019,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-22
+91111,898,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-22
+47648,461,Campo Grande (MS),Brasilia (DF),firstClass,870.91,0.72,277.7,Rainbow,2022-12-22
+37029,352,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-22
+34135,326,Aracaju (SE),Brasilia (DF),premium,706.36,1.11,425.98,Rainbow,2022-12-22
+109689,1086,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-22
+76569,744,Sao Paulo (SP),Rio de Janeiro (RJ),firstClass,1041.65,0.86,331.89,FlyingDrops,2022-12-22
+37667,357,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-22
+99974,992,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+81511,793,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-22
+90767,896,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-22
+126629,1252,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-22
+89521,882,Aracaju (SE),Sao Paulo (SP),firstClass,730.43,1.02,392.76,CloudFy,2022-12-22
+109940,1089,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+134639,1323,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-22
+109340,1083,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-22
+115603,1148,Florianopolis (SC),Rio de Janeiro (RJ),economic,317.08,1.21,466.3,Rainbow,2022-12-22
+110236,1091,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-22
+19457,189,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-22
+83446,814,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-22
+35735,341,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-22
+92665,914,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+86568,852,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-22
+70677,684,Natal (RN),Brasilia (DF),economic,697.51,1.43,550.69,CloudFy,2022-12-22
+20217,195,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-22
+60882,587,Campo Grande (MS),Aracaju (SE),firstClass,1473.41,1.69,650.1,FlyingDrops,2022-12-22
+127149,1255,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-22
+101460,1005,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-22
+49833,486,Campo Grande (MS),Recife (PE),firstClass,1262.23,1.39,535.4,FlyingDrops,2022-12-22
+65128,633,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-22
+16904,168,Brasilia (DF),Rio de Janeiro (RJ),firstClass,649.64,0.48,183.37,CloudFy,2022-12-22
+67219,651,Natal (RN),Aracaju (SE),premium,479.37,0.46,176.33,Rainbow,2022-12-22
+64334,625,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-22
+124446,1228,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-22
+108353,1074,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-22
+66301,642,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-22
+52029,504,Campo Grande (MS),Aracaju (SE),firstClass,1473.41,1.69,650.1,FlyingDrops,2022-12-22
+30139,287,Recife (PE),Campo Grande (MS),firstClass,1038.95,1.39,535.4,FlyingDrops,2022-12-22
+19013,186,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-22
+65304,634,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-22
+115968,1150,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-22
+56742,552,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-22
+117750,1165,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-22
+123236,1220,Florianopolis (SC),Salvador (BH),firstClass,1630.75,2.44,937.77,Rainbow,2022-12-22
+39846,384,Recife (PE),Brasilia (DF),firstClass,709.25,0.63,242.21,CloudFy,2022-12-22
+87178,859,Sao Paulo (SP),Brasilia (DF),firstClass,824.31,0.67,257.81,Rainbow,2022-12-22
+73699,714,Natal (RN),Rio de Janeiro (RJ),economic,774.57,1.55,595.03,CloudFy,2022-12-22
+103029,1022,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-22
+54727,533,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-22
+58629,571,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-22
+111536,1104,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-22
+127480,1257,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-22
+11843,115,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-22
+38955,372,Recife (PE),Natal (RN),firstClass,633.71,0.58,222.67,FlyingDrops,2022-12-22
+45668,445,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-22
+62903,612,Campo Grande (MS),Brasilia (DF),premium,691.99,0.72,277.7,Rainbow,2022-12-22
+94890,936,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-22
+123540,1222,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-22
+32549,312,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-22
+61635,601,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-22
+5315,52,Brasilia (DF),Natal (RN),firstClass,1433.35,1.43,550.69,FlyingDrops,2022-12-22
+77491,752,Natal (RN),Aracaju (SE),premium,479.37,0.46,176.33,Rainbow,2022-12-22
+116739,1156,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-22
+24590,239,Recife (PE),Brasilia (DF),economic,439.38,0.63,242.21,Rainbow,2022-12-22
+58829,572,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-22
+53468,516,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-22
+131664,1295,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-22
+32057,307,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-22
+83794,820,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-22
+15653,155,Brasilia (DF),Sao Paulo (SP),firstClass,992.17,0.67,257.81,Rainbow,2022-12-22
+98561,975,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-22
+38776,371,Recife (PE),Natal (RN),economic,360.22,0.58,222.67,Rainbow,2022-12-22
+11506,112,Recife (PE),Rio de Janeiro (RJ),economic,910.7,2.3,885.57,CloudFy,2022-12-22
+131267,1290,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-22
+32242,308,Recife (PE),Aracaju (SE),firstClass,1166.1,1.44,555.74,CloudFy,2022-12-22
+70503,683,Sao Paulo (SP),Aracaju (SE),economic,722.74,1.02,392.76,CloudFy,2022-12-22
+56108,545,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-22
+47835,462,Campo Grande (MS),Rio de Janeiro (RJ),economic,946.55,2.09,806.48,Rainbow,2022-12-22
+44795,436,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-22
+107551,1066,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-22
+72588,705,Natal (RN),Salvador (BH),premium,1289.31,1.85,710.57,CloudFy,2022-12-22
+46815,454,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-22
+134167,1320,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-22
+43252,422,Brasilia (DF),Salvador (BH),premium,1268.97,1.76,676.56,Rainbow,2022-12-22
+11318,111,Brasilia (DF),Recife (PE),premium,568.38,0.63,242.21,CloudFy,2022-12-22
+78065,757,Aracaju (SE),Rio de Janeiro (RJ),premium,930.12,1.55,597.61,Rainbow,2022-12-22
+130092,1280,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-22
+86167,848,Natal (RN),Sao Paulo (SP),firstClass,1142.29,0.85,327.55,FlyingDrops,2022-12-22
+59010,573,Campo Grande (MS),Sao Paulo (SP),premium,536.98,0.44,168.22,CloudFy,2022-12-22
+95277,940,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+3341,32,Brasilia (DF),Rio de Janeiro (RJ),firstClass,649.64,0.48,183.37,CloudFy,2022-12-22
+62366,607,Campo Grande (MS),Natal (RN),firstClass,749.85,0.65,250.68,FlyingDrops,2022-12-22
+991,8,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-22
+98270,973,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-22
+4253,41,Brasilia (DF),Salvador (BH),economic,921.08,1.76,676.56,Rainbow,2022-12-22
+92864,915,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-22
+26556,254,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1189.86,1.55,597.61,Rainbow,2022-12-22
+30585,290,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-22
+126828,1253,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-22
+130274,1281,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-22
+116556,1155,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-22
+105111,1041,Florianopolis (SC),Natal (RN),firstClass,1348.79,1.84,709.37,FlyingDrops,2022-12-22
+132260,1302,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-22
+104769,1039,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-22
+93193,919,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-22
+13257,129,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-22
+135830,1335,Florianopolis (SC),Salvador (BH),firstClass,1692.64,2.44,937.77,FlyingDrops,2022-12-22
+66709,646,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-22
+24340,237,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-22
+118211,1170,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-22
+395,3,Recife (PE),Brasilia (DF),firstClass,697.22,0.63,242.21,FlyingDrops,2022-12-22
+14918,148,Brasilia (DF),Rio de Janeiro (RJ),firstClass,586.04,0.48,183.37,Rainbow,2022-12-22
+33551,322,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-22
+109035,1080,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-22
+101075,1003,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-22
+29534,281,Recife (PE),Sao Paulo (SP),firstClass,883.63,1.26,486.52,CloudFy,2022-12-22
+6688,64,Brasilia (DF),Campo Grande (MS),premium,851.15,0.72,277.7,Rainbow,2022-12-22
+111734,1105,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-22
+48803,478,Campo Grande (MS),Florianopolis (SC),premium,1031.59,1.49,573.81,CloudFy,2022-12-22
+74971,727,Sao Paulo (SP),Natal (RN),economic,488.57,0.85,327.55,CloudFy,2022-12-22
+1607,13,Aracaju (SE),Brasilia (DF),firstClass,898.04,1.11,425.98,FlyingDrops,2022-12-22
+87565,864,Sao Paulo (SP),Brasilia (DF),economic,393.84,0.67,257.81,Rainbow,2022-12-22
+92127,908,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-22
+135526,1332,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-22
+10491,105,Recife (PE),Rio de Janeiro (RJ),firstClass,1611.14,2.3,885.57,Rainbow,2022-12-22
+29833,284,Brasilia (DF),Natal (RN),firstClass,1313.76,1.43,550.69,CloudFy,2022-12-22
+40585,390,Recife (PE),Brasilia (DF),premium,573.61,0.63,242.21,CloudFy,2022-12-22
+79021,766,Natal (RN),Recife (PE),firstClass,744.11,0.58,222.67,CloudFy,2022-12-22
+45865,447,Aracaju (SE),Sao Paulo (SP),firstClass,730.43,1.02,392.76,CloudFy,2022-12-22
+64948,632,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-22
+128859,1269,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-22
+124776,1231,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-22
+91747,905,Florianopolis (SC),Recife (PE),premium,1013.4,1.76,676.53,Rainbow,2022-12-22
+82146,798,Sao Paulo (SP),Brasilia (DF),economic,393.84,0.67,257.81,Rainbow,2022-12-22
+68925,666,Natal (RN),Sao Paulo (SP),economic,583.17,0.85,327.55,Rainbow,2022-12-22
+41843,407,Recife (PE),Salvador (BH),firstClass,1470.41,2.05,788.55,Rainbow,2022-12-22
+26278,251,Brasilia (DF),Aracaju (SE),economic,721.2,1.11,425.98,Rainbow,2022-12-22
+100725,1001,Florianopolis (SC),Aracaju (SE),firstClass,1468.03,2.1,808.85,CloudFy,2022-12-22
+130776,1286,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,585.77,1.21,466.3,CloudFy,2022-12-22
+46061,448,Aracaju (SE),Campo Grande (MS),economic,743.54,1.69,650.1,Rainbow,2022-12-22
+35438,338,Recife (PE),Aracaju (SE),economic,663.23,1.44,555.74,Rainbow,2022-12-22
+67408,652,Sao Paulo (SP),Aracaju (SE),premium,962.54,1.02,392.76,Rainbow,2022-12-22
+94345,931,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-22
+119845,1188,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-22
+103898,1029,Florianopolis (SC),Salvador (BH),firstClass,1640.8,2.44,937.77,CloudFy,2022-12-22
+82818,808,Aracaju (SE),Salvador (BH),premium,1289.05,2.16,830.86,Rainbow,2022-12-22
+39525,381,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-22
+34534,329,Sao Paulo (SP),Recife (PE),firstClass,1464.89,1.26,486.52,FlyingDrops,2022-12-23
+115426,1147,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-23
+67219,651,Aracaju (SE),Natal (RN),premium,427.25,0.46,176.33,Rainbow,2022-12-23
+49833,486,Recife (PE),Campo Grande (MS),firstClass,1038.95,1.39,535.4,FlyingDrops,2022-12-23
+101262,1004,Recife (PE),Florianopolis (SC),firstClass,1371.83,1.76,676.53,Rainbow,2022-12-23
+108353,1074,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-23
+8473,82,Aracaju (SE),Recife (PE),premium,835.21,1.44,555.74,CloudFy,2022-12-23
+16904,168,Rio de Janeiro (RJ),Brasilia (DF),firstClass,688.06,0.48,183.37,CloudFy,2022-12-23
+68076,659,Campo Grande (MS),Natal (RN),economic,467.6,0.65,250.68,CloudFy,2022-12-23
+40585,390,Brasilia (DF),Recife (PE),premium,568.38,0.63,242.21,CloudFy,2022-12-23
+68925,666,Sao Paulo (SP),Natal (RN),economic,530.03,0.85,327.55,Rainbow,2022-12-23
+28790,274,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-23
+38776,371,Natal (RN),Recife (PE),economic,406.36,0.58,222.67,Rainbow,2022-12-23
+130092,1280,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-23
+89521,882,Sao Paulo (SP),Aracaju (SE),firstClass,1186.15,1.02,392.76,CloudFy,2022-12-23
+59010,573,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-23
+62366,607,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-23
+34135,326,Brasilia (DF),Aracaju (SE),premium,965.62,1.11,425.98,Rainbow,2022-12-23
+35249,337,Brasilia (DF),Recife (PE),premium,568.38,0.63,242.21,CloudFy,2022-12-23
+126828,1253,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-23
+121386,1203,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-23
+98561,975,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-23
+71518,693,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-23
+105111,1041,Natal (RN),Florianopolis (SC),firstClass,1540.6,1.84,709.37,FlyingDrops,2022-12-23
+9470,94,Natal (RN),Recife (PE),firstClass,694.42,0.58,222.67,FlyingDrops,2022-12-23
+93193,919,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-23
+49394,483,Sao Paulo (SP),Campo Grande (MS),premium,447.53,0.44,168.22,CloudFy,2022-12-23
+17480,174,Recife (PE),Brasilia (DF),premium,638.63,0.63,242.21,Rainbow,2022-12-23
+45668,445,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-23
+134639,1323,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-23
+123540,1222,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-23
+25731,247,Salvador (BH),Brasilia (DF),firstClass,1020.08,1.76,676.56,FlyingDrops,2022-12-23
+19013,186,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-23
+38955,372,Natal (RN),Recife (PE),firstClass,694.42,0.58,222.67,FlyingDrops,2022-12-23
+61400,599,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-23
+81511,793,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-23
+76569,744,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,753.78,0.86,331.89,FlyingDrops,2022-12-23
+111536,1104,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-23
+37667,357,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-23
+82818,808,Salvador (BH),Aracaju (SE),premium,1247.02,2.16,830.86,Rainbow,2022-12-23
+39525,381,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-23
+103029,1022,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-23
+87178,859,Brasilia (DF),Sao Paulo (SP),firstClass,992.17,0.67,257.81,Rainbow,2022-12-23
+60491,584,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-23
+117750,1165,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-23
+26278,251,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-23
+395,3,Brasilia (DF),Recife (PE),firstClass,691.39,0.63,242.21,FlyingDrops,2022-12-23
+79426,772,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-23
+93507,922,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-23
+52972,512,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-23
+86568,852,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-23
+79021,766,Recife (PE),Natal (RN),firstClass,669.83,0.58,222.67,CloudFy,2022-12-23
+40087,387,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-23
+67030,650,Rio de Janeiro (RJ),Sao Paulo (SP),firstClass,753.78,0.86,331.89,FlyingDrops,2022-12-24
+134167,1320,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-24
+46815,454,Salvador (BH),Campo Grande (MS),premium,774.52,1.36,522.34,Rainbow,2022-12-24
+32549,312,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-24
+60320,583,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-24
+56742,552,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-24
+594,4,Rio de Janeiro (RJ),Recife (PE),premium,1333.52,2.3,885.57,CloudFy,2022-12-24
+12334,119,Rio de Janeiro (RJ),Brasilia (DF),premium,503.26,0.48,183.37,CloudFy,2022-12-24
+66116,641,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-24
+14510,145,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-24
+116556,1155,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-24
+47835,462,Rio de Janeiro (RJ),Campo Grande (MS),economic,849.52,2.09,806.48,Rainbow,2022-12-24
+103898,1029,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-24
+92665,914,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-24
+1345,11,Rio de Janeiro (RJ),Brasilia (DF),premium,503.26,0.48,183.37,CloudFy,2022-12-24
+59348,575,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-24
+43954,430,Aracaju (SE),Brasilia (DF),economic,548.62,1.11,425.98,Rainbow,2022-12-24
+20217,195,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-24
+37393,355,Rio de Janeiro (RJ),Brasilia (DF),economic,364.34,0.48,183.37,Rainbow,2022-12-24
+42380,412,Sao Paulo (SP),Recife (PE),economic,829.91,1.26,486.52,CloudFy,2022-12-24
+80132,779,Natal (RN),Aracaju (SE),firstClass,576.66,0.46,176.33,CloudFy,2022-12-24
+131664,1295,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-24
+18656,183,Salvador (BH),Aracaju (SE),premium,1209.04,2.16,830.86,CloudFy,2022-12-24
+126629,1252,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-24
+32057,307,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-24
+11506,112,Rio de Janeiro (RJ),Recife (PE),economic,952.83,2.3,885.57,CloudFy,2022-12-24
+54727,533,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-24
+72588,705,Salvador (BH),Natal (RN),premium,970.32,1.85,710.57,CloudFy,2022-12-24
+49220,482,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-24
+135830,1335,Salvador (BH),Florianopolis (SC),firstClass,1616.44,2.44,937.77,FlyingDrops,2022-12-24
+91747,905,Recife (PE),Florianopolis (SC),premium,1070.54,1.76,676.53,Rainbow,2022-12-24
+53932,521,Natal (RN),Campo Grande (MS),premium,660.25,0.65,250.68,Rainbow,2022-12-24
+61635,601,Aracaju (SE),Campo Grande (MS),premium,1116.83,1.69,650.1,Rainbow,2022-12-24
+95277,940,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-24
+115603,1148,Rio de Janeiro (RJ),Florianopolis (SC),economic,519.1,1.21,466.3,Rainbow,2022-12-24
+109340,1083,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-24
+30139,287,Campo Grande (MS),Recife (PE),firstClass,1262.23,1.39,535.4,FlyingDrops,2022-12-24
+104769,1039,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-24
+55911,544,Recife (PE),Campo Grande (MS),premium,832.77,1.39,535.4,Rainbow,2022-12-24
+131267,1290,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-24
+81205,789,Salvador (BH),Aracaju (SE),economic,826.02,2.16,830.86,Rainbow,2022-12-24
+13257,129,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-24
+74971,727,Natal (RN),Sao Paulo (SP),economic,623.33,0.85,327.55,CloudFy,2022-12-24
+78065,757,Rio de Janeiro (RJ),Aracaju (SE),premium,1098.93,1.55,597.61,Rainbow,2022-12-24
+11318,111,Recife (PE),Brasilia (DF),premium,573.61,0.63,242.21,CloudFy,2022-12-24
+88935,878,Campo Grande (MS),Natal (RN),premium,652.47,0.65,250.68,CloudFy,2022-12-24
+89118,879,Rio de Janeiro (RJ),Sao Paulo (SP),economic,446.75,0.86,331.89,CloudFy,2022-12-24
+103436,1026,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-24
+56939,553,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1518.88,2.09,806.48,Rainbow,2022-12-24
+29534,281,Sao Paulo (SP),Recife (PE),firstClass,1533.42,1.26,486.52,CloudFy,2022-12-24
+128859,1269,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-24
+127874,1260,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-24
+24859,241,Salvador (BH),Brasilia (DF),economic,587.85,1.76,676.56,CloudFy,2022-12-24
+132519,1305,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-24
+30585,290,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-24
+109035,1080,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-24
+101075,1003,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-24
+26556,254,Rio de Janeiro (RJ),Aracaju (SE),firstClass,1386.46,1.55,597.61,Rainbow,2022-12-24
+9289,93,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-24
+37029,352,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-24
+99974,992,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-24
+98270,973,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-24
+52029,504,Aracaju (SE),Campo Grande (MS),firstClass,1376.09,1.69,650.1,FlyingDrops,2022-12-24
+103244,1024,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-25
+56108,545,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-25
+90767,896,Rio de Janeiro (RJ),Florianopolis (SC),premium,708.27,1.21,466.3,CloudFy,2022-12-25
+43252,422,Salvador (BH),Brasilia (DF),premium,882.86,1.76,676.56,Rainbow,2022-12-25
+20045,194,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-25
+27622,264,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-25
+113598,1127,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-25
+24590,239,Brasilia (DF),Recife (PE),economic,421.2,0.63,242.21,Rainbow,2022-12-25
+91341,900,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-25
+127480,1257,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-25
+130274,1281,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-25
+91111,898,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-25
+35735,341,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-25
+14702,146,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-25
+92127,908,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-25
+111734,1105,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-25
+21803,212,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-25
+109940,1089,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-25
+123236,1220,Salvador (BH),Florianopolis (SC),firstClass,1654.09,2.44,937.77,Rainbow,2022-12-25
+24340,237,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-25
+8999,90,Salvador (BH),Aracaju (SE),firstClass,1581.59,2.16,830.86,FlyingDrops,2022-12-25
+33551,322,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-25
+114170,1135,Natal (RN),Florianopolis (SC),economic,873.07,1.84,709.37,CloudFy,2022-12-25
+120873,1197,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-25
+82146,798,Brasilia (DF),Sao Paulo (SP),economic,533.8,0.67,257.81,Rainbow,2022-12-25
+50531,491,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-25
+130776,1286,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,875.65,1.21,466.3,CloudFy,2022-12-25
+83446,814,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-25
+94345,931,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-25
+109689,1086,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-25
+94890,936,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-25
+22155,216,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-25
+120347,1193,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-25
+65304,634,Florianopolis (SC),Campo Grande (MS),economic,544.86,1.49,573.81,Rainbow,2022-12-25
+2462,21,Sao Paulo (SP),Recife (PE),economic,827.12,1.26,486.52,Rainbow,2022-12-25
+120694,1196,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-25
+19457,189,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-25
+3341,32,Rio de Janeiro (RJ),Brasilia (DF),firstClass,688.06,0.48,183.37,CloudFy,2022-12-25
+6049,60,Campo Grande (MS),Aracaju (SE),premium,1146.95,1.69,650.1,Rainbow,2022-12-25
+70677,684,Brasilia (DF),Natal (RN),economic,791.66,1.43,550.69,CloudFy,2022-12-25
+4073,40,Natal (RN),Recife (PE),economic,406.36,0.58,222.67,Rainbow,2022-12-25
+44795,436,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-25
+83794,820,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-25
+64948,632,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-25
+119845,1188,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-25
+28181,268,Campo Grande (MS),Recife (PE),firstClass,1244.73,1.39,535.4,CloudFy,2022-12-25
+58629,571,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-25
+32242,308,Aracaju (SE),Recife (PE),firstClass,1124.11,1.44,555.74,CloudFy,2022-12-25
+68438,662,Campo Grande (MS),Natal (RN),premium,541.59,0.65,250.68,Rainbow,2022-12-25
+70503,683,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-25
+101460,1005,Salvador (BH),Florianopolis (SC),firstClass,1657.48,2.44,937.77,CloudFy,2022-12-26
+124446,1228,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-26
+64334,625,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-26
+62903,612,Brasilia (DF),Campo Grande (MS),premium,851.15,0.72,277.7,Rainbow,2022-12-26
+127149,1255,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-26
+12954,126,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-26
+65128,633,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-26
+47648,461,Brasilia (DF),Campo Grande (MS),firstClass,1069.61,0.72,277.7,Rainbow,2022-12-26
+60882,587,Aracaju (SE),Campo Grande (MS),firstClass,1376.09,1.69,650.1,FlyingDrops,2022-12-26
+131467,1293,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-26
+11843,115,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-26
+40385,389,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-26
+16104,158,Recife (PE),Aracaju (SE),firstClass,1166.1,1.44,555.74,CloudFy,2022-12-26
+110236,1091,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-26
+100725,1001,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-26
+115968,1150,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-26
+6688,64,Campo Grande (MS),Brasilia (DF),premium,691.99,0.72,277.7,Rainbow,2022-12-26
+14918,148,Rio de Janeiro (RJ),Brasilia (DF),firstClass,687.25,0.48,183.37,Rainbow,2022-12-26
+39846,384,Brasilia (DF),Recife (PE),firstClass,804.24,0.63,242.21,CloudFy,2022-12-26
+66709,646,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-26
+45865,447,Sao Paulo (SP),Aracaju (SE),firstClass,1186.15,1.02,392.76,CloudFy,2022-12-26
+48803,478,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-26
+67408,652,Aracaju (SE),Sao Paulo (SP),premium,588.14,1.02,392.76,Rainbow,2022-12-26
+87565,864,Brasilia (DF),Sao Paulo (SP),economic,533.8,0.67,257.81,Rainbow,2022-12-26
+1607,13,Brasilia (DF),Aracaju (SE),firstClass,1287.52,1.11,425.98,FlyingDrops,2022-12-26
+124776,1231,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-26
+135526,1332,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-26
+10491,105,Rio de Janeiro (RJ),Recife (PE),firstClass,1617.81,2.3,885.57,Rainbow,2022-12-26
+35438,338,Aracaju (SE),Recife (PE),economic,602.49,1.44,555.74,Rainbow,2022-12-26
+29833,284,Natal (RN),Brasilia (DF),firstClass,1300.53,1.43,550.69,CloudFy,2022-12-26
+118211,1170,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-26
+81863,796,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-26
+5315,52,Natal (RN),Brasilia (DF),firstClass,1192.62,1.43,550.69,FlyingDrops,2022-12-26
+41843,407,Salvador (BH),Recife (PE),firstClass,1440.25,2.05,788.55,Rainbow,2022-12-26
+46061,448,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-26
+5744,56,Sao Paulo (SP),Aracaju (SE),premium,906.59,1.02,392.76,CloudFy,2022-12-26
+37971,362,Aracaju (SE),Brasilia (DF),firstClass,957.68,1.11,425.98,CloudFy,2022-12-26
+73699,714,Rio de Janeiro (RJ),Natal (RN),economic,677.1,1.55,595.03,CloudFy,2022-12-26
+77491,752,Aracaju (SE),Natal (RN),premium,427.25,0.46,176.33,Rainbow,2022-12-26
+114444,1138,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-26
+53468,516,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-26
+97424,962,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-26
+991,8,Recife (PE),Aracaju (SE),premium,932.84,1.44,555.74,CloudFy,2022-12-26
+92864,915,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-26
+116739,1156,Aracaju (SE),Florianopolis (SC),firstClass,1515.79,2.1,808.85,CloudFy,2022-12-26
+93832,925,Sao Paulo (SP),Florianopolis (SC),firstClass,1666.23,1.46,562.14,FlyingDrops,2022-12-26
+15653,155,Sao Paulo (SP),Brasilia (DF),firstClass,824.31,0.67,257.81,Rainbow,2022-12-26
+86167,848,Sao Paulo (SP),Natal (RN),firstClass,943.18,0.85,327.55,FlyingDrops,2022-12-26
+102711,1019,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-26
+121687,1205,Rio de Janeiro (RJ),Florianopolis (SC),premium,708.27,1.21,466.3,CloudFy,2022-12-26
+106425,1056,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-26
+132260,1302,Brasilia (DF),Florianopolis (SC),economic,889.07,1.66,637.56,Rainbow,2022-12-26
+24002,234,Sao Paulo (SP),Brasilia (DF),premium,602.12,0.67,257.81,CloudFy,2022-12-26
+107551,1066,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-26
+66301,642,Salvador (BH),Campo Grande (MS),economic,494.29,1.36,522.34,Rainbow,2022-12-26
+4253,41,Salvador (BH),Brasilia (DF),economic,609.83,1.76,676.56,Rainbow,2022-12-26
+58829,572,Florianopolis (SC),Campo Grande (MS),premium,697.65,1.49,573.81,CloudFy,2022-12-26
+396,3,Recife (PE),Rio de Janeiro (RJ),firstClass,1612.39,2.3,885.57,CloudFy,2022-12-29
+92128,908,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-29
+118212,1170,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-29
+53469,516,Campo Grande (MS),Rio de Janeiro (RJ),premium,1363.27,2.09,806.48,CloudFy,2022-12-29
+5316,52,Aracaju (SE),Florianopolis (SC),economic,852.18,2.1,808.85,Rainbow,2022-12-29
+29834,284,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-29
+24591,239,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-29
+109036,1080,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-29
+77492,752,Aracaju (SE),Sao Paulo (SP),firstClass,730.43,1.02,392.76,CloudFy,2022-12-29
+82819,808,Sao Paulo (SP),Natal (RN),firstClass,946.36,0.85,327.55,CloudFy,2022-12-29
+41844,407,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-29
+116740,1156,Florianopolis (SC),Recife (PE),economic,674.52,1.76,676.53,CloudFy,2022-12-29
+46062,448,Recife (PE),Rio de Janeiro (RJ),firstClass,1706.89,2.3,885.57,FlyingDrops,2022-12-29
+26279,251,Recife (PE),Rio de Janeiro (RJ),economic,910.7,2.3,885.57,CloudFy,2022-12-29
+98562,975,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-29
+3342,32,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-29
+134168,1320,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-29
+100726,1001,Florianopolis (SC),Salvador (BH),premium,1311.38,2.44,937.77,CloudFy,2022-12-29
+56743,552,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-29
+93194,919,Florianopolis (SC),Sao Paulo (SP),firstClass,762.89,1.46,562.14,FlyingDrops,2022-12-29
+135831,1335,Florianopolis (SC),Recife (PE),firstClass,1175.62,1.76,676.53,Rainbow,2022-12-29
+39526,381,Brasilia (DF),Salvador (BH),firstClass,1724.49,1.76,676.56,FlyingDrops,2022-12-29
+58830,572,Campo Grande (MS),Salvador (BH),economic,621.36,1.36,522.34,CloudFy,2022-12-29
+79022,766,Sao Paulo (SP),Campo Grande (MS),economic,367.22,0.44,168.22,Rainbow,2022-12-29
+107552,1066,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-29
+39847,384,Recife (PE),Sao Paulo (SP),firstClass,954.78,1.26,486.52,FlyingDrops,2022-12-29
+44796,436,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-29
+111735,1105,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-29
+109341,1083,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-29
+15654,155,Recife (PE),Florianopolis (SC),economic,803.39,1.76,676.53,Rainbow,2022-12-29
+48804,478,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-29
+56109,545,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1609.81,2.09,806.48,FlyingDrops,2022-12-29
+74972,727,Sao Paulo (SP),Rio de Janeiro (RJ),premium,846.03,0.86,331.89,CloudFy,2022-12-29
+70504,683,Natal (RN),Campo Grande (MS),firstClass,953.32,0.65,250.68,CloudFy,2022-12-29
+87566,864,Aracaju (SE),Brasilia (DF),economic,472.72,1.11,425.98,CloudFy,2022-12-29
+32243,308,Recife (PE),Sao Paulo (SP),firstClass,954.78,1.26,486.52,FlyingDrops,2022-12-29
+11507,112,Brasilia (DF),Rio de Janeiro (RJ),firstClass,586.04,0.48,183.37,Rainbow,2022-12-29
+83795,820,Natal (RN),Brasilia (DF),premium,919.89,1.43,550.69,Rainbow,2022-12-29
+1608,13,Recife (PE),Brasilia (DF),firstClass,709.25,0.63,242.21,CloudFy,2022-12-29
+135527,1332,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-29
+38777,371,Brasilia (DF),Aracaju (SE),premium,965.62,1.11,425.98,Rainbow,2022-12-29
+103899,1029,Florianopolis (SC),Rio de Janeiro (RJ),economic,313.62,1.21,466.3,CloudFy,2022-12-29
+40586,390,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-29
+72589,705,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-29
+128860,1269,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-29
+32058,307,Brasilia (DF),Recife (PE),economic,421.2,0.63,242.21,Rainbow,2022-12-29
+131665,1295,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-29
+65305,634,Campo Grande (MS),Rio de Janeiro (RJ),premium,1363.27,2.09,806.48,CloudFy,2022-12-29
+24341,237,Aracaju (SE),Brasilia (DF),premium,706.36,1.11,425.98,Rainbow,2022-12-29
+10492,105,Recife (PE),Campo Grande (MS),economic,615.59,1.39,535.4,Rainbow,2022-12-29
+46816,454,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1614.7,2.09,806.48,CloudFy,2022-12-29
+115969,1150,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-29
+116557,1155,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-29
+70678,684,Natal (RN),Aracaju (SE),firstClass,611.4,0.46,176.33,Rainbow,2022-12-29
+29535,281,Recife (PE),Sao Paulo (SP),firstClass,980.83,1.26,486.52,Rainbow,2022-12-29
+86569,852,Sao Paulo (SP),Brasilia (DF),economic,393.84,0.67,257.81,Rainbow,2022-12-29
+19014,186,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-29
+92666,914,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,549.55,1.21,466.3,Rainbow,2022-12-29
+95278,940,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-29
+127150,1255,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-29
+62367,607,Campo Grande (MS),Salvador (BH),economic,615.26,1.36,522.34,Rainbow,2022-12-29
+20218,195,Aracaju (SE),Campo Grande (MS),firstClass,1387.89,1.69,650.1,Rainbow,2022-12-29
+59011,573,Campo Grande (MS),Recife (PE),firstClass,1244.73,1.39,535.4,CloudFy,2022-12-29
+101461,1005,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-29
+16905,168,Brasilia (DF),Campo Grande (MS),economic,629.54,0.72,277.7,Rainbow,2022-12-29
+992,8,Brasilia (DF),Campo Grande (MS),firstClass,1096.58,0.72,277.7,CloudFy,2022-12-29
+49834,486,Campo Grande (MS),Recife (PE),firstClass,1262.23,1.39,535.4,FlyingDrops,2022-12-29
+131268,1290,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-29
+65129,633,Campo Grande (MS),Sao Paulo (SP),premium,441.34,0.44,168.22,Rainbow,2022-12-29
+130093,1280,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-29
+60883,587,Campo Grande (MS),Florianopolis (SC),premium,1030.13,1.49,573.81,Rainbow,2022-12-29
+64335,625,Campo Grande (MS),Salvador (BH),firstClass,1149.38,1.36,522.34,CloudFy,2022-12-29
+86168,848,Sao Paulo (SP),Salvador (BH),premium,1114.09,1.04,401.66,Rainbow,2022-12-29
+124447,1228,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-29
+66302,642,Campo Grande (MS),Rio de Janeiro (RJ),premium,1363.27,2.09,806.48,CloudFy,2022-12-29
+32550,312,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-29
+108354,1074,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-29
+104770,1039,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-29
+78066,757,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-29
+67220,651,Natal (RN),Salvador (BH),firstClass,1747.31,1.85,710.57,CloudFy,2022-12-29
+98271,973,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-29
+35736,341,Recife (PE),Salvador (BH),economic,842.11,2.05,788.55,CloudFy,2022-12-29
+110237,1091,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-29
+43253,422,Recife (PE),Natal (RN),premium,474.6,0.58,222.67,CloudFy,2022-12-29
+11319,111,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-29
+117751,1165,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-29
+54728,533,Campo Grande (MS),Aracaju (SE),firstClass,1581.8,1.69,650.1,CloudFy,2022-12-29
+123237,1220,Florianopolis (SC),Rio de Janeiro (RJ),premium,469.92,1.21,466.3,CloudFy,2022-12-29
+87179,859,Aracaju (SE),Salvador (BH),firstClass,1723.71,2.16,830.86,Rainbow,2022-12-29
+103030,1022,Florianopolis (SC),Natal (RN),firstClass,1315.27,1.84,709.37,CloudFy,2022-12-29
+132261,1302,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-29
+73700,714,Aracaju (SE),Florianopolis (SC),economic,869.13,2.1,808.85,CloudFy,2022-12-29
+45669,445,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-29
+111537,1104,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-29
+105112,1041,Florianopolis (SC),Natal (RN),premium,1128.51,1.84,709.37,CloudFy,2022-12-29
+58630,571,Campo Grande (MS),Salvador (BH),premium,826.72,1.36,522.34,CloudFy,2022-12-29
+11844,115,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-29
+38956,372,Brasilia (DF),Natal (RN),firstClass,1434.91,1.43,550.69,Rainbow,2022-12-29
+30586,290,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-29
+130275,1281,Florianopolis (SC),Campo Grande (MS),firstClass,857.32,1.49,573.81,Rainbow,2022-12-29
+127481,1257,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-29
+126829,1253,Florianopolis (SC),Recife (PE),firstClass,1300.6,1.76,676.53,CloudFy,2022-12-29
+94891,936,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-29
+62904,612,Campo Grande (MS),Aracaju (SE),economic,877.56,1.69,650.1,Rainbow,2022-12-29
+123541,1222,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-29
+30140,287,Brasilia (DF),Salvador (BH),premium,1346.6,1.76,676.56,CloudFy,2022-12-29
+4254,41,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-29
+19458,189,Aracaju (SE),Recife (PE),firstClass,1119.47,1.44,555.74,Rainbow,2022-12-29
+26557,254,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-29
+83447,814,Sao Paulo (SP),Florianopolis (SC),premium,1367.6,1.46,562.14,Rainbow,2022-12-29
+61636,601,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-29
+13258,129,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-29
+6689,64,Brasilia (DF),Rio de Janeiro (RJ),economic,371.04,0.48,183.37,Rainbow,2022-12-29
+101076,1003,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-29
+66117,641,Campo Grande (MS),Salvador (BH),firstClass,1149.38,1.36,522.34,CloudFy,2022-12-29
+49221,482,Campo Grande (MS),Natal (RN),economic,467.6,0.65,250.68,CloudFy,2022-12-29
+131468,1293,Florianopolis (SC),Rio de Janeiro (RJ),premium,481.42,1.21,466.3,Rainbow,2022-12-29
+24860,241,Brasilia (DF),Salvador (BH),economic,958.15,1.76,676.56,CloudFy,2022-12-29
+25732,247,Aracaju (SE),Natal (RN),economic,380.32,0.46,176.33,Rainbow,2022-12-29
+93508,922,Florianopolis (SC),Brasilia (DF),economic,555.01,1.66,637.56,Rainbow,2022-12-29
+61401,599,Campo Grande (MS),Salvador (BH),firstClass,1114.75,1.36,522.34,Rainbow,2022-12-29
+127875,1260,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-29
+81206,789,Aracaju (SE),Campo Grande (MS),premium,1021.53,1.69,650.1,CloudFy,2022-12-29
+21804,212,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-29
+52973,512,Campo Grande (MS),Brasilia (DF),premium,691.99,0.72,277.7,Rainbow,2022-12-29
+40088,387,Brasilia (DF),Rio de Janeiro (RJ),premium,440.69,0.48,183.37,Rainbow,2022-12-29
+5745,56,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1189.86,1.55,597.61,Rainbow,2022-12-29
+9000,90,Brasilia (DF),Campo Grande (MS),economic,629.54,0.72,277.7,Rainbow,2022-12-29
+12955,126,Aracaju (SE),Rio de Janeiro (RJ),economic,712.64,1.55,597.61,Rainbow,2022-12-29
+68439,662,Sao Paulo (SP),Recife (PE),firstClass,1573.5,1.26,486.52,Rainbow,2022-12-29
+42381,412,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-29
+64949,632,Campo Grande (MS),Florianopolis (SC),economic,764.53,1.49,573.81,Rainbow,2022-12-29
+79427,772,Aracaju (SE),Brasilia (DF),firstClass,959.29,1.11,425.98,Rainbow,2022-12-29
+109941,1089,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-29
+134640,1323,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-29
+91112,898,Florianopolis (SC),Sao Paulo (SP),firstClass,762.89,1.46,562.14,FlyingDrops,2022-12-29
+47649,461,Campo Grande (MS),Sao Paulo (SP),firstClass,684.65,0.44,168.22,FlyingDrops,2022-12-29
+81512,793,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-29
+76570,744,Sao Paulo (SP),Aracaju (SE),economic,722.74,1.02,392.76,CloudFy,2022-12-29
+37668,357,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-29
+60492,584,Campo Grande (MS),Natal (RN),firstClass,749.85,0.65,250.68,FlyingDrops,2022-12-29
+126630,1252,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-29
+89119,879,Sao Paulo (SP),Rio de Janeiro (RJ),premium,861.9,0.86,331.89,Rainbow,2022-12-29
+40386,389,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-29
+49395,483,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-29
+114445,1138,Florianopolis (SC),Aracaju (SE),premium,1149.53,2.1,808.85,CloudFy,2022-12-29
+120874,1197,Florianopolis (SC),Brasilia (DF),economic,636.51,1.66,637.56,CloudFy,2022-12-29
+103437,1026,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-29
+88936,878,Sao Paulo (SP),Aracaju (SE),firstClass,1159.84,1.02,392.76,Rainbow,2022-12-29
+27623,264,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-29
+97425,962,Florianopolis (SC),Natal (RN),firstClass,1385.49,1.84,709.37,Rainbow,2022-12-29
+102712,1019,Florianopolis (SC),Salvador (BH),economic,915.02,2.44,937.77,Rainbow,2022-12-29
+50532,491,Campo Grande (MS),Sao Paulo (SP),economic,375.51,0.44,168.22,CloudFy,2022-12-29
+114171,1135,Florianopolis (SC),Recife (PE),premium,918.66,1.76,676.53,CloudFy,2022-12-29
+6050,60,Brasilia (DF),Campo Grande (MS),firstClass,1009.71,0.72,277.7,FlyingDrops,2022-12-29
+113599,1127,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-29
+80133,779,Sao Paulo (SP),Recife (PE),premium,1195.26,1.26,486.52,CloudFy,2022-12-29
+60321,583,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-29
+18657,183,Brasilia (DF),Rio de Janeiro (RJ),premium,440.69,0.48,183.37,Rainbow,2022-12-29
+93833,925,Florianopolis (SC),Brasilia (DF),firstClass,1097.17,1.66,637.56,FlyingDrops,2022-12-29
+106426,1056,Florianopolis (SC),Sao Paulo (SP),firstClass,762.89,1.46,562.14,FlyingDrops,2022-12-29
+68077,659,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-29
+34535,329,Recife (PE),Aracaju (SE),firstClass,1300.81,1.44,555.74,FlyingDrops,2022-12-29
+55912,544,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-29
+24003,234,Recife (PE),Sao Paulo (SP),premium,670.13,1.26,486.52,Rainbow,2022-12-29
+28182,268,Recife (PE),Brasilia (DF),firstClass,709.25,0.63,242.21,CloudFy,2022-12-29
+595,4,Aracaju (SE),Sao Paulo (SP),economic,446.73,1.02,392.76,Rainbow,2022-12-29
+121688,1205,Florianopolis (SC),Campo Grande (MS),economic,478.02,1.49,573.81,CloudFy,2022-12-29
+14511,145,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-29
+8474,82,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-29
+20046,194,Recife (PE),Brasilia (DF),firstClass,721.93,0.63,242.21,Rainbow,2022-12-29
+37394,355,Brasilia (DF),Campo Grande (MS),economic,629.54,0.72,277.7,Rainbow,2022-12-29
+101263,1004,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-29
+17481,174,Brasilia (DF),Florianopolis (SC),firstClass,1487.52,1.66,637.56,CloudFy,2022-12-29
+90768,896,Florianopolis (SC),Aracaju (SE),economic,879.1,2.1,808.85,CloudFy,2022-12-29
+89522,882,Natal (RN),Recife (PE),firstClass,694.42,0.58,222.67,FlyingDrops,2022-12-29
+109690,1086,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-29
+34136,326,Recife (PE),Rio de Janeiro (RJ),firstClass,1706.89,2.3,885.57,FlyingDrops,2022-12-29
+99975,992,Florianopolis (SC),Sao Paulo (SP),firstClass,693.51,1.46,562.14,CloudFy,2022-12-29
+37030,352,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-29
+132520,1305,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-29
+121387,1203,Florianopolis (SC),Sao Paulo (SP),economic,427.0,1.46,562.14,Rainbow,2022-12-29
+53933,521,Campo Grande (MS),Rio de Janeiro (RJ),firstClass,1614.7,2.09,806.48,CloudFy,2022-12-29
+71519,693,Sao Paulo (SP),Salvador (BH),firstClass,1306.8,1.04,401.66,CloudFy,2022-12-29
+4074,40,Recife (PE),Aracaju (SE),premium,932.22,1.44,555.74,Rainbow,2022-12-29
+120695,1196,Florianopolis (SC),Rio de Janeiro (RJ),firstClass,624.89,1.21,466.3,FlyingDrops,2022-12-29
+16105,158,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-29
+47836,462,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-29
+124777,1231,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-29
+56940,553,Campo Grande (MS),Brasilia (DF),premium,661.32,0.72,277.7,CloudFy,2022-12-29
+91748,905,Florianopolis (SC),Aracaju (SE),firstClass,1582.1,2.1,808.85,Rainbow,2022-12-29
+81864,796,Aracaju (SE),Sao Paulo (SP),premium,588.14,1.02,392.76,Rainbow,2022-12-29
+82147,798,Sao Paulo (SP),Aracaju (SE),premium,962.54,1.02,392.76,Rainbow,2022-12-29
+94346,931,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-29
+120348,1193,Florianopolis (SC),Recife (PE),economic,674.52,1.76,676.53,CloudFy,2022-12-29
+37972,362,Recife (PE),Aracaju (SE),firstClass,1181.19,1.44,555.74,Rainbow,2022-12-29
+91342,900,Florianopolis (SC),Salvador (BH),economic,898.67,2.44,937.77,CloudFy,2022-12-29
+59349,575,Campo Grande (MS),Natal (RN),firstClass,732.89,0.65,250.68,CloudFy,2022-12-29
+9471,94,Aracaju (SE),Rio de Janeiro (RJ),premium,930.12,1.55,597.61,Rainbow,2022-12-29
+35439,338,Brasilia (DF),Natal (RN),premium,1107.52,1.43,550.69,Rainbow,2022-12-29
+35250,337,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-29
+52030,504,Campo Grande (MS),Salvador (BH),premium,834.61,1.36,522.34,Rainbow,2022-12-29
+115604,1148,Florianopolis (SC),Sao Paulo (SP),economic,426.91,1.46,562.14,CloudFy,2022-12-29
+130777,1286,Florianopolis (SC),Rio de Janeiro (RJ),economic,313.62,1.21,466.3,CloudFy,2022-12-29
+28791,274,Aracaju (SE),Campo Grande (MS),economic,750.92,1.69,650.1,CloudFy,2022-12-29
+67031,650,Natal (RN),Florianopolis (SC),firstClass,1570.02,1.84,709.37,CloudFy,2022-12-29
+103245,1024,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-29
+119846,1188,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-29
+14703,146,Recife (PE),Rio de Janeiro (RJ),economic,908.93,2.3,885.57,Rainbow,2022-12-29
+115427,1147,Florianopolis (SC),Natal (RN),economic,780.68,1.84,709.37,Rainbow,2022-12-29
+12335,119,Aracaju (SE),Recife (PE),economic,604.14,1.44,555.74,CloudFy,2022-12-29
+2463,21,Brasilia (DF),Sao Paulo (SP),premium,750.0,0.67,257.81,Rainbow,2022-12-29
+9290,93,Brasilia (DF),Aracaju (SE),premium,965.62,1.11,425.98,Rainbow,2022-12-29
+1346,11,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-29
+67409,652,Aracaju (SE),Rio de Janeiro (RJ),firstClass,1190.94,1.55,597.61,FlyingDrops,2022-12-29
+68926,666,Sao Paulo (SP),Aracaju (SE),economic,647.9,1.02,392.76,Rainbow,2022-12-29
+43955,430,Brasilia (DF),Florianopolis (SC),premium,1189.32,1.66,637.56,CloudFy,2022-12-29
+45866,447,Brasilia (DF),Salvador (BH),economic,921.08,1.76,676.56,Rainbow,2022-12-29
+33552,322,Aracaju (SE),Natal (RN),economic,332.1,0.46,176.33,CloudFy,2022-12-29
+66710,646,Campo Grande (MS),Sao Paulo (SP),firstClass,620.16,0.44,168.22,CloudFy,2022-12-29
+14919,148,Recife (PE),Brasilia (DF),economic,393.68,0.63,242.21,CloudFy,2022-12-29
+111735,1105,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-30
+17481,174,Florianopolis (SC),Brasilia (DF),firstClass,1127.36,1.66,637.56,CloudFy,2022-12-30
+6689,64,Rio de Janeiro (RJ),Brasilia (DF),economic,364.34,0.48,183.37,Rainbow,2022-12-30
+15654,155,Florianopolis (SC),Recife (PE),economic,695.3,1.76,676.53,Rainbow,2022-12-30
+24003,234,Sao Paulo (SP),Recife (PE),premium,1145.72,1.26,486.52,Rainbow,2022-12-30
+130777,1286,Rio de Janeiro (RJ),Florianopolis (SC),economic,533.69,1.21,466.3,CloudFy,2022-12-30
+20046,194,Brasilia (DF),Recife (PE),firstClass,772.21,0.63,242.21,Rainbow,2022-12-30
+29535,281,Sao Paulo (SP),Recife (PE),firstClass,1573.5,1.26,486.52,Rainbow,2022-12-30
+8474,82,Florianopolis (SC),Brasilia (DF),premium,814.55,1.66,637.56,Rainbow,2022-12-30
+130093,1280,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-30
+109690,1086,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-30
+35439,338,Natal (RN),Brasilia (DF),premium,919.89,1.43,550.69,Rainbow,2022-12-30
+128860,1269,Natal (RN),Florianopolis (SC),firstClass,1554.92,1.84,709.37,Rainbow,2022-12-30
+4254,41,Aracaju (SE),Recife (PE),premium,875.41,1.44,555.74,Rainbow,2022-12-30
+53469,516,Rio de Janeiro (RJ),Campo Grande (MS),premium,1139.93,2.09,806.48,CloudFy,2022-12-30
+24591,239,Salvador (BH),Recife (PE),economic,767.27,2.05,788.55,CloudFy,2022-12-30
+121688,1205,Campo Grande (MS),Florianopolis (SC),economic,808.63,1.49,573.81,CloudFy,2022-12-30
+71519,693,Salvador (BH),Sao Paulo (SP),firstClass,590.98,1.04,401.66,CloudFy,2022-12-30
+91748,905,Aracaju (SE),Florianopolis (SC),firstClass,1582.41,2.1,808.85,Rainbow,2022-12-30
+66710,646,Sao Paulo (SP),Campo Grande (MS),firstClass,563.0,0.44,168.22,CloudFy,2022-12-30
+131665,1295,Brasilia (DF),Florianopolis (SC),premium,1222.24,1.66,637.56,Rainbow,2022-12-30
+53933,521,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1512.09,2.09,806.48,CloudFy,2022-12-30
+38777,371,Aracaju (SE),Brasilia (DF),premium,706.36,1.11,425.98,Rainbow,2022-12-30
+43253,422,Natal (RN),Recife (PE),premium,563.23,0.58,222.67,CloudFy,2022-12-30
+18657,183,Rio de Janeiro (RJ),Brasilia (DF),premium,435.67,0.48,183.37,Rainbow,2022-12-30
+40586,390,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-30
+99975,992,Sao Paulo (SP),Florianopolis (SC),firstClass,1684.14,1.46,562.14,CloudFy,2022-12-30
+37030,352,Florianopolis (SC),Aracaju (SE),premium,1248.7,2.1,808.85,Rainbow,2022-12-30
+1608,13,Brasilia (DF),Recife (PE),firstClass,804.24,0.63,242.21,CloudFy,2022-12-30
+34535,329,Aracaju (SE),Recife (PE),firstClass,1088.87,1.44,555.74,FlyingDrops,2022-12-30
+121387,1203,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-30
+120695,1196,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-30
+65305,634,Rio de Janeiro (RJ),Campo Grande (MS),premium,1139.93,2.09,806.48,CloudFy,2022-12-30
+117751,1165,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-30
+66117,641,Salvador (BH),Campo Grande (MS),firstClass,904.66,1.36,522.34,CloudFy,2022-12-30
+20218,195,Campo Grande (MS),Aracaju (SE),firstClass,1545.78,1.69,650.1,Rainbow,2022-12-30
+100726,1001,Salvador (BH),Florianopolis (SC),premium,1321.52,2.44,937.77,CloudFy,2022-12-30
+76570,744,Aracaju (SE),Sao Paulo (SP),economic,410.79,1.02,392.76,CloudFy,2022-12-30
+120874,1197,Brasilia (DF),Florianopolis (SC),economic,884.94,1.66,637.56,CloudFy,2022-12-30
+67220,651,Salvador (BH),Natal (RN),firstClass,1218.63,1.85,710.57,CloudFy,2022-12-30
+16105,158,Florianopolis (SC),Brasilia (DF),firstClass,1087.18,1.66,637.56,Rainbow,2022-12-30
+81864,796,Sao Paulo (SP),Aracaju (SE),premium,962.54,1.02,392.76,Rainbow,2022-12-30
+14703,146,Rio de Janeiro (RJ),Recife (PE),economic,932.59,2.3,885.57,Rainbow,2022-12-30
+123541,1222,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,961.99,1.21,466.3,FlyingDrops,2022-12-30
+83447,814,Florianopolis (SC),Sao Paulo (SP),premium,577.76,1.46,562.14,Rainbow,2022-12-30
+110237,1091,Salvador (BH),Florianopolis (SC),economic,899.6,2.44,937.77,Rainbow,2022-12-30
+30140,287,Salvador (BH),Brasilia (DF),premium,836.89,1.76,676.56,CloudFy,2022-12-30
+120348,1193,Recife (PE),Florianopolis (SC),economic,761.2,1.76,676.53,CloudFy,2022-12-30
+59349,575,Natal (RN),Campo Grande (MS),firstClass,953.32,0.65,250.68,CloudFy,2022-12-30
+37668,357,Sao Paulo (SP),Aracaju (SE),economic,722.74,1.02,392.76,CloudFy,2022-12-30
+60883,587,Florianopolis (SC),Campo Grande (MS),premium,714.86,1.49,573.81,Rainbow,2022-12-30
+43955,430,Florianopolis (SC),Brasilia (DF),premium,885.37,1.66,637.56,CloudFy,2022-12-30
+109941,1089,Campo Grande (MS),Florianopolis (SC),firstClass,1446.34,1.49,573.81,CloudFy,2022-12-30
+32550,312,Florianopolis (SC),Recife (PE),firstClass,1292.29,1.76,676.53,FlyingDrops,2022-12-30
+28791,274,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-30
+104770,1039,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-30
+103245,1024,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-30
+65129,633,Sao Paulo (SP),Campo Grande (MS),premium,438.74,0.44,168.22,Rainbow,2022-12-30
+45866,447,Salvador (BH),Brasilia (DF),economic,609.83,1.76,676.56,Rainbow,2022-12-31
+13258,129,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-31
+111537,1104,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-31
+14919,148,Brasilia (DF),Recife (PE),economic,432.1,0.63,242.21,CloudFy,2022-12-31
+48804,478,Salvador (BH),Campo Grande (MS),economic,494.29,1.36,522.34,Rainbow,2022-12-31
+70504,683,Campo Grande (MS),Natal (RN),firstClass,732.89,0.65,250.68,CloudFy,2022-12-31
+113599,1127,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-31
+88936,878,Aracaju (SE),Sao Paulo (SP),firstClass,752.27,1.02,392.76,Rainbow,2022-12-31
+60492,584,Natal (RN),Campo Grande (MS),firstClass,979.56,0.65,250.68,FlyingDrops,2022-12-31
+11507,112,Rio de Janeiro (RJ),Brasilia (DF),firstClass,687.25,0.48,183.37,Rainbow,2022-12-31
+80133,779,Recife (PE),Sao Paulo (SP),premium,657.87,1.26,486.52,CloudFy,2022-12-31
+81512,793,Florianopolis (SC),Aracaju (SE),firstClass,1574.28,2.1,808.85,FlyingDrops,2022-12-31
+134640,1323,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-31
+79427,772,Brasilia (DF),Aracaju (SE),firstClass,1214.82,1.11,425.98,Rainbow,2022-12-31
+54728,533,Aracaju (SE),Campo Grande (MS),firstClass,1389.37,1.69,650.1,CloudFy,2022-12-31
+87179,859,Salvador (BH),Aracaju (SE),firstClass,1520.02,2.16,830.86,Rainbow,2022-12-31
+45669,445,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-31
+56940,553,Brasilia (DF),Campo Grande (MS),premium,831.7,0.72,277.7,CloudFy,2022-12-31
+115969,1150,Campo Grande (MS),Florianopolis (SC),firstClass,1310.32,1.49,573.81,FlyingDrops,2022-12-31
+107552,1066,Rio de Janeiro (RJ),Florianopolis (SC),firstClass,941.27,1.21,466.3,Rainbow,2022-12-31
+29834,284,Campo Grande (MS),Brasilia (DF),economic,506.56,0.72,277.7,CloudFy,2022-12-31
+131268,1290,Brasilia (DF),Florianopolis (SC),firstClass,1576.97,1.66,637.56,Rainbow,2022-12-31
+78066,757,Campo Grande (MS),Aracaju (SE),premium,1215.45,1.69,650.1,CloudFy,2022-12-31
+50532,491,Sao Paulo (SP),Campo Grande (MS),economic,335.16,0.44,168.22,CloudFy,2022-12-31
+10492,105,Campo Grande (MS),Recife (PE),economic,674.16,1.39,535.4,Rainbow,2022-12-31
+82819,808,Natal (RN),Sao Paulo (SP),firstClass,1020.42,0.85,327.55,CloudFy,2022-12-31
+52030,504,Salvador (BH),Campo Grande (MS),premium,774.52,1.36,522.34,Rainbow,2022-12-31
+127875,1260,Aracaju (SE),Florianopolis (SC),premium,1132.81,2.1,808.85,Rainbow,2022-12-31
+114171,1135,Recife (PE),Florianopolis (SC),premium,1074.75,1.76,676.53,CloudFy,2022-12-31
+64335,625,Salvador (BH),Campo Grande (MS),firstClass,904.66,1.36,522.34,CloudFy,2022-12-31
+105112,1041,Natal (RN),Florianopolis (SC),premium,1165.99,1.84,709.37,CloudFy,2022-12-31
+131468,1293,Rio de Janeiro (RJ),Florianopolis (SC),premium,672.66,1.21,466.3,Rainbow,2022-12-31
+56743,552,Florianopolis (SC),Campo Grande (MS),firstClass,930.34,1.49,573.81,FlyingDrops,2022-12-31
+134168,1320,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-31
+46816,454,Rio de Janeiro (RJ),Campo Grande (MS),firstClass,1512.09,2.09,806.48,CloudFy,2022-12-31
+19014,186,Campo Grande (MS),Aracaju (SE),economic,886.9,1.69,650.1,CloudFy,2022-12-31
+119846,1188,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-31
+60321,583,Brasilia (DF),Campo Grande (MS),economic,583.6,0.72,277.7,CloudFy,2022-12-31
+49395,483,Florianopolis (SC),Campo Grande (MS),firstClass,949.58,1.49,573.81,CloudFy,2022-12-31
+91342,900,Salvador (BH),Florianopolis (SC),economic,943.15,2.44,937.77,CloudFy,2022-12-31
+115427,1147,Natal (RN),Florianopolis (SC),economic,884.4,1.84,709.37,Rainbow,2022-12-31
+44796,436,Recife (PE),Aracaju (SE),economic,684.88,1.44,555.74,CloudFy,2022-12-31
+126829,1253,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-31
+37394,355,Campo Grande (MS),Brasilia (DF),economic,517.82,0.72,277.7,Rainbow,2022-12-31
+26279,251,Rio de Janeiro (RJ),Recife (PE),economic,952.83,2.3,885.57,CloudFy,2022-12-31
+38956,372,Natal (RN),Brasilia (DF),firstClass,1286.63,1.43,550.69,Rainbow,2022-12-31
+135527,1332,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-31
+94891,936,Aracaju (SE),Florianopolis (SC),firstClass,1499.93,2.1,808.85,FlyingDrops,2022-12-31
+101461,1005,Campo Grande (MS),Florianopolis (SC),firstClass,1341.21,1.49,573.81,Rainbow,2022-12-31
+109036,1080,Recife (PE),Florianopolis (SC),firstClass,1434.38,1.76,676.53,FlyingDrops,2022-12-31
+127481,1257,Sao Paulo (SP),Florianopolis (SC),economic,947.95,1.46,562.14,CloudFy,2022-12-31
+61401,599,Salvador (BH),Campo Grande (MS),firstClass,961.85,1.36,522.34,Rainbow,2022-12-31
+24860,241,Salvador (BH),Brasilia (DF),economic,587.85,1.76,676.56,CloudFy,2022-12-31
+132520,1305,Sao Paulo (SP),Florianopolis (SC),economic,908.17,1.46,562.14,Rainbow,2022-12-31
+127150,1255,Recife (PE),Florianopolis (SC),firstClass,1354.53,1.76,676.53,CloudFy,2022-12-31
+5316,52,Florianopolis (SC),Aracaju (SE),economic,819.41,2.1,808.85,Rainbow,2022-12-31
+132261,1302,Brasilia (DF),Florianopolis (SC),firstClass,1569.65,1.66,637.56,FlyingDrops,2022-12-31
+124447,1228,Aracaju (SE),Florianopolis (SC),premium,1174.97,2.1,808.85,CloudFy,2022-12-31
