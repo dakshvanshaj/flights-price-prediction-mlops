@@ -5,7 +5,7 @@ from pathlib import Path
 # paths independent of where the script is run from.
 # Assumes this config file is located at root folder
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-print(PROJECT_ROOT)
+
 # --- Path Definitions ---
 # Centralized directory for all log files.
 LOGS_DIR = PROJECT_ROOT / "logs"
@@ -27,8 +27,6 @@ VALIDATION_PIPELINE_LOGS_PATH = LOGS_DIR / "data_validation_pipeline.log"
 # --- Data Splitting Configuration ---
 DEV_SET_SIZE = 0.70  # 70% for initial model development
 EVAL_SET_SIZE = 0.15  # 15% for the initial hold-out evaluation
-DRIFT_SIMULATION_FILES = 4  # Number of files for drift simulation
-
 
 # --- Great Expectations Configuration ---
 # GE project root directory.
