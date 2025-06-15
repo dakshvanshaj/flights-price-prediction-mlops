@@ -1,9 +1,9 @@
 # In src/data_validation/create_validation_definitions.py
 import logging
-from src.data_validation.validation_definition import (
+from data_validation.validation_definition import (
     get_or_create_and_add_validation_definition,
 )
-from src.data_validation.config import VALIDATION_DEFINITION_NAME
+from config import VALIDATION_DEFINITION_NAME
 
 logger = logging.getLogger(__name__)
 
