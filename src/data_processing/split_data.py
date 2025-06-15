@@ -9,8 +9,7 @@ from config import (
     DRIFT_SIMULATION_DIR,
     DEV_SET_SIZE,
     EVAL_SET_SIZE,
-    DRIFT_SIMULATION_FILES,
-    SPLIT_DATA_LOGS_PATH,  # Assuming you add this to your config
+    SPLIT_DATA_LOGS_PATH,
 )
 from shared.utils import setup_logger
 
@@ -20,10 +19,11 @@ logger = logging.getLogger(__name__)
 
 def split_data():
     """
-    Reads the raw flight data, sorts it by date, and splits it into three sets:
-    1.  development_data.csv: For initial training and validation.
-    2.  evaluation_holdout.csv: For final evaluation of the initial model.
-    3.  A set of smaller files for simulating future data arrivals and drift.
+    Reads the raw flight data, sorts it chronologically, and splits it into:
+    1. A development set for initial training and validation.
+    2. A hold-out set for final evaluation of the initial model.
+    3. A set of monthly files to simulate future data arrivals for drift detection
+       and retraining.
     """
     logger.info("--- Starting Data Splitting Process ---")
 
@@ -53,7 +53,6 @@ def split_data():
     dev_end_index = int(total_rows * DEV_SET_SIZE)
     eval_end_index = dev_end_index + int(total_rows * EVAL_SET_SIZE)
 
-    # Split the DataFrame
     dev_df = df.iloc[:dev_end_index]
     eval_df = df.iloc[dev_end_index:eval_end_index]
     drift_df = df.iloc[eval_end_index:]
@@ -73,25 +72,38 @@ def split_data():
     eval_df.to_csv(eval_path, index=False)
     logger.info("Main datasets saved.")
 
-    # --- 5. Create and Save Drift Simulation Files ---
-    logger.info(
-        f"Splitting drift simulation data into {DRIFT_SIMULATION_FILES} files..."
-    )
+    # --- 5. Create and Save Monthly Drift Simulation Files ---
+    logger.info("Splitting drift simulation data into monthly files...")
 
-    # Use numpy.array_split for a clean and readable split.
-    drift_chunks = np.array_split(drift_df, DRIFT_SIMULATION_FILES)
+    if drift_df.empty:
+        logger.warning(
+            "Drift simulation set is empty. No monthly files will be created."
+        )
+        logger.info("--- Data Splitting Process Completed Successfully! ---")
+        return
 
-    # Enumerate through the chunks to save them with a 1-based index.
-    for i, chunk_df in enumerate(drift_chunks, 1):
-        chunk_path = DRIFT_SIMULATION_DIR / f"future_data_chunk_{i}.csv"
-        logger.info(f"  - Saving chunk {i} ({len(chunk_df)} rows) to '{chunk_path}'...")
-        chunk_df.to_csv(chunk_path, index=False)
+    # Group the drift dataframe by year and month
+    drift_df["year_month"] = drift_df["date"].dt.to_period("M")
+    monthly_groups = drift_df.groupby("year_month")
+
+    for period, group_df in monthly_groups:
+        # Create a descriptive filename like 'flights_2022-10.csv'
+        file_name = f"flights_{period}.csv"
+        chunk_path = DRIFT_SIMULATION_DIR / file_name
+
+        # Make a copy to avoid SettingWithCopyWarning when dropping the column
+        data_to_save = group_df.copy()
+        data_to_save.drop(columns=["year_month"], inplace=True)
+
+        logger.info(
+            f"  - Saving month {period} ({len(data_to_save)} rows) to '{chunk_path}'..."
+        )
+        data_to_save.to_csv(chunk_path, index=False)
 
     logger.info("--- Data Splitting Process Completed Successfully! ---")
 
 
 if __name__ == "__main__":
     # This block runs only when the script is executed directly.
-    # It sets up the logger for this specific run.
     setup_logger(verbose=True, log_file=SPLIT_DATA_LOGS_PATH, mode="w")
     split_data()
