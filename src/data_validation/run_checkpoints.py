@@ -1,8 +1,8 @@
 import logging
-from src.data_validation.actions import action_list
-from src.data_validation.checkpoints import get_or_create_checkpoint
-from src.data_validation.config import CHECKPOINT_NAME
-from src.data_validation.create_validation_definitions import validation_definition_list
+from data_validation.actions import action_list
+from data_validation.checkpoints import get_or_create_checkpoint
+from config import CHECKPOINT_NAME
+from data_validation.create_validation_definitions import validation_definition_list
 
 logger = logging.getLogger(__name__)
 
