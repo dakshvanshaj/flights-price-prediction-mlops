@@ -1,0 +1,31 @@
+# This file configures the Python project, its dependencies,
+# and defines custom script commands.
+
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flight_price_prediction_mlops"
+version = "0.1.0"
+# readme = "README.md"  # Uncomment this if you have a README.md file
+requires-python = ">=3.8" # Using a more general Python version
+
+# --- Core Dependencies ---
+# These are the libraries required for your project to run.
+dependencies = [
+    "pandas",
+    "numpy",
+    "great-expectations",
+    "scikit-learn",
+]
+
+# --- Setuptools Configuration ---
+# This tells setuptools where to find the Python packages.
+[tool.setuptools.packages.find]
+where = ["src"]  # Look for packages in the 'src' directory
+
+[project.scripts]
+# This defines a command called 'run-validation-pipeline' which, when run,
+# will execute the 'data_validation_pipeline' function from your script.
+run-validation-pipeline = "data_validation.pipelines.validation_pipeline:data_validation_pipeline"
