@@ -1,7 +1,9 @@
 # src/data_validation/expectations/bronze_expectations.py
 import logging
 from typing import List
-from great_expectations.core import ExpectationConfiguration
+from great_expectations.expectations.expectation_configuration import (
+    ExpectationConfiguration,
+)
 
 # Create a logger object for this module
 logger = logging.getLogger(__name__)
@@ -20,8 +22,6 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     expectations = []
 
     # --- Expectation 1: Column Existence ---
-    # This check ensures that all expected columns are present, regardless of order.
-    # It is more flexible than checking for a strict order.
     expected_columns = {
         "travelCode",
         "userCode",
@@ -36,7 +36,8 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     }
     expectations.append(
         ExpectationConfiguration(
-            expectation_type="expect_table_columns_to_match_set",
+            # Corrected: Use 'type' instead of 'expectation_type'
+            type="expect_table_columns_to_match_set",
             kwargs={"column_set": list(expected_columns)},
             meta={"name": "bronze_columns_match_set"},
         )
@@ -45,7 +46,7 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     # --- Expectation 2: Table Row Count ---
     expectations.append(
         ExpectationConfiguration(
-            expectation_type="expect_table_row_count_to_be_between",
+            type="expect_table_row_count_to_be_between",
             kwargs={"min_value": 1},
             meta={"name": "bronze_table_has_rows"},
         )
@@ -54,7 +55,7 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     # --- Expectation 3: No Null Primary Keys ---
     expectations.append(
         ExpectationConfiguration(
-            expectation_type="expect_column_values_to_not_be_null",
+            type="expect_column_values_to_not_be_null",
             kwargs={"column": "travelCode"},
             meta={"name": "bronze_travelCode_not_null"},
         )
@@ -68,7 +69,7 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     for col in ["price", "time", "distance"]:
         expectations.append(
             ExpectationConfiguration(
-                expectation_type="expect_column_values_to_be_in_type_list",
+                type="expect_column_values_to_be_in_type_list",
                 kwargs={"column": col, "type_list": numeric_types},
                 meta={"name": f"bronze_{col}_is_numeric"},
             )
@@ -78,7 +79,7 @@ def build_bronze_expectations() -> List[ExpectationConfiguration]:
     for col in ["from", "to", "flightType", "agency", "date"]:
         expectations.append(
             ExpectationConfiguration(
-                expectation_type="expect_column_values_to_be_in_type_list",
+                type="expect_column_values_to_be_in_type_list",
                 kwargs={"column": col, "type_list": string_types},
                 meta={"name": f"bronze_{col}_is_string"},
             )
