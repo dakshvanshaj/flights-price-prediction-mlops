@@ -1,43 +1,55 @@
+# src/config.py
 from pathlib import Path
 
 # --- Absolute Path Configuration ---
-# Defines the absolute path to the project root directory, making all other
-# paths independent of where the script is run from.
-# Assumes this config file is located at root folder
+# Defines the absolute path to the project root directory.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 # --- Path Definitions ---
-# Centralized directory for all log files.
 LOGS_DIR = PROJECT_ROOT / "logs"
-
-# Data-related paths.
 DATA_DIR = PROJECT_ROOT / "data"
 
+# Location of the original, full dataset used by the splitting script.
 INPUT_CSV_PATH = DATA_DIR / "flights.csv"
 
+# Raw Data Flow Directories
+RAW_DATA_DIR = DATA_DIR / "raw"
+RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
+RAW_PROCESSED_DIR = RAW_DATA_DIR / "processed"
+RAW_QUARANTINE_DIR = RAW_DATA_DIR / "quarantine"
+
+# Prepared and Cleaned Data Directories
 PREPARED_DATA_DIR = DATA_DIR / "prepared_data"
-DRIFT_SIMULATION_DIR = PREPARED_DATA_DIR / "drift_simulation_data"
+CLEANED_DATA_DIR = PREPARED_DATA_DIR / "cleaned"
+
 
 # --- Log File Paths ---
-# Specific log file paths, all pointing to the central LOGS_DIR.
 SPLIT_DATA_LOGS_PATH = LOGS_DIR / "split_data.log"
-VALIDATION_PIPELINE_LOGS_PATH = LOGS_DIR / "data_validation_pipeline.log"
+BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
+SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
 
 
 # --- Data Splitting Configuration ---
-DEV_SET_SIZE = 0.70  # 70% for initial model development
-EVAL_SET_SIZE = 0.15  # 15% for the initial hold-out evaluation
+DEV_SET_SIZE = 0.70
+EVAL_SET_SIZE = 0.15
+
 
 # --- Great Expectations Configuration ---
-# GE project root directory.
 GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
-GE_ROOT_DIR
-# Data source, asset, and batch names for GE.
-SOURCE_NAME = "flights"
-ASSET_NAME = "flights_data"
-BATCH_NAME = "flights_main"
 
-# Expectation suite and checkpoint names.
-SUITE_NAME = "flights_expectations_suite"
-CHECKPOINT_NAME = "data_validation_checkpoint"
-VALIDATION_DEFINITION_NAME = "flights_validation_definition"
+# --- Bronze Gate Configuration ---
+# Specific names for the Bronze pipeline components
+RAW_DATA_SOURCE_NAME = "raw_flight_data_source"
+BRONZE_RAW_ASSET_NAME = "raw_flights_asset"
+BRONZE_SUITE_NAME = "bronze_raw_flights_suite"
+BRONZE_BATCH_DEFINITION_NAME = "bronze_batch_definition"
+BRONZE_VALIDATION_DEFINITION_NAME = "bronze_validation_definition"
+BRONZE_CHECKPOINT_NAME = "bronze_checkpoint"
+
+
+# --- Silver Gate Configuration (Placeholders for later) ---
+# We will uncomment and use these when we build the Silver pipeline
+# CLEANED_DATA_SOURCE_NAME = "cleaned_flight_data_source"
+# SILVER_CLEANED_ASSET_NAME = "silver_cleaned_flights_asset"
+# SILVER_SUITE_NAME = "silver_cleaned_flights_suite"
+# SILVER_CHECKPOINT_NAME = "silver_checkpoint"
