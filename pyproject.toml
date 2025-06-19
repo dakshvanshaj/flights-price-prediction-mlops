@@ -28,4 +28,4 @@ where = ["src"]  # Look for packages in the 'src' directory
 [project.scripts]
 # This defines a command called 'run-validation-pipeline' which, when run,
 # will execute the 'data_validation_pipeline' function from your script.
-run-validation-pipeline = "data_validation.pipelines.validation_pipeline:data_validation_pipeline"
+run-bronze-pipeline = "data_validation.pipelines.bronze_pipeline:main"
