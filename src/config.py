@@ -9,9 +9,6 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 LOGS_DIR = PROJECT_ROOT / "logs"
 DATA_DIR = PROJECT_ROOT / "data"
 
-# Location of the original, full dataset used by the splitting script.
-INPUT_CSV_PATH = DATA_DIR / "flights.csv"
-
 # Raw Data Flow Directories
 RAW_DATA_DIR = DATA_DIR / "raw"
 RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
@@ -22,14 +19,8 @@ RAW_QUARANTINE_DIR = RAW_DATA_DIR / "quarantine"
 PREPARED_DATA_DIR = DATA_DIR / "prepared_data"
 CLEANED_DATA_DIR = PREPARED_DATA_DIR / "cleaned"
 
-
-# --- Log File Paths ---
-SPLIT_DATA_LOGS_PATH = LOGS_DIR / "split_data.log"
-BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
-SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
-
-
-# --- Data Splitting Configuration ---
+# ---------------------SPLIT_DATA------------------------
+INPUT_CSV_PATH = DATA_DIR / "flights.csv"
 DEV_SET_SIZE = 0.70
 EVAL_SET_SIZE = 0.15
 
@@ -37,19 +28,39 @@ EVAL_SET_SIZE = 0.15
 # --- Great Expectations Configuration ---
 GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 
-# --- Bronze Gate Configuration ---
-# Specific names for the Bronze pipeline components
+# gx Datasource related configurations
+# ---------------------BRONZE PIPELINE-------------------
+# RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
 RAW_DATA_SOURCE_NAME = "raw_flight_data_source"
-BRONZE_RAW_ASSET_NAME = "raw_flights_asset"
-BRONZE_SUITE_NAME = "bronze_raw_flights_suite"
+# needs path to data source folder relative to data context base directory bath i.e GE_ROOT_DIR
+RAW_DATA_SOURCE = RAW_DATA_DIR / "pending"
+
+
+# gx asset realted config
+# ---------------------BRONZE PIPELINE-------------------
+RAW_ASSET_NAME = "raw_flights_asset"
+
+# batch definition related config
+# ---------------------BRONZE PIPELINE-------------------
+# location of raw data file ready for validation (BRONZE PIPELINE) # for testing purposes
+RAW_BATCH_PATH = "flights_2022-02.csv"
 BRONZE_BATCH_DEFINITION_NAME = "bronze_batch_definition"
+
+
+# gx suite related config
+# ---------------------BRONZE PIPELINE-------------------
+BRONZE_SUITE_NAME = "bronze_raw_flights_suite"
+
+# gx validation definition config
+# ---------------------BRONZE PIPELINE-------------------
 BRONZE_VALIDATION_DEFINITION_NAME = "bronze_validation_definition"
+
+# gx checkpoint definition config
+# ---------------------BRONZE PIPELINE-------------------
 BRONZE_CHECKPOINT_NAME = "bronze_checkpoint"
 
 
-# --- Silver Gate Configuration (Placeholders for later) ---
-# We will uncomment and use these when we build the Silver pipeline
-# CLEANED_DATA_SOURCE_NAME = "cleaned_flight_data_source"
-# SILVER_CLEANED_ASSET_NAME = "silver_cleaned_flights_asset"
-# SILVER_SUITE_NAME = "silver_cleaned_flights_suite"
-# SILVER_CHECKPOINT_NAME = "silver_checkpoint"
+# ---------------------LOG FILES PATHS-------------------
+SPLIT_DATA_LOGS_PATH = LOGS_DIR / "split_data.log"
+BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
+SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
