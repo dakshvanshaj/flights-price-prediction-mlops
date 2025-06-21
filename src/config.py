@@ -32,13 +32,11 @@ GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 # ---------------------BRONZE PIPELINE-------------------
 # RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
 RAW_DATA_SOURCE_NAME = "raw_flight_data_source"
-# needs path to data source folder relative to data context base directory bath i.e GE_ROOT_DIR
-RAW_DATA_SOURCE = RAW_DATA_DIR / "pending"
-
+RAW_DATA_SOURCE = RAW_PENDING_DIR
 
 # gx asset realted config
 # ---------------------BRONZE PIPELINE-------------------
-RAW_ASSET_NAME = "raw_flights_asset"
+RAW_ASSET_NAME = "raw_flights_csv_files"
 
 # batch definition related config
 # ---------------------BRONZE PIPELINE-------------------
