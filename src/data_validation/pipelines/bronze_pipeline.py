@@ -11,7 +11,6 @@ from config import (
     RAW_ASSET_NAME,
     BRONZE_SUITE_NAME,
     RAW_DATA_SOURCE_NAME,
-    RAW_PENDING_DIR,
     BRONZE_PIPELINE_LOGS_PATH,
     BRONZE_BATCH_DEFINITION_NAME,
     BRONZE_VALIDATION_DEFINITION_NAME,
@@ -48,7 +47,7 @@ def run_bronze_pipeline(file_path: Path) -> bool:
         True if the validation succeeds, False otherwise.
     """
 
-    abs_batch_path = RAW_PENDING_DIR / file_path
+    abs_batch_path = RAW_DATA_SOURCE / file_path
     if not abs_batch_path.exists():
         logger.error(f"File not found at {file_path}. Aborting Bronze pipeline.")
         return False
