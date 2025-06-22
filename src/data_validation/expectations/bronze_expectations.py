@@ -2,17 +2,14 @@
 import logging
 from typing import List
 
-# Corrected: Use 'gxe' alias for conciseness as per standard convention.
 from great_expectations import expectations as gxe
 
-# Create a logger object for this module
 logger = logging.getLogger(__name__)
 
 
 def build_bronze_expectations() -> List:
     """
     Builds and returns a list of Expectation objects for the Bronze gate.
-    This version creates direct instances of Expectation classes.
 
     Returns:
         A list of Expectation objects.
@@ -20,7 +17,6 @@ def build_bronze_expectations() -> List:
     logger.info("Building expectations for the Bronze data quality gate...")
 
     # --- Expectation 1: Column Existence ---
-    # This check ensures that all expected columns are present, regardless of order.
     expected_columns = [
         "travelCode",
         "userCode",
@@ -37,7 +33,7 @@ def build_bronze_expectations() -> List:
         column_set=expected_columns,
         meta={
             "name": "bronze_columns_match_set",
-            "notes": "Checks for the presence of all required columns.",
+            "notes": "Checks for presence of all required columns.",
         },
     )
 
@@ -50,7 +46,7 @@ def build_bronze_expectations() -> List:
         },
     )
 
-    # --- Expectation 3: No Null Primary Keys ---
+    # --- Expectation 3: Primary Key Not Null ---
     expect_travelcode_not_null = gxe.ExpectColumnValuesToNotBeNull(
         column="travelCode",
         meta={
@@ -59,40 +55,74 @@ def build_bronze_expectations() -> List:
         },
     )
 
-    # --- Expectation 4: Basic Column Type Checks ---
-    numeric_types = ["int", "int64", "float", "float64"]
-    string_types = ["object", "str"]
-
-    expect_price_is_numeric = gxe.ExpectColumnValuesToBeInTypeList(
-        column="price",
-        type_list=numeric_types,
-        meta={"name": "bronze_price_is_numeric"},
-    )
-    expect_time_is_numeric = gxe.ExpectColumnValuesToBeInTypeList(
-        column="time", type_list=numeric_types, meta={"name": "bronze_time_is_numeric"}
-    )
-    expect_distance_is_numeric = gxe.ExpectColumnValuesToBeInTypeList(
-        column="distance",
-        type_list=numeric_types,
-        meta={"name": "bronze_distance_is_numeric"},
-    )
-    expect_agency_is_string = gxe.ExpectColumnValuesToBeInTypeList(
-        column="agency",
-        type_list=string_types,
-        meta={"name": "bronze_agency_is_string"},
-    )
-    # ... (add other string/object checks as needed) ...
-
-    # --- Assemble the list of expectations ---
+    # --- Create a list to hold all expectations ---
     expectations = [
         expect_columns_to_match_set,
         expect_table_has_rows,
         expect_travelcode_not_null,
-        expect_price_is_numeric,
-        expect_time_is_numeric,
-        expect_distance_is_numeric,
-        expect_agency_is_string,
     ]
+
+    # --- Expectation 4: Programmatic Column Type and Range Checks ---
+
+    # Define column groups
+    numeric_columns = ["price", "time", "distance", "userCode", "travelCode"]
+    string_columns = ["from", "to", "flightType", "agency"]
+
+    # Generate type checks for numeric columns
+    for col in numeric_columns:
+        expectations.append(
+            gxe.ExpectColumnValuesToBeInTypeList(
+                column=col,
+                type_list=["int", "int64", "float", "float64"],
+                meta={"name": f"bronze_{col}_is_numeric"},
+            )
+        )
+        # Add a non-negative check for relevant numeric columns
+        if col in ["price", "distance", "time"]:
+            expectations.append(
+                gxe.ExpectColumnValuesToBeBetween(
+                    column=col,
+                    min_value=0,
+                    meta={"name": f"bronze_{col}_is_not_negative"},
+                )
+            )
+
+    # Generate type checks for string columns
+    for col in string_columns:
+        expectations.append(
+            gxe.ExpectColumnValuesToBeInTypeList(
+                column=col,
+                type_list=["object", "str"],
+                meta={"name": f"bronze_{col}_is_string"},
+            )
+        )
+
+    # --- Expectation 5: More Precise and Robust Individual Checks ---
+
+    # Check if date strings match YYYY-MM-DD format
+    expectations.append(
+        gxe.ExpectColumnValuesToMatchStrftimeFormat(
+            column="date",
+            strftime_format="%Y-%m-%d",
+            meta={
+                "name": "bronze_date_format_is_correct",
+                "notes": "Checks if date strings match YYYY-MM-DD format.",
+            },
+        )
+    )
+
+    # Flexibly check for key categorical column values
+    expectations.append(
+        gxe.ExpectColumnValuesToBeInSet(
+            column="flightType",
+            value_set=["economic", "firstClass", "premium"],
+            mostly=0.90,  # Allow for some flexibility
+            meta={
+                "name": "bronze_flightType_in_known_set",
+                "notes": "Checks that most flight types are from a known list.",
+            },
+        )
+    )
 
     logger.info(
         f"Successfully built {len(expectations)} expectations for the Bronze gate."
