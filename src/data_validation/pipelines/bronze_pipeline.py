@@ -3,10 +3,13 @@ import logging
 import argparse
 from pathlib import Path
 import sys
+import shutil
 
 from config import (
     GE_ROOT_DIR,
     RAW_DATA_SOURCE,
+    RAW_PROCESSED_DIR,
+    RAW_QUARANTINE_DIR,
     BRONZE_CHECKPOINT_NAME,
     RAW_ASSET_NAME,
     BRONZE_SUITE_NAME,
@@ -14,7 +17,6 @@ from config import (
     BRONZE_PIPELINE_LOGS_PATH,
     BRONZE_BATCH_DEFINITION_NAME,
     BRONZE_VALIDATION_DEFINITION_NAME,
-    RAW_BATCH_PATH,
 )
 from data_validation.expectations.bronze_expectations import build_bronze_expectations
 from data_validation.ge_components import (
@@ -35,20 +37,21 @@ from shared.utils import setup_logger
 logger = logging.getLogger(__name__)
 
 
-def run_bronze_pipeline(file_path: Path) -> bool:
+def run_bronze_pipeline(file_name: str) -> bool:
     """
-    Runs the Bronze data validation pipeline on a specified raw data file using
-    a static, definition-based workflow.
+    Runs the Bronze data validation pipeline on a specified raw data file
+    to ensure it meets the quality standards defined in the Bronze expectations.
 
     Args:
-        file_path: The absolute path to the raw data file to validate.
+        file_name: The name of the raw data file in folder to validate.
 
     Returns:
         True if the validation succeeds, False otherwise.
     """
-
-    abs_batch_path = RAW_DATA_SOURCE / file_path
-    if not abs_batch_path.exists():
+    file_path = Path(file_name)
+    file_path = RAW_DATA_SOURCE / file_path
+    logger.info(f"Validating file: {file_path}")
+    if not file_path.exists():
         logger.error(f"File not found at {file_path}. Aborting Bronze pipeline.")
         return False
 
@@ -59,14 +62,15 @@ def run_bronze_pipeline(file_path: Path) -> bool:
     )
     asset = get_or_create_csv_asset(datasource=datasource, asset_name=RAW_ASSET_NAME)
 
-    # --- 3. Create Definitions to Link Data and Rules ---
+    # --- 2. Create Definitions to Link Data and Rules ---
+    # NOTE: This assumes the `file_name` provided to this function is what's
+    # needed by `get_or_create_batch_definition`.
     batch_definition = get_or_create_batch_definition(
         asset=asset,
         batch_definition_name=BRONZE_BATCH_DEFINITION_NAME,
-        file_path=file_path,
+        file_name=file_name,
     )
 
-    # --- 2. Build Expectation Suite ---
     suite = get_or_create_expectation_suite(
         context=context, suite_name=BRONZE_SUITE_NAME
     )
@@ -86,7 +90,7 @@ def run_bronze_pipeline(file_path: Path) -> bool:
     )
     action_list = get_action_list()
 
-    # --- 4. Run the Checkpoint ---
+    # --- 3. Run the Checkpoint ---
     checkpoint = get_or_create_checkpoint(
         context=context,
         checkpoint_name=BRONZE_CHECKPOINT_NAME,
@@ -95,11 +99,21 @@ def run_bronze_pipeline(file_path: Path) -> bool:
     )
     result = run_checkpoint(checkpoint=checkpoint)
 
-    # --- 5. Return Final Status ---
-    if not result.success:
-        logger.warning(f"--- Bronze Validation Pipeline: FAILED for {file_path} ---")
+    # --- 4. Move File Based on Result ---
+    # Ensure the destination directories exist
+    RAW_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    RAW_QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
+
+    if result.success:
+        logger.info(f"--- Bronze Validation Pipeline: PASSED for {file_name} ---")
+        destination_path = RAW_PROCESSED_DIR / file_path.name
+        logger.info(f"Moving validated file to: {destination_path}")
+        shutil.move(src=file_path, dst=destination_path)
     else:
-        logger.info(f"--- Bronze Validation Pipeline: PASSED for {file_path} ---")
+        logger.warning(f"--- Bronze Validation Pipeline: FAILED for {file_name} ---")
+        destination_path = RAW_QUARANTINE_DIR / file_path.name
+        logger.warning(f"Moving failed file to quarantine: {destination_path}")
+        shutil.move(src=file_path, dst=destination_path)
 
     return result.success
 
@@ -109,27 +123,26 @@ def main():
     Main entry point for running the Bronze pipeline from the command line.
     This function handles logging setup and argument parsing.
     """
-    # ----For Testing purposes only-----
-    file_path = RAW_BATCH_PATH
     # --- SETUP LOGGING ---
     setup_logger(verbose=True, log_file=BRONZE_PIPELINE_LOGS_PATH, mode="w")
-    logger.info(f"--- Starting Bronze Validation Pipeline for: {file_path} ---")
 
-    # parser = argparse.ArgumentParser(
-    #     description="Run the Bronze Data Validation Pipeline."
-    # )
-    # parser.add_argument(
-    #     "file_path",
-    #     type=str,
-    #     help="The relative path to the raw data file to validate.",
-    # )
-    # args = parser.parse_args()
+    # --- PARSE COMMAND-LINE ARGUMENTS ---
+    parser = argparse.ArgumentParser(
+        description="Run the Bronze Data Validation Pipeline."
+    )
+    parser.add_argument(
+        "file_name",
+        type=str,
+        help="The name of the raw data file in the 'pending' directory (e.g., 'flights_2022-02.csv').",
+    )
+    args = parser.parse_args()
 
-    # full_file_path = PROJECT_ROOT / args.file_path
+    logger.info(f"--- Starting Bronze Validation Pipeline for: {args.file_name} ---")
 
-    # Run the pipeline and get the success status
-    # Run the pipeline and get the success status
-    pipeline_success = run_bronze_pipeline(file_path)
+    file_name = args.file_name
+
+    # --- RUN THE PIPELINE ---
+    pipeline_success = run_bronze_pipeline(file_name=file_name)
 
     # Exit with a status code that an orchestrator like Airflow can interpret
     if not pipeline_success:
@@ -138,5 +151,19 @@ def main():
 
 
 if __name__ == "__main__":
-    # This allows the script to be run directly using 'python <script_name> <args>'
     main()
+
+
+# -----------------------------------------OVERVIEW-----------------------------------------
+
+# flow or steps in the Bronze pipeline:
+
+# ge context created at GE_ROOT_DIR
+# datasource created at RAW_DATA_SOURCE   -> Points to a folder with raw data files to validate
+# csv asset created at RAW_ASSET_NAME -> Points to csv files in the datasource
+# batch definition created for file_name  -> Points to a sepecific raw data file,
+# throws a regex error if absolute or any path is specified for the raw data file
+# expectation suite with name BRONZE_SUITE_NAME
+# expectations added to the suite from build_bronze_expectations()
+# validation definition created at BRONZE_VALIDATION_DEFINITION_NAME
+# checkpoint created at BRONZE_CHECKPOINT_NAME
