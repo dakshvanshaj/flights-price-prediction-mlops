@@ -40,8 +40,6 @@ RAW_ASSET_NAME = "raw_flights_csv_files"
 
 # batch definition related config
 # ---------------------BRONZE PIPELINE-------------------
-# location of raw data file ready for validation (BRONZE PIPELINE) # for testing purposes
-RAW_BATCH_PATH = "flights_2022-02.csv"
 BRONZE_BATCH_DEFINITION_NAME = "bronze_batch_definition"
 
 
