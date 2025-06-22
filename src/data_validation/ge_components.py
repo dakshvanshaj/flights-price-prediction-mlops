@@ -49,16 +49,16 @@ def get_or_create_csv_asset(datasource: PandasDatasource, asset_name: str):
     return asset
 
 
-def get_or_create_batch_definition(asset, batch_definition_name: str, file_path: str):
+def get_or_create_batch_definition(asset, batch_definition_name: str, file_name: str):
     logger.debug(
         f"Attempting to add or update batch definition '{batch_definition_name}'."
     )
     # Using add_batch_definition_path is idempotent for a given name if it points to a new path
     batch_definition = asset.add_batch_definition_path(
-        name=batch_definition_name, path=file_path
+        name=batch_definition_name, path=file_name
     )
     logger.info(
-        f"Batch definition '{batch_definition_name}' points to path: {file_path}"
+        f"Batch definition '{batch_definition_name}' points to file named: {file_name}"
     )
     return batch_definition
 
