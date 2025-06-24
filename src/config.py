@@ -60,3 +60,9 @@ BRONZE_CHECKPOINT_NAME = "bronze_checkpoint"
 SPLIT_DATA_LOGS_PATH = LOGS_DIR / "split_data.log"
 BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
 SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
+
+
+# ----------------------Preprocessing Configurations-------------------
+
+# column rename mapping
+COLUMN_RENAME_MAPPING = {"from": "from_location", "to": "to_location"}
