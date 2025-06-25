@@ -62,7 +62,15 @@ BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
 SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
 
 
-# ----------------------Preprocessing Configurations-------------------
+# ---------------------- Silver Layer Preprocessing Configurations-------------------
 
 # column rename mapping
 COLUMN_RENAME_MAPPING = {"from": "from_location", "to": "to_location"}
+ERRONEOUS_DUPE_SUBSET = [
+    "user_code",
+    "from_location",
+    "to_location",
+    "date",
+    "time",
+    "agency",
+]
