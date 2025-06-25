@@ -119,3 +119,42 @@ def optimize_data_types(
     logger.info(f"Memory reduced by {percent_reduction:.2f}%.")
 
     return df
+
+
+def handle_erroneous_duplicates(
+    df: pd.DataFrame, subset_cols: List[str]
+) -> pd.DataFrame:
+    """
+    Identifies and removes duplicate records based on a specific subset of columns.
+
+    This function is designed to remove true data errors (e.g., the same user
+    recorded twice for the same flight) while preserving valid records (e.g.,
+    different users on the same flight).
+
+    Args:
+        df: The input DataFrame.
+        subset_cols: A list of column names that define a unique record.
+
+    Returns:
+        A DataFrame with erroneous duplicates removed.
+    """
+    # Log the number of rows before cleaning for context.
+    initial_rows = len(df)
+    logger.info(f"Checking for duplicates. Initial row count: {initial_rows}")
+
+    # Use drop_duplicates with the specified subset and keep='first'.
+    # This is safer than using inplace=True as it returns a new DataFrame.
+    df_cleaned = df.drop_duplicates(subset=subset_cols, keep="first")
+
+    # Log how many duplicate rows were removed.
+    final_rows = len(df_cleaned)
+    rows_removed = initial_rows - final_rows
+
+    if rows_removed > 0:
+        logger.info(
+            f"[DuplicateHandling] Removed {rows_removed} erroneous duplicate row(s)."
+        )
+    else:
+        logger.info("[DuplicateHandling] No erroneous duplicates found.")
+
+    return df_cleaned
