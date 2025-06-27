@@ -18,7 +18,7 @@ def setup_logger(
     name: Optional[str] = None,
     verbose: bool = True,
     log_file: str = "logs/app.log",
-    mode: str = "a",
+    mode: str = "w",
     use_json: bool = False,
     max_bytes: int = 5 * 1024 * 1024,  # 5 MB
     backup_count: int = 3,
