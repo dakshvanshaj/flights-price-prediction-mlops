@@ -74,3 +74,7 @@ ERRONEOUS_DUPE_SUBSET = [
     "time",
     "agency",
 ]
+
+# missing value imputer path
+SAVED_MV_IMPUTER_PATH = PROJECT_ROOT / "models" / "missing_value_imputer.json"
+COLUMN_IMPUTATION_RULES = {"price": "mean", "time": 0}
