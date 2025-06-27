@@ -1,55 +1,85 @@
 # src/shared/utils.py
 import logging
 import sys
+import time
 from pathlib import Path
+from logging.handlers import RotatingFileHandler
+from typing import Optional
+
+try:
+    from pythonjsonlogger import jsonlogger
+
+    HAS_JSON_LOGGER = True
+except ImportError:
+    HAS_JSON_LOGGER = False
 
 
-def setup_logger(verbose: bool = True, log_file: str = "app.log", mode: str = "w"):
+def setup_logger(
+    name: Optional[str] = None,
+    verbose: bool = True,
+    log_file: str = "logs/app.log",
+    mode: str = "a",
+    use_json: bool = False,
+    max_bytes: int = 5 * 1024 * 1024,  # 5 MB
+    backup_count: int = 3,
+    use_utc: bool = False,
+) -> logging.Logger:
     """
-    Configures the root logger for the application.
-
-    This function sets up handlers for both console and file logging,
-    and adjusts log levels for noisy third-party libraries.
+    Configures and returns a logger instance.
 
     Args:
-        verbose: If True, sets the root logger level to DEBUG. Otherwise, INFO.
-        log_file: The path to the log file.
-        mode: The file mode for the log file ('w' for write, 'a' for append).
-    """
-    # Get the root logger
-    root_logger = logging.getLogger()
-    root_logger.setLevel(logging.DEBUG if verbose else logging.INFO)
+        name: Name of the logger (None for root logger).
+        verbose: If True, sets logger level to DEBUG. Otherwise, INFO.
+        log_file: Path to the log file.
+        mode: File write mode ('a' or 'w').
+        use_json: If True, formats file logs in JSON (requires `python-json-logger`).
+        max_bytes: Maximum size (in bytes) for each log file.
+        backup_count: Number of rotated backups to keep.
+        use_utc: If True, log timestamps in UTC; else use local time.
 
-    # --- Reduce Log Noise from Third-Party Libraries ---
-    # Set noisy libraries to a higher log level to silence their DEBUG/INFO messages.
-    logging.getLogger("great_expectations").setLevel(logging.INFO)
+    Returns:
+        Configured logger instance.
+    """
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG if verbose else logging.INFO)
+    logger.propagate = False  # Avoid duplicate logs if logger is child
+
+    # Quiet noisy libs
+    logging.getLogger("great_expectations").setLevel(logging.WARNING)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
     logging.getLogger("tzlocal").setLevel(logging.WARNING)
 
-    # Create the log directory if it doesn't exist
+    # Ensure log directory exists
     log_path = Path(log_file)
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Detailed formatter for file logs
-    file_formatter = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    # Clear existing handlers (idempotency)
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    # --- File Handler (Rotating) ---
+    file_handler = RotatingFileHandler(
+        log_path, mode=mode, maxBytes=max_bytes, backupCount=backup_count
     )
 
-    # Simple formatter for console logs
-    console_formatter = logging.Formatter("%(levelname)s: %(name)s - %(message)s")
+    if use_json and HAS_JSON_LOGGER:
+        file_formatter = jsonlogger.JsonFormatter()
+    else:
+        file_formatter = logging.Formatter(
+            fmt="%(asctime)s [%(levelname)-8s] [%(name)-35s] [%(filename)s:%(lineno)d] %(message)s"
+        )
+        file_formatter.converter = time.gmtime if use_utc else time.localtime
 
-    # Clear existing handlers to prevent duplicate logs
-    if root_logger.hasHandlers():
-        root_logger.handlers.clear()
-
-    # File handler
-    file_handler = logging.FileHandler(log_path, mode=mode)
     file_handler.setFormatter(file_formatter)
-    root_logger.addHandler(file_handler)
+    logger.addHandler(file_handler)
 
-    # Console handler
+    # --- Console Handler ---
     console_handler = logging.StreamHandler(sys.stdout)
+    console_formatter = logging.Formatter(
+        fmt="[%(levelname)-8s] [%(name)-25s] %(message)s"
+    )
     console_handler.setFormatter(console_formatter)
-    root_logger.addHandler(console_handler)
+    logger.addHandler(console_handler)
 
-    root_logger.debug(f"Root logger initialized (Verbose: {verbose}).")
+    logger.info("Logger initialized.")
+    return logger
