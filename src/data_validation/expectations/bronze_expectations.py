@@ -46,21 +46,25 @@ def build_bronze_expectations() -> List:
         },
     )
 
-    # --- Expectation 3: Primary Key Not Null ---
-    expect_travelcode_not_null = gxe.ExpectColumnValuesToNotBeNull(
-        column="travelCode",
-        meta={
-            "name": "bronze_travelCode_not_null",
-            "notes": "Ensures the primary identifier is always present.",
-        },
-    )
-
     # --- Create a list to hold all expectations ---
     expectations = [
         expect_columns_to_match_set,
         expect_table_has_rows,
-        expect_travelcode_not_null,
     ]
+
+    # --- Expectation 3: Programmatic Not-Null Checks ---
+    # Define columns that are not allowed to have any null values
+    required_columns_for_not_null = ["travelCode", "date"]
+    for col in required_columns_for_not_null:
+        expectations.append(
+            gxe.ExpectColumnValuesToNotBeNull(
+                column=col,
+                meta={
+                    "name": f"bronze_{col}_not_null",
+                    "notes": f"Ensures the critical column '{col}' is always present.",
+                },
+            )
+        )
 
     # --- Expectation 4: Programmatic Column Type and Range Checks ---
 
@@ -116,7 +120,7 @@ def build_bronze_expectations() -> List:
         gxe.ExpectColumnValuesToBeInSet(
             column="flightType",
             value_set=["economic", "firstClass", "premium"],
-            mostly=0.90,  # Allow for some flexibility
+            mostly=0.98,  # Allow for some flexibility
             meta={
                 "name": "bronze_flightType_in_known_set",
                 "notes": "Checks that most flight types are from a known list.",
