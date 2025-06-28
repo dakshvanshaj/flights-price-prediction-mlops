@@ -31,7 +31,7 @@ from data_validation.ge_components import (
     get_or_create_checkpoint,
     run_checkpoint,
 )
-from shared.utils import setup_logger
+from shared.utils import setup_logging_from_yaml
 
 # Create a logger object for this module
 logger = logging.getLogger(__name__)
@@ -124,8 +124,12 @@ def main():
     This function handles logging setup and argument parsing.
     """
     # --- SETUP LOGGING ---
-    setup_logger(verbose=True, log_file=BRONZE_PIPELINE_LOGS_PATH, mode="w")
-
+    # load logging configuration
+    setup_logging_from_yaml(
+        log_path=BRONZE_PIPELINE_LOGS_PATH,
+        default_level=logging.DEBUG,
+        default_yaml_path="logging.yaml",
+    )
     # --- PARSE COMMAND-LINE ARGUMENTS ---
     parser = argparse.ArgumentParser(
         description="Run the Bronze Data Validation Pipeline."
