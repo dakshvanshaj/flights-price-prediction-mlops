@@ -1,86 +1,54 @@
-# src/shared/utils.py
 import logging
-import sys
-import time
+import logging.config
+import yaml
 from pathlib import Path
-from logging.handlers import RotatingFileHandler
-from typing import Optional
-
-try:
-    from pythonjsonlogger import json
-
-    HAS_JSON_LOGGER = True
-except ImportError:
-    HAS_JSON_LOGGER = False
+from typing import Union
 
 
-def setup_logger(
-    name: Optional[str] = None,
-    verbose: bool = True,
-    log_file: str = "logs/app.log",
-    mode: str = "a",
-    use_json: bool = False,
-    max_bytes: int = 5 * 1024 * 1024,  # 5 MB
-    backup_count: int = 3,
-    use_utc: bool = False,
-) -> logging.Logger:
+def setup_logging_from_yaml(
+    log_path: Union[str, Path],
+    default_yaml_path: str = "logging.yaml",
+    default_level=logging.INFO,
+):
     """
-    Configures and returns a logger instance.
+    Set up logging configuration from a YAML file, overriding the log file path.
 
     Args:
-        name: Name of the logger (None for root logger).
-        verbose: If True, sets logger level to DEBUG. Otherwise, INFO.
-        log_file: Path to the log file.
-        mode: File write mode ('a' or 'w').
-        use_json: If True, formats file logs in JSON (requires `python-json-logger`).
-        max_bytes: Maximum size (in bytes) for each log file.
-        backup_count: Number of rotated backups to keep.
-        use_utc: If True, log timestamps in UTC; else use local time.
-
-    Returns:
-        Configured logger instance.
+        log_path (Union[str, Path]): The desired path for the log file, read from main config.
+        default_yaml_path (str): The path to the logging configuration file.
+        default_level: The log level to use if the config file is not found.
     """
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG if verbose else logging.INFO)
-    logger.propagate = False  # Avoid duplicate logs if logger is child
+    config_path = Path(default_yaml_path)
 
-    # Quiet noisy libs
-    logging.getLogger("great_expectations").setLevel(logging.WARNING)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
-    logging.getLogger("tzlocal").setLevel(logging.WARNING)
+    # Ensure the provided log_path is a Path object
+    log_path = Path(log_path)
 
-    # Ensure log directory exists
-    log_path = Path(log_file)
-    log_path.parent.mkdir(parents=True, exist_ok=True)
+    if config_path.exists():
+        try:
+            with open(config_path, "rt") as f:
+                # Load the YAML configuration into a Python dictionary
+                config = yaml.safe_load(f.read())
 
-    # Clear existing handlers for idempotency
-    if logger.hasHandlers():
-        logger.handlers.clear()
+            # --- OVERRIDE THE LOG FILE PATH ---
+            # Modify the dictionary to set the filename for the 'file' handler
+            if "file" in config.get("handlers", {}):
+                config["handlers"]["file"]["filename"] = str(log_path)
+            # --- END OF OVERRIDE ---
 
-    # --- File Handler (Rotating) ---
-    file_handler = RotatingFileHandler(
-        log_path, mode=mode, maxBytes=max_bytes, backupCount=backup_count
-    )
+            # Ensure the parent directory for the new log path exists
+            log_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if use_json and HAS_JSON_LOGGER:
-        # Use the correct object for the formatter
-        file_formatter = json.JsonFormatter()
+            # Configure the logging system using the modified dictionary
+            logging.config.dictConfig(config)
+            logging.info(
+                "Logging configured from %s; outputting to %s",
+                default_yaml_path,
+                log_path,
+            )
+
+        except Exception as e:
+            print(f"Error loading logging configuration: {e}")
+            logging.basicConfig(level=default_level)
     else:
-        file_formatter = logging.Formatter(
-            fmt="%(asctime)s [%(levelname)-8s] [%(name)-35s] [%(filename)s:%(lineno)d] %(message)s"
-        )
-        file_formatter.converter = time.gmtime if use_utc else time.localtime
-
-    file_handler.setFormatter(file_formatter)
-    logger.addHandler(file_handler)
-
-    # --- Console Handler ---
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_formatter = logging.Formatter(
-        fmt="[%(levelname)-8s] [%(name)s] %(message)s"
-    )
-    console_handler.setFormatter(console_formatter)
-    logger.addHandler(console_handler)
-
-    logger.info("Logger initialized.")
-    return logger
+        print(f"Logging configuration file not found: {config_path}")
+        logging.basicConfig(level=default_level)
