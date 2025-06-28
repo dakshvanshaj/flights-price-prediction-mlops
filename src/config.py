@@ -77,5 +77,23 @@ ERRONEOUS_DUPE_SUBSET = [
 
 # missing value imputer path
 SAVED_MV_IMPUTER_PATH = PROJECT_ROOT / "models" / "missing_value_imputer.json"
-COLUMN_IMPUTATION_RULES = {"price": "mean", "time": 0}
-ID_COLS_TO_EXCLUDE_FROM_IMPUTATION = ["travel_code", "user_code"]
+COLUMN_IMPUTATION_RULES = {
+    "from_location": "most_frequent",
+    "to_location": "most_frequent",
+    "flight_type": "most_frequent",
+    "price": "median",
+    "time": "median",
+    "distance": "median",
+    "agency": "most_frequent",
+}
+
+ID_COLS_TO_EXCLUDE_FROM_IMPUTATION = [
+    "travel_code",
+    "user_code",
+    "year",
+    "month",
+    "day",
+    "day_of_week",
+    "day_of_year",
+    "week_of_year",
+]
