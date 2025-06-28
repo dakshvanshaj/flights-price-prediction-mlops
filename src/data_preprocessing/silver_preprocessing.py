@@ -1,7 +1,7 @@
 import pandas as pd
 import logging
 import re
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, Any
 import json
 from pathlib import Path
 
@@ -48,21 +48,17 @@ def optimize_data_types(
 
     initial_mem_usage = df.memory_usage(deep=True).sum() / 1024**2
     logger.info(f"Memory Usage Before Optimization: {initial_mem_usage:.2f} MB")
-    # This detailed log is useful for deep dives but verbose for normal runs.
     logger.debug(f"Initial dtypes:\n{df.dtypes}")
 
-    # Prioritized list of common date formats for efficient parsing.
     COMMON_DATE_FORMATS = ["%Y-%m-%d", "%m/%d/%Y", "%d/%m/%Y", "%Y/%m/%d"]
 
     if date_cols is None:
         date_cols = []
 
     for col in df.columns:
-        # Store original dtype for logging comparison.
         old_dtype = df[col].dtype
 
         if col in date_cols and old_dtype == "object":
-            # This block attempts to parse specified date columns.
             parsed_successfully = False
             for fmt in COMMON_DATE_FORMATS:
                 try:
@@ -73,7 +69,6 @@ def optimize_data_types(
                     continue
 
             if not parsed_successfully:
-                # As a last resort, try pandas' slow but powerful inference.
                 try:
                     df[col] = pd.to_datetime(df[col])
                     logger.warning(f"Column '{col}' parsed using slow date inference.")
@@ -88,7 +83,6 @@ def optimize_data_types(
                 )
                 continue
 
-        # --- Standard Type Optimization Logic ---
         if str(old_dtype).startswith("int"):
             df[col] = pd.to_numeric(df[col], downcast="integer")
             new_dtype = df[col].dtype
@@ -106,7 +100,6 @@ def optimize_data_types(
                 )
 
         elif old_dtype == "object":
-            # Heuristic: convert low-cardinality strings to 'category' for memory savings.
             if df[col].nunique() / len(df[col]) < 0.5:
                 df[col] = df[col].astype("category")
                 new_dtype = df[col].dtype
@@ -143,12 +136,7 @@ def handle_erroneous_duplicates(
     # Log the number of rows before cleaning for context.
     initial_rows = len(df)
     logger.info(f"Checking for duplicates. Initial row count: {initial_rows}")
-
-    # Use drop_duplicates with the specified subset and keep='first'.
-    # This is safer than using inplace=True as it returns a new DataFrame.
     df_cleaned = df.drop_duplicates(subset=subset_cols, keep="first")
-
-    # Log how many duplicate rows were removed.
     final_rows = len(df_cleaned)
     rows_removed = initial_rows - final_rows
 
@@ -162,6 +150,40 @@ def handle_erroneous_duplicates(
     return df_cleaned
 
 
+def create_date_features(df: pd.DataFrame, date_column: str = "date") -> pd.DataFrame:
+    """
+    Creates new date-based features from a datetime column.
+
+    Args:
+        df: The input DataFrame.
+        date_column: The name of the column containing datetime objects.
+
+    Returns:
+        A DataFrame with new date-part columns added.
+    """
+    logger.info(f"Creating date-part features from column '{date_column}'...")
+    df_copy = df.copy()
+
+    # Ensure the column is a datetime type before proceeding
+    if not pd.api.types.is_datetime64_any_dtype(df_copy[date_column]):
+        logger.error(
+            f"Column '{date_column}' is not a datetime type. Cannot create date features."
+        )
+        return df  # Return original df to avoid crashing the pipeline
+
+    df_copy["year"] = df_copy[date_column].dt.year
+    df_copy["month"] = df_copy[date_column].dt.month
+    df_copy["day"] = df_copy[date_column].dt.day
+    df_copy["day_of_week"] = df_copy[date_column].dt.dayofweek  # Monday=0, Sunday=6
+    df_copy["day_of_year"] = df_copy[date_column].dt.dayofyear
+    df_copy["week_of_year"] = df_copy[date_column].dt.isocalendar().week.astype(int)
+
+    logger.info(
+        "Successfully created date features: year, month, day, day_of_week, day_of_year, week_of_year."
+    )
+    return df_copy
+
+
 class MissingValueHandler:
     """
     A class to handle missing values in a DataFrame, designed for a robust MLOps
@@ -173,20 +195,21 @@ class MissingValueHandler:
         self,
         numerical_strategy: str = "median",
         categorical_strategy: str = "most_frequent",
-        column_strategies: Optional[Dict[str, str]] = None,
+        column_strategies: Optional[Dict[str, Any]] = None,
+        exclude_columns: Optional[List[str]] = None,
     ):
         """
         Initializes the MissingValueHandler.
 
         Args:
-            numerical_strategy (str): The default strategy for all numerical columns.
-                                      Supported: 'median' (default), 'mean'.
-            categorical_strategy (str): The default strategy for all categorical columns.
-                                        Supported: 'most_frequent' (default).
-            column_strategies (dict, optional): A dictionary to specify strategies for
-                                                individual columns. This overrides the default.
-                                                Example: {'price': 'mean', 'agency': 'Unknown', 'distance': 0}
-                                                any key other than 'mean', 'median', or 'most_frequent' will be treated as a constant fill value.
+            numerical_strategy (str): Default strategy for numerical columns.
+                                      Supported: 'median', 'mean'.
+            categorical_strategy (str): Default strategy for categorical columns.
+                                        Supported: 'most_frequent'.
+            column_strategies (dict, optional): Column-specific overrides.
+                                                Example: {'price': 'mean', 'agency': 'Unknown'}
+            exclude_columns (list, optional): Columns to completely ignore during imputation.
+                                              Example: ['travel_code', 'user_code']
         """
         if numerical_strategy not in ["median", "mean"]:
             raise ValueError("Default numerical_strategy must be 'median' or 'mean'")
@@ -196,27 +219,24 @@ class MissingValueHandler:
         self.default_numerical_strategy = numerical_strategy
         self.default_categorical_strategy = categorical_strategy
         self.column_strategies = column_strategies if column_strategies else {}
+        self.exclude_columns = exclude_columns if exclude_columns else []
         self.imputers_ = None
 
     def fit(self, df: pd.DataFrame):
         """
         Learns the imputation values from the training DataFrame based on the
         defined strategies and stores them in the `imputers_` attribute.
-
-        Column-specific strategies in `column_strategies` will take precedence
-        over the default strategies.
-
-        Args:
-            df (pd.DataFrame): The training DataFrame to learn from.
-
-        Returns:
-            self: The instance of the class itself.
         """
         logger.info("Fitting MissingValueHandler: Learning imputation values...")
         self.imputers_ = {}
 
         for col in df.columns:
-            # --- Step 1: Check for a column-specific strategy first ---
+            # First, check if the column should be excluded from imputation
+            if col in self.exclude_columns:
+                logger.debug(f"Skipping column '{col}' as it is in the exclude list.")
+                continue
+
+            # Check for a column-specific strategy
             if col in self.column_strategies:
                 strategy = self.column_strategies[col]
                 if isinstance(strategy, str) and strategy == "mean":
@@ -228,9 +248,8 @@ class MissingValueHandler:
                         df[col].mode()[0] if not df[col].mode().empty else None
                     )
                 else:
-                    # If it's not a recognized keyword, treat it as a constant fill value
                     impute_value = strategy
-            # --- Step 2: If no column specific strategy, use the default based on dtype ---
+            # If no specific strategy, use the default based on dtype
             elif pd.api.types.is_numeric_dtype(df[col]):
                 if self.default_numerical_strategy == "median":
                     impute_value = df[col].median()
@@ -251,7 +270,6 @@ class MissingValueHandler:
                 )
                 continue
 
-            # --- Final check before storing the learned value ---
             if pd.isna(impute_value):
                 logger.warning(
                     f"Learned imputation value for column '{col}' is NaN. Skipping this column."
@@ -267,12 +285,6 @@ class MissingValueHandler:
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Fills missing values in a DataFrame using the learned imputation values.
-
-        Args:
-            df (pd.DataFrame): The DataFrame to transform.
-
-        Returns:
-            pd.DataFrame: A new DataFrame with missing values imputed.
         """
         if self.imputers_ is None:
             logger.error(
@@ -296,9 +308,6 @@ class MissingValueHandler:
     def save(self, filepath: str):
         """
         Saves the learned imputers to a JSON file for later use.
-
-        Args:
-            filepath (str): The path to the file where the imputer state will be saved.
         """
         if self.imputers_ is None:
             logger.error(
@@ -331,12 +340,6 @@ class MissingValueHandler:
     def load(cls, filepath: str):
         """
         Loads a pre-trained handler state from a JSON file.
-
-        Args:
-            filepath (str): The path to the saved imputer JSON file.
-
-        Returns:
-            MissingValueHandler: An instance of the class with its state loaded.
         """
         logger.info(f"Loading handler state from '{filepath}'...")
         try:
@@ -357,6 +360,9 @@ class MissingValueHandler:
         handler.default_numerical_strategy = None
         handler.default_categorical_strategy = None
         handler.column_strategies = None
+        handler.exclude_columns = (
+            None  # It's assumed the loaded imputer already excluded them
+        )
 
         logger.info("Handler state loaded successfully. Ready to transform data.")
         return handler
