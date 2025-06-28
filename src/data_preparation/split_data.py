@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import logging
 from pathlib import Path
-from config import (
+from shared.config import (
     INPUT_CSV_PATH,
     PREPARED_DATA_DIR,
     DRIFT_SIMULATION_DIR,
@@ -11,7 +11,7 @@ from config import (
     EVAL_SET_SIZE,
     SPLIT_DATA_LOGS_PATH,
 )
-from shared.utils import setup_logger
+from shared.utils import setup_logging_from_yaml
 
 # Create a logger object for this module
 logger = logging.getLogger(__name__)
@@ -105,5 +105,9 @@ def split_data():
 
 if __name__ == "__main__":
     # This block runs only when the script is executed directly.
-    setup_logger(verbose=True, log_file=SPLIT_DATA_LOGS_PATH, mode="w")
+    setup_logging_from_yaml(
+        log_path=SPLIT_DATA_LOGS_PATH,
+        default_level="DEBUG",
+        default_yaml_path="logging.yaml",
+    )
     split_data()
