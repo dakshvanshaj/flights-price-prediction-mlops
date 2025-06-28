@@ -78,3 +78,4 @@ ERRONEOUS_DUPE_SUBSET = [
 # missing value imputer path
 SAVED_MV_IMPUTER_PATH = PROJECT_ROOT / "models" / "missing_value_imputer.json"
 COLUMN_IMPUTATION_RULES = {"price": "mean", "time": 0}
+ID_COLS_TO_EXCLUDE_FROM_IMPUTATION = ["travel_code", "user_code"]
