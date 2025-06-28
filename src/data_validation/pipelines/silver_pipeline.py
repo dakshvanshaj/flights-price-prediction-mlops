@@ -22,7 +22,8 @@ from config import (
     COLUMN_IMPUTATION_RULES,
     ID_COLS_TO_EXCLUDE_FROM_IMPUTATION,
 )
-from shared.utils import setup_logger
+from shared.utils import setup_logging_from_yaml
+
 
 # Initialize the logger for this module
 logger = logging.getLogger(__name__)
@@ -124,8 +125,11 @@ def run_silver_pipeline(
 
 
 if __name__ == "__main__":
-    setup_logger(
-        verbose=True, log_file=SILVER_PIPELINE_LOGS_PATH, mode="a", use_json=True
+    # load logging configuration
+    setup_logging_from_yaml(
+        log_path=SILVER_PIPELINE_LOGS_PATH,
+        default_level=logging.DEBUG,
+        default_yaml_path="logging.yaml",
     )
 
     test_file_path = PROJECT_ROOT / "data" / "raw" / "processed" / "flights_2022-02.csv"
