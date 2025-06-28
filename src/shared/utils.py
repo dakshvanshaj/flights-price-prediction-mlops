@@ -7,7 +7,7 @@ from logging.handlers import RotatingFileHandler
 from typing import Optional
 
 try:
-    from pythonjsonlogger import jsonlogger
+    from pythonjsonlogger import json
 
     HAS_JSON_LOGGER = True
 except ImportError:
@@ -18,7 +18,7 @@ def setup_logger(
     name: Optional[str] = None,
     verbose: bool = True,
     log_file: str = "logs/app.log",
-    mode: str = "w",
+    mode: str = "a",
     use_json: bool = False,
     max_bytes: int = 5 * 1024 * 1024,  # 5 MB
     backup_count: int = 3,
@@ -53,7 +53,7 @@ def setup_logger(
     log_path = Path(log_file)
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Clear existing handlers (idempotency)
+    # Clear existing handlers for idempotency
     if logger.hasHandlers():
         logger.handlers.clear()
 
@@ -63,7 +63,8 @@ def setup_logger(
     )
 
     if use_json and HAS_JSON_LOGGER:
-        file_formatter = jsonlogger.JsonFormatter()
+        # Use the correct object for the formatter
+        file_formatter = json.JsonFormatter()
     else:
         file_formatter = logging.Formatter(
             fmt="%(asctime)s [%(levelname)-8s] [%(name)-35s] [%(filename)s:%(lineno)d] %(message)s"
@@ -76,7 +77,7 @@ def setup_logger(
     # --- Console Handler ---
     console_handler = logging.StreamHandler(sys.stdout)
     console_formatter = logging.Formatter(
-        fmt="[%(levelname)-8s] [%(name)-25s] %(message)s"
+        fmt="[%(levelname)-8s] [%(name)s] %(message)s"
     )
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
