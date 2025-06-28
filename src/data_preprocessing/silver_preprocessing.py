@@ -116,6 +116,44 @@ def optimize_data_types(
     return df
 
 
+def sort_data_by_date(df: pd.DataFrame, date_column: str = "date") -> pd.DataFrame:
+    """
+    Sorts the DataFrame by the specified date column for chronological consistency.
+
+    Args:
+        df: The input DataFrame.
+        date_column: The name of the column to sort by.
+
+    Returns:
+        A new DataFrame sorted by the date column.
+    """
+    logger.info(f"Sorting DataFrame by '{date_column}' column...")
+
+    # --- Pre-computation Checks for Robustness ---
+    if date_column not in df.columns:
+        logger.error(
+            f"Date column '{date_column}' not found in DataFrame. Skipping sorting."
+        )
+        return df
+
+    if not pd.api.types.is_datetime64_any_dtype(df[date_column]):
+        logger.error(
+            f"Column '{date_column}' is not a datetime type. Skipping sorting."
+        )
+        return df
+
+    # Check if the data is already sorted to provide useful logs
+    if df[date_column].is_monotonic_increasing:
+        logger.info(f"Data is already sorted by '{date_column}'. No changes made.")
+        return df
+
+    # --- Sorting and Resetting Index ---
+    df_sorted = df.sort_values(by=date_column, ascending=True).reset_index(drop=True)
+
+    logger.info("DataFrame successfully sorted by date.")
+    return df_sorted
+
+
 def handle_erroneous_duplicates(
     df: pd.DataFrame, subset_cols: List[str]
 ) -> pd.DataFrame:
