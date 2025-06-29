@@ -3,7 +3,7 @@
 import logging
 from pathlib import Path
 from typing import List
-
+import pandas as pd
 import great_expectations as gx
 from great_expectations.core import ExpectationSuite, ValidationDefinition
 from great_expectations.checkpoint import Checkpoint, CheckpointResult
@@ -157,4 +157,88 @@ def run_checkpoint(checkpoint: Checkpoint) -> CheckpointResult:
     logger.info(f"Running checkpoint: '{checkpoint.name}'...")
     result = checkpoint.run()
     logger.info(f"Checkpoint run completed. Success: {result.success}")
+    return result
+
+
+def run_checkpoint_on_dataframe(
+    project_root_dir: str,
+    datasource_name: str,
+    asset_name: str,
+    batch_definition_name: str,
+    suite_name: str,
+    validation_definition_name: str,
+    checkpoint_name: str,
+    dataframe_to_validate: pd.DataFrame,
+    expectation_list: List,
+) -> CheckpointResult:
+    """
+    Creates and runs a checkpoint to validate an in-memory DataFrame, following
+    the Validation Definition pattern.
+
+    Args:
+        project_root_dir: The root directory of the Great Expectations project.
+        suite_name: The name of the expectation suite to use.
+        checkpoint_name: The name for the temporary checkpoint.
+        dataframe_to_validate: The pandas DataFrame to be validated.
+        expectation_list: A list of Expectation objects to validate against.
+
+    Returns:
+        A CheckpointResult object containing the validation results.
+    """
+    context = get_ge_context(project_root_dir=project_root_dir)
+
+    # 1. Add a temporary 'in-memory' datasource. We use the delete/recreate pattern.
+    try:
+        context.data_sources.delete(name=datasource_name)
+        logger.info(
+            f"Deleted existing datasource '{datasource_name}' for a clean state."
+        )
+    except (ValueError, KeyError):
+        logger.info(f"Datasource '{datasource_name}' not found. Creating new...")
+    datasource = context.data_sources.add_pandas(name=datasource_name)
+
+    # 2. Add the DataFrame as a Data Asset
+
+    try:
+        datasource.delete_asset(name=asset_name)
+    except (LookupError, KeyError):
+        pass
+    data_asset = datasource.add_dataframe_asset(name=asset_name)
+
+    # 3. Create a Batch Definition that points to our DataFrame asset
+    batch_definition = data_asset.add_batch_definition_whole_dataframe(
+        name=batch_definition_name
+    )
+
+    # 4. Get or create the Expectation Suite and add our rules to it
+    suite = get_or_create_expectation_suite(context, suite_name)
+    add_expectations_to_suite(suite, expectation_list)
+    suite.save()
+
+    # 5. Create a Validation Definition linking the data and the suite
+    validation_definition = get_or_create_validation_definition(
+        context=context,
+        definition_name=validation_definition_name,
+        batch_definition=batch_definition,  # pass batch directly with dataframe_to_validate
+        suite=suite,
+    )
+
+    # 6. Create the Checkpoint using the Validation Definition
+    checkpoint = get_or_create_checkpoint(
+        context=context,
+        checkpoint_name=checkpoint_name,
+        validation_definition_list=[validation_definition],
+        action_list=get_action_list(),
+    )
+
+    # 7. Run the checkpoint and return the result
+    try:
+        logger.info(f"Running checkpoint: '{checkpoint.name}'...")
+        result = checkpoint.run(
+            batch_parameters={"dataframe": dataframe_to_validate},
+        )
+        logger.info(f"Checkpoint run completed. Success: {result.success}")
+    except Exception as e:
+        logger.error(f"Error running checkpoint: {e}", exc_info=True)
+
     return result
