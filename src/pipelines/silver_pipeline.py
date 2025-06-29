@@ -3,30 +3,45 @@ from pathlib import Path
 import logging
 from typing import Dict, Optional, Any, List
 
-# Local application imports
+# --- Local Application Imports ---
+# Import the new silver expectations builder and the dataframe checkpoint runner
+from data_validation.expectations.silver_expectations import build_silver_expectations
+from data_validation.ge_components import run_checkpoint_on_dataframe
+
 from data_ingestion.data_loader import load_data
 from data_preprocessing.silver_preprocessing import (
     rename_specific_columns,
     standardize_column_format,
     optimize_data_types,
-    sort_data_by_date,
     create_date_features,
     handle_erroneous_duplicates,
     MissingValueHandler,
+    sort_data_by_date,
 )
+
+# Import all necessary configuration variables
 from shared.config import (
     COLUMN_RENAME_MAPPING,
-    PROJECT_ROOT,
-    SILVER_PIPELINE_LOGS_PATH,
     ERRONEOUS_DUPE_SUBSET,
     SAVED_MV_IMPUTER_PATH,
     COLUMN_IMPUTATION_RULES,
     ID_COLS_TO_EXCLUDE_FROM_IMPUTATION,
+    GE_ROOT_DIR,
+    SILVER_EXPECTED_COLS_ORDER,
+    SILVER_EXPECTED_COLUMN_TYPES,
+    SILVER_REQUIRED_NON_NULL_COLS,
+    SILVER_PIPELINE_LOGS_PATH,
+    PROJECT_ROOT,
+    SILVER_DATA_SOURCE_NAME,
+    SILVER_ASSET_NAME,
+    SILVER_BATCH_DEFINITION_NAME,
+    SILVER_SUITE_NAME,
+    SILVER_VALIDATION_DEFINITION_NAME,
+    SILVER_CHECKPOINT_NAME,
 )
 from shared.utils import setup_logging_from_yaml
 
-
-# Initialize the logger for this module
+# Initialize a logger for this module
 logger = logging.getLogger(__name__)
 
 
@@ -38,60 +53,37 @@ def run_silver_pipeline(
     exclude_cols_imputation: Optional[List[str]] = None,
 ) -> Optional[pd.DataFrame]:
     """
-    Orchestrates the Silver layer data processing pipeline.
-
-    This function can run in two modes:
-    1.  train_mode=True: It will learn imputation values from the data, apply them,
-        and save the learned imputer to `imputer_path`.
-    2.  train_mode=False: It will load a pre-existing imputer from `imputer_path`
-        and apply it to the new data.
-
-    Args:
-        input_filepath (str): Path to the processed bronze data file.
-        imputer_path (str): Path to save or load the imputer JSON file.
-        train_mode (bool): If True, fits and saves a new imputer.
-        column_strategies (dict, optional): Column-specific imputation strategies.
-
-    Returns:
-        Optional[pd.DataFrame]: The cleaned DataFrame, or None if an error occurs.
+    Orchestrates the Silver layer data processing pipeline, including a final
+    validation step on the cleaned data.
     """
     file_name = Path(input_filepath).name
     logger.info(
         f"--- Starting Silver Pipeline for: {file_name} (Train Mode: {train_mode}) ---"
     )
 
-    # --- Stage 1: Data Ingestion ---
-    logger.info("=" * 25 + " STAGE 1/6: DATA INGESTION " + "=" * 25)
+    # === STAGE 1: DATA INGESTION ===
+    logger.info("=" * 25 + " STAGE 1/5: DATA INGESTION " + "=" * 25)
     df = load_data(file_path=input_filepath)
     if df is None:
-        logger.error("Data loading failed. Aborting pipeline.")
         return None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
-    # --- Stage 2: Standardization, Datatype Optimization & Cleaning ---
-    logger.info(
-        "=" * 25
-        + " STAGE 2/6: STANDARDIZATION, DATATYPE OPTIMIZATION & SORTING "
-        + "=" * 25
-    )
+    # === STAGE 2: PREPROCESSING & CLEANING ===
+    logger.info("=" * 25 + " STAGE 2/5: PREPROCESSING & CLEANING " + "=" * 25)
     df = rename_specific_columns(df, rename_mapping=COLUMN_RENAME_MAPPING)
     df = standardize_column_format(df)
     df = optimize_data_types(df, date_cols=["date"])
     df = sort_data_by_date(df, date_column="date")
-    logger.info("Standardization,type optimization and sorting complete.")
+    df = handle_erroneous_duplicates(df=df, subset_cols=ERRONEOUS_DUPE_SUBSET)
+    logger.info("Standardization, cleaning, and sorting complete.")
 
-    # --- Stage 3: Date Part Extraction ---
-    logger.info("=" * 25 + " STAGE 3/6: DATE PART EXTRACTION " + "=" * 25)
+    # === STAGE 3: FEATURE ENGINEERING ===
+    logger.info("=" * 25 + " STAGE 3/5: FEATURE ENGINEERING " + "=" * 25)
     df = create_date_features(df, date_column="date")
     logger.info("Date part extraction complete.")
 
-    # --- Stage 4: Duplicate Record Handling ---
-    logger.info("=" * 25 + " STAGE 4/6: DUPLICATE HANDLING " + "=" * 25)
-    df = handle_erroneous_duplicates(df=df, subset_cols=ERRONEOUS_DUPE_SUBSET)
-    logger.info("Duplicate handling complete.")
-
-    # --- Stage 5: Missing Value Imputation ---
-    logger.info("=" * 25 + " STAGE 5/6: MISSING VALUE IMPUTATION " + "=" * 25)
+    # === STAGE 4: MISSING VALUE IMPUTATION ===
+    logger.info("=" * 25 + " STAGE 4/5: MISSING VALUE IMPUTATION " + "=" * 25)
     try:
         if train_mode:
             logger.info("Training mode: Creating and fitting a new imputer...")
@@ -104,9 +96,7 @@ def run_silver_pipeline(
         else:
             logger.info(f"Inference mode: Loading imputer from {imputer_path}...")
             if not Path(imputer_path).exists():
-                logger.error(
-                    f"Imputer file not found at '{imputer_path}'. Cannot proceed."
-                )
+                logger.error(f"Imputer file not found at '{imputer_path}'. Aborting.")
                 return None
             handler = MissingValueHandler.load(imputer_path)
 
@@ -118,29 +108,59 @@ def run_silver_pipeline(
         )
         return None
 
-    # --- Stage 6: Final Validation (Placeholder) ---
-    logger.info("=" * 25 + " STAGE 6/6: FINAL VALIDATION " + "=" * 25)
-    # TODO: Add call to Silver Great Expectations checkpoint here.
-    logger.info("Data validation complete (placeholder).")
+    # === FINAL STAGE 5/5: DATA VALIDATION (QUALITY GATE) ===
+    logger.info("=" * 25 + " STAGE 5/5: FINAL VALIDATION " + "=" * 25)
 
-    logger.info(f"--- Silver Pipeline for: {file_name} completed successfully ---")
+    # 1. Build the list of expectations using our function and central config
+    silver_expectations = build_silver_expectations(
+        expected_cols_ordered=SILVER_EXPECTED_COLS_ORDER,
+        expected_col_types=SILVER_EXPECTED_COLUMN_TYPES,
+        non_null_cols=SILVER_REQUIRED_NON_NULL_COLS,
+        unique_record_cols=ERRONEOUS_DUPE_SUBSET,
+    )
+
+    # 2. Run the checkpoint on our cleaned DataFrame
+    validation_result = run_checkpoint_on_dataframe(
+        project_root_dir=GE_ROOT_DIR,
+        datasource_name=SILVER_DATA_SOURCE_NAME,
+        asset_name=SILVER_ASSET_NAME,
+        batch_definition_name=SILVER_BATCH_DEFINITION_NAME,
+        suite_name=SILVER_SUITE_NAME,
+        validation_definition_name=SILVER_VALIDATION_DEFINITION_NAME,
+        checkpoint_name=SILVER_CHECKPOINT_NAME,
+        dataframe_to_validate=df,
+        expectation_list=silver_expectations,
+    )
+
+    # 3. Act on the validation result
+    if not validation_result.success:
+        logger.critical("--- Silver Data Validation: FAILED ---")
+        logger.critical(
+            "The cleaned data does not meet quality standards. Aborting pipeline."
+        )
+        # In a real scenario, you might want to save the failed `df` to a quarantine area.
+        return None
+
+    logger.info("--- Silver Data Validation: PASSED ---")
+    logger.info("=" * 20 + " Silver Pipeline Completed Successfully " + "=" * 20)
 
     return df
 
 
 if __name__ == "__main__":
-    # load logging configuration
-    setup_logging_from_yaml(
-        log_path=SILVER_PIPELINE_LOGS_PATH,
-        default_level=logging.DEBUG,
-        default_yaml_path="logging.yaml",
+    # Setup logging from the YAML configuration file
+    setup_logging_from_yaml(log_path=SILVER_PIPELINE_LOGS_PATH)
+
+    # Define a test file to run the pipeline on
+    test_file = (
+        Path(PROJECT_ROOT) / "data" / "raw" / "processed" / "flights_2022-02.csv"
     )
 
-    test_file_path = PROJECT_ROOT / "data" / "raw" / "processed" / "flights_2022-02.csv"
+    logger.info(f"Running pipeline in TRAIN mode on test file: {test_file}")
 
-    logger.info(f"Running pipeline in TRAIN mode on test file: {test_file_path}")
+    # Execute the main pipeline function
     cleaned_df = run_silver_pipeline(
-        input_filepath=str(test_file_path),
+        input_filepath=str(test_file),
         imputer_path=str(SAVED_MV_IMPUTER_PATH),
         train_mode=True,
         column_strategies=COLUMN_IMPUTATION_RULES,
@@ -148,7 +168,7 @@ if __name__ == "__main__":
     )
 
     if cleaned_df is not None:
-        logger.info("Pipeline executed successfully. Cleaned DataFrame head:")
+        logger.info("Pipeline execution finished. Cleaned DataFrame head:")
         print(cleaned_df.head())
         logger.info(f"Imputer state saved to '{SAVED_MV_IMPUTER_PATH}'")
     else:
