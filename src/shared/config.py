@@ -33,28 +33,38 @@ GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 # RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
 RAW_DATA_SOURCE_NAME = "raw_flight_data_source"
 RAW_DATA_SOURCE = RAW_PENDING_DIR
+# ----------------------SILVER PIPELINE-------------------
+SILVER_DATA_SOURCE_NAME = "pandas_temp_datasource"
 
 # gx asset realted config
 # ---------------------BRONZE PIPELINE-------------------
 RAW_ASSET_NAME = "raw_flights_csv_files"
+# ----------------------SILVER PIPELINE-------------------
+SILVER_ASSET_NAME = "silver_in_memory_asset"
+
 
 # batch definition related config
 # ---------------------BRONZE PIPELINE-------------------
 BRONZE_BATCH_DEFINITION_NAME = "bronze_batch_definition"
-
+# ----------------------SILVER PIPELINE-------------------
+SILVER_BATCH_DEFINITION_NAME = "silver_batch_definition"
 
 # gx suite related config
 # ---------------------BRONZE PIPELINE-------------------
 BRONZE_SUITE_NAME = "bronze_raw_flights_suite"
+# ----------------------SILVER PIPELINE-------------------
+SILVER_SUITE_NAME = "silver_df_flights_suite"
 
 # gx validation definition config
 # ---------------------BRONZE PIPELINE-------------------
 BRONZE_VALIDATION_DEFINITION_NAME = "bronze_validation_definition"
+# ----------------------SILVER PIPELINE-------------------
+SILVER_VALIDATION_DEFINITION_NAME = "silver_validation_definition"
 
 # gx checkpoint definition config
 # ---------------------BRONZE PIPELINE-------------------
 BRONZE_CHECKPOINT_NAME = "bronze_checkpoint"
-
+SILVER_CHECKPOINT_NAME = "silver_checkpoint"
 
 # ---------------------LOG FILES PATHS-------------------
 SPLIT_DATA_LOGS_PATH = LOGS_DIR / "split_data.log"
@@ -96,4 +106,57 @@ ID_COLS_TO_EXCLUDE_FROM_IMPUTATION = [
     "day_of_week",
     "day_of_year",
     "week_of_year",
+]
+
+# ---------------------- Silver Layer Expectations Configurations-------------------
+# The exact column order and names we expect after all Silver processing.
+SILVER_EXPECTED_COLS_ORDER = [
+    "travel_code",
+    "user_code",
+    "from_location",
+    "to_location",
+    "flight_type",
+    "price",
+    "time",
+    "distance",
+    "agency",
+    "date",
+    "year",
+    "month",
+    "day",
+    "day_of_week",
+    "day_of_year",
+    "week_of_year",
+]
+
+# The exact data types we expect after optimization.
+SILVER_EXPECTED_COLUMN_TYPES = {
+    "travel_code": "int32",
+    "user_code": "int16",
+    "from_location": "category",
+    "to_location": "category",
+    "flight_type": "category",
+    "price": "float32",
+    "time": "float32",
+    "distance": "float32",
+    "agency": "category",
+    "date": "datetime64[ns]",
+    "year": "int16",
+    "month": "int8",
+    "day": "int8",
+    "day_of_week": "int8",
+    "day_of_year": "int16",
+    "week_of_year": "int32",
+}
+
+# The columns that should have no missing values after imputation.
+SILVER_REQUIRED_NON_NULL_COLS = [
+    "from_location",
+    "to_location",
+    "flight_type",
+    "price",
+    "time",
+    "distance",
+    "agency",
+    "date",
 ]
