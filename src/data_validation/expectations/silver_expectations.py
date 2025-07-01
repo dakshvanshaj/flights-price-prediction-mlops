@@ -27,15 +27,24 @@ def build_silver_expectations(
     # --- 2. Data Type Conformance ---
     type_expectations = []
     for col, type_str in expected_col_types.items():
-        type_expectations.append(
-            gxe.ExpectColumnValuesToBeOfType(
+        # If the expected type in config is 'category', we must check for multiple
+        # valid string representations that different backends might report.
+        if type_str == "category":
+            expectation = gxe.ExpectColumnValuesToBeInTypeList(
+                column=col,
+                type_list=["category", "CategoricalDtypeType"],
+                meta={"notes": f"Verify column {col} is a categorical type."},
+            )
+        # For all other simple types, we can use a strict, single-type check.
+        else:
+            expectation = gxe.ExpectColumnValuesToBeOfType(
                 column=col,
                 type_=type_str,
                 meta={
                     "notes": f"Verify data type optimization for {col} is {type_str}."
                 },
             )
-        )
+        type_expectations.append(expectation)
 
     # --- 3. Missing Value Check ---
     not_null_expectations = []
