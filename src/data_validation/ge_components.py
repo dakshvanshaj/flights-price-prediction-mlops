@@ -1,20 +1,34 @@
-# delete and recreate stratify for on the fly working of pipeline
+# src/data_validation/ge_components.py
 
 import logging
 from pathlib import Path
-from typing import List
+from typing import List, Any
+
 import pandas as pd
 import great_expectations as gx
 from great_expectations.core import ExpectationSuite, ValidationDefinition
 from great_expectations.checkpoint import Checkpoint, CheckpointResult
 from great_expectations.checkpoint.actions import UpdateDataDocsAction
 from great_expectations.data_context import FileDataContext
-from great_expectations.datasource.fluent import PandasDatasource
+from great_expectations.datasource.fluent import PandasDatasource, DataAsset
 
 logger = logging.getLogger(__name__)
 
 
 def get_ge_context(project_root_dir: Path) -> FileDataContext:
+    """
+    Initializes and returns a Great Expectations FileDataContext.
+
+    This function serves as the primary entry point for interacting with a
+    Great Expectations project on the filesystem.
+
+    Args:
+        project_root_dir: The absolute path to the Great Expectations
+                          project root directory (i.e., the `gx` folder).
+
+    Returns:
+        An initialized FileDataContext object.
+    """
     logger.info(f"Initializing GE context from directory: {project_root_dir}")
     return gx.get_context(mode="file", project_root_dir=project_root_dir)
 
@@ -22,6 +36,22 @@ def get_ge_context(project_root_dir: Path) -> FileDataContext:
 def get_or_create_datasource(
     context: FileDataContext, source_name: str, data_dir: Path
 ) -> PandasDatasource:
+    """
+    Ensures a datasource exists by deleting it if present and recreating it.
+
+    This "delete-and-recreate" pattern guarantees that the pipeline starts
+    with a clean, known datasource configuration for each run, preventing
+    issues from leftover state. It is designed for file-based datasources
+    in an automated pipeline context.
+
+    Args:
+        context: The Great Expectations FileDataContext object.
+        source_name: The name for the datasource.
+        data_dir: The base directory for the filesystem datasource.
+
+    Returns:
+        The newly created or recreated PandasDatasource object.
+    """
     logger.debug(f"Attempting to delete and recreate datasource '{source_name}'.")
     try:
         context.data_sources.delete(source_name)
@@ -37,6 +67,15 @@ def get_or_create_datasource(
 
 
 def get_or_create_csv_asset(datasource: PandasDatasource, asset_name: str):
+    """
+    Ensures a CSV asset exists on a datasource by deleting and recreating it.
+
+    This ensures a clean asset state for each pipeline run.
+
+    Args:
+        datasource: The PandasDatasource to add the asset to.
+        asset_name: The name for the CSV asset.
+    """
     logger.debug(f"Attempting to delete and recreate asset '{asset_name}'.")
     try:
         datasource.delete_asset(asset_name)
@@ -49,11 +88,23 @@ def get_or_create_csv_asset(datasource: PandasDatasource, asset_name: str):
     return asset
 
 
-def get_or_create_batch_definition(asset, batch_definition_name: str, file_name: str):
+def get_or_create_batch_definition(
+    asset: DataAsset, batch_definition_name: str, file_name: str
+):
+    """
+    Adds or updates a batch definition to point to a specific file.
+
+    Using `add_batch_definition_path` is idempotent for a given name if it
+    points to a new path.
+
+    Args:
+        asset: The DataAsset to which the batch definition will be added.
+        batch_definition_name: The name for the batch definition.
+        file_name: The relative path of the file to be included in the batch.
+    """
     logger.debug(
         f"Attempting to add or update batch definition '{batch_definition_name}'."
     )
-    # Using add_batch_definition_path is idempotent for a given name if it points to a new path
     batch_definition = asset.add_batch_definition_path(
         name=batch_definition_name, path=file_name
     )
@@ -68,8 +119,16 @@ def get_or_create_expectation_suite(
 ) -> ExpectationSuite:
     """
     Ensures a fresh, empty Expectation Suite exists for the pipeline run.
+
     If a suite with the same name already exists, it is deleted and
     recreated to guarantee a clean state.
+
+    Args:
+        context: The Great Expectations FileDataContext object.
+        suite_name: The name for the expectation suite.
+
+    Returns:
+        The newly created, empty ExpectationSuite object.
     """
     try:
         logger.debug(f"Checking for existing suite '{suite_name}' to recreate.")
@@ -79,7 +138,6 @@ def get_or_create_expectation_suite(
         # This is expected if the suite doesn't exist yet
         logger.info(f"Expectation suite '{suite_name}' not found. Will create new.")
 
-    # Create the new suite
     suite = ExpectationSuite(name=suite_name)
     context.suites.add(suite=suite)
     logger.info(f"Expectation suite '{suite_name}' created/recreated successfully.")
@@ -88,8 +146,11 @@ def get_or_create_expectation_suite(
 
 def add_expectations_to_suite(suite: ExpectationSuite, expectation_list: List):
     """
-    Adds a list of new expectations to a suite. Assumes the suite is
-    ready to be populated (e.g., is empty).
+    Adds a list of new expectation objects to an existing suite.
+
+    Args:
+        suite: The ExpectationSuite object to be populated.
+        expectation_list: A list of Expectation objects to add.
     """
     logger.info(
         f"Adding {len(expectation_list)} expectations to suite '{suite.name}'..."
@@ -102,9 +163,21 @@ def add_expectations_to_suite(suite: ExpectationSuite, expectation_list: List):
 def get_or_create_validation_definition(
     context: FileDataContext,
     definition_name: str,
-    batch_definition,
+    batch_definition: Any,  # Using Any to avoid new GX imports
     suite: ExpectationSuite,
-):
+) -> ValidationDefinition:
+    """
+    Creates or recreates a Validation Definition linking data to an Expectation Suite.
+
+    Args:
+        context: The Great Expectations FileDataContext object.
+        definition_name: The name for the validation definition.
+        batch_definition: The batch definition representing the data to be validated.
+        suite: The ExpectationSuite containing the rules.
+
+    Returns:
+        The newly created ValidationDefinition object.
+    """
     try:
         context.validation_definitions.delete(definition_name)
         logger.info(
@@ -112,7 +185,7 @@ def get_or_create_validation_definition(
         )
     except (gx.exceptions.DataContextError, AttributeError, KeyError):
         logger.info(
-            f"Validation definition '{definition_name}' not found. . Creating new one..."
+            f"Validation definition '{definition_name}' not found. Creating new one..."
         )
 
     validation_def = ValidationDefinition(
@@ -124,7 +197,11 @@ def get_or_create_validation_definition(
 
 
 def get_action_list() -> list:
-    """Returns a default list of actions for checkpoints."""
+    """
+    Returns a default list of actions for checkpoints.
+
+    Currently configured to update all Data Docs sites after a validation run.
+    """
     return [
         UpdateDataDocsAction(
             name="update_all_data_docs",
@@ -137,8 +214,21 @@ def get_or_create_checkpoint(
     checkpoint_name: str,
     validation_definition_list: List,
     action_list: List,
-    result_format={"result_format": "COMPLETE"},
+    result_format: dict = {"result_format": "COMPLETE"},
 ) -> Checkpoint:
+    """
+    Creates or updates a Checkpoint configuration in the Data Context.
+
+    Args:
+        context: The Great Expectations FileDataContext object.
+        checkpoint_name: The name for the checkpoint.
+        validation_definition_list: A list of ValidationDefinition objects to include.
+        action_list: A list of actions to perform after validation.
+        result_format: The format for the validation results.
+
+    Returns:
+        The configured Checkpoint object from the context.
+    """
     checkpoint_config = {
         "name": checkpoint_name,
         "validation_definitions": validation_definition_list,
@@ -154,10 +244,27 @@ def get_or_create_checkpoint(
 
 
 def run_checkpoint(checkpoint: Checkpoint) -> CheckpointResult:
+    """
+    Executes a Great Expectations Checkpoint and returns the result.
+
+    Includes error handling to prevent pipeline crashes during the run.
+
+    Args:
+        checkpoint: The Checkpoint object to run.
+
+    Returns:
+        A CheckpointResult object, or None if a critical error occurs.
+    """
     logger.info(f"Running checkpoint: '{checkpoint.name}'...")
-    result = checkpoint.run()
-    logger.info(f"Checkpoint run completed. Success: {result.success}")
-    return result
+    try:
+        result = checkpoint.run()
+        logger.info(f"Checkpoint run completed. Success: {result.success}")
+        return result
+    except Exception as e:
+        logger.error(
+            f"An unexpected error occurred during checkpoint run: {e}", exc_info=True
+        )
+        return None
 
 
 def run_checkpoint_on_dataframe(
@@ -172,22 +279,28 @@ def run_checkpoint_on_dataframe(
     expectation_list: List,
 ) -> CheckpointResult:
     """
-    Creates and runs a checkpoint to validate an in-memory DataFrame, following
-    the Validation Definition pattern.
+    Creates and runs a checkpoint to validate an in-memory DataFrame.
+
+    This orchestrates the creation of all necessary temporary GE objects
+    (datasource, asset, definitions) to perform the validation.
 
     Args:
         project_root_dir: The root directory of the Great Expectations project.
+        datasource_name: Name for the temporary pandas datasource.
+        asset_name: Name for the temporary dataframe asset.
+        batch_definition_name: Name for the temporary batch definition.
         suite_name: The name of the expectation suite to use.
+        validation_definition_name: Name for the validation definition.
         checkpoint_name: The name for the temporary checkpoint.
         dataframe_to_validate: The pandas DataFrame to be validated.
         expectation_list: A list of Expectation objects to validate against.
 
     Returns:
-        A CheckpointResult object containing the validation results.
+        A CheckpointResult object, or None if a critical error occurs.
     """
     context = get_ge_context(project_root_dir=project_root_dir)
 
-    # 1. Add a temporary 'in-memory' datasource. We use the delete/recreate pattern.
+    # 1. Add a temporary 'in-memory' datasource.
     try:
         context.data_sources.delete(name=datasource_name)
         logger.info(
@@ -198,32 +311,31 @@ def run_checkpoint_on_dataframe(
     datasource = context.data_sources.add_pandas(name=datasource_name)
 
     # 2. Add the DataFrame as a Data Asset
-
     try:
         datasource.delete_asset(name=asset_name)
     except (LookupError, KeyError):
-        pass
+        pass  # Asset didn't exist, which is fine
     data_asset = datasource.add_dataframe_asset(name=asset_name)
 
-    # 3. Create a Batch Definition that points to our DataFrame asset
+    # 3. Create a Batch Definition
     batch_definition = data_asset.add_batch_definition_whole_dataframe(
         name=batch_definition_name
     )
 
-    # 4. Get or create the Expectation Suite and add our rules to it
+    # 4. Create and populate the Expectation Suite
     suite = get_or_create_expectation_suite(context, suite_name)
     add_expectations_to_suite(suite, expectation_list)
     suite.save()
 
-    # 5. Create a Validation Definition linking the data and the suite
+    # 5. Create the Validation Definition
     validation_definition = get_or_create_validation_definition(
         context=context,
         definition_name=validation_definition_name,
-        batch_definition=batch_definition,  # pass batch directly with dataframe_to_validate
+        batch_definition=batch_definition,
         suite=suite,
     )
 
-    # 6. Create the Checkpoint using the Validation Definition
+    # 6. Create the Checkpoint
     checkpoint = get_or_create_checkpoint(
         context=context,
         checkpoint_name=checkpoint_name,
@@ -231,14 +343,15 @@ def run_checkpoint_on_dataframe(
         action_list=get_action_list(),
     )
 
-    # 7. Run the checkpoint and return the result
+    # 7. Run the checkpoint, passing the DataFrame as a runtime parameter
     try:
-        logger.info(f"Running checkpoint: '{checkpoint.name}'...")
         result = checkpoint.run(
             batch_parameters={"dataframe": dataframe_to_validate},
         )
-        logger.info(f"Checkpoint run completed. Success: {result.success}")
+        return result
     except Exception as e:
-        logger.error(f"Error running checkpoint: {e}", exc_info=True)
-
-    return result
+        logger.error(
+            f"An unexpected error occurred during in-memory checkpoint run: {e}",
+            exc_info=True,
+        )
+        return None
