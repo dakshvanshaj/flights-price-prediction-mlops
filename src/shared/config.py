@@ -17,15 +17,21 @@ GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 # ==============================================================================
 # --- 2. DATA FLOW & LOGGING PATHS ---
 # ==============================================================================
-# Raw Data Flow Directories
+
+# Split data directory
+SPLIT_DATA_DIR = DATA_DIR / "intial_data"
+
+# Raw Data Flow Directories(BRONZE_PIPELINE)
 RAW_DATA_DIR = DATA_DIR / "raw"
 RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
+RAW_DATA_SOURCE = RAW_PENDING_DIR
 RAW_PROCESSED_DIR = RAW_DATA_DIR / "processed"
 RAW_QUARANTINE_DIR = RAW_DATA_DIR / "quarantine"
 
-# Prepared and Cleaned Data Directories
-PREPARED_DATA_DIR = DATA_DIR / "prepared_data"
-CLEANED_DATA_DIR = PREPARED_DATA_DIR / "cleaned"
+# Silver Preprocessed Data Flow Directories(SILVER_PIPELINE)
+SILVER_DATA_DIR = DATA_DIR / "silver_data"
+SILVER_PROCESSED_DIR = SILVER_DATA_DIR / "processed"
+SILVER_QUARANTINE_DIR = SILVER_DATA_DIR / "quarantine"
 
 # Individual Log File Paths
 BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
@@ -113,16 +119,18 @@ SILVER_EXPECTED_COLS_ORDER = [
     "day_of_year",
     "week_of_year",
 ]
+
 SILVER_EXPECTED_COLUMN_TYPES = {
     "travel_code": "int32",
     "user_code": "int16",
-    "from_location": "category",
-    "to_location": "category",
-    "flight_type": "category",
+    # Use the exact type string reported by Great Expectations for categorical columns.
+    "from_location": "CategoricalDtypeType",
+    "to_location": "CategoricalDtypeType",
+    "flight_type": "CategoricalDtypeType",
+    "agency": "CategoricalDtypeType",
     "price": "float32",
     "time": "float32",
     "distance": "float32",
-    "agency": "category",
     "date": "datetime64[ns]",
     "year": "int16",
     "month": "int8",
@@ -131,6 +139,7 @@ SILVER_EXPECTED_COLUMN_TYPES = {
     "day_of_year": "int16",
     "week_of_year": "int32",
 }
+
 SILVER_REQUIRED_NON_NULL_COLS = [
     "from_location",
     "to_location",
