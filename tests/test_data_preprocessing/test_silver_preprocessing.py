@@ -3,6 +3,7 @@
 import pytest
 import pandas as pd
 import numpy as np
+from pandas.testing import assert_frame_equal
 
 # Import all functions and the class from the script to be tested
 from src.data_preprocessing.silver_preprocessing import (
@@ -46,20 +47,26 @@ def test_standardize_column_format(preprocessing_base_df):
 def test_optimize_data_types():
     df = pd.DataFrame(
         {
-            "int_col": [1, 2, 128],
-            "float_col": [1.0, 2.5, 3.5],
-            "obj_col_cat": ["a", "b", "a"],
-            "obj_col_high_card": ["x", "y", "z"],
-            "date_str": ["2023-01-01", "2023-01-02", "2023-01-03"],
+            "int_col": [1, 2, 128, 200, 300],
+            "float_col": [1.0, 2.5, 3.5, 4.0, 5.5],
+            "obj_col_cat": ["a", "b", "a", "a", "b"],
+            "obj_col_high_card": ["x", "y", "z", "w", "v"],
+            "date_str": [
+                "2023-01-01",
+                "2023-01-02",
+                "2023-01-03",
+                "2023-01-04",
+                "2023-01-05",
+            ],
         }
     )
     result_df = optimize_data_types(df, date_cols=["date_str"])
-    assert str(result_df["int_col"].dtype) == "int8"
+
+    # Assertions based on the corrected data and logic
+    assert str(result_df["int_col"].dtype) == "int16"
     assert str(result_df["float_col"].dtype) == "float32"
     assert isinstance(result_df["obj_col_cat"].dtype, pd.CategoricalDtype)
-    assert (
-        str(result_df["obj_col_high_card"].dtype) == "object"
-    )  # High cardinality, should not convert
+    assert str(result_df["obj_col_high_card"].dtype) == "object"
     assert pd.api.types.is_datetime64_any_dtype(result_df["date_str"])
 
 
@@ -69,7 +76,6 @@ def test_sort_data_by_date(preprocessing_base_df):
 
 
 def test_handle_erroneous_duplicates(preprocessing_base_df):
-    # The base df has one duplicate row: Alvin Seville, 10, 88.0, 2023-03-15, Red
     result_df = handle_erroneous_duplicates(
         preprocessing_base_df, subset_cols=["First Name", "Last Name", "Age"]
     )
@@ -118,7 +124,7 @@ class TestMissingValueHandler:
         assert transformed_df["numeric_col"].iloc[1] == 30.0
         assert transformed_df["category_col"].isnull().sum() == 0
         assert transformed_df["category_col"].iloc[2] == "A"
-        assert transformed_df["col_with_nan"].isnull().sum() == 0  # Should be untouched
+        assert transformed_df["col_with_nan"].isnull().sum() == 0
 
     def test_column_specific_strategies(self, imputer_train_df, imputer_test_df):
         # Arrange
@@ -140,7 +146,6 @@ class TestMissingValueHandler:
         # Add a NaN to the id_col in the test set to ensure it's ignored
         test_df_with_nan_id = imputer_test_df.copy()
         test_df_with_nan_id.loc[0, "id_col"] = np.nan
-
         handler = MissingValueHandler(exclude_columns=["id_col"])
 
         # Act
@@ -161,10 +166,8 @@ class TestMissingValueHandler:
         # Act: Load the imputer and transform data
         loaded_handler = MissingValueHandler.load(save_path)
         transformed_df = loaded_handler.transform(imputer_test_df)
-
-        # Assert: The loaded handler should behave identically to the original
-        assert transformed_df["numeric_col"].iloc[1] == 30.0  # Median
-        assert transformed_df["category_col"].iloc[2] == "A"  # Mode
+        assert transformed_df["numeric_col"].iloc[1] == 30.0
+        assert transformed_df["category_col"].iloc[2] == "A"
 
     def test_transform_before_fit_raises_error(self):
         handler = MissingValueHandler()
