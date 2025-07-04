@@ -38,10 +38,14 @@ def standardize_column_format(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     clean_cols = []
     for col in df.columns:
-        standardized_col = (
-            re.sub(r"(?<!^)(?=[A-Z])", "_", col.strip()).lower().replace(" ", "_")
-        )
+        # First, replace spaces with a single underscore
+        s1 = col.strip().replace(" ", "_")
+        # Then, insert underscores before capital letters (for camelCase)
+        s2 = re.sub(r"(?<!^)(?=[A-Z])", "_", s1)
+        # Finally, convert to lower case
+        standardized_col = s2.lower()
         clean_cols.append(standardized_col)
+
     df.columns = clean_cols
     logger.info("Standardized column name formats for consistency.")
     logger.debug(f"Final standardized columns: {', '.join(df.columns)}")
