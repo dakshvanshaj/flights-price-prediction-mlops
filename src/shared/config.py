@@ -66,6 +66,8 @@ SILVER_CHECKPOINT_NAME = "silver_checkpoint"
 
 # --- Data Splitting Config ---
 INPUT_CSV_PATH = DATA_DIR / "flights.csv"
+INITIAL_DATA_SPLITS = DATA_DIR / "_initial_data_splits"
+DRIFT_SIMULATION_DIR = INITIAL_DATA_SPLITS / "drift_simulation_data"
 DEV_SET_SIZE = 0.70
 EVAL_SET_SIZE = 0.15
 
