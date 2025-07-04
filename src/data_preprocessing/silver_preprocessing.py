@@ -34,20 +34,29 @@ def rename_specific_columns(
 
 
 def standardize_column_format(df: pd.DataFrame) -> pd.DataFrame:
-    """Standardizes all column names in a DataFrame to a consistent format."""
+    """
+    Standardizes all column names in a DataFrame to a consistent snake_case format.
+    Handles both 'camelCase' and 'Title Case Names'.
+    """
     df = df.copy()
+
     clean_cols = []
     for col in df.columns:
-        # First, replace spaces with a single underscore
-        s1 = col.strip().replace(" ", "_")
-        # Then, insert underscores before capital letters (for camelCase)
-        s2 = re.sub(r"(?<!^)(?=[A-Z])", "_", s1)
-        # Finally, convert to lower case
-        standardized_col = s2.lower()
+        # 1. Remove spaces to correctly handle inputs like "First Name" -> "FirstName"
+        temp_col = col.replace(" ", "")
+
+        # 2. Insert an underscore before any capital letter (for camelCase)
+        #    Example: "FirstName" -> "First_Name"
+        temp_col = re.sub(r"(?<!^)(?=[A-Z])", "_", temp_col)
+
+        # 3. Convert the entire string to lowercase
+        #    Example: "First_Name" -> "first_name"
+        standardized_col = temp_col.lower()
+
         clean_cols.append(standardized_col)
 
     df.columns = clean_cols
-    logger.info("Standardized column name formats for consistency.")
+    logger.info("Standardized column name formats to snake_case.")
     logger.debug(f"Final standardized columns: {', '.join(df.columns)}")
     return df
 
@@ -100,6 +109,7 @@ def optimize_data_types(
         elif str(old_dtype).startswith("float"):
             df[col] = pd.to_numeric(df[col], downcast="float")
         elif old_dtype == "object":
+            # Convert to category if the number of unique values is less than 50%
             if df[col].nunique() / len(df[col]) < 0.5:
                 df[col] = df[col].astype("category")
 
