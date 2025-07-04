@@ -4,6 +4,7 @@ import pytest
 import pandas as pd
 from pathlib import Path
 import zipfile
+import numpy as np
 
 
 @pytest.fixture(scope="module")
@@ -68,3 +69,51 @@ def create_test_file(tmp_path: Path, sample_df: pd.DataFrame):
         return file_path
 
     return _create_file
+
+
+@pytest.fixture(scope="module")
+def preprocessing_base_df() -> pd.DataFrame:
+    """
+    Provides a versatile DataFrame for testing multiple preprocessing steps.
+    It includes:
+    - Mixed data types (int, float, object, datetime).
+    - Messy column names for standardization.
+    - An unsorted date column.
+    - Duplicate rows.
+    - Missing values.
+    """
+    data = {
+        "First Name": ["Alvin", "Simon", "Theodore", "Alvin", "Dave"],
+        "Last Name": ["Seville", "Seville", "Seville", "Seville", "Seville"],
+        "Age": [10, 10, 10, 10, 40],
+        "Score": [88.0, 92.5, np.nan, 88.0, 99.9],
+        "Join Date": pd.to_datetime(
+            ["2023-03-15", "2023-01-20", "2023-02-10", "2023-03-15", "2021-05-01"]
+        ),
+        "Favorite Color": ["Red", "Blue", "Green", "Red", np.nan],
+    }
+    return pd.DataFrame(data)
+
+
+@pytest.fixture(scope="module")
+def imputer_train_df() -> pd.DataFrame:
+    """Provides a training DataFrame for fitting the MissingValueHandler."""
+    data = {
+        "numeric_col": [10, 20, 30, 40, 50],  # median=30
+        "category_col": ["A", "B", "A", "A", "C"],  # mode='A'
+        "col_with_nan": [1, 2, np.nan, 4, 5],
+        "id_col": [1, 2, 3, 4, 5],
+    }
+    return pd.DataFrame(data)
+
+
+@pytest.fixture(scope="module")
+def imputer_test_df() -> pd.DataFrame:
+    """Provides a test DataFrame with missing values to transform."""
+    data = {
+        "numeric_col": [15, np.nan, 25, np.nan, 55],
+        "category_col": ["B", "B", np.nan, "C", np.nan],
+        "col_with_nan": [1, 2, 3, 4, 5],  # No NaNs here to test it's untouched
+        "id_col": [1, 2, 3, 4, 5],
+    }
+    return pd.DataFrame(data)
