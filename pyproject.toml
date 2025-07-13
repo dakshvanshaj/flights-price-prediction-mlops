@@ -19,15 +19,20 @@ dependencies = [
     "scikit-learn",
     "great-expectations",
     "python-json-logger",
-    "pyyaml",  # Added as it's now required for logging configuration
+    "pyyaml",
+    "openpyxl",
 ]
+
+# if want to test code use pip install -e .[test]
+[project.optional-dependencies]
+test = ["pytest"]
 
 # --- Setuptools Configuration ---
 # This tells setuptools where to find the Python packages.
 [tool.setuptools.packages.find]
 where = ["src"]  # Look for packages in the 'src' directory
 
-# --- Project URLs (Optional but good practice) ---
+# --- Project URLs ---
 [project.urls]
 Homepage = "https://github.com/your_username/your_project" # Example URL
 Issues = "https://github.com/your_username/your_project/issues" # Example URL
