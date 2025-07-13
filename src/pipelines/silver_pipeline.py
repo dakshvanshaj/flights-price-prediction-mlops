@@ -41,6 +41,7 @@ from shared.config import (
     SILVER_SUITE_NAME,
     SILVER_VALIDATION_DEFINITION_NAME,
     SILVER_CHECKPOINT_NAME,
+    LOGGING_YAML
 )
 from shared.utils import setup_logging_from_yaml
 
@@ -159,8 +160,13 @@ def main():
     """
     Main entry point for running the Silver pipeline from the command line.
     """
-    setup_logging_from_yaml(log_path=SILVER_PIPELINE_LOGS_PATH)
-
+    # --- SETUP LOGGING ---
+    # load logging configuration
+    setup_logging_from_yaml(
+        log_path=SILVER_PIPELINE_LOGS_PATH,
+        default_level=logging.DEBUG,
+        default_yaml_path=LOGGING_YAML,
+    )
     parser = argparse.ArgumentParser(
         description="Run the Silver Data Processing Pipeline."
     )
