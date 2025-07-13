@@ -5,7 +5,8 @@ disable_existing_loggers: false  # Keep existing loggers active
 formatters:
   # JSON formatter for file logs
   json:
-    '()': pythonjsonlogger.jsonlogger.JsonFormatter  # Use python-json-logger
+  
+    '()': pythonjsonlogger.json.JsonFormatter  # Use python-json-logger
     format: "%(asctime)s %(levelname)s %(name)s %(lineno)d %(message)s"  # Include line number
     rename_fields:
       asctime: timestamp  # Rename 'asctime' to 'timestamp' in output
