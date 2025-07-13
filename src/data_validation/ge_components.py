@@ -1,21 +1,14 @@
-# src/data_validation/ge_components.py
-
 import logging
 from pathlib import Path
 from typing import List, Any
 
 import pandas as pd
 import great_expectations as gx
-from great_expectations.core import ExpectationSuite, ValidationDefinition
-from great_expectations.checkpoint import Checkpoint, CheckpointResult
-from great_expectations.checkpoint.actions import UpdateDataDocsAction
-from great_expectations.data_context import FileDataContext
-from great_expectations.datasource.fluent import PandasDatasource, DataAsset
 
 logger = logging.getLogger(__name__)
 
 
-def get_ge_context(project_root_dir: Path) -> FileDataContext:
+def get_ge_context(project_root_dir: Path):
     """
     Initializes and returns a Great Expectations FileDataContext.
 
@@ -33,9 +26,7 @@ def get_ge_context(project_root_dir: Path) -> FileDataContext:
     return gx.get_context(mode="file", project_root_dir=project_root_dir)
 
 
-def get_or_create_datasource(
-    context: FileDataContext, source_name: str, data_dir: Path
-) -> PandasDatasource:
+def get_or_create_datasource(context, source_name: str, data_dir: Path):
     """
     Ensures a datasource exists by deleting it if present and recreating it.
 
@@ -66,7 +57,7 @@ def get_or_create_datasource(
     return datasource
 
 
-def get_or_create_csv_asset(datasource: PandasDatasource, asset_name: str):
+def get_or_create_csv_asset(datasource, asset_name: str):
     """
     Ensures a CSV asset exists on a datasource by deleting and recreating it.
 
@@ -88,9 +79,7 @@ def get_or_create_csv_asset(datasource: PandasDatasource, asset_name: str):
     return asset
 
 
-def get_or_create_batch_definition(
-    asset: DataAsset, batch_definition_name: str, file_name: str
-):
+def get_or_create_batch_definition(asset, batch_definition_name: str, file_name: str):
     """
     Adds or updates a batch definition to point to a specific file.
 
@@ -114,9 +103,7 @@ def get_or_create_batch_definition(
     return batch_definition
 
 
-def get_or_create_expectation_suite(
-    context: FileDataContext, suite_name: str
-) -> ExpectationSuite:
+def get_or_create_expectation_suite(context, suite_name: str):
     """
     Ensures a fresh, empty Expectation Suite exists for the pipeline run.
 
@@ -138,13 +125,13 @@ def get_or_create_expectation_suite(
         # This is expected if the suite doesn't exist yet
         logger.info(f"Expectation suite '{suite_name}' not found. Will create new.")
 
-    suite = ExpectationSuite(name=suite_name)
-    context.suites.add(suite=suite)
+    suite = gx.ExpectationSuite(name=suite_name)
+    context.suites.add(suite)
     logger.info(f"Expectation suite '{suite_name}' created/recreated successfully.")
     return suite
 
 
-def add_expectations_to_suite(suite: ExpectationSuite, expectation_list: List):
+def add_expectations_to_suite(suite, expectation_list: List):
     """
     Adds a list of new expectation objects to an existing suite.
 
@@ -156,16 +143,16 @@ def add_expectations_to_suite(suite: ExpectationSuite, expectation_list: List):
         f"Adding {len(expectation_list)} expectations to suite '{suite.name}'..."
     )
     for expectation in expectation_list:
-        suite.add_expectation(expectation=expectation)
+        suite.add_expectation(expectation)
     logger.info("All expectations added successfully.")
 
 
 def get_or_create_validation_definition(
-    context: FileDataContext,
+    context,
     definition_name: str,
-    batch_definition: Any,  # Using Any to avoid new GX imports
-    suite: ExpectationSuite,
-) -> ValidationDefinition:
+    batch_definition: Any,
+    suite,
+):
     """
     Creates or recreates a Validation Definition linking data to an Expectation Suite.
 
@@ -188,7 +175,7 @@ def get_or_create_validation_definition(
             f"Validation definition '{definition_name}' not found. Creating new one..."
         )
 
-    validation_def = ValidationDefinition(
+    validation_def = gx.ValidationDefinition(
         name=definition_name, data=batch_definition, suite=suite
     )
     context.validation_definitions.add(validation_def)
@@ -203,19 +190,19 @@ def get_action_list() -> list:
     Currently configured to update all Data Docs sites after a validation run.
     """
     return [
-        UpdateDataDocsAction(
+        gx.checkpoint.actions.UpdateDataDocsAction(
             name="update_all_data_docs",
         ),
     ]
 
 
 def get_or_create_checkpoint(
-    context: FileDataContext,
+    context,
     checkpoint_name: str,
     validation_definition_list: List,
     action_list: List,
     result_format: dict = {"result_format": "COMPLETE"},
-) -> Checkpoint:
+):
     """
     Creates or updates a Checkpoint configuration in the Data Context.
 
@@ -243,7 +230,7 @@ def get_or_create_checkpoint(
     return checkpoint
 
 
-def run_checkpoint(checkpoint: Checkpoint) -> CheckpointResult:
+def run_checkpoint(checkpoint):
     """
     Executes a Great Expectations Checkpoint and returns the result.
 
@@ -277,7 +264,7 @@ def run_checkpoint_on_dataframe(
     checkpoint_name: str,
     dataframe_to_validate: pd.DataFrame,
     expectation_list: List,
-) -> CheckpointResult:
+):
     """
     Creates and runs a checkpoint to validate an in-memory DataFrame.
 
