@@ -1,0 +1,12 @@
+# This file lists the direct dependencies for the project.
+# It is used for setting up the environment via pip.
+# For a Conda-based setup, refer to environment.yml.
+
+pandas==2.1.4
+numpy==1.26.4
+scikit-learn==1.7.0
+great-expectations==1.5.5
+python-json-logger==2.0.7
+PyYAML==6.0.1
+openpyxl==3.1.5
+pytest==8.4.1
