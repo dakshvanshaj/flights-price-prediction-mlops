@@ -17,6 +17,8 @@ from shared.config import (
     BRONZE_PIPELINE_LOGS_PATH,
     BRONZE_BATCH_DEFINITION_NAME,
     BRONZE_VALIDATION_DEFINITION_NAME,
+    LOGGING_YAML
+    
 )
 from data_validation.expectations.bronze_expectations import build_bronze_expectations
 from data_validation.ge_components import (
@@ -128,7 +130,7 @@ def main():
     setup_logging_from_yaml(
         log_path=BRONZE_PIPELINE_LOGS_PATH,
         default_level=logging.DEBUG,
-        default_yaml_path="logging.yaml",
+        default_yaml_path=LOGGING_YAML,
     )
     # --- PARSE COMMAND-LINE ARGUMENTS ---
     parser = argparse.ArgumentParser(
