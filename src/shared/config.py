@@ -33,6 +33,10 @@ SILVER_DATA_DIR = DATA_DIR / "silver_data"
 SILVER_PROCESSED_DIR = SILVER_DATA_DIR / "processed"
 SILVER_QUARANTINE_DIR = SILVER_DATA_DIR / "quarantine"
 
+# Logger config path
+LOGGING_YAML = PROJECT_ROOT / "logging.yaml"
+
+
 # Individual Log File Paths
 BRONZE_PIPELINE_LOGS_PATH = LOGS_DIR / "bronze_pipeline.log"
 SILVER_PIPELINE_LOGS_PATH = LOGS_DIR / "silver_pipeline.log"
