@@ -1,15 +1,32 @@
-name: travels_mlops
-channels:
+name: flights_mlops # The name for the new environment
+
+channels: # The channels to search for packages, in order of priority
+  - conda-forge
   - defaults
+
 dependencies:
-  - python=3.12.9
-  - pandas=2.1.4
-  - numpy=1.26.4
-  - scikit-learn=1.7.0
-  - pyyaml=6.0.1
+  # Core Python version
+  - python=3.12
+
+  # Core Data Science Libraries (let conda handle versions)
+  - pandas
+  - numpy
+  - scikit-learn
+  - scipy
+  - pyarrow
   - openpyxl=3.1.5
-  - pytest=8.4.1
+
+  # Data Visualization
+  - altair
+
+  # Data Quality & Validation
+  - great-expectations
+
+  # Testing
+  - pytest
+
+  # Pip-installed packages (only for things not on conda channels)
   - pip
   - pip:
-      - great-expectations==1.5.5
-      - python-json-logger==2.0.7
+      # This format allows pip to install directly from a specific commit
+      - -e git+ssh://git@github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs.git@9a61519c82de5646b15d37e3c84f6e4b40a139ad#egg=flight_price_prediction_mlops
