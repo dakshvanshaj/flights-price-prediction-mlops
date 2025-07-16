@@ -1,12 +1,22 @@
-# This file lists the direct dependencies for the project.
-# It is used for setting up the environment via pip.
-# For a Conda-based setup, refer to environment.yml.
-
+# Core Data Science Libraries
 pandas==2.1.4
 numpy==1.26.4
 scikit-learn==1.7.0
+scipy==1.16.0
+pyarrow==20.0.0
+
+# Data Visualization
+altair==4.2.2
+
+# Data Quality & Validation
 great-expectations==1.5.5
-python-json-logger==2.0.7
-PyYAML==6.0.1
 openpyxl==3.1.5
+# Testing
 pytest==8.4.1
+
+# Web & API
+requests==2.32.4
+
+# Your custom package from GitHub
+# This format allows pip to install directly from a specific commit
+-e git+ssh://git@github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs.git@9a61519c82de5646b15d37e3c84f6e4b40a139ad#egg=flight_price_prediction_mlops
