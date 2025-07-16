@@ -8,22 +8,29 @@ import great_expectations as gx
 logger = logging.getLogger(__name__)
 
 
-def get_ge_context(project_root_dir: Path):
+def get_ge_context(project_root_dir: Path, mode: str = "file"):
     """
-    Initializes and returns a Great Expectations FileDataContext.
+    Initializes and returns a Great Expectations DataContext.
 
     This function serves as the primary entry point for interacting with a
-    Great Expectations project on the filesystem.
+    Great Expectations project. It can create a persistent context on the
+    filesystem or a temporary one in memory.
 
     Args:
         project_root_dir: The absolute path to the Great Expectations
-                          project root directory (i.e., the `gx` folder).
+            project root directory (i.e., the `gx` folder). This is only
+            used when `mode` is "file".
+        mode: The type of data context to initialize. Can be one of:
+            - "file": A persistent DataContext using YAML files.
+            - "ephemeral": A temporary, in-memory DataContext that does
+              not persist beyond the current session.
 
     Returns:
-        An initialized FileDataContext object.
+        An initialized Great Expectations DataContext object (either
+        FileDataContext or EphemeralDataContext).
     """
-    logger.info(f"Initializing GE context from directory: {project_root_dir}")
-    return gx.get_context(mode="file", project_root_dir=project_root_dir)
+    logger.info(f"Initializing GE {mode} context from directory: {project_root_dir}")
+    return gx.get_context(mode=mode, project_root_dir=project_root_dir)
 
 
 def get_or_create_datasource(context, source_name: str, data_dir: Path):
@@ -74,7 +81,8 @@ def get_or_create_csv_asset(datasource, asset_name: str):
     except (LookupError, KeyError):
         logger.info(f"Asset '{asset_name}' not found. Will create new.")
 
-    asset = datasource.add_csv_asset(name=asset_name)
+    datasource.add_csv_asset(name=asset_name)
+    asset = datasource.get_asset(name=asset_name)
     logger.info(f"Asset '{asset_name}' created/recreated successfully.")
     return asset
 
@@ -92,11 +100,19 @@ def get_or_create_batch_definition(asset, batch_definition_name: str, file_name:
         file_name: The relative path of the file to be included in the batch.
     """
     logger.debug(
-        f"Attempting to add or update batch definition '{batch_definition_name}'."
+        f"Attempting to delete or recreate batch definition '{batch_definition_name}'."
     )
-    batch_definition = asset.add_batch_definition_path(
-        name=batch_definition_name, path=file_name
-    )
+    try:
+        asset.delete_batch_definition(name=batch_definition_name)
+        logger.info(
+            f"Deleted existing batch definition '{batch_definition_name}' for a clean state."
+        )
+    except (LookupError, KeyError, ValueError):
+        logger.info(
+            f"Batch definition '{batch_definition_name}' not found. Will create new."
+        )
+    asset.add_batch_definition_path(name=batch_definition_name, path=file_name)
+    batch_definition = asset.get_batch_definition(name=batch_definition_name)
     logger.info(
         f"Batch definition '{batch_definition_name}' points to file named: {file_name}"
     )
@@ -127,6 +143,7 @@ def get_or_create_expectation_suite(context, suite_name: str):
 
     suite = gx.ExpectationSuite(name=suite_name)
     context.suites.add(suite)
+    # suite = context.suites.get(name=suite_name) # not required as its already ready to use
     logger.info(f"Expectation suite '{suite_name}' created/recreated successfully.")
     return suite
 
@@ -170,7 +187,7 @@ def get_or_create_validation_definition(
         logger.info(
             f"Deleted existing validation definition '{definition_name}' for a clean state."
         )
-    except (gx.exceptions.DataContextError, AttributeError, KeyError):
+    except (gx.exceptions.DataContextError, AttributeError, KeyError, ValueError):
         logger.info(
             f"Validation definition '{definition_name}' not found. Creating new one..."
         )
