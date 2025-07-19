@@ -1,0 +1,332 @@
+{
+  "expectations": [
+    {
+      "id": "5abfbe6f-54eb-44e8-a76a-50be3ae83b69",
+      "kwargs": {
+        "column_list": [
+          "travel_code",
+          "user_code",
+          "from_location",
+          "to_location",
+          "flight_type",
+          "price",
+          "time",
+          "distance",
+          "agency",
+          "date",
+          "year",
+          "month",
+          "day",
+          "day_of_week",
+          "day_of_year",
+          "week_of_year"
+        ]
+      },
+      "meta": {
+        "notes": "Verify the final schema, column names, and their exact order."
+      },
+      "type": "expect_table_columns_to_match_ordered_list"
+    },
+    {
+      "id": "b7d91834-ea90-4af5-bdbc-27d43830ec12",
+      "kwargs": {
+        "column_list": [
+          "user_code",
+          "from_location",
+          "to_location",
+          "date",
+          "time",
+          "agency"
+        ]
+      },
+      "meta": {
+        "notes": "Verify that there are no duplicate records based on the business key."
+      },
+      "type": "expect_compound_columns_to_be_unique"
+    },
+    {
+      "id": "757b15cc-5eab-4435-b599-76685a5f3631",
+      "kwargs": {
+        "min_value": 1
+      },
+      "meta": {
+        "notes": "Ensures the silver table is not empty after processing."
+      },
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "9604907b-b449-40b7-9e76-81509eb73596",
+      "kwargs": {
+        "column": "price",
+        "max_value": 5000.0,
+        "min_value": 100.0
+      },
+      "meta": {
+        "notes": "Sanity check for flight prices to detect anomalies."
+      },
+      "type": "expect_column_mean_to_be_between"
+    },
+    {
+      "id": "556ea81e-8b22-4bae-87ab-c87e0a8cbdc4",
+      "kwargs": {
+        "column": "travel_code",
+        "type_": "int32"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for travel_code is int32."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "f1e4f4b6-1f53-4c06-bf6a-94c036348be1",
+      "kwargs": {
+        "column": "user_code",
+        "type_": "int16"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for user_code is int16."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "8e81115f-7637-453e-92c0-7de0b03c142a",
+      "kwargs": {
+        "column": "from_location",
+        "type_": "CategoricalDtypeType"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for from_location is CategoricalDtypeType."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "2ed94369-52db-412b-8d0e-a805b91e36f8",
+      "kwargs": {
+        "column": "to_location",
+        "type_": "CategoricalDtypeType"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for to_location is CategoricalDtypeType."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "c1e85fa5-446b-40fe-bc33-36104592a787",
+      "kwargs": {
+        "column": "flight_type",
+        "type_": "CategoricalDtypeType"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for flight_type is CategoricalDtypeType."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "4cc49595-826c-4bf5-ae48-60d33d0e545e",
+      "kwargs": {
+        "column": "agency",
+        "type_": "CategoricalDtypeType"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for agency is CategoricalDtypeType."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "50ad0834-145a-4ccf-86a4-5c59edc5aed1",
+      "kwargs": {
+        "column": "price",
+        "type_": "float32"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for price is float32."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "2d4359f0-856b-4dcb-88c9-90ffb49f66c1",
+      "kwargs": {
+        "column": "time",
+        "type_": "float32"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for time is float32."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "b2645a20-d0d3-4a1c-b249-c5aabf75fcd1",
+      "kwargs": {
+        "column": "distance",
+        "type_": "float32"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for distance is float32."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "7e232be1-0182-4723-9c17-ccd4cd44caff",
+      "kwargs": {
+        "column": "date",
+        "type_": "datetime64[ns]"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for date is datetime64[ns]."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "ba684807-bc03-4fae-a6e0-da6c840ef62f",
+      "kwargs": {
+        "column": "year",
+        "type_": "int16"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for year is int16."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "3c4ad633-c63a-4bab-92d0-7f5a14ddbc7f",
+      "kwargs": {
+        "column": "month",
+        "type_": "int8"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for month is int8."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "34ef4b12-e072-44da-af97-8b896d1a2a88",
+      "kwargs": {
+        "column": "day",
+        "type_": "int8"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for day is int8."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "b90ea42b-71a8-47ab-9351-b144eff1901f",
+      "kwargs": {
+        "column": "day_of_week",
+        "type_": "int8"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for day_of_week is int8."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "4868e6e9-cc05-4e96-9764-76e1dcc3008b",
+      "kwargs": {
+        "column": "day_of_year",
+        "type_": "int16"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for day_of_year is int16."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "cb67d02e-f723-4053-b464-2764b09c4de9",
+      "kwargs": {
+        "column": "week_of_year",
+        "type_": "int32"
+      },
+      "meta": {
+        "notes": "Verify data type optimization for week_of_year is int32."
+      },
+      "type": "expect_column_values_to_be_of_type"
+    },
+    {
+      "id": "f5ae4a4f-31d4-46b3-8291-9044ce4ab8fe",
+      "kwargs": {
+        "column": "from_location"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: from_location."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "dfba7ddb-cabc-4c04-8837-b066275998f7",
+      "kwargs": {
+        "column": "to_location"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: to_location."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a360fa9b-943f-4ef1-b562-d173a1530f29",
+      "kwargs": {
+        "column": "flight_type"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: flight_type."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "7ac6734d-10ff-45b6-bcd2-93e1d341cbbe",
+      "kwargs": {
+        "column": "price"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: price."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "6fcab5b2-56af-46f0-ac12-5207e6f7cde6",
+      "kwargs": {
+        "column": "time"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: time."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a6820572-c38c-437c-81fe-2ed49f1774b4",
+      "kwargs": {
+        "column": "distance"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: distance."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "4b1dc96e-1ce9-4816-bd05-9f5ca2be6a5c",
+      "kwargs": {
+        "column": "agency"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: agency."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "142fbd5a-92dc-42fb-aa26-70beffde1b70",
+      "kwargs": {
+        "column": "date"
+      },
+      "meta": {
+        "notes": "Verify no missing values in critical column: date."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    }
+  ],
+  "id": "91a0f0fd-ff57-49af-8e85-1b6acbe41334",
+  "meta": {
+    "great_expectations_version": "1.5.5"
+  },
+  "name": "silver_df_flights_suite",
+  "notes": null
+}
