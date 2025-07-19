@@ -1,0 +1,47 @@
+# --- Great Expectations ---
+# Ignore the uncommitted directory which contains generated data docs and validation results
+great_expectations/uncommitted/
+
+# Ignore local user-specific files that should not be shared
+great_expectations/plugins/custom_data_docs/
+great_expectations/gx/expectations/.ge_store_backend_id
+
+# Temporary help files
+most_used.txt
+src/pipelines/practise.py
+
+# --- Bytecode and Distribution ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# --- Environment & Dependencies ---
+# Ignore virtual environments
+.env
+.venv
+env/
+venv/
+
+# --- DVC Data Directory ---
+# This folder is managed by DVC
+/data
+
+# --- Logs & Runtime Artifacts ---
+# Ignore all log files and log directories
+logs/
+*.log
+
+# --- Editor & OS Specific ---
+# VSCode
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store
+
+# --- Test Artifacts ---
+.pytest_cache/
+.coverage
