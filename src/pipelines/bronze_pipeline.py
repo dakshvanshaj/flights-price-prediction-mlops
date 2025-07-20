@@ -8,8 +8,8 @@ import shutil
 from shared.config import (
     GE_ROOT_DIR,
     RAW_DATA_SOURCE,
-    RAW_PROCESSED_DIR,
-    RAW_QUARANTINE_DIR,
+    BRONZE_PROCESSED_DIR,
+    BRONZE_QUARANTINE_DIR,
     BRONZE_CHECKPOINT_NAME,
     RAW_ASSET_NAME,
     BRONZE_SUITE_NAME,
@@ -17,8 +17,7 @@ from shared.config import (
     BRONZE_PIPELINE_LOGS_PATH,
     BRONZE_BATCH_DEFINITION_NAME,
     BRONZE_VALIDATION_DEFINITION_NAME,
-    LOGGING_YAML
-    
+    LOGGING_YAML,
 )
 from data_validation.expectations.bronze_expectations import build_bronze_expectations
 from data_validation.ge_components import (
@@ -103,17 +102,17 @@ def run_bronze_pipeline(file_name: str) -> bool:
 
     # --- 4. Move File Based on Result ---
     # Ensure the destination directories exist
-    RAW_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    RAW_QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
+    BRONZE_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    BRONZE_QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
 
     if result.success:
         logger.info(f"--- Bronze Validation Pipeline: PASSED for {file_name} ---")
-        destination_path = RAW_PROCESSED_DIR / file_path.name
+        destination_path = BRONZE_PROCESSED_DIR / file_path.name
         logger.info(f"Moving validated file to: {destination_path}")
         shutil.move(src=file_path, dst=destination_path)
     else:
         logger.warning(f"--- Bronze Validation Pipeline: FAILED for {file_name} ---")
-        destination_path = RAW_QUARANTINE_DIR / file_path.name
+        destination_path = BRONZE_QUARANTINE_DIR / file_path.name
         logger.warning(f"Moving failed file to quarantine: {destination_path}")
         shutil.move(src=file_path, dst=destination_path)
 
@@ -139,7 +138,7 @@ def main():
     parser.add_argument(
         "file_name",
         type=str,
-        help="The name of the raw data file in the 'pending' directory (e.g., 'flights_2022-02.csv').",
+        help="The name of the raw data file in the 'raw' directory (e.g., 'train.csv').",
     )
     args = parser.parse_args()
 
@@ -158,18 +157,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# -----------------------------------------OVERVIEW-----------------------------------------
-
-# flow or steps in the Bronze pipeline:
-
-# ge context created at GE_ROOT_DIR
-# datasource created at RAW_DATA_SOURCE   -> Points to a folder with raw data files to validate
-# csv asset created at RAW_ASSET_NAME -> Points to csv files in the datasource
-# batch definition created for file_name  -> Points to a sepecific raw data file,
-# throws a regex error if absolute or any path is specified for the raw data file
-# expectation suite with name BRONZE_SUITE_NAME
-# expectations added to the suite from build_bronze_expectations()
-# validation definition created at BRONZE_VALIDATION_DEFINITION_NAME
-# checkpoint created at BRONZE_CHECKPOINT_NAME
