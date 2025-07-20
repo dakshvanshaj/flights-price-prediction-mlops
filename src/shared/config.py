@@ -23,6 +23,12 @@ RAW_DATA_DIR = DATA_DIR / "raw"
 # Split data directory
 SPLIT_DATA_DIR = RAW_DATA_DIR / "train_validation_test"
 
+# Bronze Preprocessed Data Flow Directories(BRONZE_PIPELINE)
+RAW_DATA_SOURCE = SPLIT_DATA_DIR
+BRONZE_DATA_DIR = DATA_DIR / "bronze_data"
+BRONZE_PROCESSED_DIR = BRONZE_DATA_DIR / "processed"
+BRONZE_QUARANTINE_DIR = BRONZE_DATA_DIR / "quarantine"
+
 # Silver Preprocessed Data Flow Directories(SILVER_PIPELINE)
 SILVER_DATA_DIR = DATA_DIR / "silver_data"
 SILVER_PROCESSED_DIR = SILVER_DATA_DIR / "processed"
