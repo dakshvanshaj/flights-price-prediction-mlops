@@ -3,7 +3,7 @@ from pathlib import Path
 import logging
 import argparse
 import sys
-from typing import Dict, Optional, Any, List
+from typing import Optional
 
 # --- Local Application Imports ---
 from data_validation.expectations.silver_expectations import build_silver_expectations
@@ -15,24 +15,19 @@ from data_preprocessing.silver_preprocessing import (
     optimize_data_types,
     create_date_features,
     handle_erroneous_duplicates,
-    MissingValueHandler,
     sort_data_by_date,
-    enforce_column_order,  # Import the new function
-    ImputerNotFittedError,
-    ImputerLoadError,
+    enforce_column_order,
 )
+
 from shared.config import (
     COLUMN_RENAME_MAPPING,
     ERRONEOUS_DUPE_SUBSET,
-    SAVED_MV_IMPUTER_PATH,
-    COLUMN_IMPUTATION_RULES,
-    ID_COLS_TO_EXCLUDE_FROM_IMPUTATION,
     GE_ROOT_DIR,
     SILVER_EXPECTED_COLS_ORDER,
     SILVER_EXPECTED_COLUMN_TYPES,
     SILVER_REQUIRED_NON_NULL_COLS,
     SILVER_PIPELINE_LOGS_PATH,
-    RAW_PROCESSED_DIR,
+    BRONZE_PROCESSED_DIR,
     SILVER_PROCESSED_DIR,
     SILVER_QUARANTINE_DIR,
     SILVER_DATA_SOURCE_NAME,
@@ -41,7 +36,7 @@ from shared.config import (
     SILVER_SUITE_NAME,
     SILVER_VALIDATION_DEFINITION_NAME,
     SILVER_CHECKPOINT_NAME,
-    LOGGING_YAML
+    LOGGING_YAML,
 )
 from shared.utils import setup_logging_from_yaml
 
@@ -50,28 +45,22 @@ logger = logging.getLogger(__name__)
 
 def run_silver_pipeline(
     input_filepath: str,
-    imputer_path: str,
-    train_mode: bool = False,
-    column_strategies: Optional[Dict[str, Any]] = None,
-    exclude_cols_imputation: Optional[List[str]] = None,
 ) -> Optional[pd.DataFrame]:
     """
     Orchestrates the full Silver layer data processing and validation pipeline.
     """
     file_name = Path(input_filepath).name
-    logger.info(
-        f"--- Starting Silver Pipeline for: {file_name} (Train Mode: {train_mode}) ---"
-    )
+    logger.info(f"--- Starting Silver Pipeline for: {file_name} ---")
 
     # === STAGE 1: DATA INGESTION ===
-    logger.info("=" * 25 + " STAGE 1/6: DATA INGESTION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 1/5: DATA INGESTION " + "=" * 25)
     df = load_data(file_path=input_filepath)
     if df is None:
         return None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: PREPROCESSING & CLEANING ===
-    logger.info("=" * 25 + " STAGE 2/6: PREPROCESSING & CLEANING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 2/5: PREPROCESSING & CLEANING " + "=" * 25)
     df = rename_specific_columns(df, rename_mapping=COLUMN_RENAME_MAPPING)
     df = standardize_column_format(df)
     df = optimize_data_types(df, date_cols=["date"])
@@ -80,45 +69,16 @@ def run_silver_pipeline(
     logger.info("Standardization, cleaning, and sorting complete.")
 
     # === STAGE 3: FEATURE ENGINEERING ===
-    logger.info("=" * 25 + " STAGE 3/6: FEATURE ENGINEERING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 3/5: FEATURE ENGINEERING " + "=" * 25)
     df = create_date_features(df, date_column="date")
     logger.info("Date part extraction complete.")
 
-    # === STAGE 4: MISSING VALUE IMPUTATION ===
-    logger.info("=" * 25 + " STAGE 4/6: MISSING VALUE IMPUTATION " + "=" * 25)
-    try:
-        if train_mode:
-            logger.info("Training mode: Creating and fitting a new imputer...")
-            handler = MissingValueHandler(
-                column_strategies=column_strategies,
-                exclude_columns=exclude_cols_imputation,
-            )
-            handler.fit(df)
-            handler.save(imputer_path)
-        else:
-            logger.info(f"Inference mode: Loading imputer from {imputer_path}...")
-            handler = MissingValueHandler.load(imputer_path)
-
-        df = handler.transform(df)
-        logger.info("Missing value imputation complete.")
-    except (ImputerNotFittedError, ImputerLoadError, FileNotFoundError) as e:
-        logger.error(
-            f"A critical error occurred during missing value handling: {e}",
-            exc_info=True,
-        )
-        return None
-    except Exception as e:
-        logger.error(
-            f"An unexpected error occurred during imputation: {e}", exc_info=True
-        )
-        return None
-
-    # === STAGE 5/6: ENFORCE SCHEMA ORDER ===
-    logger.info("=" * 25 + " STAGE 5/6: ENFORCE SCHEMA ORDER " + "=" * 25)
+    # === STAGE 4: ENFORCE SCHEMA ORDER ===
+    logger.info("=" * 25 + " STAGE 4/5: ENFORCE SCHEMA ORDER " + "=" * 25)
     df = enforce_column_order(df, column_order=SILVER_EXPECTED_COLS_ORDER)
 
-    # === FINAL STAGE 6/6: DATA VALIDATION (QUALITY GATE) ===
-    logger.info("=" * 25 + " STAGE 6/6: FINAL VALIDATION " + "=" * 25)
+    # === FINAL STAGE 5/5: DATA VALIDATION (QUALITY GATE) ===
+    logger.info("=" * 25 + " STAGE 5/5: FINAL VALIDATION " + "=" * 25)
     silver_expectations = build_silver_expectations(
         expected_cols_ordered=SILVER_EXPECTED_COLS_ORDER,
         expected_col_types=SILVER_EXPECTED_COLUMN_TYPES,
@@ -173,26 +133,15 @@ def main():
     parser.add_argument(
         "input_file",
         type=str,
-        help="The name of the file in the 'processed' directory to clean (e.g., 'flights_2022-02.csv').",
+        help="The name of the file in the 'processed' directory to clean (e.g., 'train.csv').",
     )
-    parser.add_argument(
-        "--train-mode",
-        action="store_true",
-        help="Run in training mode to create and save a new imputer. If not set, runs in inference mode.",
-    )
+
     args = parser.parse_args()
 
-    input_filepath = RAW_PROCESSED_DIR / args.input_file
-    logger.info(
-        f"Running pipeline for '{args.input_file}' | Train Mode: {args.train_mode}"
-    )
+    input_filepath = BRONZE_PROCESSED_DIR / args.input_file
 
     cleaned_df = run_silver_pipeline(
         input_filepath=str(input_filepath),
-        imputer_path=str(SAVED_MV_IMPUTER_PATH),
-        train_mode=args.train_mode,
-        column_strategies=COLUMN_IMPUTATION_RULES,
-        exclude_cols_imputation=ID_COLS_TO_EXCLUDE_FROM_IMPUTATION,
     )
 
     if cleaned_df is not None:
