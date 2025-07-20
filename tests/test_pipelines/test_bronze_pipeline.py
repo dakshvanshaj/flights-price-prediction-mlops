@@ -46,8 +46,8 @@ def setup_bronze_test_env(tmp_path: Path, monkeypatch):
 
     # This is the key: we tell the bronze_pipeline module to use our temp dirs
     monkeypatch.setattr(bronze_pipeline, "RAW_DATA_SOURCE", pending_dir)
-    monkeypatch.setattr(bronze_pipeline, "RAW_PROCESSED_DIR", processed_dir)
-    monkeypatch.setattr(bronze_pipeline, "RAW_QUARANTINE_DIR", quarantine_dir)
+    monkeypatch.setattr(bronze_pipeline, "BRONZE_PROCESSED_DIR", processed_dir)
+    monkeypatch.setattr(bronze_pipeline, "BRONZE_QUARANTINE_DIR", quarantine_dir)
 
     test_file = pending_dir / "test_data.csv"
     test_file.touch()
