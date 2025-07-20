@@ -18,15 +18,10 @@ GE_ROOT_DIR = PROJECT_ROOT / "src" / "data_validation" / "great_expectations"
 # --- 2. DATA FLOW & LOGGING PATHS ---
 # ==============================================================================
 
-# Split data directory
-SPLIT_DATA_DIR = DATA_DIR / "intial_data"
-
-# Raw Data Flow Directories(BRONZE_PIPELINE)
+# Raw Data  Directory
 RAW_DATA_DIR = DATA_DIR / "raw"
-RAW_PENDING_DIR = RAW_DATA_DIR / "pending"
-RAW_DATA_SOURCE = RAW_PENDING_DIR
-RAW_PROCESSED_DIR = RAW_DATA_DIR / "processed"
-RAW_QUARANTINE_DIR = RAW_DATA_DIR / "quarantine"
+# Split data directory
+SPLIT_DATA_DIR = RAW_DATA_DIR / "train_validation_test"
 
 # Silver Preprocessed Data Flow Directories(SILVER_PIPELINE)
 SILVER_DATA_DIR = DATA_DIR / "silver_data"
@@ -69,11 +64,10 @@ SILVER_CHECKPOINT_NAME = "silver_checkpoint"
 # ==============================================================================
 
 # --- Data Splitting Config ---
-INPUT_CSV_PATH = DATA_DIR / "flights.csv"
-INITIAL_DATA_SPLITS = DATA_DIR / "_initial_data_splits"
-DRIFT_SIMULATION_DIR = INITIAL_DATA_SPLITS / "drift_simulation_data"
-DEV_SET_SIZE = 0.70
-EVAL_SET_SIZE = 0.15
+RAW_CSV_PATH = RAW_DATA_DIR / "flights.csv"
+TRAIN_SET_SIZE = 0.70
+VAL_SET_SIZE = 0.15
+# remaining is validation set size
 
 # --- Silver Preprocessing Config ---
 COLUMN_RENAME_MAPPING = {"from": "from_location", "to": "to_location"}
