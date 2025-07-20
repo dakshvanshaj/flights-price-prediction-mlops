@@ -28,7 +28,7 @@ def setup_test_environment(
     # We import the config module that the script-under-test will use.
     # This requires `pythonpath = ["src"]` in your pyproject.toml
 
-    monkeypatch.setattr(config, "INPUT_CSV_PATH", input_csv)
+    monkeypatch.setattr(config, "RAW_CSV_PATH", input_csv)
     monkeypatch.setattr(config, "SPLIT_DATA_DIR", temp_splits_dir)
 
     # Return a dictionary with paths and expected counts for easy access in tests
