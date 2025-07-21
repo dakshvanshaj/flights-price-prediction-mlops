@@ -37,19 +37,19 @@ def setup_bronze_test_env(tmp_path: Path, monkeypatch):
     Creates a temporary directory structure for bronze pipeline tests
     and monkeypatches the config variables to use these temporary paths.
     """
-    pending_dir = tmp_path / "pending"
+    raw_data_source_dir = tmp_path / "train_validation_test"
     processed_dir = tmp_path / "processed"
     quarantine_dir = tmp_path / "quarantine"
-    pending_dir.mkdir()
+    raw_data_source_dir.mkdir()
     processed_dir.mkdir()
     quarantine_dir.mkdir()
 
     # This is the key: we tell the bronze_pipeline module to use our temp dirs
-    monkeypatch.setattr(bronze_pipeline, "RAW_DATA_SOURCE", pending_dir)
+    monkeypatch.setattr(bronze_pipeline, "RAW_DATA_SOURCE", raw_data_source_dir)
     monkeypatch.setattr(bronze_pipeline, "BRONZE_PROCESSED_DIR", processed_dir)
     monkeypatch.setattr(bronze_pipeline, "BRONZE_QUARANTINE_DIR", quarantine_dir)
 
-    test_file = pending_dir / "test_data.csv"
+    test_file = raw_data_source_dir / "test_data.csv"
     test_file.touch()
 
     return test_file, processed_dir, quarantine_dir
