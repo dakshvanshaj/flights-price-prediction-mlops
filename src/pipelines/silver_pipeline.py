@@ -3,7 +3,7 @@ from pathlib import Path
 import logging
 import argparse
 import sys
-from typing import Optional
+
 
 # --- Local Application Imports ---
 from data_validation.expectations.silver_expectations import build_silver_expectations
@@ -19,25 +19,8 @@ from data_preprocessing.silver_preprocessing import (
     enforce_column_order,
 )
 
-from shared.config import (
-    COLUMN_RENAME_MAPPING,
-    ERRONEOUS_DUPE_SUBSET,
-    GE_ROOT_DIR,
-    SILVER_EXPECTED_COLS_ORDER,
-    SILVER_EXPECTED_COLUMN_TYPES,
-    SILVER_REQUIRED_NON_NULL_COLS,
-    SILVER_PIPELINE_LOGS_PATH,
-    BRONZE_PROCESSED_DIR,
-    SILVER_PROCESSED_DIR,
-    SILVER_QUARANTINE_DIR,
-    SILVER_DATA_SOURCE_NAME,
-    SILVER_ASSET_NAME,
-    SILVER_BATCH_DEFINITION_NAME,
-    SILVER_SUITE_NAME,
-    SILVER_VALIDATION_DEFINITION_NAME,
-    SILVER_CHECKPOINT_NAME,
-    LOGGING_YAML,
-)
+# CORRECTED IMPORT PATTERN FOR TESTABILITY
+from shared import config
 from shared.utils import setup_logging_from_yaml
 
 logger = logging.getLogger(__name__)
@@ -45,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 def run_silver_pipeline(
     input_filepath: str,
-) -> Optional[pd.DataFrame]:
+) -> bool:
     """
     Orchestrates the full Silver layer data processing and validation pipeline.
     """
@@ -61,11 +44,11 @@ def run_silver_pipeline(
 
     # === STAGE 2: PREPROCESSING & CLEANING ===
     logger.info("=" * 25 + " STAGE 2/5: PREPROCESSING & CLEANING " + "=" * 25)
-    df = rename_specific_columns(df, rename_mapping=COLUMN_RENAME_MAPPING)
+    df = rename_specific_columns(df, rename_mapping=config.COLUMN_RENAME_MAPPING)
     df = standardize_column_format(df)
     df = optimize_data_types(df, date_cols=["date"])
     df = sort_data_by_date(df, date_column="date")
-    df = handle_erroneous_duplicates(df=df, subset_cols=ERRONEOUS_DUPE_SUBSET)
+    df = handle_erroneous_duplicates(df=df, subset_cols=config.ERRONEOUS_DUPE_SUBSET)
     logger.info("Standardization, cleaning, and sorting complete.")
 
     # === STAGE 3: FEATURE ENGINEERING ===
@@ -75,45 +58,43 @@ def run_silver_pipeline(
 
     # === STAGE 4: ENFORCE SCHEMA ORDER ===
     logger.info("=" * 25 + " STAGE 4/5: ENFORCE SCHEMA ORDER " + "=" * 25)
-    df = enforce_column_order(df, column_order=SILVER_EXPECTED_COLS_ORDER)
+    df = enforce_column_order(df, column_order=config.SILVER_EXPECTED_COLS_ORDER)
 
     # === FINAL STAGE 5/5: DATA VALIDATION (QUALITY GATE) ===
     logger.info("=" * 25 + " STAGE 5/5: FINAL VALIDATION " + "=" * 25)
     silver_expectations = build_silver_expectations(
-        expected_cols_ordered=SILVER_EXPECTED_COLS_ORDER,
-        expected_col_types=SILVER_EXPECTED_COLUMN_TYPES,
-        non_null_cols=SILVER_REQUIRED_NON_NULL_COLS,
-        unique_record_cols=ERRONEOUS_DUPE_SUBSET,
+        expected_cols_ordered=config.SILVER_EXPECTED_COLS_ORDER,
+        expected_col_types=config.SILVER_EXPECTED_COLUMN_TYPES,
+        non_null_cols=config.SILVER_REQUIRED_NON_NULL_COLS,
+        unique_record_cols=config.ERRONEOUS_DUPE_SUBSET,
     )
-    validation_result = run_checkpoint_on_dataframe(
-        project_root_dir=GE_ROOT_DIR,
-        datasource_name=SILVER_DATA_SOURCE_NAME,
-        asset_name=SILVER_ASSET_NAME,
-        batch_definition_name=SILVER_BATCH_DEFINITION_NAME,
-        suite_name=SILVER_SUITE_NAME,
-        validation_definition_name=SILVER_VALIDATION_DEFINITION_NAME,
-        checkpoint_name=SILVER_CHECKPOINT_NAME,
+    result = run_checkpoint_on_dataframe(
+        project_root_dir=config.GE_ROOT_DIR,
+        datasource_name=config.SILVER_DATA_SOURCE_NAME,
+        asset_name=config.SILVER_ASSET_NAME,
+        batch_definition_name=config.SILVER_BATCH_DEFINITION_NAME,
+        suite_name=config.SILVER_SUITE_NAME,
+        validation_definition_name=config.SILVER_VALIDATION_DEFINITION_NAME,
+        checkpoint_name=config.SILVER_CHECKPOINT_NAME,
         dataframe_to_validate=df,
         expectation_list=silver_expectations,
     )
+    if result.success:
+        logger.info(
+            f"--- Silver Preprocessing And Data Validation Pipeline: PASSED for {file_name} ---"
+        )
+        destination_path = config.SILVER_PROCESSED_DIR / file_name
+        logger.info(f"Moving validated file to: {destination_path}")
+        df.to_csv(destination_path, index=False)
+    else:
+        logger.warning(
+            f"--- Silver Preprocessing And Data Validation Pipeline: FAILED for {file_name} ---"
+        )
+        destination_path = config.SILVER_QUARANTINE_DIR / file_name
+        logger.warning(f"Moving failed file to quarantine: {destination_path}")
+        df.to_csv(destination_path, index=False)
 
-    if validation_result is None:
-        logger.critical("--- Silver Data Validation: FAILED TO RUN ---")
-        logger.critical("The validation checkpoint itself failed to execute. Aborting.")
-        return None
-
-    if not validation_result.success:
-        logger.critical("--- Silver Data Validation: FAILED ---")
-        logger.critical("The cleaned data does not meet quality standards.")
-        quarantine_path = SILVER_QUARANTINE_DIR / file_name
-        quarantine_path.parent.mkdir(parents=True, exist_ok=True)
-        df.to_csv(quarantine_path, index=False)
-        logger.warning(f"Failed data saved to quarantine: {quarantine_path}")
-        return None
-
-    logger.info("--- Silver Data Validation: PASSED ---")
-    logger.info("=" * 20 + " Silver Pipeline Completed Successfully " + "=" * 20)
-    return df
+    return result.success
 
 
 def main():
@@ -123,9 +104,9 @@ def main():
     # --- SETUP LOGGING ---
     # load logging configuration
     setup_logging_from_yaml(
-        log_path=SILVER_PIPELINE_LOGS_PATH,
+        log_path=config.SILVER_PIPELINE_LOGS_PATH,
         default_level=logging.DEBUG,
-        default_yaml_path=LOGGING_YAML,
+        default_yaml_path=config.LOGGING_YAML,
     )
     parser = argparse.ArgumentParser(
         description="Run the Silver Data Processing Pipeline."
@@ -138,24 +119,16 @@ def main():
 
     args = parser.parse_args()
 
-    input_filepath = BRONZE_PROCESSED_DIR / args.input_file
+    input_filepath = config.BRONZE_PROCESSED_DIR / args.input_file
 
-    cleaned_df = run_silver_pipeline(
+    pipeline_success = run_silver_pipeline(
         input_filepath=str(input_filepath),
     )
 
-    if cleaned_df is not None:
-        logger.info("Pipeline executed successfully.")
-        output_path = SILVER_PROCESSED_DIR / args.input_file
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        cleaned_df.to_csv(output_path, index=False)
-        logger.info(f"Cleaned data saved to '{output_path}'")
-        sys.exit(0)
-    else:
-        logger.error(
-            f"Pipeline execution failed. Check logs at '{SILVER_PIPELINE_LOGS_PATH}'."
-        )
+    # Exit with a status code that an orchestrator like Airflow can interpret
+    if not pipeline_success:
         sys.exit(1)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
