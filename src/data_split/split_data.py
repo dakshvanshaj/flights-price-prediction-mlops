@@ -1,7 +1,6 @@
 # src/data_split/split_data.py
 import pandas as pd
 import logging
-from pathlib import Path
 
 # Import project-specific modules
 from shared import config
@@ -41,8 +40,11 @@ def split_data_chronologically():
     # Convert 'date' column to datetime, sort, and handle any conversion errors
     logger.info("Converting 'date' column to datetime and sorting chronologically...")
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
     df.dropna(subset=["date"], inplace=True)  # Drop rows where date conversion failed
     df.sort_values("date", inplace=True)
+
+    # resets index to start from 0 instead of jumbled indexes(if there)
     df.reset_index(drop=True, inplace=True)
     logger.info("Data sorted and cleaned.")
 
