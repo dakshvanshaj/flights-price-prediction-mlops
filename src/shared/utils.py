@@ -3,6 +3,10 @@ import logging.config
 import yaml
 from pathlib import Path
 from typing import Union
+import shutil
+import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def setup_logging_from_yaml(
@@ -52,3 +56,66 @@ def setup_logging_from_yaml(
     else:
         print(f"Logging configuration file not found: {config_path}")
         logging.basicConfig(level=default_level)
+
+
+def handle_file_based_on_validation(
+    result, file_path: Path, success_dir: Path, failure_dir: Path
+) -> bool:
+    """
+    Moves a file to a success or failure directory based on a validation result.
+
+    Args:
+        result: The validation result object (must have a .success attribute).
+        file_path: The full path to the source file to be moved.
+        success_dir: The destination directory for successful validations.
+        failure_dir: The destination directory for failed validations.
+
+    Returns:
+        True if the original validation succeeded and the file operation was
+        successful, False otherwise.
+    """
+    destination_dir = success_dir if result.success else failure_dir
+
+    try:
+        destination_dir.mkdir(parents=True, exist_ok=True)
+        destination_path = destination_dir / file_path.name
+        shutil.move(src=file_path, dst=destination_path)
+        logger.info(f"Moved '{file_path.name}' to '{destination_path}'")
+        return True
+    except (IOError, OSError) as e:
+        logger.error(
+            f"Failed to move file '{file_path.name}' to '{destination_dir}'. Error: {e}"
+        )
+        return False
+
+
+def save_dataframe_based_on_validation(
+    result, df: pd.DataFrame, file_name: str, success_dir: Path, failure_dir: Path
+) -> bool:
+    """
+    Saves a DataFrame to a success or failure directory based on a validation result.
+
+    Args:
+        result: The validation result object (must have a .success attribute).
+        df: The pandas DataFrame to save.
+        file_name: The original filename to use for the saved file.
+        success_dir: The destination directory for successful validations.
+        failure_dir: The destination directory for failed validations.
+
+    Returns:
+        True if the original validation succeeded and the save operation was
+        successful, False otherwise.
+    """
+    destination_dir = success_dir if result.success else failure_dir
+
+    try:
+        destination_dir.mkdir(parents=True, exist_ok=True)
+        destination_path = destination_dir / file_name
+        df.to_csv(destination_path, index=False)
+        logger.info(f"Saved DataFrame for '{file_name}' to '{destination_path}'")
+        return True
+    except (IOError, OSError) as e:
+        logger.error(
+            f"Failed to save DataFrame for '{file_name}' to '{destination_dir}'. Error: {e}"
+        )
+        return False
