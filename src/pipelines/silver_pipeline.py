@@ -1,4 +1,3 @@
-import pandas as pd
 from pathlib import Path
 import logging
 import argparse
@@ -21,7 +20,7 @@ from data_preprocessing.silver_preprocessing import (
 
 # CORRECTED IMPORT PATTERN FOR TESTABILITY
 from shared import config
-from shared.utils import setup_logging_from_yaml
+from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +38,9 @@ def run_silver_pipeline(
     logger.info("=" * 25 + " STAGE 1/5: DATA INGESTION " + "=" * 25)
     df = load_data(file_path=input_filepath)
     if df is None:
-        return None
+        # Added an explicit error log for clarity
+        logger.error(f"Failed to load data from {input_filepath}. Aborting pipeline.")
+        return False
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: PREPROCESSING & CLEANING ===
@@ -60,7 +61,7 @@ def run_silver_pipeline(
     logger.info("=" * 25 + " STAGE 4/5: ENFORCE SCHEMA ORDER " + "=" * 25)
     df = enforce_column_order(df, column_order=config.SILVER_EXPECTED_COLS_ORDER)
 
-    # === FINAL STAGE 5/5: DATA VALIDATION (QUALITY GATE) ===
+    # === STAGE 5: DATA VALIDATION (QUALITY GATE) ===
     logger.info("=" * 25 + " STAGE 5/5: FINAL VALIDATION " + "=" * 25)
     silver_expectations = build_silver_expectations(
         expected_cols_ordered=config.SILVER_EXPECTED_COLS_ORDER,
@@ -79,22 +80,30 @@ def run_silver_pipeline(
         dataframe_to_validate=df,
         expectation_list=silver_expectations,
     )
-    if result.success:
+
+    # === STAGE 6: SAVE DATAFRAME BASED ON RESULT ===
+    save_successful = save_dataframe_based_on_validation(
+        result=result,
+        df=df,
+        file_name=file_name,
+        success_dir=config.SILVER_PROCESSED_DIR,
+        failure_dir=config.SILVER_QUARANTINE_DIR,
+    )
+
+    # The pipeline's true success depends on BOTH validation AND the save operation
+    pipeline_successful = result.success and save_successful
+
+    # === STAGE 7: LOG FINAL STATUS ===
+    if pipeline_successful:
         logger.info(
-            f"--- Silver Preprocessing And Data Validation Pipeline: PASSED for {file_name} ---"
+            f"--- Silver Preprocessing & Validation: PASSED for {file_name} ---"
         )
-        destination_path = config.SILVER_PROCESSED_DIR / file_name
-        logger.info(f"Moving validated file to: {destination_path}")
-        df.to_csv(destination_path, index=False)
     else:
         logger.warning(
-            f"--- Silver Preprocessing And Data Validation Pipeline: FAILED for {file_name} ---"
+            f"--- Silver Preprocessing & Validation: FAILED for {file_name} ---"
         )
-        destination_path = config.SILVER_QUARANTINE_DIR / file_name
-        logger.warning(f"Moving failed file to quarantine: {destination_path}")
-        df.to_csv(destination_path, index=False)
 
-    return result.success
+    return pipeline_successful
 
 
 def main():
