@@ -3,8 +3,6 @@ import logging
 import argparse
 from pathlib import Path
 import sys
-import shutil
-
 from shared.config import (
     GE_ROOT_DIR,
     RAW_DATA_SOURCE,
@@ -32,7 +30,7 @@ from data_validation.ge_components import (
     get_or_create_checkpoint,
     run_checkpoint,
 )
-from shared.utils import setup_logging_from_yaml
+from shared.utils import setup_logging_from_yaml, handle_file_based_on_validation
 
 # Create a logger object for this module
 logger = logging.getLogger(__name__)
@@ -64,8 +62,6 @@ def run_bronze_pipeline(file_name: str) -> bool:
     asset = get_or_create_csv_asset(datasource=datasource, asset_name=RAW_ASSET_NAME)
 
     # --- 2. Create Definitions to Link Data and Rules ---
-    # NOTE: This assumes the `file_name` provided to this function is what's
-    # needed by `get_or_create_batch_definition`.
     batch_definition = get_or_create_batch_definition(
         asset=asset,
         batch_definition_name=BRONZE_BATCH_DEFINITION_NAME,
@@ -101,22 +97,26 @@ def run_bronze_pipeline(file_name: str) -> bool:
     result = run_checkpoint(checkpoint=checkpoint)
 
     # --- 4. Move File Based on Result ---
-    # Ensure the destination directories exist
-    BRONZE_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-    BRONZE_QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
+    file_op_successful = handle_file_based_on_validation(
+        result=result,
+        file_path=file_path,
+        success_dir=BRONZE_PROCESSED_DIR,
+        failure_dir=BRONZE_QUARANTINE_DIR,
+    )
 
-    if result.success:
-        logger.info(f"--- Bronze Validation Pipeline: PASSED for {file_name} ---")
-        destination_path = BRONZE_PROCESSED_DIR / file_path.name
-        logger.info(f"Moving validated file to: {destination_path}")
-        shutil.move(src=file_path, dst=destination_path)
+    # The pipeline's true success depends on BOTH validation AND the file move
+    pipeline_successful = result.success and file_op_successful
+
+    # --- 5. Log Final Status ---
+    if pipeline_successful:
+        logger.info(f"--- Bronze Validation Pipeline: PASSED for {file_path.name} ---")
     else:
-        logger.warning(f"--- Bronze Validation Pipeline: FAILED for {file_name} ---")
-        destination_path = BRONZE_QUARANTINE_DIR / file_path.name
-        logger.warning(f"Moving failed file to quarantine: {destination_path}")
-        shutil.move(src=file_path, dst=destination_path)
+        logger.warning(
+            f"--- Bronze Validation Pipeline: FAILED for {file_path.name} ---"
+        )
 
-    return result.success
+    # Return the final, combined success status
+    return pipeline_successful
 
 
 def main():
