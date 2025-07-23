@@ -110,8 +110,9 @@ def save_dataframe_based_on_validation(
 
     try:
         destination_dir.mkdir(parents=True, exist_ok=True)
+        file_name = file_name + ".parquet"
         destination_path = destination_dir / file_name
-        df.to_csv(destination_path, index=False)
+        df.to_parquet(destination_path, engine="pyarrow", index=False)
         logger.info(f"Saved DataFrame for '{file_name}' to '{destination_path}'")
         return True
     except (IOError, OSError) as e:
