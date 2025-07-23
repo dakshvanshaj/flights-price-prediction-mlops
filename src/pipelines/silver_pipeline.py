@@ -31,6 +31,11 @@ def run_silver_pipeline(
     """
     Orchestrates the full Silver layer data processing and validation pipeline.
     """
+    logger.info(f"Validating file path: {input_filepath}")
+    if not input_filepath.exists():
+        logger.error(f"File not found at {input_filepath}. Aborting pipeline.")
+        return False
+
     file_name = Path(input_filepath).name
     logger.info(f"--- Starting Silver Pipeline for: {file_name} ---")
 
@@ -85,7 +90,7 @@ def run_silver_pipeline(
     save_successful = save_dataframe_based_on_validation(
         result=result,
         df=df,
-        file_name=file_name,
+        file_name=Path(file_name).stem,
         success_dir=config.SILVER_PROCESSED_DIR,
         failure_dir=config.SILVER_QUARANTINE_DIR,
     )
