@@ -1,22 +1,9 @@
-# src/data_validation/pipelines/bronze_pipeline.py
+# src/pipelines/bronze_pipeline.py
 import logging
 import argparse
 from pathlib import Path
 import sys
-from shared.config import (
-    GE_ROOT_DIR,
-    RAW_DATA_SOURCE,
-    BRONZE_PROCESSED_DIR,
-    BRONZE_QUARANTINE_DIR,
-    BRONZE_CHECKPOINT_NAME,
-    RAW_ASSET_NAME,
-    BRONZE_SUITE_NAME,
-    RAW_DATA_SOURCE_NAME,
-    BRONZE_PIPELINE_LOGS_PATH,
-    BRONZE_BATCH_DEFINITION_NAME,
-    BRONZE_VALIDATION_DEFINITION_NAME,
-    LOGGING_YAML,
-)
+from shared.config import config_bronze, core_paths, config_logging
 from data_validation.expectations.bronze_expectations import build_bronze_expectations
 from data_validation.ge_components import (
     get_ge_context,
@@ -48,40 +35,44 @@ def run_bronze_pipeline(file_name: str) -> bool:
         True if the validation succeeds, False otherwise.
     """
     file_path = Path(file_name)
-    file_path = RAW_DATA_SOURCE / file_path
+    file_path = config_bronze.RAW_DATA_SOURCE / file_path
     logger.info(f"Validating file: {file_path}")
     if not file_path.exists():
         logger.error(f"File not found at {file_path}. Aborting Bronze pipeline.")
         return False
 
     # --- 1. Initialize GE Context and Datasource ---
-    context = get_ge_context(project_root_dir=GE_ROOT_DIR)
+    context = get_ge_context(project_root_dir=core_paths.GE_ROOT_DIR)
     datasource = get_or_create_datasource(
-        context=context, source_name=RAW_DATA_SOURCE_NAME, data_dir=RAW_DATA_SOURCE
+        context=context,
+        source_name=config_bronze.RAW_DATA_SOURCE_NAME,
+        data_dir=config_bronze.RAW_DATA_SOURCE,
     )
-    asset = get_or_create_csv_asset(datasource=datasource, asset_name=RAW_ASSET_NAME)
+    asset = get_or_create_csv_asset(
+        datasource=datasource, asset_name=config_bronze.RAW_ASSET_NAME
+    )
 
     # --- 2. Create Definitions to Link Data and Rules ---
     batch_definition = get_or_create_batch_definition(
         asset=asset,
-        batch_definition_name=BRONZE_BATCH_DEFINITION_NAME,
+        batch_definition_name=config_bronze.BRONZE_BATCH_DEFINITION_NAME,
         file_name=file_name,
     )
 
     suite = get_or_create_expectation_suite(
-        context=context, suite_name=BRONZE_SUITE_NAME
+        context=context, suite_name=config_bronze.BRONZE_SUITE_NAME
     )
     bronze_expectations = build_bronze_expectations()
     add_expectations_to_suite(suite=suite, expectation_list=bronze_expectations)
     suite.save()
 
     logger.info(
-        f"Bronze expectation suite '{BRONZE_SUITE_NAME}' is built successfully."
+        f"Bronze expectation suite '{config_bronze.BRONZE_SUITE_NAME}' is built successfully."
     )
 
     validation_definition = get_or_create_validation_definition(
         context=context,
-        definition_name=BRONZE_VALIDATION_DEFINITION_NAME,
+        definition_name=config_bronze.BRONZE_VALIDATION_DEFINITION_NAME,
         batch_definition=batch_definition,
         suite=suite,
     )
@@ -90,7 +81,7 @@ def run_bronze_pipeline(file_name: str) -> bool:
     # --- 3. Run the Checkpoint ---
     checkpoint = get_or_create_checkpoint(
         context=context,
-        checkpoint_name=BRONZE_CHECKPOINT_NAME,
+        checkpoint_name=config_bronze.BRONZE_CHECKPOINT_NAME,
         validation_definition_list=[validation_definition],
         action_list=action_list,
     )
@@ -100,8 +91,8 @@ def run_bronze_pipeline(file_name: str) -> bool:
     file_op_successful = handle_file_based_on_validation(
         result=result,
         file_path=file_path,
-        success_dir=BRONZE_PROCESSED_DIR,
-        failure_dir=BRONZE_QUARANTINE_DIR,
+        success_dir=config_bronze.BRONZE_PROCESSED_DIR,
+        failure_dir=config_bronze.BRONZE_QUARANTINE_DIR,
     )
 
     # The pipeline's true success depends on BOTH validation AND the file move
@@ -127,9 +118,9 @@ def main():
     # --- SETUP LOGGING ---
     # load logging configuration
     setup_logging_from_yaml(
-        log_path=BRONZE_PIPELINE_LOGS_PATH,
+        log_path=config_logging.BRONZE_PIPELINE_LOGS_PATH,
         default_level=logging.DEBUG,
-        default_yaml_path=LOGGING_YAML,
+        default_yaml_path=config_logging.LOGGING_YAML,
     )
     # --- PARSE COMMAND-LINE ARGUMENTS ---
     parser = argparse.ArgumentParser(

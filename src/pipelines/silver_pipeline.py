@@ -17,7 +17,7 @@ from silver_data_preprocessing.silver_preprocessing import (
     enforce_column_order,
 )
 
-from shared import config
+from shared.config import core_paths, config_silver, config_bronze, config_logging
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
 
 logger = logging.getLogger(__name__)
@@ -48,11 +48,13 @@ def run_silver_pipeline(
 
     # === STAGE 2: PREPROCESSING & CLEANING ===
     logger.info("=" * 25 + " STAGE 2/5: PREPROCESSING & CLEANING " + "=" * 25)
-    df = rename_specific_columns(df, rename_mapping=config.COLUMN_RENAME_MAPPING)
+    df = rename_specific_columns(df, rename_mapping=config_silver.COLUMN_RENAME_MAPPING)
     df = standardize_column_format(df)
     df = optimize_data_types(df, date_cols=["date"])
     df = sort_data_by_date(df, date_column="date")
-    df = handle_erroneous_duplicates(df=df, subset_cols=config.ERRONEOUS_DUPE_SUBSET)
+    df = handle_erroneous_duplicates(
+        df=df, subset_cols=config_silver.ERRONEOUS_DUPE_SUBSET
+    )
     logger.info("Standardization, cleaning, and sorting complete.")
 
     # === STAGE 3: FEATURE ENGINEERING ===
@@ -62,24 +64,24 @@ def run_silver_pipeline(
 
     # === STAGE 4: ENFORCE SCHEMA ORDER ===
     logger.info("=" * 25 + " STAGE 4/5: ENFORCE SCHEMA ORDER " + "=" * 25)
-    df = enforce_column_order(df, column_order=config.SILVER_EXPECTED_COLS_ORDER)
+    df = enforce_column_order(df, column_order=config_silver.SILVER_EXPECTED_COLS_ORDER)
 
     # === STAGE 5: DATA VALIDATION (QUALITY GATE) ===
     logger.info("=" * 25 + " STAGE 5/5: FINAL VALIDATION " + "=" * 25)
     silver_expectations = build_silver_expectations(
-        expected_cols_ordered=config.SILVER_EXPECTED_COLS_ORDER,
-        expected_col_types=config.SILVER_EXPECTED_COLUMN_TYPES,
-        non_null_cols=config.SILVER_REQUIRED_NON_NULL_COLS,
-        unique_record_cols=config.ERRONEOUS_DUPE_SUBSET,
+        expected_cols_ordered=config_silver.SILVER_EXPECTED_COLS_ORDER,
+        expected_col_types=config_silver.SILVER_EXPECTED_COLUMN_TYPES,
+        non_null_cols=config_silver.SILVER_REQUIRED_NON_NULL_COLS,
+        unique_record_cols=config_silver.ERRONEOUS_DUPE_SUBSET,
     )
     result = run_checkpoint_on_dataframe(
-        project_root_dir=config.GE_ROOT_DIR,
-        datasource_name=config.SILVER_DATA_SOURCE_NAME,
-        asset_name=config.SILVER_ASSET_NAME,
-        batch_definition_name=config.SILVER_BATCH_DEFINITION_NAME,
-        suite_name=config.SILVER_SUITE_NAME,
-        validation_definition_name=config.SILVER_VALIDATION_DEFINITION_NAME,
-        checkpoint_name=config.SILVER_CHECKPOINT_NAME,
+        project_root_dir=core_paths.GE_ROOT_DIR,
+        datasource_name=config_silver.SILVER_DATA_SOURCE_NAME,
+        asset_name=config_silver.SILVER_ASSET_NAME,
+        batch_definition_name=config_silver.SILVER_BATCH_DEFINITION_NAME,
+        suite_name=config_silver.SILVER_SUITE_NAME,
+        validation_definition_name=config_silver.SILVER_VALIDATION_DEFINITION_NAME,
+        checkpoint_name=config_silver.SILVER_CHECKPOINT_NAME,
         dataframe_to_validate=df,
         expectation_list=silver_expectations,
     )
@@ -89,8 +91,8 @@ def run_silver_pipeline(
         result=result,
         df=df,
         file_name=Path(file_name).stem,
-        success_dir=config.SILVER_PROCESSED_DIR,
-        failure_dir=config.SILVER_QUARANTINE_DIR,
+        success_dir=config_silver.SILVER_PROCESSED_DIR,
+        failure_dir=config_silver.SILVER_QUARANTINE_DIR,
     )
 
     # The pipeline's true success depends on BOTH validation AND the save operation
@@ -116,9 +118,9 @@ def main():
     # --- SETUP LOGGING ---
     # load logging configuration
     setup_logging_from_yaml(
-        log_path=config.SILVER_PIPELINE_LOGS_PATH,
+        log_path=config_logging.SILVER_PIPELINE_LOGS_PATH,
         default_level=logging.DEBUG,
-        default_yaml_path=config.LOGGING_YAML,
+        default_yaml_path=config_logging.LOGGING_YAML,
     )
     parser = argparse.ArgumentParser(
         description="Run the Silver Data Processing Pipeline."
@@ -131,7 +133,7 @@ def main():
 
     args = parser.parse_args()
 
-    input_filepath = config.BRONZE_PROCESSED_DIR / args.input_file
+    input_filepath = config_bronze.BRONZE_PROCESSED_DIR / args.input_file
 
     pipeline_success = run_silver_pipeline(
         input_filepath=Path(input_filepath),
