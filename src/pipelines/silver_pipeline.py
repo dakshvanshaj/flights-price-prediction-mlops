@@ -8,7 +8,7 @@ import sys
 from data_validation.expectations.silver_expectations import build_silver_expectations
 from data_validation.ge_components import run_checkpoint_on_dataframe
 from data_ingestion.data_loader import load_data
-from data_preprocessing.silver_preprocessing import (
+from silver_data_preprocessing.silver_preprocessing import (
     rename_specific_columns,
     standardize_column_format,
     optimize_data_types,
