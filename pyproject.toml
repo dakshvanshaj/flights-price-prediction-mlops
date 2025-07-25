@@ -45,7 +45,7 @@ Issues = "https://github.com/your_username/your_project/issues" # Example URL
 run-bronze-pipeline = "pipelines.bronze_pipeline:main"
 run-silver-pipeline = "pipelines.silver_pipeline:main"
 run-gold-pipeline = "pipelines.gold_pipeline:main"
-
+run-split-data = "data_split.split_data:split_data_chronologically"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
