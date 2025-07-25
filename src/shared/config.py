@@ -81,6 +81,10 @@ TRAIN_SET_SIZE = 0.70
 VAL_SET_SIZE = 0.15
 # remaining is validation set size
 
+# --- Gold Pipeline Config ---
+GOLD_DROP_COLS = ["travel_code", "user_code"]
+TARGET_COLUMN = "price"
+
 # --- Silver Preprocessing Config ---
 COLUMN_RENAME_MAPPING = {"from": "from_location", "to": "to_location"}
 ERRONEOUS_DUPE_SUBSET = [
