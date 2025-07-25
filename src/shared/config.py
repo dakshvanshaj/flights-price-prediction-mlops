@@ -34,6 +34,11 @@ SILVER_DATA_DIR = DATA_DIR / "silver_data"
 SILVER_PROCESSED_DIR = SILVER_DATA_DIR / "processed"
 SILVER_QUARANTINE_DIR = SILVER_DATA_DIR / "quarantine"
 
+# Gold Engineered Data Flow Directories(GOLD_PIPELINE)
+GOLD_DATA_DIR = DATA_DIR / "gold_engineered_data"
+GOLD_PROCESSED_DIR = GOLD_DATA_DIR / "processed"
+GOLD_QUARANTINE_DIR = GOLD_DATA_DIR / "quarantine"
+
 # Logger config path
 LOGGING_YAML = PROJECT_ROOT / "logging.yaml"
 
