@@ -1,10 +1,15 @@
 from data_ingestion.data_loader import load_data
 from shared import config
-from shared.utils import setup_logging_from_yaml
+from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
 from pathlib import Path
 import argparse
 import sys
 import logging
+from gold_data_preprocessing.data_cleaning import (
+    drop_columns,
+    drop_duplicates,
+    drop_missing_target_rows,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -21,15 +26,45 @@ def gold_engineering_pipeline(
     logger.info(f"--- Starting Gold Engineering Pipeline for: {file_name} ---")
 
     # === STAGE 1: DATA INGESTION ===
-    logger.info("=" * 25 + " STAGE 1/5: DATA INGESTION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 1/?: DATA INGESTION " + "=" * 25)
     df = load_data(input_filepath)
     if df is None:
         logger.error(f"Failed to load data from {input_filepath}. Aborting pipeline.")
         return False
     logger.info(f"Successfully loaded {len(df)} rows.")
 
-    # === STAGE 2: OUTLIER DETECTION AND HANDLING ==
-    logger.info("=" * 25 + " STAGE 2/5: OUTLIER DETECTION AND HANDLING " + "=" * 25)
+    # === STAGE 2: Dropping Unique Id Columns ==
+    logger.info(
+        "=" * 25 + " STAGE 2/?: DROPPING COLUMNS AND HANDLING DUPLICATES " + "=" * 25
+    )
+    df = drop_columns(df, columns_to_drop=["travel_code", "user_code"])
+    df = drop_duplicates(df, keep="first")
+    df = drop_missing_target_rows(df, "price")
+
+    # for testing lets say result was success
+    result = {"success": True}
+    # === STAGE ?: SAVE DATAFRAME BASED ON RESULT ===
+    save_successful = save_dataframe_based_on_validation(
+        result=result,
+        df=df,
+        file_name=Path(file_name).stem,
+        success_dir=config.GOLD_PROCESSED_DIR,
+        failure_dir=config.GOLD_QUARANTINE_DIR,
+    )
+
+    # The pipeline's true success depends on BOTH validation AND the save operation
+    pipeline_successful = result.success and save_successful
+    # === STAGE ?: LOG FINAL STATUS ===
+    if pipeline_successful:
+        logger.info(
+            f"--- Silver Preprocessing & Validation: PASSED for {file_name} ---"
+        )
+    else:
+        logger.warning(
+            f"--- Silver Preprocessing & Validation: FAILED for {file_name} ---"
+        )
+
+    return pipeline_successful
 
 
 if __name__ == "__main__":
