@@ -3,7 +3,7 @@ import pandas as pd
 import logging
 
 # Import project-specific modules
-from shared import config
+from shared.config import core_paths, config_split, config_logging
 from shared.utils import setup_logging_from_yaml
 from data_ingestion.data_loader import load_data
 
@@ -19,19 +19,19 @@ def split_data_chronologically():
     logger.info("--- Starting Data Splitting Process ---")
 
     # --- 1. Ensure Output Directory Exists ---
-    logger.info(f"Ensuring output directory exists at '{config.SPLIT_DATA_DIR}'...")
-    config.SPLIT_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Ensuring output directory exists at '{core_paths.SPLIT_DATA_DIR}'...")
+    core_paths.SPLIT_DATA_DIR.mkdir(parents=True, exist_ok=True)
     logger.info("Output directory is ready.")
 
     # --- 2. Load and Sort the Data ---
-    logger.info(f"Loading data from '{config.RAW_CSV_PATH}'...")
+    logger.info(f"Loading data from '{config_split.RAW_CSV_PATH}'...")
     try:
-        df = load_data(config.RAW_CSV_PATH)
+        df = load_data(config_split.RAW_CSV_PATH)
         if df is None:
             raise FileNotFoundError  # load_data returns None on error
     except FileNotFoundError:
         logger.error(
-            f"Failed to load data from '{config.RAW_CSV_PATH}'. Aborting process."
+            f"Failed to load data from '{config_split.RAW_CSV_PATH}'. Aborting process."
         )
         return
 
@@ -50,8 +50,8 @@ def split_data_chronologically():
 
     # --- 3. Perform Chronological Splits ---
     total_rows = len(df)
-    train_end_index = int(total_rows * config.TRAIN_SET_SIZE)
-    validation_end_index = train_end_index + int(total_rows * config.VAL_SET_SIZE)
+    train_end_index = int(total_rows * config_split.TRAIN_SET_SIZE)
+    validation_end_index = train_end_index + int(total_rows * config_split.VAL_SET_SIZE)
 
     train_df = df.iloc[:train_end_index]
     validation_df = df.iloc[train_end_index:validation_end_index]
@@ -63,9 +63,9 @@ def split_data_chronologically():
     logger.info(f"  - Test Set:       {len(test_df)} rows")
 
     # --- 4. Save the Datasets ---
-    train_path = config.SPLIT_DATA_DIR / "train.csv"
-    validation_path = config.SPLIT_DATA_DIR / "validation.csv"
-    test_path = config.SPLIT_DATA_DIR / "test.csv"
+    train_path = config_split.SPLIT_DATA_DIR / "train.csv"
+    validation_path = config_split.SPLIT_DATA_DIR / "validation.csv"
+    test_path = config_split.SPLIT_DATA_DIR / "test.csv"
 
     logger.info(f"Saving training set to '{train_path}'...")
     train_df.to_csv(train_path, index=False)
@@ -81,5 +81,5 @@ def split_data_chronologically():
 
 if __name__ == "__main__":
     # Setup logging from the central YAML file
-    setup_logging_from_yaml(log_path=config.SPLIT_DATA_LOGS_PATH)
+    setup_logging_from_yaml(log_path=config_logging.SPLIT_DATA_LOGS_PATH)
     split_data_chronologically()
