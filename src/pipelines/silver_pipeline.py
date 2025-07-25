@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 def run_silver_pipeline(
-    input_filepath: str,
+    input_filepath: Path,
 ) -> bool:
     """
     Orchestrates the full Silver layer data processing and validation pipeline.
@@ -136,7 +136,7 @@ def main():
     input_filepath = config.BRONZE_PROCESSED_DIR / args.input_file
 
     pipeline_success = run_silver_pipeline(
-        input_filepath=str(input_filepath),
+        input_filepath=Path(input_filepath),
     )
 
     # Exit with a status code that an orchestrator like Airflow can interpret
