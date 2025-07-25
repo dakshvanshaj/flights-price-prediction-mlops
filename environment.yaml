@@ -14,8 +14,9 @@ dependencies:
   - scikit-learn
   - scipy
   - pyarrow
-  - openpyxl=3.1.5
-
+  - openpyxl
+  - dvc
+  - dvc-s3
   # Data Visualization
   - altair
 
