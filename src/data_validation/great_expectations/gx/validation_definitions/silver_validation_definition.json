@@ -1,22 +1,22 @@
 {
   "data": {
     "asset": {
-      "id": "72b74ff3-babd-42eb-a42e-f1366fc20bd3",
+      "id": "0c069b42-f62c-464f-aa08-a26ff4d862a6",
       "name": "silver_in_memory_asset"
     },
     "batch_definition": {
-      "id": "f96bc30f-af05-41d5-a3fd-3fd18321d29f",
+      "id": "577435a1-d7cc-4290-86c8-86288bec53f3",
       "name": "silver_batch_definition"
     },
     "datasource": {
-      "id": "2b8e2f19-8706-4d0c-b193-d69f0c4d2a9e",
+      "id": "5bdc5373-f55d-4caf-beee-4c30bd3bc559",
       "name": "pandas_temp_datasource"
     }
   },
-  "id": "c7b404c7-ae3e-45e6-bd12-1425136c3051",
+  "id": "32a77f3c-a0d1-4f99-93f0-5d3b2218bce3",
   "name": "silver_validation_definition",
   "suite": {
-    "id": "ecbbd5ad-500b-4944-b38a-bd3c0f6ca781",
+    "id": "349c5570-4086-4dae-a1e1-488fe5c0b316",
     "name": "silver_df_flights_suite"
   }
 }
