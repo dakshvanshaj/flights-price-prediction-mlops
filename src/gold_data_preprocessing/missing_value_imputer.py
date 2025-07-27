@@ -1,8 +1,11 @@
 import pandas as pd
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, List
 import json
 from pathlib import Path
+import joblib
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
 
 logger = logging.getLogger(__name__)
 
@@ -158,3 +161,96 @@ class SimpleImputer:
         instance.imputers_ = imputers
         logger.info("Imputer state loaded successfully.")
         return instance
+
+
+class MICEImputer:
+    """
+    Handles missing values using Multiple Imputation by Chained Equations (MICE).
+    This class is a wrapper around scikit-learn's IterativeImputer and uses
+    joblib for saving/loading the model state.
+    """
+
+    def __init__(self, numerical_cols: List[str], **kwargs):
+        """
+        Initializes the MICEImputer.
+
+        Args:
+            numerical_cols (List[str]): List of numerical column names to apply MICE to.
+            **kwargs: Keyword arguments to be passed to the IterativeImputer.
+                      Example: max_iter=10, random_state=0
+        """
+        self.imputer = IterativeImputer(**kwargs)
+        self.numerical_cols = numerical_cols
+        self._is_fitted = False
+
+    def fit(self, df: pd.DataFrame):
+        """
+        Learns the imputation models from the numerical columns of the training DataFrame.
+        """
+        logger.info("Fitting MICEImputer...")
+
+        # Ensure all specified numerical columns are present in the DataFrame
+        missing_cols = [col for col in self.numerical_cols if col not in df.columns]
+        if missing_cols:
+            raise ValueError(
+                f"The following columns are not in the DataFrame: {missing_cols}"
+            )
+
+        df_numeric = df[self.numerical_cols]
+
+        self.imputer.fit(df_numeric)
+        self._is_fitted = True
+        logger.info("Fitting complete.")
+        return self
+
+    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Applies the learned imputation to a DataFrame.
+        """
+        if not self._is_fitted:
+            raise RuntimeError("Imputer has not been fitted yet. Call .fit() first.")
+
+        df_copy = df.copy()
+        logger.info("Transforming data with MICEImputer...")
+
+        # Transform only the numerical columns that the imputer was trained on
+        imputed_data = self.imputer.transform(df_copy[self.numerical_cols])
+
+        # Create a new DataFrame with the imputed values
+        df_imputed = pd.DataFrame(
+            imputed_data, columns=self.numerical_cols, index=df_copy.index
+        )
+
+        # Update the original DataFrame with the imputed values
+        df_copy[self.numerical_cols] = df_imputed
+
+        logger.info("Transformation complete.")
+        return df_copy
+
+    def fit_transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Fits the imputer and transforms the data in one step.
+        """
+        self.fit(df)
+        return self.transform(df)
+
+    def save(self, filepath: Path):
+        """Saves the fitted imputer to a file using joblib."""
+        if not self._is_fitted:
+            raise RuntimeError("Imputer has not been fitted. Cannot save.")
+
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+        logger.info(f"Saving MICE imputer state to {filepath}...")
+        joblib.dump(self, filepath)
+        logger.info("Imputer state saved successfully.")
+
+    @classmethod
+    def load(cls, filepath: Path):
+        """Loads a pre-fitted imputer from a file."""
+        logger.info(f"Loading MICE imputer state from {filepath}...")
+        if not filepath.exists():
+            raise FileNotFoundError(f"Imputer state file not found at {filepath}")
+
+        imputer_instance = joblib.load(filepath)
+        logger.info("Imputer state loaded successfully.")
+        return imputer_instance
