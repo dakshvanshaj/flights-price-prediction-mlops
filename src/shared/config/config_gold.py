@@ -35,3 +35,9 @@ ENCODING_CONFIG = {
     # The specific order for the ordinal columns. This is required!
     "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
 }
+
+CYCLICAL_MAP = {
+    "month": 12,
+    "day_of_week": 7,
+    "day": 31,
+}
