@@ -1,43 +1,88 @@
-from shared.config.core_paths import GOLD_DATA_DIR, LOGS_DIR, PROJECT_ROOT
+from shared.config.core_paths import GOLD_DATA_DIR, LOGS_DIR, MODELS_DIR
 
-# --- Gold Data Flow ---
+# =============================================================================
+# --- GENERAL FILE PATHS & LOGGING ---
+# =============================================================================
 GOLD_PROCESSED_DIR = GOLD_DATA_DIR / "processed"
 GOLD_QUARANTINE_DIR = GOLD_DATA_DIR / "quarantine"
-
-# --- Gold Logging ---
 GOLD_PIPELINE_LOGS_PATH = LOGS_DIR / "gold_pipeline.log"
 
-# --- Gold Pipeline Config ---
+
+# =============================================================================
+# --- STAGE 2: DATA CLEANING ---
+# =============================================================================
+# List of columns to remove at the start of the gold pipeline
 GOLD_DROP_COLS = ["travel_code", "user_code", "date", "day_of_year", "week_of_year"]
+
+# The target variable for the model
 TARGET_COLUMN = "price"
+
+
+# =============================================================================
+# --- STAGE 3: IMPUTATION ---
+# =============================================================================
+# Path to save the fitted imputer object
+SIMPLE_IMPUTER_PATH = MODELS_DIR / "simple_imputer.json"
+
+# Strategy for filling missing values in specified columns
 IMPUTER_STRATEGY = {
     "median": ["price", "time", "distance"],
     "mode": ["agency", "flight_type"],
     "constant": {"from_location": "Unknown", "to_location": "Unknown"},
 }
 
-MODELS_DIR = PROJECT_ROOT / "models"
 
-# Path to save the new imputer object
-
-SIMPLE_IMPUTER_PATH = MODELS_DIR / "simple_imputer.json"
-
-# Path to save the new encoder object
-CATEGORICAL_ENCODER_PATH = MODELS_DIR / "categorical_encoder.joblib"
-
-# Configuration dictionary for the encoder.
-# Customize this to match the categorical columns in your dataset.
-ENCODING_CONFIG = {
-    # Columns to convert into 0s and 1s.
-    "onehot_cols": ["from_location", "to_location", "agency"],
-    # Columns to convert into ordered numbers (e.g., 0, 1, 2).
-    "ordinal_cols": ["flight_type"],
-    # The specific order for the ordinal columns. This is required!
-    "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
-}
-
-CYCLICAL_MAP = {
+# =============================================================================
+# --- STAGE 4: FEATURE ENGINEERING ---
+# =============================================================================
+# Configuration for creating cyclical features (e.g., month_sin, month_cos)
+CYCLICAL_FEATURES_MAP = {
     "month": 12,
     "day_of_week": 7,
     "day": 31,
+}
+
+# Configuration for creating new features by combining categorical columns
+INTERACTION_FEATURES_CONFIG = {
+    "route": ["from_location", "to_location"],
+    "agency_flight_type": ["agency", "flight_type"],
+    "route_agency": ["from_location", "to_location", "agency"],
+}
+
+
+# =============================================================================
+# --- STAGE 5: RARE CATEGORY GROUPING ---
+# =============================================================================
+# Path to save the fitted grouper object
+RARE_CATEGORY_GROUPER_PATH = MODELS_DIR / "rare_category_grouper.joblib"
+
+# List of high-cardinality columns to apply the grouping strategy to
+HIGH_CARDINALITY_COLS = ["route", "route_agency"]
+
+# Threshold for grouping. Categories appearing in less than this fraction
+# of the data will be grouped into a single 'Other' category.
+CARDINALITY_THRESHOLD = 0.01
+
+
+# =============================================================================
+# --- STAGE 6: ENCODING ---
+# =============================================================================
+# Path to save the fitted encoder object
+CATEGORICAL_ENCODER_PATH = MODELS_DIR / "categorical_encoder.joblib"
+
+# Configuration for the final encoding of all categorical features
+ENCODING_CONFIG = {
+    # Columns to be one-hot encoded
+    "onehot_cols": [
+        "from_location",
+        "to_location",
+        "agency",
+        "route",
+        "agency_flight_type",
+        "route_agency",
+    ],
+    # Columns to be ordinally encoded (order matters)
+    "ordinal_cols": ["flight_type"],
+    # The specific order for the ordinal columns
+    "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
 }
