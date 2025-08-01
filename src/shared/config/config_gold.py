@@ -92,6 +92,14 @@ ENCODING_CONFIG = {
 # =============================================================================
 OUTLIER_DETECTION_STRATEGY = "isolation_forest"
 OUTLIER_HANDLING_STRATEGY = "trim"
-NUMERICAL_COLUMNS = ["price", "time", "distance"]
+OUTLIER_HANDLER_COLUMNS = ["price", "time", "distance"]
 OUTLIER_HANDLER_PATH = MODELS_DIR / "outlier_handler.joblib"
 ISO_FOREST_CONTAMINATION = 0.01
+
+
+# =============================================================================
+# --- STAGE 7: Power Transformations ---
+# =============================================================================
+POWER_TRANSFORMER_STRATEGY = "yeo-johnson"
+POWER_TRANSFORMER_PATH = MODELS_DIR / "power_transformer.joblib"
+POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
