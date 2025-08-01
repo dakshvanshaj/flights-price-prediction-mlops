@@ -86,3 +86,12 @@ ENCODING_CONFIG = {
     # The specific order for the ordinal columns
     "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
 }
+
+# =============================================================================
+# --- STAGE 7: OUTLIER HANDLING ---
+# =============================================================================
+OUTLIER_DETECTION_STRATEGY = "isolation_forest"
+OUTLIER_HANDLING_STRATEGY = "trim"
+NUMERICAL_COLUMNS = ["price", "time", "distance"]
+OUTLIER_HANDLER_PATH = MODELS_DIR / "outlier_handler.joblib"
+ISO_FOREST_CONTAMINATION = 0.01
