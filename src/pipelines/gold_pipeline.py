@@ -23,6 +23,7 @@ from gold_data_preprocessing.rare_category_grouper import RareCategoryGrouper
 from gold_data_preprocessing.categorical_encoder import CategoricalEncoder
 from gold_data_preprocessing.outlier_handling import OutlierTransformer
 from gold_data_preprocessing.power_transformer import PowerTransformer
+from gold_data_preprocessing.scaler import Scaler
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,7 @@ def gold_engineering_pipeline(
     encoder_to_apply: Optional[CategoricalEncoder] = None,
     outlier_handler_to_apply: Optional[OutlierTransformer] = None,
     power_transformer_to_apply: Optional[PowerTransformer] = None,
+    scaler_to_apply: Optional[Scaler] = None,
 ) -> Tuple[
     bool,
     Optional[SimpleImputer],
@@ -41,6 +43,7 @@ def gold_engineering_pipeline(
     Optional[CategoricalEncoder],
     Optional[OutlierTransformer],
     Optional[PowerTransformer],
+    Optional[Scaler],
 ]:
     """
     Executes the full gold layer pipeline in the correct order.
@@ -49,7 +52,7 @@ def gold_engineering_pipeline(
     logger.info(f"--- Starting Gold Engineering Pipeline for: {file_name} ---")
 
     # === STAGE 1: DATA INGESTION ===
-    logger.info("=" * 25 + " STAGE 1/8: DATA INGESTION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 1/9: DATA INGESTION " + "=" * 25)
     df = load_data(input_filepath)
     if df is None:
         # --- FIX: Ensure we return the correct number of None values ---
@@ -57,13 +60,13 @@ def gold_engineering_pipeline(
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: DATA CLEANING ===
-    logger.info("=" * 25 + " STAGE 2/8: DATA CLEANING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 2/9: DATA CLEANING " + "=" * 25)
     df = drop_columns(df, columns_to_drop=config_gold.GOLD_DROP_COLS)
     df = drop_duplicates(df, keep="first")
     df = drop_missing_target_rows(df, config_gold.TARGET_COLUMN)
 
     # === STAGE 3: IMPUTATION ===
-    logger.info("=" * 25 + " STAGE 3/8: IMPUTATION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 3/9: IMPUTATION " + "=" * 25)
     fitted_imputer = None
     if imputer_to_apply:
         df = imputer_to_apply.transform(df)
@@ -73,14 +76,14 @@ def gold_engineering_pipeline(
         fitted_imputer = imputer
 
     # === STAGE 4: FEATURE ENGINEERING ===
-    logger.info("=" * 25 + " STAGE 4/8: FEATURE ENGINEERING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 4/9: FEATURE ENGINEERING " + "=" * 25)
     df = create_cyclical_features(df, cyclical_map=config_gold.CYCLICAL_FEATURES_MAP)
     df = create_categorical_interaction_features(
         df, interaction_map=config_gold.INTERACTION_FEATURES_CONFIG
     )
 
     # === STAGE 5: RARE CATEGORY GROUPING ===
-    logger.info("=" * 25 + " STAGE 5/8: RARE CATEGORY GROUPING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 5/9: RARE CATEGORY GROUPING " + "=" * 25)
     fitted_grouper = None
     if grouper_to_apply:
         df = grouper_to_apply.transform(df)
@@ -93,7 +96,7 @@ def gold_engineering_pipeline(
         fitted_grouper = grouper
 
     # === STAGE 6: ENCODE CATEGORICAL COLUMNS ===
-    logger.info("=" * 25 + " STAGE 6/8: ENCODING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 6/9: ENCODING " + "=" * 25)
     fitted_encoder = None
     if encoder_to_apply:
         df = encoder_to_apply.transform(df)
@@ -103,7 +106,7 @@ def gold_engineering_pipeline(
         fitted_encoder = encoder
 
     # === STAGE 7: OUTLIER DETECTION AND HANDLING ===
-    logger.info("=" * 25 + " STAGE 7/8: OUTLIER HANDLING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 7/9: OUTLIER HANDLING " + "=" * 25)
     fitted_outlier_handler = None
     if outlier_handler_to_apply:
         df = outlier_handler_to_apply.transform(df)
@@ -119,7 +122,7 @@ def gold_engineering_pipeline(
         fitted_outlier_handler = outlier_handler
 
     # === STAGE 8: POWER TRANSFORMATIONS ===
-    logger.info("=" * 25 + " STAGE 8/8: POWER TRANSFORMATIONS " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 8/9: POWER TRANSFORMATIONS " + "=" * 25)
     fitted_power_transformer = None
     if power_transformer_to_apply:
         df = power_transformer_to_apply.transform(df)
@@ -130,6 +133,16 @@ def gold_engineering_pipeline(
         )
         df = power_transformer.fit_transform(df)
         fitted_power_transformer = power_transformer
+
+    # === STAGE 9: SCALING ===
+    logger.info("=" * 25 + " STAGE 9/9: SCALING " + "=" * 25)
+    fitted_scaler = None
+    if scaler_to_apply:
+        df = scaler_to_apply.transform(df)
+    else:
+        scaler = Scaler(columns=config_gold.SCALER_COLUMNS, strategy="standard")
+        df = scaler.fit_transform(df)
+        fitted_scaler = scaler
 
     # === FINAL STAGE: SAVE DATAFRAME ===
     logger.info("=" * 25 + " SAVING DATAFRAME " + "=" * 25)
@@ -156,6 +169,7 @@ def gold_engineering_pipeline(
         fitted_encoder,
         fitted_outlier_handler,
         fitted_power_transformer,
+        fitted_scaler,
     )
 
 
@@ -168,6 +182,7 @@ def main():
     encoder_path = config_gold.CATEGORICAL_ENCODER_PATH
     outlier_path = config_gold.OUTLIER_HANDLER_PATH
     power_path = config_gold.POWER_TRANSFORMER_PATH
+    scaler_path = config_gold.SCALER_PATH
 
     # 1. Process Training Data
     logger.info(">>> ORCHESTRATOR: Processing training data...")
@@ -179,6 +194,7 @@ def main():
         fitted_encoder,
         fitted_outlier_handler,
         fitted_power_transformer,
+        fitted_scaler,
     ) = gold_engineering_pipeline(input_filepath=train_path)
 
     if not all(
@@ -189,6 +205,7 @@ def main():
             fitted_encoder,
             fitted_outlier_handler,
             fitted_power_transformer,
+            fitted_scaler,
         ]
     ):
         logger.critical("Training data processing failed. Aborting.")
@@ -199,6 +216,7 @@ def main():
     fitted_encoder.save(encoder_path)
     fitted_outlier_handler.save(outlier_path)
     fitted_power_transformer.save(power_path)
+    fitted_scaler.save(scaler_path)
 
     logger.info("Successfully fitted and saved all preprocessing objects.")
 
@@ -212,14 +230,16 @@ def main():
         encoder = CategoricalEncoder.load(encoder_path)
         outlier_handler = OutlierTransformer.load(outlier_path)
         transformer = PowerTransformer.load(power_path)
+        scaler = Scaler.load(scaler_path)
 
-        success, _, _, _, _, _ = gold_engineering_pipeline(
+        success, _, _, _, _, _, _ = gold_engineering_pipeline(
             input_filepath=data_path,
             imputer_to_apply=imputer,
             grouper_to_apply=grouper,
             encoder_to_apply=encoder,
             outlier_handler_to_apply=outlier_handler,
             power_transformer_to_apply=transformer,
+            scaler_to_apply=scaler,
         )
         if not success:
             logger.error(f"{data_split.capitalize()} data processing failed.")
