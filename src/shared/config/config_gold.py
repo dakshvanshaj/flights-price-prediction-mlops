@@ -103,3 +103,9 @@ ISO_FOREST_CONTAMINATION = 0.01
 POWER_TRANSFORMER_STRATEGY = "yeo-johnson"
 POWER_TRANSFORMER_PATH = MODELS_DIR / "power_transformer.joblib"
 POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
+
+# =============================================================================
+# --- STAGE 8: Scaling ---
+# =============================================================================
+SCALER_COLUMNS = ["price", "time", "distance"]
+SCALER_PATH = MODELS_DIR / "scaler.joblib"
