@@ -8,7 +8,7 @@ great_expectations/gx/expectations/.ge_store_backend_id
 
 # Temporary help files
 most_used.txt
-src/pipelines/practise.py
+practise.py
 
 # --- Bytecode and Distribution ---
 __pycache__/
