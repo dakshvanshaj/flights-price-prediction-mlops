@@ -6,7 +6,7 @@ import numpy as np
 from pandas.testing import assert_frame_equal
 
 # Import all functions and the class from the script to be tested
-from src.data_preprocessing.silver_preprocessing import (
+from src.silver_data_preprocessing.silver_preprocessing import (
     rename_specific_columns,
     standardize_column_format,
     optimize_data_types,
