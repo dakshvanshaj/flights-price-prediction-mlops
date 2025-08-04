@@ -27,7 +27,6 @@ venv/
 
 # --- DVC Data Directory ---
 # This folder is managed by DVC
-/data
 
 # --- Logs & Runtime Artifacts ---
 # Ignore all log files and log directories
@@ -45,3 +44,5 @@ logs/
 # --- Test Artifacts ---
 .pytest_cache/
 .coverage
+
+data/
