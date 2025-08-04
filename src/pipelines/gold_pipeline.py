@@ -1,6 +1,5 @@
 import sys
 import logging
-
 from data_ingestion.data_loader import load_data
 from shared.config import config_gold, config_logging, config_silver
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
@@ -24,6 +23,7 @@ from gold_data_preprocessing.categorical_encoder import CategoricalEncoder
 from gold_data_preprocessing.outlier_handling import OutlierTransformer
 from gold_data_preprocessing.power_transformer import PowerTransformer
 from gold_data_preprocessing.scaler import Scaler
+
 
 logger = logging.getLogger(__name__)
 
@@ -140,7 +140,9 @@ def gold_engineering_pipeline(
     if scaler_to_apply:
         df = scaler_to_apply.transform(df)
     else:
-        scaler = Scaler(columns=config_gold.SCALER_COLUMNS, strategy="standard")
+        scaler = Scaler(
+            columns=config_gold.SCALER_COLUMNS, strategy=config_gold.SCALER_STRATEGY
+        )
         df = scaler.fit_transform(df)
         fitted_scaler = scaler
 
