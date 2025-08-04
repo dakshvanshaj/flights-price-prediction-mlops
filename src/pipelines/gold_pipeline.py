@@ -56,7 +56,7 @@ def gold_engineering_pipeline(
     df = load_data(input_filepath)
     if df is None:
         # --- FIX: Ensure we return the correct number of None values ---
-        return False, None, None, None, None, None
+        return False, None, None, None, None, None, None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: DATA CLEANING ===
@@ -232,7 +232,15 @@ def main():
         transformer = PowerTransformer.load(power_path)
         scaler = Scaler.load(scaler_path)
 
-        success, _, _, _, _, _, _ = gold_engineering_pipeline(
+        (
+            success,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+        ) = gold_engineering_pipeline(
             input_filepath=data_path,
             imputer_to_apply=imputer,
             grouper_to_apply=grouper,
