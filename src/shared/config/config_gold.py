@@ -109,3 +109,4 @@ POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
 # =============================================================================
 SCALER_COLUMNS = ["price", "time", "distance"]
 SCALER_PATH = MODELS_DIR / "scaler.joblib"
+SCALER_STRATEGY = "standard"
