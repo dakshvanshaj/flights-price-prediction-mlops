@@ -1,0 +1,39 @@
+# params.yaml
+
+# This list is used by DVC to loop through data splits.
+data_splits:
+  - train
+  - validation
+  - test
+
+# =================================================================
+# --- HYPERPARAMETERS FOR GOLD PIPELINE STAGES ---
+# =================================================================
+gold_pipeline:
+  # --- Imputation (Stage 3) ---
+  imputation:
+    strategy_median: ["price", "time", "distance"]
+    strategy_mode: ["agency", "flight_type"]
+    strategy_constant:
+      from_location: "Unknown"
+      to_location: "Unknown"
+
+  # --- Rare Category Grouping (Stage 5) ---
+  rare_category_grouping:
+    # Threshold for grouping. Categories appearing in less than this fraction
+    # of the data will be grouped into a single 'Other' category.
+    threshold: 0.01
+
+  # --- Outlier Handling (Stage 7) ---
+  outlier_handling:
+    # Strategy can be 'isolation_forest' or other future methods.
+    detection_strategy: "isolation_forest"
+    # Handling can be 'trim', 'cap', or other methods.
+    handling_strategy: "trim"
+    # The expected percentage of outliers in the data for Isolation Forest.
+    iso_forest_contamination: 0.01
+
+  # --- Power Transformations (Stage 8) ---
+  power_transformer:
+    # Strategy can be 'yeo-johnson' or 'box-cox'.
+    strategy: "yeo-johnson"

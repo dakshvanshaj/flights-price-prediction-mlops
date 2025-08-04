@@ -1,6 +1,5 @@
 import sys
 import logging
-
 from data_ingestion.data_loader import load_data
 from shared.config import config_gold, config_logging, config_silver
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
@@ -24,6 +23,7 @@ from gold_data_preprocessing.categorical_encoder import CategoricalEncoder
 from gold_data_preprocessing.outlier_handling import OutlierTransformer
 from gold_data_preprocessing.power_transformer import PowerTransformer
 from gold_data_preprocessing.scaler import Scaler
+
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ def gold_engineering_pipeline(
     df = load_data(input_filepath)
     if df is None:
         # --- FIX: Ensure we return the correct number of None values ---
-        return False, None, None, None, None, None
+        return False, None, None, None, None, None, None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: DATA CLEANING ===
@@ -140,7 +140,9 @@ def gold_engineering_pipeline(
     if scaler_to_apply:
         df = scaler_to_apply.transform(df)
     else:
-        scaler = Scaler(columns=config_gold.SCALER_COLUMNS, strategy="standard")
+        scaler = Scaler(
+            columns=config_gold.SCALER_COLUMNS, strategy=config_gold.SCALER_STRATEGY
+        )
         df = scaler.fit_transform(df)
         fitted_scaler = scaler
 
@@ -232,7 +234,15 @@ def main():
         transformer = PowerTransformer.load(power_path)
         scaler = Scaler.load(scaler_path)
 
-        success, _, _, _, _, _, _ = gold_engineering_pipeline(
+        (
+            success,
+            _,
+            _,
+            _,
+            _,
+            _,
+            _,
+        ) = gold_engineering_pipeline(
             input_filepath=data_path,
             imputer_to_apply=imputer,
             grouper_to_apply=grouper,
