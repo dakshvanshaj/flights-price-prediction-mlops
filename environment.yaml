@@ -26,6 +26,7 @@ dependencies:
   # Testing
   - pytest
 
+  - pyyaml
   # Pip-installed packages (only for things not on conda channels)
   - pip
   - pip:
