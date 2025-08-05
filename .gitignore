@@ -45,4 +45,6 @@ logs/
 .pytest_cache/
 .coverage
 
+# --- DVC TRACKED FILES ---
 data/
+models/
