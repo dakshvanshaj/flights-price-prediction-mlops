@@ -1,0 +1,313 @@
+schema: '2.0'
+stages:
+  split_data:
+    cmd: python src/data_split/split_data.py
+    deps:
+    - path: data/raw/flights.csv
+      hash: md5
+      md5: df18a038826769e5ce870aa7934facfc
+      size: 24570411
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
+    - path: src/data_split/split_data.py
+      hash: md5
+      md5: facaf4c7d2fdcd4ae02d5d52f514444e
+      size: 3258
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    outs:
+    - path: data/raw/train_validation_test/test.csv
+      hash: md5
+      md5: dfa25b636af1f48bc9d1985dcadc324e
+      size: 3650705
+    - path: data/raw/train_validation_test/train.csv
+      hash: md5
+      md5: c913f2a2f5394eba3d96badf8c07ea29
+      size: 17002301
+    - path: data/raw/train_validation_test/validation.csv
+      hash: md5
+      md5: 035f4539e18954eaca370c6a5c06723a
+      size: 3645658
+  bronze_pipeline@train:
+    cmd: python src/pipelines/bronze_pipeline.py train.csv
+    deps:
+    - path: data/raw/train_validation_test/train.csv
+      hash: md5
+      md5: c913f2a2f5394eba3d96badf8c07ea29
+      size: 17002301
+    - path: src/data_validation/
+      hash: md5
+      md5: ff486c5cf3df8afb08c214b4db1beeed.dir
+      size: 9643547
+      nfiles: 171
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: 461f7f20b6b83cfc53910d31b594484d
+      size: 5125
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    outs:
+    - path: data/bronze_data/processed/train.csv
+      hash: md5
+      md5: c913f2a2f5394eba3d96badf8c07ea29
+      size: 17002301
+  bronze_pipeline@validation:
+    cmd: python src/pipelines/bronze_pipeline.py validation.csv
+    deps:
+    - path: data/raw/train_validation_test/validation.csv
+      hash: md5
+      md5: 035f4539e18954eaca370c6a5c06723a
+      size: 3645658
+    - path: src/data_validation/
+      hash: md5
+      md5: dbaca9c884289e7b5f1e616c4b95d9b6.dir
+      size: 9717807
+      nfiles: 173
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: 461f7f20b6b83cfc53910d31b594484d
+      size: 5125
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    outs:
+    - path: data/bronze_data/processed/validation.csv
+      hash: md5
+      md5: 035f4539e18954eaca370c6a5c06723a
+      size: 3645658
+  bronze_pipeline@test:
+    cmd: python src/pipelines/bronze_pipeline.py test.csv
+    deps:
+    - path: data/raw/train_validation_test/test.csv
+      hash: md5
+      md5: dfa25b636af1f48bc9d1985dcadc324e
+      size: 3650705
+    - path: src/data_validation/
+      hash: md5
+      md5: 26ddb00c3c8b7ae6dbbac0b64f449371.dir
+      size: 9792026
+      nfiles: 175
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: 461f7f20b6b83cfc53910d31b594484d
+      size: 5125
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    outs:
+    - path: data/bronze_data/processed/test.csv
+      hash: md5
+      md5: dfa25b636af1f48bc9d1985dcadc324e
+      size: 3650705
+  silver_pipeline@train:
+    cmd: python src/pipelines/silver_pipeline.py train.csv
+    deps:
+    - path: data/bronze_data/processed/train.csv
+      hash: md5
+      md5: c913f2a2f5394eba3d96badf8c07ea29
+      size: 17002301
+    - path: src/data_ingestion/
+      hash: md5
+      md5: 2661bcb446d210975f34885f7df6f7de.dir
+      size: 10498
+      nfiles: 4
+    - path: src/data_validation/
+      hash: md5
+      md5: 331b1eb00e34f60a5e70d4306c32a6cd.dir
+      size: 9886053
+      nfiles: 177
+    - path: src/pipelines/silver_pipeline.py
+      hash: md5
+      md5: 488cd73a306688ae48c373ca8ed0d2fc
+      size: 5574
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    - path: src/silver_data_preprocessing/
+      hash: md5
+      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      size: 18729
+      nfiles: 4
+    outs:
+    - path: data/silver_data/processed/train.parquet
+      hash: md5
+      md5: 9c04839d67de437d7ca6b1c6bd4523fa
+      size: 1866293
+  silver_pipeline@validation:
+    cmd: python src/pipelines/silver_pipeline.py validation.csv
+    deps:
+    - path: data/bronze_data/processed/validation.csv
+      hash: md5
+      md5: 035f4539e18954eaca370c6a5c06723a
+      size: 3645658
+    - path: src/data_ingestion/
+      hash: md5
+      md5: 2661bcb446d210975f34885f7df6f7de.dir
+      size: 10498
+      nfiles: 4
+    - path: src/data_validation/
+      hash: md5
+      md5: 9af39f8b9d5328a5ec4c04c2f97390bb.dir
+      size: 9980069
+      nfiles: 179
+    - path: src/pipelines/silver_pipeline.py
+      hash: md5
+      md5: 488cd73a306688ae48c373ca8ed0d2fc
+      size: 5574
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    - path: src/silver_data_preprocessing/
+      hash: md5
+      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      size: 18729
+      nfiles: 4
+    outs:
+    - path: data/silver_data/processed/validation.parquet
+      hash: md5
+      md5: 4ab1e09c3bfe882e9a34dcd9438a0ed3
+      size: 399605
+  silver_pipeline@test:
+    cmd: python src/pipelines/silver_pipeline.py test.csv
+    deps:
+    - path: data/bronze_data/processed/test.csv
+      hash: md5
+      md5: dfa25b636af1f48bc9d1985dcadc324e
+      size: 3650705
+    - path: src/data_ingestion/
+      hash: md5
+      md5: 2661bcb446d210975f34885f7df6f7de.dir
+      size: 10498
+      nfiles: 4
+    - path: src/data_validation/
+      hash: md5
+      md5: 0d0df891d974dd61729b3a12b55804fc.dir
+      size: 10074085
+      nfiles: 181
+    - path: src/pipelines/silver_pipeline.py
+      hash: md5
+      md5: 488cd73a306688ae48c373ca8ed0d2fc
+      size: 5574
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    - path: src/silver_data_preprocessing/
+      hash: md5
+      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      size: 18729
+      nfiles: 4
+    outs:
+    - path: data/silver_data/processed/test.parquet
+      hash: md5
+      md5: 9c564881e84853faad55461550b362ac
+      size: 402967
+  gold_pipeline:
+    cmd: python src/pipelines/gold_pipeline.py
+    deps:
+    - path: data/silver_data/processed/test.parquet
+      hash: md5
+      md5: 9c564881e84853faad55461550b362ac
+      size: 402967
+    - path: data/silver_data/processed/train.parquet
+      hash: md5
+      md5: 9c04839d67de437d7ca6b1c6bd4523fa
+      size: 1866293
+    - path: data/silver_data/processed/validation.parquet
+      hash: md5
+      md5: 4ab1e09c3bfe882e9a34dcd9438a0ed3
+      size: 399605
+    - path: src/data_ingestion/
+      hash: md5
+      md5: 2661bcb446d210975f34885f7df6f7de.dir
+      size: 10498
+      nfiles: 4
+    - path: src/gold_data_preprocessing/
+      hash: md5
+      md5: 7c0cc659b50cf202b568fa282ac0104d.dir
+      size: 113943
+      nfiles: 19
+    - path: src/pipelines/gold_pipeline.py
+      hash: md5
+      md5: 55a26c11e09318b066d076608d64c38b
+      size: 10052
+    - path: src/shared/
+      hash: md5
+      md5: 160bc40711a0988d165f9a03285cf9c6.dir
+      size: 34061
+      nfiles: 20
+    params:
+      params.yaml:
+        gold_pipeline.imputation:
+          median:
+          - price
+          - time
+          - distance
+          mode:
+          - agency
+          - flight_type
+          constant:
+            from_location: Unknown
+            to_location: Unknown
+        gold_pipeline.outlier_handling:
+          detection_strategy: isolation_forest
+          handling_strategy: trim
+          iso_forest_contamination: 0.01
+        gold_pipeline.power_transformer:
+          strategy: yeo-johnson
+        gold_pipeline.rare_category_grouping:
+          cardinality_threshold: 0.01
+    outs:
+    - path: data/gold_engineered_data/processed/test.parquet
+      hash: md5
+      md5: 4befacee29816a8f435157376a09e47d
+      size: 372835
+    - path: data/gold_engineered_data/processed/train.parquet
+      hash: md5
+      md5: e9c9a744e973881849dcf7351be3998b
+      size: 953216
+    - path: data/gold_engineered_data/processed/validation.parquet
+      hash: md5
+      md5: b1593f958b2dc3f9e32a2a2fdad79a36
+      size: 329829
+    - path: models/categorical_encoder.joblib
+      hash: md5
+      md5: 839901b02d4e8309d3209f4bae997bb1
+      size: 8322
+    - path: models/outlier_handler.joblib
+      hash: md5
+      md5: d34c8abb3f7582a517dafd3984e146a1
+      size: 2678840
+    - path: models/power_transformer.joblib
+      hash: md5
+      md5: bb7861584b9301f133f02c2440224870
+      size: 312
+    - path: models/rare_category_grouper.joblib
+      hash: md5
+      md5: 43a6021b46cdcf7a8a3042f52111d998
+      size: 2371
+    - path: models/scaler.joblib
+      hash: md5
+      md5: 6edd47ccade7b3dfde90507c66714c7c
+      size: 348
+    - path: models/simple_imputer.json
+      hash: md5
+      md5: 4a939e5d5a7cfb3346567524080f6b6d
+      size: 219
