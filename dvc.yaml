@@ -27,8 +27,6 @@ stages:
         - data/raw/train_validation_test/${item}.csv
       outs:
         - data/bronze_data/processed/${item}.csv
-        - data/bronze_data/quarantine/${item}.csv:
-            cache: false
 
   silver_pipeline:
     foreach: ${data_splits}
@@ -43,8 +41,6 @@ stages:
         - data/bronze_data/processed/${item}.csv
       outs:
         - data/silver_data/processed/${item}.parquet
-        - data/silver_data/quarantine/${item}.parquet:
-            cache: false
 
   gold_pipeline:
     cmd: python src/pipelines/gold_pipeline.py
