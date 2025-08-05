@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 def gold_engineering_pipeline(
     input_filepath: Path,
-    params: dict,
+    params: Optional[dict] = None,
     imputer_to_apply: Optional[SimpleImputer] = None,
     grouper_to_apply: Optional[RareCategoryGrouper] = None,
     encoder_to_apply: Optional[CategoricalEncoder] = None,
@@ -136,7 +136,7 @@ def gold_engineering_pipeline(
     if power_transformer_to_apply:
         df = power_transformer_to_apply.transform(df)
     else:
-        power_params = params["power_transformations"]
+        power_params = params["power_transformer"]
         POWER_TRANSFORMER_STRATEGY = power_params["strategy"]
         power_transformer = PowerTransformer(
             columns=config_gold.POWER_TRANSFORMER_COLUMNS,
