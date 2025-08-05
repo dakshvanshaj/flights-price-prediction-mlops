@@ -62,7 +62,7 @@ def handle_file_based_on_validation(
     result, file_path: Path, success_dir: Path, failure_dir: Path
 ) -> bool:
     """
-    Moves a file to a success or failure directory based on a validation result.
+    Copies a file to a success or failure directory based on a validation result.
 
     Args:
         result: The validation result object (must have a .success attribute).
@@ -79,12 +79,12 @@ def handle_file_based_on_validation(
     try:
         destination_dir.mkdir(parents=True, exist_ok=True)
         destination_path = destination_dir / file_path.name
-        shutil.move(src=file_path, dst=destination_path)
-        logger.info(f"Moved '{file_path.name}' to '{destination_path}'")
+        shutil.copy(src=file_path, dst=destination_path)
+        logger.info(f"Copied '{file_path.name}' to '{destination_path}'")
         return True
     except (IOError, OSError) as e:
         logger.error(
-            f"Failed to move file '{file_path.name}' to '{destination_dir}'. Error: {e}"
+            f"Failed to copy file '{file_path.name}' to '{destination_dir}'. Error: {e}"
         )
         return False
 
