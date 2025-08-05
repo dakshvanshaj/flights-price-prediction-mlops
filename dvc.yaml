@@ -23,7 +23,9 @@ stages:
       deps:
         - src/pipelines/bronze_pipeline.py
         - src/shared/
-        - src/data_validation/
+        # --- Specific GE Dependencies ---
+        - src/data_validation/ge_components.py
+        - src/data_validation/expectations/bronze_expectations.py
         - data/raw/train_validation_test/${item}.csv
       outs:
         - data/bronze_data/processed/${item}.csv
@@ -37,7 +39,9 @@ stages:
         - src/data_ingestion/
         - src/silver_data_preprocessing/
         - src/shared/
-        - src/data_validation/
+        # --- Specific GE Dependencies ---
+        - src/data_validation/ge_components.py
+        - src/data_validation/expectations/silver_expectations.py
         - data/bronze_data/processed/${item}.csv
       outs:
         - data/silver_data/processed/${item}.parquet
