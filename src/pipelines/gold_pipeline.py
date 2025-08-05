@@ -1,5 +1,6 @@
 import sys
 import logging
+import yaml
 from data_ingestion.data_loader import load_data
 from shared.config import config_gold, config_logging, config_silver
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
@@ -30,6 +31,7 @@ logger = logging.getLogger(__name__)
 
 def gold_engineering_pipeline(
     input_filepath: Path,
+    params: dict,
     imputer_to_apply: Optional[SimpleImputer] = None,
     grouper_to_apply: Optional[RareCategoryGrouper] = None,
     encoder_to_apply: Optional[CategoricalEncoder] = None,
@@ -71,7 +73,8 @@ def gold_engineering_pipeline(
     if imputer_to_apply:
         df = imputer_to_apply.transform(df)
     else:
-        imputer = SimpleImputer(strategy_dict=config_gold.IMPUTER_STRATEGY)
+        IMPUTER_STRATEGY = params["imputation"]
+        imputer = SimpleImputer(strategy_dict=IMPUTER_STRATEGY)
         df = imputer.fit_transform(df)
         fitted_imputer = imputer
 
@@ -88,9 +91,11 @@ def gold_engineering_pipeline(
     if grouper_to_apply:
         df = grouper_to_apply.transform(df)
     else:
+        grouper_params = params["rare_category_grouping"]
+        CARDINALITY_THRESHOLD = grouper_params["cardinality_threshold"]
         grouper = RareCategoryGrouper(
             columns=config_gold.HIGH_CARDINALITY_COLS,
-            threshold=config_gold.CARDINALITY_THRESHOLD,
+            threshold=CARDINALITY_THRESHOLD,
         )
         df = grouper.fit_transform(df)
         fitted_grouper = grouper
@@ -111,11 +116,15 @@ def gold_engineering_pipeline(
     if outlier_handler_to_apply:
         df = outlier_handler_to_apply.transform(df)
     else:
+        outlier_params = params["outlier_handling"]
+        OUTLIER_DETECTION_STRATEGY = outlier_params["detection_strategy"]
+        OUTLIER_HANDLING_STRATEGY = outlier_params["handling_strategy"]
+        ISO_FOREST_CONTAMINATION = outlier_params["iso_forest_contamination"]
         outlier_handler = OutlierTransformer(
-            detection_strategy=config_gold.OUTLIER_DETECTION_STRATEGY,
-            handling_strategy=config_gold.OUTLIER_HANDLING_STRATEGY,
+            detection_strategy=OUTLIER_DETECTION_STRATEGY,
+            handling_strategy=OUTLIER_HANDLING_STRATEGY,
             columns=config_gold.OUTLIER_HANDLER_COLUMNS,
-            contamination=config_gold.ISO_FOREST_CONTAMINATION,
+            contamination=ISO_FOREST_CONTAMINATION,
             random_state=42,
         )
         df = outlier_handler.fit_transform(df)
@@ -127,9 +136,11 @@ def gold_engineering_pipeline(
     if power_transformer_to_apply:
         df = power_transformer_to_apply.transform(df)
     else:
+        power_params = params["power_transformations"]
+        POWER_TRANSFORMER_STRATEGY = power_params["strategy"]
         power_transformer = PowerTransformer(
             columns=config_gold.POWER_TRANSFORMER_COLUMNS,
-            strategy=config_gold.POWER_TRANSFORMER_STRATEGY,
+            strategy=POWER_TRANSFORMER_STRATEGY,
         )
         df = power_transformer.fit_transform(df)
         fitted_power_transformer = power_transformer
@@ -186,6 +197,12 @@ def main():
     power_path = config_gold.POWER_TRANSFORMER_PATH
     scaler_path = config_gold.SCALER_PATH
 
+    # ==== Import Parameters From params.yaml =====
+    with open("params.yaml", "r") as f:
+        params = yaml.safe_load(f)
+    # Check the parameters dictionary for gold_pipeline
+    gold_params = params["gold_pipeline"]
+
     # 1. Process Training Data
     logger.info(">>> ORCHESTRATOR: Processing training data...")
     train_path = config_silver.SILVER_PROCESSED_DIR / "train.parquet"
@@ -197,7 +214,7 @@ def main():
         fitted_outlier_handler,
         fitted_power_transformer,
         fitted_scaler,
-    ) = gold_engineering_pipeline(input_filepath=train_path)
+    ) = gold_engineering_pipeline(input_filepath=train_path, params=gold_params)
 
     if not all(
         [

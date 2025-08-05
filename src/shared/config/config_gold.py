@@ -25,11 +25,11 @@ TARGET_COLUMN = "price"
 SIMPLE_IMPUTER_PATH = MODELS_DIR / "simple_imputer.json"
 
 # Strategy for filling missing values in specified columns
-IMPUTER_STRATEGY = {
-    "median": ["price", "time", "distance"],
-    "mode": ["agency", "flight_type"],
-    "constant": {"from_location": "Unknown", "to_location": "Unknown"},
-}
+# IMPUTER_STRATEGY = {
+#     "median": ["price", "time", "distance"],
+#     "mode": ["agency", "flight_type"],
+#     "constant": {"from_location": "Unknown", "to_location": "Unknown"},
+# }
 
 
 # =============================================================================
@@ -61,7 +61,7 @@ HIGH_CARDINALITY_COLS = ["route", "route_agency"]
 
 # Threshold for grouping. Categories appearing in less than this fraction
 # of the data will be grouped into a single 'Other' category.
-CARDINALITY_THRESHOLD = 0.01
+# CARDINALITY_THRESHOLD = 0.01
 
 
 # =============================================================================
@@ -90,17 +90,17 @@ ENCODING_CONFIG = {
 # =============================================================================
 # --- STAGE 7: OUTLIER HANDLING ---
 # =============================================================================
-OUTLIER_DETECTION_STRATEGY = "isolation_forest"
-OUTLIER_HANDLING_STRATEGY = "trim"
+# OUTLIER_DETECTION_STRATEGY = "isolation_forest"
+# OUTLIER_HANDLING_STRATEGY = "trim"
 OUTLIER_HANDLER_COLUMNS = ["price", "time", "distance"]
 OUTLIER_HANDLER_PATH = MODELS_DIR / "outlier_handler.joblib"
-ISO_FOREST_CONTAMINATION = 0.01
+# ISO_FOREST_CONTAMINATION = 0.01
 
 
 # =============================================================================
 # --- STAGE 7: Power Transformations ---
 # =============================================================================
-POWER_TRANSFORMER_STRATEGY = "yeo-johnson"
+# POWER_TRANSFORMER_STRATEGY = "yeo-johnson"
 POWER_TRANSFORMER_PATH = MODELS_DIR / "power_transformer.joblib"
 POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
 

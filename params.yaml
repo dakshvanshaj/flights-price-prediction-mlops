@@ -12,9 +12,9 @@ data_splits:
 gold_pipeline:
   # --- Imputation (Stage 3) ---
   imputation:
-    strategy_median: ["price", "time", "distance"]
-    strategy_mode: ["agency", "flight_type"]
-    strategy_constant:
+    median: ["price", "time", "distance"]
+    mode: ["agency", "flight_type"]
+    constant:
       from_location: "Unknown"
       to_location: "Unknown"
 
@@ -22,7 +22,7 @@ gold_pipeline:
   rare_category_grouping:
     # Threshold for grouping. Categories appearing in less than this fraction
     # of the data will be grouped into a single 'Other' category.
-    threshold: 0.01
+    cardinality_threshold: 0.01
 
   # --- Outlier Handling (Stage 7) ---
   outlier_handling:
