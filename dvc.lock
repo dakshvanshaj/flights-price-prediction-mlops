@@ -17,8 +17,8 @@ stages:
       size: 3258
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     outs:
     - path: data/raw/train_validation_test/test.csv
@@ -54,8 +54,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     outs:
     - path: data/bronze_data/processed/train.csv
@@ -83,8 +83,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     outs:
     - path: data/bronze_data/processed/validation.csv
@@ -112,8 +112,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     outs:
     - path: data/bronze_data/processed/test.csv
@@ -146,8 +146,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -185,8 +185,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -224,8 +224,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -257,6 +257,14 @@ stages:
       md5: 2661bcb446d210975f34885f7df6f7de.dir
       size: 10498
       nfiles: 4
+    - path: src/data_validation/expectations/gold_expectations.py
+      hash: md5
+      md5: 9ad9ba114b3691686ba918328dca87cc
+      size: 5253
+    - path: src/data_validation/ge_components.py
+      hash: md5
+      md5: 312a7b57f107e84894946050b1d80206
+      size: 13316
     - path: src/gold_data_preprocessing/
       hash: md5
       md5: 7c0cc659b50cf202b568fa282ac0104d.dir
@@ -264,12 +272,12 @@ stages:
       nfiles: 19
     - path: src/pipelines/gold_pipeline.py
       hash: md5
-      md5: 55a26c11e09318b066d076608d64c38b
-      size: 10052
+      md5: 3e3baa172ea84c6e09eb39955000a9b9
+      size: 12561
     - path: src/shared/
       hash: md5
-      md5: 160bc40711a0988d165f9a03285cf9c6.dir
-      size: 34061
+      md5: 484daf523894f9fdd7dbe2a4942330e8.dir
+      size: 35412
       nfiles: 20
     params:
       params.yaml:
@@ -309,6 +317,10 @@ stages:
       hash: md5
       md5: 839901b02d4e8309d3209f4bae997bb1
       size: 8322
+    - path: models/gold_final_columns.json
+      hash: md5
+      md5: 2b1258e76f55f7bd8b231feace1a791e
+      size: 3770
     - path: models/outlier_handler.joblib
       hash: md5
       md5: d34c8abb3f7582a517dafd3984e146a1
