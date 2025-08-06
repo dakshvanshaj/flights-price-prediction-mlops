@@ -26,14 +26,19 @@ gold_pipeline:
 
   # --- Outlier Handling (Stage 7) ---
   outlier_handling:
-    # Strategy can be 'isolation_forest' or other future methods.
+    # Strategy can be 'iqr', 'zscore' 'isolation_forest'.
     detection_strategy: "isolation_forest"
-    # Handling can be 'trim', 'cap', or other methods.
+    # Handling can be 'trim', 'winsorize'.
     handling_strategy: "trim"
     # The expected percentage of outliers in the data for Isolation Forest.
     iso_forest_contamination: 0.01
 
   # --- Power Transformations (Stage 8) ---
   power_transformer:
-    # Strategy can be 'yeo-johnson' or 'box-cox'.
+    # Strategy can be 'log', 'yeo-johnson' or 'box-cox'.
     strategy: "yeo-johnson"
+
+  # --- Scaling (Stage 9) ---
+  scaler:
+    # Strategy can be 'standard', 'robust', or 'minmax'
+    strategy: "standard"
