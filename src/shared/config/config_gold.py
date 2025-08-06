@@ -110,3 +110,23 @@ POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
 SCALER_COLUMNS = ["price", "time", "distance"]
 SCALER_PATH = MODELS_DIR / "scaler.joblib"
 SCALER_STRATEGY = "standard"
+
+# =============================================================================
+# --- STAGE 10: DATA VALIDATION  ---
+# =============================================================================
+GOLD_DATA_SOURCE_NAME = "pandas_parquet_datasource"
+
+GOLD_ASSET_NAME = "gold_in_memory_asset"
+GOLD_BATCH_DEFINITION_NAME = "gold_batch_definition"
+GOLD_SUITE_NAME = "gold_df_flights_suite"
+GOLD_VALIDATION_DEFINITION_NAME = "gold_validation_definition"
+GOLD_CHECKPOINT_NAME = "gold_checkpoint"
+
+
+# Path to save the final, ordered list of columns from the training data.
+# This ensures validation and test sets are checked against the exact same schema.
+GOLD_FINAL_COLS_PATH = MODELS_DIR / "gold_final_columns.json"
+
+# List of columns that have been scaled and should be checked for a specific range (e.g., 0-1).
+# This is often the same as the scaler columns.
+GOLD_SCALED_COLS = ["price", "time", "distance"]
