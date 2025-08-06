@@ -1,8 +1,9 @@
 import sys
 import logging
 import yaml
+import json
 from data_ingestion.data_loader import load_data
-from shared.config import config_gold, config_logging, config_silver
+from shared.config import config_gold, config_logging, config_silver, core_paths
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
 from pathlib import Path
 from typing import Optional, Tuple
@@ -24,6 +25,8 @@ from gold_data_preprocessing.categorical_encoder import CategoricalEncoder
 from gold_data_preprocessing.outlier_handling import OutlierTransformer
 from gold_data_preprocessing.power_transformer import PowerTransformer
 from gold_data_preprocessing.scaler import Scaler
+from data_validation.ge_components import run_checkpoint_on_dataframe
+from data_validation.expectations.gold_expectations import build_gold_expectations
 
 
 logger = logging.getLogger(__name__)
@@ -54,7 +57,7 @@ def gold_engineering_pipeline(
     logger.info(f"--- Starting Gold Engineering Pipeline for: {file_name} ---")
 
     # === STAGE 1: DATA INGESTION ===
-    logger.info("=" * 25 + " STAGE 1/9: DATA INGESTION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 1/10: DATA INGESTION " + "=" * 25)
     df = load_data(input_filepath)
     if df is None:
         # --- FIX: Ensure we return the correct number of None values ---
@@ -62,13 +65,13 @@ def gold_engineering_pipeline(
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: DATA CLEANING ===
-    logger.info("=" * 25 + " STAGE 2/9: DATA CLEANING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 2/10: DATA CLEANING " + "=" * 25)
     df = drop_columns(df, columns_to_drop=config_gold.GOLD_DROP_COLS)
     df = drop_duplicates(df, keep="first")
     df = drop_missing_target_rows(df, config_gold.TARGET_COLUMN)
 
     # === STAGE 3: IMPUTATION ===
-    logger.info("=" * 25 + " STAGE 3/9: IMPUTATION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 3/10: IMPUTATION " + "=" * 25)
     fitted_imputer = None
     if imputer_to_apply:
         df = imputer_to_apply.transform(df)
@@ -79,14 +82,14 @@ def gold_engineering_pipeline(
         fitted_imputer = imputer
 
     # === STAGE 4: FEATURE ENGINEERING ===
-    logger.info("=" * 25 + " STAGE 4/9: FEATURE ENGINEERING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 4/10: FEATURE ENGINEERING " + "=" * 25)
     df = create_cyclical_features(df, cyclical_map=config_gold.CYCLICAL_FEATURES_MAP)
     df = create_categorical_interaction_features(
         df, interaction_map=config_gold.INTERACTION_FEATURES_CONFIG
     )
 
     # === STAGE 5: RARE CATEGORY GROUPING ===
-    logger.info("=" * 25 + " STAGE 5/9: RARE CATEGORY GROUPING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 5/10: RARE CATEGORY GROUPING " + "=" * 25)
     fitted_grouper = None
     if grouper_to_apply:
         df = grouper_to_apply.transform(df)
@@ -101,7 +104,7 @@ def gold_engineering_pipeline(
         fitted_grouper = grouper
 
     # === STAGE 6: ENCODE CATEGORICAL COLUMNS ===
-    logger.info("=" * 25 + " STAGE 6/9: ENCODING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 6/10: ENCODING " + "=" * 25)
     fitted_encoder = None
     if encoder_to_apply:
         df = encoder_to_apply.transform(df)
@@ -111,7 +114,7 @@ def gold_engineering_pipeline(
         fitted_encoder = encoder
 
     # === STAGE 7: OUTLIER DETECTION AND HANDLING ===
-    logger.info("=" * 25 + " STAGE 7/9: OUTLIER HANDLING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 7/10: OUTLIER HANDLING " + "=" * 25)
     fitted_outlier_handler = None
     if outlier_handler_to_apply:
         df = outlier_handler_to_apply.transform(df)
@@ -131,7 +134,7 @@ def gold_engineering_pipeline(
         fitted_outlier_handler = outlier_handler
 
     # === STAGE 8: POWER TRANSFORMATIONS ===
-    logger.info("=" * 25 + " STAGE 8/9: POWER TRANSFORMATIONS " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 8/10: POWER TRANSFORMATIONS " + "=" * 25)
     fitted_power_transformer = None
     if power_transformer_to_apply:
         df = power_transformer_to_apply.transform(df)
@@ -146,7 +149,7 @@ def gold_engineering_pipeline(
         fitted_power_transformer = power_transformer
 
     # === STAGE 9: SCALING ===
-    logger.info("=" * 25 + " STAGE 9/9: SCALING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 9/10: SCALING " + "=" * 25)
     fitted_scaler = None
     if scaler_to_apply:
         df = scaler_to_apply.transform(df)
@@ -157,11 +160,47 @@ def gold_engineering_pipeline(
         df = scaler.fit_transform(df)
         fitted_scaler = scaler
 
+    # === STAGE 10: DATA VALIDATION (QUALITY GATE) ===
+
+    logger.info("=" * 25 + " STAGE 10/10: FINAL VALIDATION " + "=" * 25)
+
+    # Dynamically load or save the final column order to ensure consistency
+    # across training, validation, and test datasets.
+    final_cols_path = config_gold.GOLD_FINAL_COLS_PATH
+    # `scaler_to_apply` being None signifies this is the initial training run.
+    if scaler_to_apply is None:
+        logger.info(f"Training run: saving final column order to {final_cols_path}")
+        final_cols_order = list(df.columns)
+        with open(final_cols_path, "w") as f:
+            json.dump(final_cols_order, f)
+    # If a scaler is provided, it's a validation or test run, so we load the order.
+    else:
+        logger.info(
+            f"Validation/Test run: loading final column order from {final_cols_path}"
+        )
+        with open(final_cols_path, "r") as f:
+            final_cols_order = json.load(f)
+
+    gold_expectations = build_gold_expectations(
+        expected_cols_ordered=final_cols_order,  # Use the dynamic list here
+        scaled_cols=config_gold.GOLD_SCALED_COLS,
+        target_col=config_gold.TARGET_COLUMN,
+    )
+    result = run_checkpoint_on_dataframe(
+        project_root_dir=core_paths.GE_ROOT_DIR,
+        datasource_name=config_gold.GOLD_DATA_SOURCE_NAME,
+        asset_name=config_gold.GOLD_ASSET_NAME,
+        batch_definition_name=config_gold.GOLD_BATCH_DEFINITION_NAME,
+        suite_name=config_gold.GOLD_SUITE_NAME,
+        validation_definition_name=config_gold.GOLD_VALIDATION_DEFINITION_NAME,
+        checkpoint_name=config_gold.GOLD_CHECKPOINT_NAME,
+        dataframe_to_validate=df,
+        expectation_list=gold_expectations,
+    )
+
     # === FINAL STAGE: SAVE DATAFRAME ===
     logger.info("=" * 25 + " SAVING DATAFRAME " + "=" * 25)
-    from types import SimpleNamespace
 
-    result = SimpleNamespace(success=True)
     save_successful = save_dataframe_based_on_validation(
         result=result,
         df=df,
@@ -186,6 +225,7 @@ def gold_engineering_pipeline(
     )
 
 
+# ... (The rest of the file, including main(), remains unchanged) ...
 def main():
     """Orchestrates the Gold workflow for all data splits."""
     setup_logging_from_yaml(log_path=config_logging.GOLD_PIPELINE_LOGS_PATH)
