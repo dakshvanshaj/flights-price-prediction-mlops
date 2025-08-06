@@ -13,8 +13,6 @@ from gold_data_preprocessing.data_cleaning import (
     drop_duplicates,
     drop_missing_target_rows,
 )
-
-# Import all our preprocessing modules
 from gold_data_preprocessing.feature_engineering import (
     create_cyclical_features,
     create_categorical_interaction_features,
@@ -34,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 def gold_engineering_pipeline(
     input_filepath: Path,
+    scaler_strategy_for_validation: str,
     params: Optional[dict] = None,
     imputer_to_apply: Optional[SimpleImputer] = None,
     grouper_to_apply: Optional[RareCategoryGrouper] = None,
@@ -60,7 +59,6 @@ def gold_engineering_pipeline(
     logger.info("=" * 25 + " STAGE 1/10: DATA INGESTION " + "=" * 25)
     df = load_data(input_filepath)
     if df is None:
-        # --- FIX: Ensure we return the correct number of None values ---
         return False, None, None, None, None, None, None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
@@ -153,27 +151,22 @@ def gold_engineering_pipeline(
     fitted_scaler = None
     if scaler_to_apply:
         df = scaler_to_apply.transform(df)
+        SCALER_STRATEGY = scaler_strategy_for_validation
     else:
-        scaler = Scaler(
-            columns=config_gold.SCALER_COLUMNS, strategy=config_gold.SCALER_STRATEGY
-        )
+        SCALER_STRATEGY = params["scaler"]["strategy"]
+        scaler = Scaler(columns=config_gold.SCALER_COLUMNS, strategy=SCALER_STRATEGY)
         df = scaler.fit_transform(df)
         fitted_scaler = scaler
 
     # === STAGE 10: DATA VALIDATION (QUALITY GATE) ===
-
     logger.info("=" * 25 + " STAGE 10/10: FINAL VALIDATION " + "=" * 25)
 
-    # Dynamically load or save the final column order to ensure consistency
-    # across training, validation, and test datasets.
     final_cols_path = config_gold.GOLD_FINAL_COLS_PATH
-    # `scaler_to_apply` being None signifies this is the initial training run.
     if scaler_to_apply is None:
         logger.info(f"Training run: saving final column order to {final_cols_path}")
         final_cols_order = list(df.columns)
         with open(final_cols_path, "w") as f:
             json.dump(final_cols_order, f)
-    # If a scaler is provided, it's a validation or test run, so we load the order.
     else:
         logger.info(
             f"Validation/Test run: loading final column order from {final_cols_path}"
@@ -182,7 +175,8 @@ def gold_engineering_pipeline(
             final_cols_order = json.load(f)
 
     gold_expectations = build_gold_expectations(
-        expected_cols_ordered=final_cols_order,  # Use the dynamic list here
+        expected_cols_ordered=final_cols_order,
+        scaler_strategy=SCALER_STRATEGY,
         scaled_cols=config_gold.GOLD_SCALED_COLS,
         target_col=config_gold.TARGET_COLUMN,
     )
@@ -197,6 +191,25 @@ def gold_engineering_pipeline(
         dataframe_to_validate=df,
         expectation_list=gold_expectations,
     )
+
+    if not result.success:
+        logger.warning("--- DATA VALIDATION FAILED! ---")
+        logger.warning(
+            "To see the full report, open the Data Docs: great_expectations/uncommitted/data_docs/local_site/index.html"
+        )
+        logger.warning("For quick debugging, here are the failing expectations:")
+
+        for validation_result in result["results"]:
+            if not validation_result["success"]:
+                expectation_config = validation_result["expectation_config"]
+                expectation_type = expectation_config["expectation_type"]
+                kwargs = expectation_config["kwargs"]
+                observed_value = validation_result["result"].get("observed_value")
+
+                logger.warning(f"  - Expectation: {expectation_type}")
+                logger.warning(f"    Kwargs: {kwargs}")
+                logger.warning(f"    Observed Value: {observed_value}")
+        logger.warning("------------------------------------")
 
     # === FINAL STAGE: SAVE DATAFRAME ===
     logger.info("=" * 25 + " SAVING DATAFRAME " + "=" * 25)
@@ -225,7 +238,6 @@ def gold_engineering_pipeline(
     )
 
 
-# ... (The rest of the file, including main(), remains unchanged) ...
 def main():
     """Orchestrates the Gold workflow for all data splits."""
     setup_logging_from_yaml(log_path=config_logging.GOLD_PIPELINE_LOGS_PATH)
@@ -237,15 +249,14 @@ def main():
     power_path = config_gold.POWER_TRANSFORMER_PATH
     scaler_path = config_gold.SCALER_PATH
 
-    # ==== Import Parameters From params.yaml =====
     with open("params.yaml", "r") as f:
         params = yaml.safe_load(f)
-    # Check the parameters dictionary for gold_pipeline
     gold_params = params["gold_pipeline"]
 
     # 1. Process Training Data
     logger.info(">>> ORCHESTRATOR: Processing training data...")
     train_path = config_silver.SILVER_PROCESSED_DIR / "train.parquet"
+    scaler_strategy = gold_params["scaler"]["strategy"]
     (
         train_success,
         fitted_imputer,
@@ -254,7 +265,11 @@ def main():
         fitted_outlier_handler,
         fitted_power_transformer,
         fitted_scaler,
-    ) = gold_engineering_pipeline(input_filepath=train_path, params=gold_params)
+    ) = gold_engineering_pipeline(
+        input_filepath=train_path,
+        params=gold_params,
+        scaler_strategy_for_validation=scaler_strategy,
+    )
 
     if not all(
         [
@@ -291,15 +306,7 @@ def main():
         transformer = PowerTransformer.load(power_path)
         scaler = Scaler.load(scaler_path)
 
-        (
-            success,
-            _,
-            _,
-            _,
-            _,
-            _,
-            _,
-        ) = gold_engineering_pipeline(
+        (success, _, _, _, _, _, _) = gold_engineering_pipeline(
             input_filepath=data_path,
             imputer_to_apply=imputer,
             grouper_to_apply=grouper,
@@ -307,6 +314,7 @@ def main():
             outlier_handler_to_apply=outlier_handler,
             power_transformer_to_apply=transformer,
             scaler_to_apply=scaler,
+            scaler_strategy_for_validation=scaler.strategy,
         )
         if not success:
             logger.error(f"{data_split.capitalize()} data processing failed.")
