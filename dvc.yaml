@@ -56,6 +56,8 @@ stages:
       - data/silver_data/processed/train.parquet
       - data/silver_data/processed/validation.parquet
       - data/silver_data/processed/test.parquet
+      - src/data_validation/expectations/gold_expectations.py
+      - src/data_validation/ge_components.py
     params:
       - gold_pipeline.imputation
       - gold_pipeline.rare_category_grouping
@@ -71,3 +73,4 @@ stages:
       - models/outlier_handler.joblib
       - models/power_transformer.joblib
       - models/scaler.joblib
+      - models/gold_final_columns.json
