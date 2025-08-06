@@ -82,14 +82,14 @@ data_docs_sites:
 fluent_datasources:
   raw_flight_data_source:
     type: pandas_filesystem
-    id: f07b0f29-3b05-4ed7-b54f-ad19e54644f2
+    id: 56baeaf3-0d03-41fa-847b-3932a55b2698
     assets:
       raw_flights_csv_files:
         type: csv
-        id: 38a9d53c-04a6-47d1-bbd7-f4f94b15cf72
+        id: 2a6c8a39-d490-48eb-8021-e1bb72c4da3c
         batch_definitions:
           bronze_batch_definition:
-            id: 3c0cbbf3-a0ac-416d-a6d4-d621d4865140
+            id: e93de4f8-7752-4659-8d33-7ed387112d45
             partitioner:
               regex: test.csv$
               param_names: []
@@ -97,15 +97,27 @@ fluent_datasources:
       /home/daksh_linux/Projects/Flights_Mlops/data/raw/train_validation_test
   pandas_temp_datasource:
     type: pandas
-    id: a86bd73f-fed5-4ad2-b217-9086aa383fcd
+    id: 0ea25a61-b626-41be-82d7-c3f1a0b27d33
     assets:
       silver_in_memory_asset:
         type: dataframe
-        id: 021e787e-3654-4337-998e-95ea81cd7e18
+        id: a92cc370-2709-4405-8522-4de7cef1a256
         batch_metadata: {}
         batch_definitions:
           silver_batch_definition:
-            id: f9db3682-de86-456b-b202-f693c55dcfa3
+            id: 3eaa6ea1-17e8-42b5-8957-9d813b9fdc3e
+            partitioner:
+  pandas_parquet_datasource:
+    type: pandas
+    id: c18e1892-e0f2-4385-8849-3802bbfade3d
+    assets:
+      gold_in_memory_asset:
+        type: dataframe
+        id: b870e721-51a8-410d-9bf7-1575dcfc9dc9
+        batch_metadata: {}
+        batch_definitions:
+          gold_batch_definition:
+            id: 15a0f9f8-66f2-4f20-a867-ca9aad7bc4f7
             partitioner:
 analytics_enabled:
 data_context_id: 7a163a9b-e890-4167-a8ef-7192f2a657b5

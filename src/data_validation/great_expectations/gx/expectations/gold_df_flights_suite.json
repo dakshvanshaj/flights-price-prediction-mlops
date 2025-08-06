@@ -1,0 +1,2938 @@
+{
+  "expectations": [
+    {
+      "id": "b93872c0-9571-408e-923b-5016be8fc189",
+      "kwargs": {
+        "column_list": [
+          "from_location_Aracaju (SE)",
+          "from_location_Brasilia (DF)",
+          "from_location_Campo Grande (MS)",
+          "from_location_Florianopolis (SC)",
+          "from_location_Natal (RN)",
+          "from_location_Recife (PE)",
+          "from_location_Rio de Janeiro (RJ)",
+          "from_location_Salvador (BH)",
+          "from_location_Sao Paulo (SP)",
+          "to_location_Aracaju (SE)",
+          "to_location_Brasilia (DF)",
+          "to_location_Campo Grande (MS)",
+          "to_location_Florianopolis (SC)",
+          "to_location_Natal (RN)",
+          "to_location_Recife (PE)",
+          "to_location_Rio de Janeiro (RJ)",
+          "to_location_Salvador (BH)",
+          "to_location_Sao Paulo (SP)",
+          "agency_CloudFy",
+          "agency_FlyingDrops",
+          "agency_Rainbow",
+          "route_Aracaju (SE)_Brasilia (DF)",
+          "route_Aracaju (SE)_Campo Grande (MS)",
+          "route_Aracaju (SE)_Florianopolis (SC)",
+          "route_Aracaju (SE)_Natal (RN)",
+          "route_Aracaju (SE)_Recife (PE)",
+          "route_Aracaju (SE)_Sao Paulo (SP)",
+          "route_Brasilia (DF)_Aracaju (SE)",
+          "route_Brasilia (DF)_Campo Grande (MS)",
+          "route_Brasilia (DF)_Florianopolis (SC)",
+          "route_Brasilia (DF)_Natal (RN)",
+          "route_Brasilia (DF)_Recife (PE)",
+          "route_Brasilia (DF)_Sao Paulo (SP)",
+          "route_Campo Grande (MS)_Aracaju (SE)",
+          "route_Campo Grande (MS)_Brasilia (DF)",
+          "route_Campo Grande (MS)_Florianopolis (SC)",
+          "route_Campo Grande (MS)_Natal (RN)",
+          "route_Campo Grande (MS)_Recife (PE)",
+          "route_Campo Grande (MS)_Sao Paulo (SP)",
+          "route_Florianopolis (SC)_Aracaju (SE)",
+          "route_Florianopolis (SC)_Brasilia (DF)",
+          "route_Florianopolis (SC)_Campo Grande (MS)",
+          "route_Florianopolis (SC)_Natal (RN)",
+          "route_Florianopolis (SC)_Recife (PE)",
+          "route_Florianopolis (SC)_Sao Paulo (SP)",
+          "route_Natal (RN)_Aracaju (SE)",
+          "route_Natal (RN)_Brasilia (DF)",
+          "route_Natal (RN)_Campo Grande (MS)",
+          "route_Natal (RN)_Florianopolis (SC)",
+          "route_Natal (RN)_Recife (PE)",
+          "route_Natal (RN)_Sao Paulo (SP)",
+          "route_Other",
+          "route_Recife (PE)_Aracaju (SE)",
+          "route_Recife (PE)_Brasilia (DF)",
+          "route_Recife (PE)_Campo Grande (MS)",
+          "route_Recife (PE)_Florianopolis (SC)",
+          "route_Recife (PE)_Natal (RN)",
+          "route_Recife (PE)_Sao Paulo (SP)",
+          "route_Rio de Janeiro (RJ)_Aracaju (SE)",
+          "route_Rio de Janeiro (RJ)_Brasilia (DF)",
+          "route_Rio de Janeiro (RJ)_Campo Grande (MS)",
+          "route_Rio de Janeiro (RJ)_Florianopolis (SC)",
+          "route_Rio de Janeiro (RJ)_Recife (PE)",
+          "route_Salvador (BH)_Aracaju (SE)",
+          "route_Salvador (BH)_Brasilia (DF)",
+          "route_Salvador (BH)_Campo Grande (MS)",
+          "route_Salvador (BH)_Florianopolis (SC)",
+          "route_Salvador (BH)_Recife (PE)",
+          "route_Sao Paulo (SP)_Aracaju (SE)",
+          "route_Sao Paulo (SP)_Brasilia (DF)",
+          "route_Sao Paulo (SP)_Campo Grande (MS)",
+          "route_Sao Paulo (SP)_Florianopolis (SC)",
+          "route_Sao Paulo (SP)_Natal (RN)",
+          "route_Sao Paulo (SP)_Recife (PE)",
+          "agency_flight_type_CloudFy_economic",
+          "agency_flight_type_CloudFy_firstClass",
+          "agency_flight_type_CloudFy_premium",
+          "agency_flight_type_FlyingDrops_firstClass",
+          "agency_flight_type_Rainbow_economic",
+          "agency_flight_type_Rainbow_firstClass",
+          "agency_flight_type_Rainbow_premium",
+          "route_agency_Aracaju (SE)_Florianopolis (SC)_CloudFy",
+          "route_agency_Aracaju (SE)_Florianopolis (SC)_Rainbow",
+          "route_agency_Brasilia (DF)_Florianopolis (SC)_CloudFy",
+          "route_agency_Brasilia (DF)_Florianopolis (SC)_Rainbow",
+          "route_agency_Campo Grande (MS)_Florianopolis (SC)_CloudFy",
+          "route_agency_Campo Grande (MS)_Florianopolis (SC)_Rainbow",
+          "route_agency_Natal (RN)_Florianopolis (SC)_CloudFy",
+          "route_agency_Natal (RN)_Florianopolis (SC)_Rainbow",
+          "route_agency_Other",
+          "route_agency_Recife (PE)_Florianopolis (SC)_CloudFy",
+          "route_agency_Recife (PE)_Florianopolis (SC)_Rainbow",
+          "route_agency_Sao Paulo (SP)_Florianopolis (SC)_CloudFy",
+          "route_agency_Sao Paulo (SP)_Florianopolis (SC)_Rainbow",
+          "flight_type",
+          "price",
+          "time",
+          "distance",
+          "year",
+          "month_sin",
+          "month_cos",
+          "day_of_week_sin",
+          "day_of_week_cos",
+          "day_sin",
+          "day_cos"
+        ]
+      },
+      "meta": {
+        "notes": "Verify the final model-ready schema and column order."
+      },
+      "type": "expect_table_columns_to_match_ordered_list"
+    },
+    {
+      "id": "b55487b1-7687-42af-9c22-cd1e5ee2e0a0",
+      "kwargs": {
+        "min_value": 10
+      },
+      "meta": {
+        "notes": "Ensures the gold table is not empty after processing."
+      },
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "70858fb3-1922-41d0-8110-258d3f3fb10b",
+      "kwargs": {
+        "column": "from_location_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "867b019b-ed9e-4347-a1e4-e8382a7b4222",
+      "kwargs": {
+        "column": "from_location_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c14a4b05-130a-41c0-82d1-01742acbea74",
+      "kwargs": {
+        "column": "from_location_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "f287f4bc-5c3c-4c40-95a0-1237537e5df9",
+      "kwargs": {
+        "column": "from_location_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "2d972b76-49c0-470a-9672-f83fa2b996e6",
+      "kwargs": {
+        "column": "from_location_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "5c797138-3d1e-4160-8e1d-c13c446dfcb0",
+      "kwargs": {
+        "column": "from_location_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "29548acc-f148-41dd-8de8-cd0fdcbde066",
+      "kwargs": {
+        "column": "from_location_Rio de Janeiro (RJ)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Rio de Janeiro (RJ) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c0255c47-e27f-4113-a338-7614983f0d3c",
+      "kwargs": {
+        "column": "from_location_Salvador (BH)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Salvador (BH) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "3fa370c5-5009-4043-8dbb-c50b00bc0d33",
+      "kwargs": {
+        "column": "from_location_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "de35888b-91d8-49df-9ca7-19b6518d2469",
+      "kwargs": {
+        "column": "to_location_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "4c8bccf9-068b-4c23-a0c0-c64a25601f2e",
+      "kwargs": {
+        "column": "to_location_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "23de4d45-f029-4124-8e82-ae7de95fa101",
+      "kwargs": {
+        "column": "to_location_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e1432a6e-345b-41b4-9279-7cbfeae2bc6d",
+      "kwargs": {
+        "column": "to_location_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "6d64c23b-ae83-44b7-9c71-226b64172c93",
+      "kwargs": {
+        "column": "to_location_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "86a31d26-a7ba-4a01-a4da-097230965611",
+      "kwargs": {
+        "column": "to_location_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "10d491cb-b7ab-40fa-a029-1c60bdf091d1",
+      "kwargs": {
+        "column": "to_location_Rio de Janeiro (RJ)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Rio de Janeiro (RJ) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "08e13c56-0212-41ce-89cc-b801fd7a0f15",
+      "kwargs": {
+        "column": "to_location_Salvador (BH)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Salvador (BH) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0650528e-3fba-40ea-ace6-7cf08d2a4815",
+      "kwargs": {
+        "column": "to_location_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c59d588e-6343-4427-8ea7-a66343d2c632",
+      "kwargs": {
+        "column": "agency_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "1cf4982e-3eae-426b-9a8c-c0d8e4c221ee",
+      "kwargs": {
+        "column": "agency_FlyingDrops",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_FlyingDrops is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "fc980cec-06d2-4e68-bf50-0f7735b643c7",
+      "kwargs": {
+        "column": "agency_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d7548658-4844-4b97-84c8-02585bb65b2d",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "11e8ae12-0943-42bb-b88a-6b2f9c8565ae",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "5e972deb-70bf-44ca-9fe5-a0c0d95ea79b",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a5debac8-7f07-429b-9857-21f8cc6b0c71",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "100656b4-9dfd-4523-bae6-0a127a4cd348",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a044fa6c-5173-4c6f-a5f3-ea5d821db395",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Aracaju (SE)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "db29ee45-e09d-4824-9a92-e17f05c11967",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "b91f4272-be1b-477f-9f00-fa77c8aca599",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9f0a9c93-d1bd-4e24-9e33-66c9d680eea3",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e697e150-3f50-484e-858a-4ef00e522bb6",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "501dfa7d-1da0-462b-8df0-2acf6347584c",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "be3afd25-9015-4b74-b15e-4b598685ef1b",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Brasilia (DF)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "3b8010eb-8af4-41bf-b8fb-ea8c22bf273f",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "33242e39-3cf6-46d9-aeb2-da36f363e2ea",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "f3818477-72fa-4ad9-8ed5-49047a165e5f",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e75a9677-a1be-4bb7-ab65-cabae92e287f",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e52b00b7-51da-4c51-996d-48317260113f",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "13a62b1c-8677-4513-b0af-8d01815faf20",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Campo Grande (MS)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0b4f7ab1-0b6c-472e-a2b1-bdeca5ef9bb9",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "2ab3f884-b2b6-4638-a4f5-03c2e9f4d8fd",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "247a28a1-0db8-43e8-8925-5fc0bdced6eb",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "171fac00-c037-4bb8-803c-9ba3fb8f4503",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "808a17c2-1726-4f7a-9d82-caa969f95e25",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "99a6e2b6-743f-4fb1-8134-1a86b1c4555e",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Florianopolis (SC)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e7fe6f7b-7143-44c3-9fdd-f43f47cd6148",
+      "kwargs": {
+        "column": "route_Natal (RN)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d156add7-9f4b-43c8-b911-762009bdd48a",
+      "kwargs": {
+        "column": "route_Natal (RN)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "6d0b758d-b44e-4e05-ae30-c78c555348d5",
+      "kwargs": {
+        "column": "route_Natal (RN)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "ca5c79d8-c8c0-435c-b2d1-d61c055c2020",
+      "kwargs": {
+        "column": "route_Natal (RN)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "da7c48ab-2292-4c7b-ab9e-f10d29e2a5d4",
+      "kwargs": {
+        "column": "route_Natal (RN)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "83d4e46e-7225-4a33-ac78-43194429f873",
+      "kwargs": {
+        "column": "route_Natal (RN)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Natal (RN)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "6f9d7a97-64bb-4051-8ed5-646c7ddf67bf",
+      "kwargs": {
+        "column": "route_Other",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Other is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d76ec938-72fe-4bc2-ac94-06d23abffa14",
+      "kwargs": {
+        "column": "route_Recife (PE)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9db90ef9-49d0-40e1-9286-1766de84c37d",
+      "kwargs": {
+        "column": "route_Recife (PE)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a5aec9e7-b6c9-4125-bfe0-409c86339ea7",
+      "kwargs": {
+        "column": "route_Recife (PE)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d40e9b24-e7ec-417b-ae9c-f49bdf70f054",
+      "kwargs": {
+        "column": "route_Recife (PE)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c0a9e494-b69d-44d7-97fe-18a8ffbafdd1",
+      "kwargs": {
+        "column": "route_Recife (PE)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9395227c-d48c-4a52-b000-9425847b4c61",
+      "kwargs": {
+        "column": "route_Recife (PE)_Sao Paulo (SP)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Recife (PE)_Sao Paulo (SP) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "aa22a7cc-7069-4b60-ad47-cbeff9be18a4",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Rio de Janeiro (RJ)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d7c116f0-d034-42de-8f58-04cb9c173420",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Rio de Janeiro (RJ)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "ff24652e-a3e6-471d-a476-32314f68b4f8",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Rio de Janeiro (RJ)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a383f3ca-0159-4cbd-bf4c-aa905093a9eb",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Rio de Janeiro (RJ)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e75df977-024f-48cd-b7bd-81bff085ec8c",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Rio de Janeiro (RJ)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "40e22a51-69eb-4a38-9480-365063b4e7c3",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Salvador (BH)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "8ec84610-def2-4dae-afdf-88635b67c54a",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Salvador (BH)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0c68e07c-5b02-4e42-849f-2c094a426de0",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Salvador (BH)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9a14af0c-452c-4b88-afb8-0c83f6990d5b",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Salvador (BH)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e41d0536-fe8f-47ee-ad85-36c05122f111",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Salvador (BH)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "4c203bda-432d-4e73-917a-041722e84188",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Aracaju (SE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Aracaju (SE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "67420ccc-3fb1-49be-bde4-a539de75f791",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Brasilia (DF)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Brasilia (DF) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c522d1b5-5c12-43d3-8e25-88cf348da2a3",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Campo Grande (MS)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Campo Grande (MS) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "cd58d0fd-be29-4939-a1da-de72374bd9d2",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Florianopolis (SC)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Florianopolis (SC) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "61e3bcf7-ef15-4060-87c0-ef2d5e8412a9",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Natal (RN)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Natal (RN) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "3fc017d5-949c-4262-85cc-7c80a20e41c7",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Recife (PE)",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_Sao Paulo (SP)_Recife (PE) is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "b2669eb4-89f7-4398-b2b7-32abbd7a3251",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_economic",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_CloudFy_economic is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "bfe0d233-4793-4ea2-922f-744270836730",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_firstClass",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_CloudFy_firstClass is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9d27b92a-905e-47af-9951-61266f7102a3",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_premium",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_CloudFy_premium is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0ffb69d0-eb21-4b5d-98e1-0bff5b87f63a",
+      "kwargs": {
+        "column": "agency_flight_type_FlyingDrops_firstClass",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_FlyingDrops_firstClass is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "31a818a8-d419-40b0-9b96-2906292a9ecd",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_economic",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_Rainbow_economic is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "cc50a346-dff2-41d2-a20c-961c3bd4fc08",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_firstClass",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_Rainbow_firstClass is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "16e38d8e-ad3d-4de3-ba14-dac50ecb23a8",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_premium",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency_flight_type_Rainbow_premium is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "ff07f43c-6b90-448d-a333-c2d9cc149d21",
+      "kwargs": {
+        "column": "route_agency_Aracaju (SE)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Aracaju (SE)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a366a0e0-7cab-4976-ad72-7931f24992bc",
+      "kwargs": {
+        "column": "route_agency_Aracaju (SE)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Aracaju (SE)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9ddc7d82-74ce-4937-936c-ab430e55b219",
+      "kwargs": {
+        "column": "route_agency_Brasilia (DF)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Brasilia (DF)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "524f2223-869e-4b20-855e-16bbe48101e8",
+      "kwargs": {
+        "column": "route_agency_Brasilia (DF)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Brasilia (DF)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0e32f7fc-cb3a-4630-b1fc-370f9ae60992",
+      "kwargs": {
+        "column": "route_agency_Campo Grande (MS)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Campo Grande (MS)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e1baade6-680a-4c80-823a-394f07d693df",
+      "kwargs": {
+        "column": "route_agency_Campo Grande (MS)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Campo Grande (MS)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "61376e58-0285-4fff-b3e9-1e0c649567dc",
+      "kwargs": {
+        "column": "route_agency_Natal (RN)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Natal (RN)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "b8fec2db-56e1-4223-930b-b7731a97587d",
+      "kwargs": {
+        "column": "route_agency_Natal (RN)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Natal (RN)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "ffdf2bee-48e7-4565-bb17-850af2aeb6cc",
+      "kwargs": {
+        "column": "route_agency_Other",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Other is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "560526f5-5abd-4b40-abcc-3fcf40138b11",
+      "kwargs": {
+        "column": "route_agency_Recife (PE)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Recife (PE)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "abd32f3e-9d10-47c5-ac1a-3ef1e1bf9405",
+      "kwargs": {
+        "column": "route_agency_Recife (PE)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Recife (PE)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "862232ee-4068-4085-b063-7ecc71e41d82",
+      "kwargs": {
+        "column": "route_agency_Sao Paulo (SP)_Florianopolis (SC)_CloudFy",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Sao Paulo (SP)_Florianopolis (SC)_CloudFy is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "1d13c869-c67c-48e0-aae0-c6ca7c867997",
+      "kwargs": {
+        "column": "route_agency_Sao Paulo (SP)_Florianopolis (SC)_Rainbow",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route_agency_Sao Paulo (SP)_Florianopolis (SC)_Rainbow is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e3552236-5151-4342-a3de-7c1d03661524",
+      "kwargs": {
+        "column": "flight_type",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column flight_type is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d93485a3-f3cf-4e35-bb26-2dde21f429a7",
+      "kwargs": {
+        "column": "price",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column price is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "de7dc21e-606c-442a-951e-d979fdd55f87",
+      "kwargs": {
+        "column": "time",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column time is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "486c7263-aa32-4ae9-880e-6c12f76fa46a",
+      "kwargs": {
+        "column": "distance",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column distance is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "4f2ee54f-ac69-4fbc-814c-851f9cedda4b",
+      "kwargs": {
+        "column": "year",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column year is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "bfae377a-4001-45c1-8da1-62b4a1efd8d5",
+      "kwargs": {
+        "column": "month_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column month_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "72fe11ca-861a-4f0a-bc2e-470bb152f72c",
+      "kwargs": {
+        "column": "month_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column month_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "5038252c-8b3f-4702-9e5c-78561d345e9c",
+      "kwargs": {
+        "column": "day_of_week_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_of_week_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "13656298-fcab-4577-ba84-004ddadbcb30",
+      "kwargs": {
+        "column": "day_of_week_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_of_week_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9b8ff935-8e1a-409a-84f4-8db41b5d6136",
+      "kwargs": {
+        "column": "day_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c094fa00-6a86-4ad3-a57c-bfdf28517852",
+      "kwargs": {
+        "column": "day_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "0d7b5e59-e369-4876-a34f-799866c8fac4",
+      "kwargs": {
+        "column": "from_location_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "280ba02b-3ea3-4483-bcd1-7968f0ae35a9",
+      "kwargs": {
+        "column": "from_location_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "00f5f91d-590d-4d71-925f-2c57d3830d96",
+      "kwargs": {
+        "column": "from_location_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "015e4db4-bcbe-47f0-8594-0ec0b10032d6",
+      "kwargs": {
+        "column": "from_location_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "eea227c1-4d03-48f5-8e12-14dc1378b909",
+      "kwargs": {
+        "column": "from_location_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a0a01a59-0dd6-4096-962f-e98f8eecacbc",
+      "kwargs": {
+        "column": "from_location_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "d38e3708-b9bd-4a8e-bfe1-645d7c8c248a",
+      "kwargs": {
+        "column": "from_location_Rio de Janeiro (RJ)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Rio de Janeiro (RJ)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "46663f52-df80-4657-9c70-358e643350bd",
+      "kwargs": {
+        "column": "from_location_Salvador (BH)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Salvador (BH)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c2df0482-de81-463e-99d5-8a06daabc830",
+      "kwargs": {
+        "column": "from_location_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "023f2c06-1291-49f8-9203-4e56a2cc2e43",
+      "kwargs": {
+        "column": "to_location_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "2dedf3de-2f0c-4983-ae72-a0422869d328",
+      "kwargs": {
+        "column": "to_location_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "bbc2010d-f036-41f2-9a74-e224069bf8a1",
+      "kwargs": {
+        "column": "to_location_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "430cd1d7-a8d9-4204-aa27-bc91d3c2665b",
+      "kwargs": {
+        "column": "to_location_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "79aebfe6-046d-40fa-8429-fd1191a7f6ea",
+      "kwargs": {
+        "column": "to_location_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f4543d3a-2855-4fde-a304-4ed7c8dcbe04",
+      "kwargs": {
+        "column": "to_location_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "112c2d65-a594-4e20-8171-01f212f8e69c",
+      "kwargs": {
+        "column": "to_location_Rio de Janeiro (RJ)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Rio de Janeiro (RJ)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c167e224-861f-40eb-9e8f-c91c1a6355aa",
+      "kwargs": {
+        "column": "to_location_Salvador (BH)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Salvador (BH)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "744101de-270c-4cb8-a651-1102a99cfc7f",
+      "kwargs": {
+        "column": "to_location_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f1974a7f-edbf-4c03-b988-393ada2e8637",
+      "kwargs": {
+        "column": "agency_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "9490d265-2d58-4627-92a7-0f3d62999e0c",
+      "kwargs": {
+        "column": "agency_FlyingDrops"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_FlyingDrops."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "cc84edac-6698-48b1-894d-848c9918a81c",
+      "kwargs": {
+        "column": "agency_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "7dd8061f-748b-40f8-b823-34eeef0d3b01",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "dcbc3919-66cd-44bb-a301-cdb00d7728e5",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "ad7cf995-c838-414d-8af6-e5c016adf660",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "9b3d6d6d-8b35-43ad-ab07-c1b07c7eb7c5",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "2dd1d602-6689-4677-9fad-56c147857f5c",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "0d5c0401-09fb-44d9-b0d0-d7136d7448c8",
+      "kwargs": {
+        "column": "route_Aracaju (SE)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Aracaju (SE)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "9dc791ff-14d7-4acc-9d50-21464d75bb02",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c431d8d3-76bc-408e-9a8c-2d17cf9569e7",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "364732fe-2f5e-49d3-8201-bc6e402d05b3",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "91d69e88-fbf0-427d-8e01-2eca951ee638",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "0ef8358f-e050-4c9b-9aca-7f4b623028ca",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "6ca25823-c1d4-4f06-838e-c2ea32fbaf68",
+      "kwargs": {
+        "column": "route_Brasilia (DF)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Brasilia (DF)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "ce4eb791-5b09-4ce1-9200-366e04255b45",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "1b16a312-2c08-44c4-8b9b-9661d4d890dd",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "7706c904-b433-4b51-a62b-8328b021e7e7",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a4117354-2f71-4c3c-95d0-83976794d4b3",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "1b0681f1-7858-4c0b-8d7b-014995051286",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c6cf1334-41f7-4a49-8b48-9185c88c810a",
+      "kwargs": {
+        "column": "route_Campo Grande (MS)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Campo Grande (MS)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "dfc3e74f-d271-428d-9d4c-ed43d715ca91",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "06cd8525-d0be-4f0f-b7ee-eaddde76eeca",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "39f4b89f-cb77-4d5c-a32f-942fdf71d770",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "332dfe8f-c37d-447d-a338-afa48b3de61c",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c7c53a4d-5a20-4dcc-b6cb-f849e18f3814",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a19fc3f0-a9b8-424c-b2b7-63211c4be369",
+      "kwargs": {
+        "column": "route_Florianopolis (SC)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Florianopolis (SC)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "8c44fb19-56b4-4ca7-b465-f0bf40c0f988",
+      "kwargs": {
+        "column": "route_Natal (RN)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "8dcc9a17-2ed6-474c-b3cd-cad453c69bef",
+      "kwargs": {
+        "column": "route_Natal (RN)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "e76e7254-216c-42d6-9daf-5059f0516c6a",
+      "kwargs": {
+        "column": "route_Natal (RN)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "3220b8ec-38ba-4b9e-8b61-434ceece1140",
+      "kwargs": {
+        "column": "route_Natal (RN)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "bd5f1557-3078-4fb8-b905-7458e7818be8",
+      "kwargs": {
+        "column": "route_Natal (RN)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "1789e7b5-ef1d-4596-aadc-274feb809ee1",
+      "kwargs": {
+        "column": "route_Natal (RN)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Natal (RN)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "e46f3ca4-4e11-45e0-84a4-201d10461cec",
+      "kwargs": {
+        "column": "route_Other"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Other."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "e81faece-f8f0-440c-b411-1bbfe1047d8b",
+      "kwargs": {
+        "column": "route_Recife (PE)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c167574d-289a-4eb0-a14f-e5894136d17a",
+      "kwargs": {
+        "column": "route_Recife (PE)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "d596c209-d636-4c97-9b16-a45721b86edf",
+      "kwargs": {
+        "column": "route_Recife (PE)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "74a735a5-ee4e-4961-8c88-c308e59d5ea9",
+      "kwargs": {
+        "column": "route_Recife (PE)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "5659ffbb-55cf-4a37-99f4-ab4b660221c4",
+      "kwargs": {
+        "column": "route_Recife (PE)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "76c73740-3cce-4f4f-9b71-b89ebee50407",
+      "kwargs": {
+        "column": "route_Recife (PE)_Sao Paulo (SP)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Recife (PE)_Sao Paulo (SP)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "e664c2d8-06a1-489a-a50e-79acb0d0f1c6",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Rio de Janeiro (RJ)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "6005ed70-0796-4553-b86f-be3072c9fbae",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Rio de Janeiro (RJ)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "67290ddc-9862-4844-9677-124feb6ec18f",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Rio de Janeiro (RJ)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f87a760e-3f59-4862-8a6d-cc700b54ad15",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Rio de Janeiro (RJ)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "bd70e345-ab2f-4000-b5d8-fa2d135b1bbb",
+      "kwargs": {
+        "column": "route_Rio de Janeiro (RJ)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Rio de Janeiro (RJ)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a492a02a-c6ef-4860-ab16-a96fe0610998",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Salvador (BH)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "e7d2726e-eb54-4558-8005-7583f5ba8559",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Salvador (BH)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "b5b10412-3130-444c-a5e4-683a3e0bb207",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Salvador (BH)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "189a60e8-8cf1-4997-86d1-cf40564157ae",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Salvador (BH)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a5908171-5c6c-41f5-bc85-acd50f70e269",
+      "kwargs": {
+        "column": "route_Salvador (BH)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Salvador (BH)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "034b8172-3857-49a3-b6cc-d7f1cd2d8eee",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Aracaju (SE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Aracaju (SE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "840986ea-bf5c-4be1-920f-0f4be0c8b744",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Brasilia (DF)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Brasilia (DF)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a9903259-857c-474f-939e-1b17d519eadd",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Campo Grande (MS)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Campo Grande (MS)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "201c27a4-b95c-42a3-a45b-a01e02018135",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Florianopolis (SC)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Florianopolis (SC)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "ac8ea230-e0b5-451e-94f2-d5a0ea64fdfb",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Natal (RN)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Natal (RN)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "3d3b2898-acda-41c1-a5dc-2335d250642a",
+      "kwargs": {
+        "column": "route_Sao Paulo (SP)_Recife (PE)"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_Sao Paulo (SP)_Recife (PE)."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "7af6d76b-db69-40d3-814d-2ed091110e19",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_economic"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_CloudFy_economic."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a3305901-3b54-4185-b187-95a58cb67de2",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_firstClass"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_CloudFy_firstClass."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "0598f78c-fdce-4277-aa5f-eea517bedd21",
+      "kwargs": {
+        "column": "agency_flight_type_CloudFy_premium"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_CloudFy_premium."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "3ac72e0b-757c-4084-aeb6-c8aae27a104c",
+      "kwargs": {
+        "column": "agency_flight_type_FlyingDrops_firstClass"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_FlyingDrops_firstClass."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "647db091-fa89-4477-85ed-34791bea3fc5",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_economic"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_Rainbow_economic."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "76b032da-5fe6-409f-8f35-393f2509b62e",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_firstClass"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_Rainbow_firstClass."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "02f98795-2d06-41bd-bdd2-d0257151b12a",
+      "kwargs": {
+        "column": "agency_flight_type_Rainbow_premium"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency_flight_type_Rainbow_premium."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "dac6e675-3d42-42c5-b5b1-90ff3b75f28d",
+      "kwargs": {
+        "column": "route_agency_Aracaju (SE)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Aracaju (SE)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "ddbb9df3-3b0e-48a7-b471-85a2e1df4f20",
+      "kwargs": {
+        "column": "route_agency_Aracaju (SE)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Aracaju (SE)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "af6fd501-9887-46d5-8311-a2983f5a4f3c",
+      "kwargs": {
+        "column": "route_agency_Brasilia (DF)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Brasilia (DF)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "494f1030-c587-4c86-bdff-b2c651195a89",
+      "kwargs": {
+        "column": "route_agency_Brasilia (DF)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Brasilia (DF)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "79f47b74-17be-45d2-9f01-4fcc46d2ef1e",
+      "kwargs": {
+        "column": "route_agency_Campo Grande (MS)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Campo Grande (MS)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "d9ab2da6-dad1-4c77-b47e-d269be2caace",
+      "kwargs": {
+        "column": "route_agency_Campo Grande (MS)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Campo Grande (MS)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "b79d66e1-51fe-473d-9606-2124a1c5ceec",
+      "kwargs": {
+        "column": "route_agency_Natal (RN)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Natal (RN)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f78f8337-19d5-4b4a-a22a-f064d9de7a43",
+      "kwargs": {
+        "column": "route_agency_Natal (RN)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Natal (RN)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "8d3e63b1-fc24-4cdb-8b6f-211c4f2194b0",
+      "kwargs": {
+        "column": "route_agency_Other"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Other."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "1e4fac79-6704-45f6-905e-ddaa4045ad34",
+      "kwargs": {
+        "column": "route_agency_Recife (PE)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Recife (PE)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c440c709-b0eb-40f9-8300-e219630d159f",
+      "kwargs": {
+        "column": "route_agency_Recife (PE)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Recife (PE)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f2427d4d-8a29-45c0-890b-97341d50fbb1",
+      "kwargs": {
+        "column": "route_agency_Sao Paulo (SP)_Florianopolis (SC)_CloudFy"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Sao Paulo (SP)_Florianopolis (SC)_CloudFy."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "41fb7e0b-5320-4440-b4e1-cbed65c42279",
+      "kwargs": {
+        "column": "route_agency_Sao Paulo (SP)_Florianopolis (SC)_Rainbow"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route_agency_Sao Paulo (SP)_Florianopolis (SC)_Rainbow."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "d7547b48-e65f-4032-9379-3ecc798d1708",
+      "kwargs": {
+        "column": "flight_type"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: flight_type."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "0ae0871a-e2bf-4e6d-90b8-15cc8e360aa3",
+      "kwargs": {
+        "column": "price"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: price."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "5c7d9004-9bee-405a-9079-a32de83fb174",
+      "kwargs": {
+        "column": "time"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: time."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "a93d4a19-e6fa-4764-84ce-7ed55cc6c572",
+      "kwargs": {
+        "column": "distance"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: distance."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "b182cea2-411d-4bd0-b91e-ba78817da992",
+      "kwargs": {
+        "column": "year"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: year."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "106be167-caf7-45d3-9fe4-3a84a1a72d6b",
+      "kwargs": {
+        "column": "month_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: month_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "bdab041d-ecc4-42ef-b075-a2f437281bd5",
+      "kwargs": {
+        "column": "month_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: month_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "80854053-82c8-462b-bbc2-49dac5cc9af9",
+      "kwargs": {
+        "column": "day_of_week_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_of_week_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "f5736ef8-0531-4b29-974d-5b4b5a5bd4d1",
+      "kwargs": {
+        "column": "day_of_week_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_of_week_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "b22a400c-a4ee-4fe5-9b33-c75f002acd79",
+      "kwargs": {
+        "column": "day_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "611e3b3c-09f7-4d89-9465-f3fd36db6e75",
+      "kwargs": {
+        "column": "day_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "020519bf-c26c-4d72-827e-3055924e15cf",
+      "kwargs": {
+        "column": "price",
+        "max_value": 0.2,
+        "min_value": -0.2
+      },
+      "meta": {
+        "notes": "Verify standardized column price has a mean near 0."
+      },
+      "type": "expect_column_mean_to_be_between"
+    },
+    {
+      "id": "2c8dad81-bd4c-49f6-8977-e1a5618b0d77",
+      "kwargs": {
+        "column": "price",
+        "max_value": 1.2,
+        "min_value": 0.8
+      },
+      "meta": {
+        "notes": "Verify standardized column price has a stdev near 1."
+      },
+      "type": "expect_column_stdev_to_be_between"
+    },
+    {
+      "id": "c9b2ffe7-9348-44e8-a355-3bf4db75137b",
+      "kwargs": {
+        "column": "time",
+        "max_value": 0.2,
+        "min_value": -0.2
+      },
+      "meta": {
+        "notes": "Verify standardized column time has a mean near 0."
+      },
+      "type": "expect_column_mean_to_be_between"
+    },
+    {
+      "id": "cd9c747a-5ade-445c-aead-c96182c5b34c",
+      "kwargs": {
+        "column": "time",
+        "max_value": 1.2,
+        "min_value": 0.8
+      },
+      "meta": {
+        "notes": "Verify standardized column time has a stdev near 1."
+      },
+      "type": "expect_column_stdev_to_be_between"
+    },
+    {
+      "id": "79de4790-5878-413a-b435-e8ea016c6f91",
+      "kwargs": {
+        "column": "distance",
+        "max_value": 0.2,
+        "min_value": -0.2
+      },
+      "meta": {
+        "notes": "Verify standardized column distance has a mean near 0."
+      },
+      "type": "expect_column_mean_to_be_between"
+    },
+    {
+      "id": "da80bd82-5bc1-4164-9409-3a6a31384503",
+      "kwargs": {
+        "column": "distance",
+        "max_value": 1.2,
+        "min_value": 0.8
+      },
+      "meta": {
+        "notes": "Verify standardized column distance has a stdev near 1."
+      },
+      "type": "expect_column_stdev_to_be_between"
+    }
+  ],
+  "id": "aae49f91-f8d5-4100-be48-d97fafcf115d",
+  "meta": {
+    "great_expectations_version": "1.5.5"
+  },
+  "name": "gold_df_flights_suite",
+  "notes": null
+}
