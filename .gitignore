@@ -48,3 +48,19 @@ logs/
 # --- DVC TRACKED FILES ---
 data/
 models/
+
+# --- Airflow Local Environment ---
+# Ignore the local postgres database data
+airflow/postgres-db-volume/
+
+# Ignore local Airflow logs
+airflow/logs/
+
+# Ignore local Airflow plugins (if any)
+airflow/plugins/
+
+# Ignore the local .env file
+airflow/.env
+
+# the config file
+airflow/config/airflow.cfg
