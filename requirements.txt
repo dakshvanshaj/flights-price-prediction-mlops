@@ -10,7 +10,7 @@ altair==4.2.2
 
 # Data Quality & Validation
 great-expectations==1.5.5
-openpyxl==3.1.
+openpyxl==3.1
 
 # Data Versioning
 dvc==3.61.0
@@ -24,6 +24,9 @@ requests==2.32.4
 
 # yaml
 pyyaml==6.0.2  
+
+# for airflow
+pendulum==3.1.0  
 
 # Your custom package from GitHub
 # This format allows pip to install directly from a specific commit
