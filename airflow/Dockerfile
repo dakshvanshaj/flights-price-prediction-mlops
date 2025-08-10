@@ -1,9 +1,17 @@
-
-# Start from the official Airflow image
+# Base image airflow 3.0.4
 FROM apache/airflow:3.0.4
 
-# Copy your project's requirements file into the image
-COPY ./requirements.txt /requirements.txt
+# Set a working directory for all subsequent commands
+WORKDIR /opt/airflow/Flights_Mlops
 
-# Install the Python packages from your requirements file
-RUN pip install --no-cache-dir -r /requirements.txt
+# This command copies everything from the build context (our project)
+# into the current WORKDIR (/opt/airflow/Flights_Mlops).
+# and changes owner ship to airflow:root
+COPY --chown=airflow:root . .
+
+# install the project Pip will find 'pyproject.toml' in pwd.
+RUN pip install --no-deps .
+
+# Finally, install the dependencies from your requirements.txt file.
+# The path is now relative to our WORKDIR.
+RUN pip install --no-cache-dir -r ./airflow/requirements.txt
