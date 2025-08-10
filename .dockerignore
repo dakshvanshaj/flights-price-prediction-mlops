@@ -1,0 +1,46 @@
+# --- Version Control ---
+.git
+
+# --- DVC Cache & Local Data ---
+# Solves the latest 'Operation not permitted' errors.
+# The container only needs the DVC metadata (dvc.yaml, .dvc files), not the cache.
+.dvc/
+
+# DVC tracked data and models are pulled at runtime.
+data/
+models/
+
+# --- Local Logs & Reports ---
+logs/
+reports/
+
+# --- Development, Build & Cache Artifacts ---
+Notebooks/
+tests/
+build/
+dist/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# --- Virtual Environments & Local Configs ---
+.env
+.venv
+airflow/.env
+
+# --- Editor & OS Specific ---
+.vscode/
+.DS_Store
+
+# --- Airflow Local Artifacts ---
+airflow/logs/
+airflow/plugins/
+airflow/postgres-db-volume/
+airflow/config/
+
+# --- Great Expectations Local Artifacts ---
+src/data_validation/great_expectations/gx/uncommitted/
+
+src/flight_price_prediction_mlops.egg-info
