@@ -3,46 +3,46 @@ import pendulum
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 
-# Import your pipeline functions
-from pipelines.bronze_pipeline import main as run_bronze_pipeline
-from pipelines.gold_pipeline import main as run_gold_pipeline
-from pipelines.silver_pipeline import main as run_silver_pipeline
 
-default_args = {
-    "owner": "Daksh",
-    "retries": 0,
-    "retry_delay": pendulum.duration(minutes=5),
-}
+default_args = {"owner": "Daksh", "retries": 0}
 
 with DAG(
-    dag_id="data_pipeline",
+    dag_id="data_preprocessing_pipeline",
     start_date=pendulum.datetime(2025, 8, 1, tz="UTC"),
-    description="Fetches data with DVC and runs the Bronze, Silver, and Gold pipelines.",
+    description="Fetches DVC data and runs the full ML pipeline.",
     schedule=None,
     catchup=False,
-    tags=["production", "dvc", "flights_mlops"],
+    tags=["data", "preprocessing", "pipeline", "dvc"],
     default_args=default_args,
 ) as dag:
-    # Task 1: Fetch data using DVC. This task must succeed before any others run.
     fetch_data = BashOperator(
         task_id="fetch_data_with_dvc",
-        bash_command="cd /opt/airflow/Flights_Mlops && dvc pull",
+        bash_command="cd /opt/airflow/Flights_Mlops && echo --- CWD --- && pwd && echo --- ls -la --- && ls -la && echo --- dvc pull --- && dvc pull -v",
     )
 
-    # Task 2: Bronze Layer
-    bronze_pipeline_task = PythonOperator(
-        task_id="run_bronze_pipeline", python_callable=run_bronze_pipeline
+    bronze_pipeline_task = BashOperator(
+        task_id="run_bronze_pipeline",
+        bash_command=(
+            "cd /opt/airflow/Flights_Mlops && "
+            "python src/pipelines/bronze_pipeline.py train.csv && "
+            "python src/pipelines/bronze_pipeline.py validation.csv && "
+            "python src/pipelines/bronze_pipeline.py test.csv"
+        ),
     )
 
-    # Task 3: Silver Layer
-    silver_pipeline_task = PythonOperator(
-        task_id="run_silver_pipeline", python_callable=run_silver_pipeline
+    silver_pipeline_task = BashOperator(
+        task_id="run_silver_pipeline",
+        bash_command=(
+            "cd /opt/airflow/Flights_Mlops && "
+            "python src/pipelines/silver_pipeline.py train.csv && "
+            "python src/pipelines/silver_pipeline.py validation.csv && "
+            "python src/pipelines/silver_pipeline.py test.csv"
+        ),
     )
 
-    # Task 4: Gold Layer
-    gold_pipeline_task = PythonOperator(
-        task_id="run_gold_pipeline", python_callable=run_gold_pipeline
+    gold_pipeline_task = BashOperator(
+        task_id="run_gold_pipeline",
+        bash_command="cd /opt/airflow/Flights_Mlops && python src/pipelines/gold_pipeline.py",
     )
 
-    # Now, the pipeline will only start after the data is successfully pulled.
     fetch_data >> bronze_pipeline_task >> silver_pipeline_task >> gold_pipeline_task
