@@ -57,9 +57,10 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
     # Set python path for importing files 
-    # PYTHONPATH: "/opt/airflow/dags:/opt/airflow/plugins:/opt/airflow/Flights_Mlops"
+    PYTHONPATH: "/opt/airflow/dags:/opt/airflow/Flights_Mlops:/opt/airflow/Flights_Mlops/src"
   volumes:
-    # - ../:/opt/airflow/Flights_Mlops 
+    
+    - ../:/opt/airflow/Flights_Mlops 
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
