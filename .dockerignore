@@ -1,10 +1,12 @@
 # --- Version Control ---
 .git
 
+
 # --- DVC Cache & Local Data ---
-# Solves the latest 'Operation not permitted' errors.
-# The container only needs the DVC metadata (dvc.yaml, .dvc files), not the cache.
-.dvc/
+#  We ignore the cache and tmp files,
+# but we KEEP the rest of the .dvc directory.
+.dvc/cache
+.dvc/tmp
 
 # DVC tracked data and models are pulled at runtime.
 data/
