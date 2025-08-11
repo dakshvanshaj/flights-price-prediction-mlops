@@ -23,6 +23,8 @@ dependencies:
   # Data Quality & Validation
   - great-expectations
 
+  - python-json-logger
+
   # Testing
   - pytest
 
