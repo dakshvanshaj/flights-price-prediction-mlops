@@ -28,6 +28,10 @@ pyyaml==6.0.2
 # for airflow
 pendulum==3.1.0  
 
+# for logger
+python-json-logger==3.3.0
+# node js is installed for gemini cli will need to be removed later.
+
 # Your custom package from GitHub
 # This format allows pip to install directly from a specific commit
 -e git+ssh://git@github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs.git@9a61519c82de5646b15d37e3c84f6e4b40a139ad#egg=flight_price_prediction_mlops
