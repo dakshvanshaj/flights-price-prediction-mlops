@@ -6,15 +6,15 @@
       "type": "update_data_docs"
     }
   ],
-  "id": "33bf5c61-2505-4510-94ac-1db225b777f8",
-  "name": "silver_checkpoint",
+  "id": "2b63b881-9414-4137-98f2-0070d274ba2e",
+  "name": "silver_checkpoint_test",
   "result_format": {
     "result_format": "COMPLETE"
   },
   "validation_definitions": [
     {
-      "id": "3260b7c2-2cd2-4b88-a635-91ee69a0a35a",
-      "name": "silver_validation_definition"
+      "id": "f84e4175-6a5c-44f1-af8a-03776326f892",
+      "name": "silver_validation_definition_test"
     }
   ]
 }

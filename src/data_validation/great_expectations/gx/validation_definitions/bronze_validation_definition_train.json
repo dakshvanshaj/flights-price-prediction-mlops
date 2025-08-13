@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "798fc30e-ffe7-4029-a8bc-182d7d8265c8",
+      "name": "raw_flights_csv_files_train"
+    },
+    "batch_definition": {
+      "id": "f243c301-10dd-4946-8932-0f512e60b962",
+      "name": "bronze_batch_definition_train"
+    },
+    "datasource": {
+      "id": "21d6220a-daea-4b05-ac58-f63b68fbf343",
+      "name": "raw_flight_data_source_train"
+    }
+  },
+  "id": "c029a205-7b74-4186-a540-4dfa76476195",
+  "name": "bronze_validation_definition_train",
+  "suite": {
+    "id": "eb6a6338-c7ad-4131-8104-d327826d7a31",
+    "name": "bronze_raw_flights_suite_train"
+  }
+}
