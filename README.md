@@ -67,6 +67,16 @@ Flights_Mlops/
     dvc pull -v
     ```
 
+## Data Validation and EDA
+
+-   **Great Expectations:** The data validation results are compiled into user-friendly HTML docs. After running the pipeline, you can find them here:
+    -   `src/data_validation/great_expectations/gx/uncommitted/data_docs/local_site/index.html`
+
+-   **Exploratory Data Analysis (EDA):** An comprehensive EDA and automated EDA report for the training dataset is available at:
+    -   `Notebooks/eda/flights_training_eda.ipynb`
+    -   `reports/eda/flights_training_eda_report.html`
+
+
 ## Usage
 
 You can run the data processing pipelines using either DVC or Airflow.
@@ -74,7 +84,7 @@ You can run the data processing pipelines using either DVC or Airflow.
 ### Running with DVC
 
 DVC allows you to run the entire pipeline or specific stages. The pipeline is defined in `dvc.yaml`.
-
+ 
 To run the full pipeline:
 
 ```bash
@@ -89,25 +99,33 @@ The project includes an Airflow setup to orchestrate the pipeline in a productio
 
 1.  **Build and start the Airflow containers:**
     ```bash
-    cd airflow/
-    docker-compose up --build -d
+    cd airflow
+    # Build the custom Airflow image
+    docker build -t airflow-flights-mlops .
+    # Start the services
+    docker compose up -d 
     ```
 
 2.  **Access the Airflow UI:**
-    Open your browser and go to `http://localhost:8080`.
+    Open your browser and go to `http://localhost:8080`. The default credentials are `airflow` / `airflow`.
 
 3.  **Trigger the DAG:**
     In the Airflow UI, find the `data_preprocessing_pipeline` DAG and trigger it manually. This DAG will:
     -   Pull the latest data using `dvc pull`.
     -   Execute the Bronze, Silver, and Gold pipelines in sequence.
 
-## Under Development
+## Roadmap & Future Work
 
-This project provides a solid foundation for an MLOps workflow. Here are some areas for future development:
+This project provides a solid foundation for a production-ready MLOps workflow. The next steps are to build out the model training, deployment, and monitoring capabilities.
 
--   **Model Training Pipeline:** Implement a DVC stage for training various regression models (e.g., Linear Regression, XGBoost, LightGBM) on the gold data.
--   **Model Evaluation & Selection:** Add a pipeline for model evaluation, hyperparameter tuning, and selecting the best-performing model.
--   **Model Registry:** Integrate a model registry (like MLflow ) to track experiments and manage model versions.
--   **CI/CD Integration:** Set up a CI/CD pipeline (e.g., using GitHub Actions) to automatically run tests, linting, and pipeline execution on code changes.
--   **Model Serving:** Create a REST API (e.g., using FastAPI) to serve the trained model for real-time predictions.
--   **Monitoring:** Implement monitoring for data drift, model performance, and pipeline health.
+1.  **Model Training & Experimentation:**
+    -   [ ] Implement a `dvc` versioned stage for training regression models (e.g., XGBoost, LightGBM).
+    -   [ ] Integrate **MLflow** for experiment tracking, parameter logging, and metric comparison.
+2.  **CI/CD Automation:**
+    -   [ ] Set up a **GitHub Actions** workflow to automate testing, linting, and pipeline reproduction (`dvc repro`) on every push.
+3.  **Model Serving:**
+    -   [ ] Create a REST API using **FastAPI** to serve the best-performing model.
+    -   [ ] Containerize the serving application with **Docker** for easy deployment.
+4.  **Monitoring:**
+    -   [ ] Implement data validation checks on incoming prediction requests.
+    -   [ ] Set up monitoring for data drift and model performance degradation over time.
