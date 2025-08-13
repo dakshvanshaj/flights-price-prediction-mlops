@@ -36,7 +36,7 @@ default_args = {
     tags=["data", "preprocessing", "pipeline", "dvc", "taskflow"],
     default_args=default_args,
 )
-def data_preprocessing_pipeline():
+def data_preprocessing_pipeline_taskflow():
     """
     This is the main function that defines the DAG's workflow.
     Airflow will parse this function to create the DAG structure.
@@ -101,4 +101,4 @@ def data_preprocessing_pipeline():
 
 
 # This final call creates the DAG object that Airflow can discover.
-data_preprocessing_pipeline()
+data_preprocessing_pipeline_taskflow()
