@@ -120,13 +120,13 @@ def gold_engineering_pipeline(
         outlier_params = params["outlier_handling"]
         OUTLIER_DETECTION_STRATEGY = outlier_params["detection_strategy"]
         OUTLIER_HANDLING_STRATEGY = outlier_params["handling_strategy"]
-        ISO_FOREST_CONTAMINATION = outlier_params["iso_forest_contamination"]
+        # ISO_FOREST_CONTAMINATION = outlier_params["iso_forest_contamination"]
         outlier_handler = OutlierTransformer(
             detection_strategy=OUTLIER_DETECTION_STRATEGY,
             handling_strategy=OUTLIER_HANDLING_STRATEGY,
             columns=config_gold.OUTLIER_HANDLER_COLUMNS,
-            contamination=ISO_FOREST_CONTAMINATION,
-            random_state=42,
+            # contamination=ISO_FOREST_CONTAMINATION,
+            # random_state=42,
         )
         df = outlier_handler.fit_transform(df)
         fitted_outlier_handler = outlier_handler

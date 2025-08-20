@@ -27,7 +27,7 @@ gold_pipeline:
   # --- Outlier Handling (Stage 7) ---
   outlier_handling:
     # Strategy can be 'iqr', 'zscore' 'isolation_forest'.
-    detection_strategy: "isolation_forest"
+    detection_strategy: "iqr"
     # Handling can be 'trim', 'winsorize'.
     handling_strategy: "trim"
     # The expected percentage of outliers in the data for Isolation Forest.
@@ -42,3 +42,17 @@ gold_pipeline:
   scaler:
     # Strategy can be 'standard', 'robust', or 'minmax'
     strategy: "standard"
+
+training_pipeline:
+  model_to_train: "LinearRegression"
+  name: "LinearRegression_v1"
+  # Specify a list of columns to drop to handle multicollinearity.
+  # e.g., ["distance"] or ["time"]. Set to null or [] to keep all columns.
+  drop_multicollinear_cols: ["distance"]
+  training_params:
+    n_jobs: -1
+
+mlflow_params:
+  experiment_name: "Flights_Price_Prediction"
+  # experiment_id:
+  run_name: "test3-removed-multicollinearity"
