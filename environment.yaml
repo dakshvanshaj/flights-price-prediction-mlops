@@ -20,6 +20,13 @@ dependencies:
   # Data Visualization
   - altair
 
+  # Gradient boosting libraries
+  - xgboost
+  - lightgbm
+
+  # ML Experiment Tracking & Modeling
+  - mlflow
+
   # Data Quality & Validation
   - great-expectations
 
