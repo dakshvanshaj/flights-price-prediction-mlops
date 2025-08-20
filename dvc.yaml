@@ -74,3 +74,15 @@ stages:
       - models/power_transformer.joblib
       - models/scaler.joblib
       - models/gold_final_columns.json
+
+  training_pipeline:
+    cmd: python src/pipelines/training_pipeline.py train.parquet validation.parquet
+    deps:
+      - src/pipelines/training_pipeline.py
+      - src/model_training/
+      - src/shared/
+      - data/gold_engineered_data/processed/train.parquet
+      - data/gold_engineered_data/processed/validation.parquet
+    params:
+      - training_pipeline
+      - mlflow_params
