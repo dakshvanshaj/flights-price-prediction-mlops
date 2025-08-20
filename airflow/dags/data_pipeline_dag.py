@@ -10,8 +10,8 @@ DVC_PULL_COMMAND = "dvc pull -v"
 BRONZE_SCRIPT = "src/pipelines/bronze_pipeline.py"
 SILVER_SCRIPT = "src/pipelines/silver_pipeline.py"
 GOLD_SCRIPT = "src/pipelines/gold_pipeline.py"
+TRAINING_SCRIPT = "src/pipelines/training_pipeline.py"
 DATA_FILES = ["train.csv", "validation.csv", "test.csv"]
-
 default_args = {
     "owner": "Daksh",
     "retries": 0,
@@ -88,6 +88,11 @@ def data_preprocessing_pipeline_taskflow():
         """Runs the final gold data processing script."""
         run_command(f"python {GOLD_SCRIPT}", FLIGHTS_MLOPS_DIR)
 
+    @task
+    def run_training_pipeline():
+        """Runs the training pipeline."""
+        run_command(f"python {TRAINING_SCRIPT}", FLIGHTS_MLOPS_DIR)
+
     # --- Define Dependencies ---
     # Even with TaskFlow, you can explicitly set dependencies.
     # This is necessary here because the tasks don't pass data to each other directly.
@@ -96,8 +101,9 @@ def data_preprocessing_pipeline_taskflow():
     bronze_task = run_bronze_pipeline()
     silver_task = run_silver_pipeline()
     gold_task = run_gold_pipeline()
+    training_task = run_training_pipeline()
 
-    fetch_task >> bronze_task >> silver_task >> gold_task
+    fetch_task >> bronze_task >> silver_task >> gold_task >> training_task
 
 
 # This final call creates the DAG object that Airflow can discover.
