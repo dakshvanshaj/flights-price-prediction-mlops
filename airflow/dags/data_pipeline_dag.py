@@ -12,17 +12,19 @@ SILVER_SCRIPT = "src/pipelines/silver_pipeline.py"
 GOLD_SCRIPT = "src/pipelines/gold_pipeline.py"
 TRAINING_SCRIPT = "src/pipelines/training_pipeline.py"
 DATA_FILES = ["train.csv", "validation.csv", "test.csv"]
+
 default_args = {
     "owner": "Daksh",
     "retries": 0,
     "doc_md": """
-    ### Data Preprocessing Pipeline 
+    ### Data Preprocessing Pipeline
     This DAG uses the TaskFlow API to orchestrate a DVC pull followed by
-    a multi-stage data processing pipeline (Bronze, Silver, Gold).
+    a multi-stage data processing pipeline (Bronze, Silver, Gold, and Training).
     - **fetch_data_with_dvc**: Pulls data using DVC.
-    - **run_bronze_pipeline**: Processes raw data into the bronze layer for data validation.
-    - **run_silver_pipeline**: Cleans and transforms bronze data into the silver layer.
-    - **run_gold_pipeline**: Aggregates silver data into the final gold layer for modeling.
+    - **run_bronze_pipeline**: Processes raw data into the bronze layer.
+    - **run_silver_pipeline**: Cleans bronze data into the silver layer.
+    - **run_gold_pipeline**: Aggregates silver data into the gold layer.
+    - **run_training_pipeline**: Trains the model on the gold data.
     """,
 }
 
@@ -41,28 +43,43 @@ def data_preprocessing_pipeline_taskflow():
     This is the main function that defines the DAG's workflow.
     Airflow will parse this function to create the DAG structure.
     """
-
     logger = logging.getLogger(__name__)
 
+    # --- NEW, IMPROVED run_command FUNCTION ---
     def run_command(command: str, cwd: str):
-        """Helper function to run shell commands and handle errors."""
+        """
+        Helper function to run shell commands, log output, and handle errors.
+        """
         logger.info(f"Running command: '{command}' in directory '{cwd}'")
         process = subprocess.run(
             command,
             shell=True,
-            check=True,  # This will raise a CalledProcessError if the command fails
             cwd=cwd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
-        logger.info("--- STDOUT ---")
-        logger.info(process.stdout)
+
+        # Always log stdout and stderr for better debugging
+        if process.stdout:
+            logger.info("--- STDOUT ---")
+            logger.info(process.stdout)
         if process.stderr:
-            logger.warning("--- STDERR ---")
-            logger.warning(process.stderr)
+            # Log stderr as an error to make it more visible in Airflow logs
+            logger.error("--- STDERR ---")
+            logger.error(process.stderr)
+
+        # Now, check if the command failed and raise an exception if it did
+        if process.returncode != 0:
+            raise subprocess.CalledProcessError(
+                returncode=process.returncode,
+                cmd=command,
+                output=process.stdout,
+                stderr=process.stderr,
+            )
+
         logger.info(f"Command '{command}' executed successfully.")
-        return process.stdout  #  return output if needed
+        return process.stdout
 
     @task
     def fetch_data_with_dvc():
@@ -91,12 +108,12 @@ def data_preprocessing_pipeline_taskflow():
     @task
     def run_training_pipeline():
         """Runs the training pipeline."""
-        run_command(f"python {TRAINING_SCRIPT}", FLIGHTS_MLOPS_DIR)
+        run_command(
+            f"python {TRAINING_SCRIPT} train.parquet validation.parquet",
+            FLIGHTS_MLOPS_DIR,
+        )
 
     # --- Define Dependencies ---
-    # Even with TaskFlow, you can explicitly set dependencies.
-    # This is necessary here because the tasks don't pass data to each other directly.
-    # They operate on files within a shared directory.
     fetch_task = fetch_data_with_dvc()
     bronze_task = run_bronze_pipeline()
     silver_task = run_silver_pipeline()
@@ -106,5 +123,4 @@ def data_preprocessing_pipeline_taskflow():
     fetch_task >> bronze_task >> silver_task >> gold_task >> training_task
 
 
-# This final call creates the DAG object that Airflow can discover.
 data_preprocessing_pipeline_taskflow()
