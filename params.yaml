@@ -31,7 +31,7 @@ gold_pipeline:
     # Handling can be 'trim', 'winsorize'.
     handling_strategy: "trim"
     # The expected percentage of outliers in the data for Isolation Forest.
-    iso_forest_contamination: 0.01
+    # iso_forest_contamination: 0.01
 
   # --- Power Transformations (Stage 8) ---
   power_transformer:
@@ -48,11 +48,11 @@ training_pipeline:
   name: "LinearRegression_v1"
   # Specify a list of columns to drop to handle multicollinearity.
   # e.g., ["distance"] or ["time"]. Set to null or [] to keep all columns.
-  drop_multicollinear_cols: ["distance"]
+  drop_multicollinear_cols: ["time"]
   training_params:
     n_jobs: -1
 
 mlflow_params:
   experiment_name: "Flights_Price_Prediction"
   # experiment_id:
-  run_name: "test3-removed-multicollinearity"
+  run_name: "test_run"
