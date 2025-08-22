@@ -30,3 +30,11 @@ pendulum==3.1.0
 
 # for logger
 python-json-logger==3.3.0
+# node js is installed for gemini cli will need to be removed later.
+
+# Experiment tracking and model versioning with mlflow
+mlflow==3.2.0
+
+# gradient boosting libraries
+xgboost==3.0.1      
+lightgbm==4.6.0
