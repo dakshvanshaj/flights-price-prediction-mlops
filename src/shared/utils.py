@@ -6,6 +6,7 @@ from typing import Union
 import shutil
 import pandas as pd
 import numpy as np
+from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
@@ -169,3 +170,27 @@ def median_absolute_percentage_error(y_true, y_pred):
     mdape = np.median(absolute_percentage_errors)
 
     return mdape
+
+
+def flatten_params(params: Dict[str, Any], parent_key: str = "") -> Dict[str, Any]:
+    """
+    Flattens a nested dictionary of parameters for clean logging to MLflow.
+
+    Args:
+        params: The dictionary of parameters to flatten.
+        parent_key: The base key for nested dictionaries.
+
+    Returns:
+        A flattened dictionary.
+    """
+    items = []
+    for key, value in params.items():
+        new_key = f"{parent_key}.{key}" if parent_key else key
+        if isinstance(value, dict):
+            items.extend(flatten_params(value, new_key).items())
+        else:
+            # Convert lists to strings for better MLflow display
+            if isinstance(value, list):
+                value = ", ".join(map(str, value))
+            items.append((new_key, value))
+    return dict(items)
