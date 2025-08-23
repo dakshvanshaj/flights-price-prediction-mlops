@@ -147,6 +147,42 @@ class Scaler:
         # --- FIX: Corrected typo from 'tranform' to 'transform' ---
         return self.fit(df).transform(df)
 
+    def inverse_transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Applies the inverse scaling transformation to the data.
+
+        Args:
+            df (pd.DataFrame): The scaled DataFrame to inverse-transform.
+
+        Returns:
+            pd.DataFrame: The DataFrame with original-scale values.
+        """
+        if not self.params_:
+            raise RuntimeError("Inverse transform called before fitting the scaler.")
+
+        df_copy = df.copy()
+        logger.info(f"Applying inverse '{self.strategy}' scaling.")
+
+        for col in df_copy.columns:
+            if col not in self.params_:
+                logger.warning(
+                    f"Column '{col}' not found in scaler params. Skipping inverse transform."
+                )
+                continue
+
+            params = self.params_[col]
+            if self.strategy == "standard":
+                df_copy[col] = (df_copy[col] * params["std"]) + params["mean"]
+
+            elif self.strategy == "minmax":
+                range_val = params["max"] - params["min"]
+                df_copy[col] = (df_copy[col] * range_val) + params["min"]
+
+            elif self.strategy == "robust":
+                df_copy[col] = (df_copy[col] * params["iqr"]) + params["median"]
+
+        return df_copy
+
     def save(self, filepath: Union[str, Path]):
         """Saves the fitted scaler instance to a file."""
         logger.info(f"Saving scaler to {filepath}")
