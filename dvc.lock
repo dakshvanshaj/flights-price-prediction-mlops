@@ -17,8 +17,8 @@ stages:
       size: 3258
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     outs:
     - path: data/raw/train_validation_test/test.csv
@@ -54,8 +54,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     outs:
     - path: data/bronze_data/processed/train.csv
@@ -83,8 +83,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     outs:
     - path: data/bronze_data/processed/validation.csv
@@ -112,8 +112,8 @@ stages:
       size: 5125
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     outs:
     - path: data/bronze_data/processed/test.csv
@@ -146,8 +146,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -185,8 +185,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -224,8 +224,8 @@ stages:
       size: 5574
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     - path: src/silver_data_preprocessing/
       hash: md5
@@ -267,8 +267,8 @@ stages:
       size: 13316
     - path: src/gold_data_preprocessing/
       hash: md5
-      md5: 57c6618a91974950ea4ecb723f2b0328.dir
-      size: 113943
+      md5: 9d572cc1a0a650a8d1b893ab98b0c652.dir
+      size: 122570
       nfiles: 19
     - path: src/pipelines/gold_pipeline.py
       hash: md5
@@ -276,8 +276,8 @@ stages:
       size: 12567
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     params:
       params.yaml:
@@ -295,7 +295,6 @@ stages:
         gold_pipeline.outlier_handling:
           detection_strategy: iqr
           handling_strategy: trim
-          iso_forest_contamination: 0.01
         gold_pipeline.power_transformer:
           strategy: yeo-johnson
         gold_pipeline.rare_category_grouping:
@@ -303,20 +302,20 @@ stages:
     outs:
     - path: data/gold_engineered_data/processed/test.parquet
       hash: md5
-      md5: 275f192547ba0466cd34cf1b7d092b62
+      md5: 481ecbba85bec8dbe015a58c7955e8d6
       size: 374839
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: 5b530a739e4ed1e624cc2dac3829888e
+      md5: ab2d8d868ed2d5b7ef181ead8b238a1b
       size: 961853
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: c247566a0d15ed3c1a52f5f77666fb79
+      md5: 0e2d9d902ad34998e9cd555f08be7e9b
       size: 331314
     - path: models/categorical_encoder.joblib
       hash: md5
-      md5: ca5ee8bcc97f01d335c9cf0231283ad7
-      size: 7292
+      md5: 839901b02d4e8309d3209f4bae997bb1
+      size: 8322
     - path: models/gold_final_columns.json
       hash: md5
       md5: 2b1258e76f55f7bd8b231feace1a791e
@@ -335,8 +334,8 @@ stages:
       size: 2371
     - path: models/scaler.joblib
       hash: md5
-      md5: 9358fc324ab4beaea02d401c8f669a56
-      size: 378
+      md5: a6795a15f9f5e7824a67db3b244a7994
+      size: 348
     - path: models/simple_imputer.json
       hash: md5
       md5: 4a939e5d5a7cfb3346567524080f6b6d
@@ -347,11 +346,11 @@ stages:
     deps:
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: 5b530a739e4ed1e624cc2dac3829888e
+      md5: ab2d8d868ed2d5b7ef181ead8b238a1b
       size: 961853
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: c247566a0d15ed3c1a52f5f77666fb79
+      md5: 0e2d9d902ad34998e9cd555f08be7e9b
       size: 331314
     - path: src/model_training/
       hash: md5
@@ -360,22 +359,22 @@ stages:
       nfiles: 2
     - path: src/pipelines/training_pipeline.py
       hash: md5
-      md5: d14b85cfb6469b23a6684935bd828cdd
-      size: 8666
+      md5: f0bd271702d75a739985b66e5cae555b
+      size: 10702
     - path: src/shared/
       hash: md5
-      md5: 0ea1ec6c7a9c0232b6589aa7c9160825.dir
-      size: 39960
+      md5: d57a3f8d655bde9e8ba007465c200fed.dir
+      size: 38432
       nfiles: 22
     params:
       params.yaml:
         mlflow_params:
-          experiment_name: Flights_Price_Prediction
-          run_name: test3-removed-multicollinearity
+          experiment_name: Flights_Price_Prediction_Linear_Models
+          run_name: LinearRegression_Base
         training_pipeline:
           model_to_train: LinearRegression
-          name: LinearRegression_v1
+          name: LinearRegression_Base
           drop_multicollinear_cols:
-          - distance
+          - time
           training_params:
             n_jobs: -1
