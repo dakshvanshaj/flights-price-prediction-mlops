@@ -1,7 +1,9 @@
 import logging
 import pendulum
 import subprocess
+import os
 
+from typing import Optional, Dict
 from airflow.sdk import dag, task
 
 # Define constants for paths and commands to keep the code clean
@@ -45,18 +47,25 @@ def data_preprocessing_pipeline_taskflow():
     """
     logger = logging.getLogger(__name__)
 
-    # --- NEW, IMPROVED run_command FUNCTION ---
-    def run_command(command: str, cwd: str):
+    def run_command(command: str, cwd: str, env: Optional[Dict[str, str]] = None):
         """
         Helper function to run shell commands, log output, and handle errors.
         """
         logger.info(f"Running command: '{command}' in directory '{cwd}'")
+
+        # Create a full environment for the subprocess to run in.
+        # This inherits the Airflow worker's environment and can be updated.
+        full_env = os.environ.copy()
+        if env:
+            full_env.update(env)
+
         process = subprocess.run(
             command,
             shell=True,
             cwd=cwd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            env=full_env,
             text=True,
         )
 
@@ -108,10 +117,11 @@ def data_preprocessing_pipeline_taskflow():
     @task
     def run_training_pipeline():
         """Runs the training pipeline."""
-        run_command(
-            f"python {TRAINING_SCRIPT} train.parquet validation.parquet",
-            FLIGHTS_MLOPS_DIR,
-        )
+        # Define the command and environment separately for clarity and security.
+        command = f"python {TRAINING_SCRIPT} train.parquet validation.parquet"
+        mlflow_env = {"MLFLOW_TRACKING_URI": "http://65.2.142.127:5000"}
+
+        run_command(command, FLIGHTS_MLOPS_DIR, env=mlflow_env)
 
     # --- Define Dependencies ---
     fetch_task = fetch_data_with_dvc()
