@@ -1,22 +1,22 @@
 {
   "data": {
     "asset": {
-      "id": "5a033436-049f-418c-a1a7-e3a801a82c02",
+      "id": "57b08f60-5787-4f55-a18d-40b85c6d961a",
       "name": "gold_in_memory_asset"
     },
     "batch_definition": {
-      "id": "7cfb17a9-f4a5-4207-a8a0-72172e740778",
+      "id": "f69265ea-f7c6-465d-9ab3-6bbdd4cadb89",
       "name": "gold_batch_definition"
     },
     "datasource": {
-      "id": "84bdb729-4f60-4861-a744-8a2bf41ae750",
+      "id": "426c0b25-2244-4684-bf31-0e5a3c4eecab",
       "name": "pandas_parquet_datasource"
     }
   },
-  "id": "034a51ef-74cf-4daa-b494-9b73e033f0fc",
+  "id": "4674fa77-a461-4baa-91db-bcd3102a9770",
   "name": "gold_validation_definition",
   "suite": {
-    "id": "90a681cd-b39d-42df-9a37-a6ae38442f5d",
+    "id": "8cbe0bdc-af7a-49ff-b78f-02ae52a513b1",
     "name": "gold_df_flights_suite"
   }
 }
