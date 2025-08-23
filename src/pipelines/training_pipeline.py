@@ -8,57 +8,45 @@ import yaml
 import sys
 from typing import Dict, Any
 from data_ingestion.data_loader import load_data
+from model_evaluation.evaluation import calculate_all_regression_metrics
+from gold_data_preprocessing.power_transformer import PowerTransformer
+from gold_data_preprocessing.scaler import Scaler
 from model_training.train import train_model
-from shared.config import config_logging, config_gold, config_training, core_paths
+from shared.config import config_logging, config_gold, config_training
 from shared.utils import (
     setup_logging_from_yaml,
-    s_mape,
-    median_absolute_percentage_error,
     flatten_params,
 )
-
-# from sklearn.metrics import (
-#     max_error,
-#     mean_absolute_error,
-#     mean_absolute_percentage_error,
-#     median_absolute_error,
-#     mean_squared_error,
-#     root_mean_squared_error,
-#     r2_score,
-# )
-from mlflow.exceptions import MlflowException
 
 # Create a logger object for this module
 logger = logging.getLogger(__name__)
 
 
-def _evaluate_and_log_metrics(y_true: pd.Series, y_pred: pd.Series) -> Dict[str, float]:
+def _calculate_and_log_metrics(
+    y_true: pd.Series, y_pred: pd.Series, prefix: str
+) -> Dict[str, float]:
     """
-    Calculates custom regression metrics and logs them to MLflow.
-    Note: Autologging handles standard metrics, this is for any additional custom ones.
+    Calculates and logs regression metrics to MLflow with a given prefix.
 
     Args:
         y_true: The true target values.
         y_pred: The predicted target values.
+        prefix: A string to prefix the metric names with (e.g., 'train', 'validation').
 
     Returns:
         A dictionary of calculated metrics.
     """
-    logger.info("Calculating and logging custom validation metrics...")
-    metrics = {
-        "symmetric_mean_absolute_percentage_error": s_mape(y_true, y_pred),
-        "median_absolute_percentage_error": median_absolute_percentage_error(
-            y_true, y_pred
-        ),
-        # Add any other custom metrics here. Standard metrics like MSE, MAE, R2
-        # are already captured by autologging.
-    }
+    logger.info(f"Calculating and logging metrics with prefix: '{prefix}'...")
+
+    raw_metrics = calculate_all_regression_metrics(y_true, y_pred)
+    # Add prefix to all metric names
+    metrics = {f"{prefix}_{k}": v for k, v in raw_metrics.items()}
 
     for name, value in metrics.items():
         logger.info(f"  - {name}: {value:.4f}")
 
     mlflow.log_metrics(metrics)
-    logger.info("Successfully logged custom metrics to MLflow.")
+    logger.info("Successfully logged metrics to MLflow.")
     return metrics
 
 
@@ -77,6 +65,22 @@ def training_pipeline(
     experiment_name = mlflow_params["experiment_name"]
     run_name = mlflow_params["run_name"]
     model_to_train = training_params["model_to_train"]
+    model_name = training_params["name"]
+
+    # Load the fitted preprocessors to inverse-transform predictions for interpretability
+    logger.info(
+        "Loading fitted preprocessors for inverse transformation of predictions..."
+    )
+    scaler = None
+    power_transformer = None
+    try:
+        scaler = Scaler.load(config_gold.SCALER_PATH)
+        logger.info("Scaler loaded successfully.")
+        power_transformer = PowerTransformer.load(config_gold.POWER_TRANSFORMER_PATH)
+        logger.info("PowerTransformer loaded successfully.")
+    except (FileNotFoundError, AttributeError) as e:
+        logger.warning(f"Could not load preprocessors for inverse transformation: {e}")
+        logger.warning("Unscaled metrics will not be available.")
 
     # Set the experiment. MLflow will use the URI from the environment variable.
     mlflow.set_experiment(experiment_name)
@@ -123,6 +127,11 @@ def training_pipeline(
         logger.info("Logging preprocessing parameters from gold_pipeline...")
         flat_gold_params = flatten_params(gold_pipeline_params)
         mlflow.log_params(flat_gold_params)
+
+        # Log the model name as a tag for easier filtering in the MLflow UI
+        mlflow.set_tag("model_name", model_name)
+        logger.info(f"Logged model name '{model_name}' as a tag.")
+
         logger.info("Successfully logged preprocessing parameters.")
 
         # Log any extra parameters not captured by autologging
@@ -139,14 +148,62 @@ def training_pipeline(
 
         # === STAGE 4: MODEL EVALUATION ===
         logger.info("=" * 25 + " STAGE 4/4: MODEL EVALUATION " + "=" * 25)
-        # Autolog will capture standard metrics on prediction.
-        # We call our custom function for any additional metrics.
-        y_pred = model.predict(val_x)
-        _evaluate_and_log_metrics(val_y, y_pred)
 
-    logger.info(
-        f"--- Training Pipeline: COMPLETED for model '{training_params['name']}' ---"
-    )
+        # --- Log Scaled Metrics ---
+        # These metrics are on the transformed scale, useful for model comparison
+        # but less interpretable in business terms.
+        y_pred_train = model.predict(train_x)
+        _calculate_and_log_metrics(train_y, y_pred_train, prefix="training_scaled")
+        y_pred_val = model.predict(val_x)
+        _calculate_and_log_metrics(val_y, y_pred_val, prefix="validation_scaled")
+
+        # --- Log Unscaled Metrics for Interpretability ---
+        if scaler and power_transformer:
+            logger.info("Calculating and logging unscaled (original scale) metrics...")
+
+            # Create temporary DataFrames for inverse transformation.
+            # The scaler expects a DataFrame with the correct column name(s).
+            train_y_df = pd.DataFrame(train_y)
+            y_pred_train_df = pd.DataFrame(
+                y_pred_train,
+                columns=[config_training.TARGET_COLUMN],
+                index=train_y.index,
+            )
+            val_y_df = pd.DataFrame(val_y)
+            y_pred_val_df = pd.DataFrame(
+                y_pred_val, columns=[config_training.TARGET_COLUMN], index=val_y.index
+            )
+
+            # Inverse transform in reverse order: 1. Scaler, 2. PowerTransformer
+            logger.info("Applying inverse scaling and power transformations...")
+            train_y_unscaled = power_transformer.inverse_transform(
+                scaler.inverse_transform(train_y_df)
+            )[config_training.TARGET_COLUMN]
+
+            y_pred_train_unscaled = power_transformer.inverse_transform(
+                scaler.inverse_transform(y_pred_train_df)
+            )[config_training.TARGET_COLUMN]
+
+            val_y_unscaled = power_transformer.inverse_transform(
+                scaler.inverse_transform(val_y_df)
+            )[config_training.TARGET_COLUMN]
+
+            y_pred_val_unscaled = power_transformer.inverse_transform(
+                scaler.inverse_transform(y_pred_val_df)
+            )[config_training.TARGET_COLUMN]
+
+            _calculate_and_log_metrics(
+                train_y_unscaled,
+                y_pred_train_unscaled,
+                prefix="training",
+            )
+            _calculate_and_log_metrics(
+                val_y_unscaled,
+                y_pred_val_unscaled,
+                prefix="validation",
+            )
+
+    logger.info(f"--- Training Pipeline: COMPLETED for model '{model_name}' ---")
     return model
 
 
@@ -206,7 +263,7 @@ def main():
         logger.info(
             ">>> ORCHESTRATOR: Training Pipeline execution finished successfully."
         )
-    except (MlflowException, ValueError, FileNotFoundError) as e:
+    except (ValueError, FileNotFoundError) as e:
         logger.critical(f"Pipeline execution failed: {e}")
         sys.exit(1)
 
