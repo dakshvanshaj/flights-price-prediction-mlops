@@ -4,9 +4,43 @@ import logging
 from typing import List, Dict, Union
 from pathlib import Path
 import joblib
-from scipy import stats
+from scipy import stats, special
 
 logger = logging.getLogger(__name__)
+
+
+# Check if inv_yeojohnson is available, otherwise define a fallback.
+# This function was added in SciPy 1.2.0.
+_INV_YEOJOHNSON_AVAILABLE = hasattr(special, "inv_yeojohnson")
+
+if not _INV_YEOJOHNSON_AVAILABLE:
+    logger.debug(
+        "scipy.special.inv_yeojohnson is not available in this environment. "
+        "Using a custom implementation. Consider upgrading SciPy to version >= 1.2.0."
+    )
+
+    def _inv_yeojohnson(x, lmbda):
+        """Custom implementation of the inverse Yeo-Johnson transformation."""
+        x = np.asanyarray(x)
+        y = np.empty_like(x, dtype=float)
+
+        # Define masks for positive and negative values of x
+        pos = x >= 0
+        neg = ~pos
+
+        # Positive values transformation
+        if abs(lmbda) < np.finfo(float).eps:
+            y[pos] = np.exp(x[pos]) - 1
+        else:
+            y[pos] = np.power(x[pos] * lmbda + 1, 1 / lmbda) - 1
+
+        # Negative values transformation
+        if abs(lmbda - 2) < np.finfo(float).eps:
+            y[neg] = 1 - np.exp(-x[neg])
+        else:
+            y[neg] = 1 - np.power(-(2 - lmbda) * x[neg] + 1, 1 / (2 - lmbda))
+
+        return y
 
 
 class PowerTransformer:
@@ -132,6 +166,48 @@ class PowerTransformer:
     def fit_transform(self, df: pd.DataFrame) -> pd.DataFrame:
         """A convenience method to fit and then transform the same data."""
         return self.fit(df).transform(df)
+
+    def inverse_transform(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Applies the inverse power transformation using the learned parameters.
+
+        Args:
+            df (pd.DataFrame): The transformed DataFrame to inverse-transform.
+
+        Returns:
+            pd.DataFrame: The DataFrame with original-scale values.
+        """
+        if self.strategy in ["box-cox", "yeo-johnson"] and not self.params_:
+            raise RuntimeError(
+                "Inverse transform called before fitting the transformer."
+            )
+
+        df_copy = df.copy()
+        logger.info(f"Applying inverse '{self.strategy}' transformation.")
+
+        for col in df_copy.columns:
+            if self.strategy == "log":
+                # Inverse of log1p is expm1
+                df_copy[col] = np.expm1(df_copy[col])
+            else:
+                # For stateful strategies, ensure we have learned params for the column
+                if col not in self.params_:
+                    logger.warning(
+                        f"Column '{col}' not found in transformer params. "
+                        "Skipping inverse transform."
+                    )
+                    continue
+
+                lmbda = self.params_[col]
+                if self.strategy == "box-cox":
+                    df_copy[col] = special.inv_boxcox(df_copy[col], lmbda)
+                else:  # yeo-johnson
+                    if _INV_YEOJOHNSON_AVAILABLE:
+                        df_copy[col] = special.inv_yeojohnson(df_copy[col], lmbda)
+                    else:
+                        df_copy[col] = _inv_yeojohnson(df_copy[col], lmbda)
+
+        return df_copy
 
     def save(self, filepath: Union[str, Path]):
         """Saves the fitted transformer instance to a file."""
