@@ -260,6 +260,10 @@ services:
         echo
         ls -la /opt/airflow/{logs,dags,plugins,config}
         echo
+        echo "Change ownership of files in /opt/airflow/Flights_Mlops to ${AIRFLOW_UID}:0"
+        echo
+        chown -R "${AIRFLOW_UID}:0" /opt/airflow/Flights_Mlops
+        echo
         echo "Change ownership of files in /opt/airflow to ${AIRFLOW_UID}:0"
         echo
         chown -R "${AIRFLOW_UID}:0" /opt/airflow/
