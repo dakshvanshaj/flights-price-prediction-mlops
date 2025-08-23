@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Union
 import shutil
 import pandas as pd
-import numpy as np
 from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
@@ -122,54 +121,6 @@ def save_dataframe_based_on_validation(
             f"Failed to save DataFrame for '{file_name}' to '{destination_dir}'. Error: {e}"
         )
         return False
-
-
-def s_mape(y_true, y_pred):
-    """
-    Calculates the Symmetric Mean Absolute Percentage Error (SMAPE).
-
-    Args:
-        y_true (array-like): Ground truth (correct) target values.
-        y_pred (array-like): Estimated target values.
-
-    Returns:
-        float: The SMAPE value.
-    """
-    numerator = np.abs(y_pred - y_true)
-    denominator = (np.abs(y_true) + np.abs(y_pred)) / 2
-    # Handle cases where denominator might be zero to avoid division by zero
-    # A common approach is to set the error to 0 if both y_true and y_pred are 0
-    # or to a small epsilon if only one is 0.
-    # For simplicity here, we'll use a small epsilon for the denominator if it's zero.
-    # In a production setting, carefully consider edge cases for zero values.
-    smape_values = np.where(denominator == 0, 0, numerator / denominator)
-    return np.mean(smape_values) * 100
-
-
-def median_absolute_percentage_error(y_true, y_pred):
-    """
-    Calculates the Median Absolute Percentage Error (MdAPE).
-
-    Args:
-        y_true (array-like): Array of true values.
-        y_pred (array-like): Array of predicted values.
-
-    Returns:
-        float: The Median Absolute Percentage Error.
-    """
-    y_true, y_pred = np.array(y_true), np.array(y_pred)
-
-    # Calculate individual absolute percentage errors
-    # Handle division by zero for y_true values close to zero by returning a large value
-    # instead of infinity, similar to sklearn's MAPE handling.
-    # A small epsilon is added to the denominator to prevent division by zero.
-    epsilon = np.finfo(float).eps
-    absolute_percentage_errors = np.abs((y_true - y_pred) / (y_true + epsilon)) * 100
-
-    # Calculate the median of the absolute percentage errors
-    mdape = np.median(absolute_percentage_errors)
-
-    return mdape
 
 
 def flatten_params(params: Dict[str, Any], parent_key: str = "") -> Dict[str, Any]:
