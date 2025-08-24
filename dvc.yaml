@@ -8,8 +8,9 @@ stages:
     cmd: python src/data_split/split_data.py
     deps:
       - src/data_split/split_data.py
-      - src/shared/
       - src/data_ingestion/data_loader.py
+      - src/shared/utils.py
+      - src/shared/config/config_logging.py
       - data/raw/flights.csv
     outs:
       - data/raw/train_validation_test/train.csv
@@ -22,7 +23,10 @@ stages:
       cmd: python src/pipelines/bronze_pipeline.py ${item}.csv
       deps:
         - src/pipelines/bronze_pipeline.py
-        - src/shared/
+        - src/shared/utils.py
+        - src/shared/config/config_logging.py
+        - src/shared/config/config_bronze.py
+        - src/data_ingestion/data_loader.py
         # --- Specific GE Dependencies ---
         - src/data_validation/ge_components.py
         - src/data_validation/expectations/bronze_expectations.py
@@ -36,9 +40,11 @@ stages:
       cmd: python src/pipelines/silver_pipeline.py ${item}.csv
       deps:
         - src/pipelines/silver_pipeline.py
-        - src/data_ingestion/
+        - src/data_ingestion/data_loader.py
         - src/silver_data_preprocessing/
-        - src/shared/
+        - src/shared/utils.py
+        - src/shared/config/config_logging.py
+        - src/shared/config/config_silver.py
         # --- Specific GE Dependencies ---
         - src/data_validation/ge_components.py
         - src/data_validation/expectations/silver_expectations.py
@@ -51,8 +57,10 @@ stages:
     deps:
       - src/pipelines/gold_pipeline.py
       - src/gold_data_preprocessing/
-      - src/data_ingestion/
-      - src/shared/
+      - src/data_ingestion/data_loader.py
+      - src/shared/utils.py
+      - src/shared/config/config_logging.py
+      - src/shared/config/config_gold.py
       - data/silver_data/processed/train.parquet
       - data/silver_data/processed/validation.parquet
       - data/silver_data/processed/test.parquet
@@ -79,8 +87,15 @@ stages:
     cmd: python src/pipelines/training_pipeline.py train.parquet validation.parquet
     deps:
       - src/pipelines/training_pipeline.py
-      - src/model_training/
-      - src/shared/
+      - src/data_ingestion/data_loader.py
+      - src/model_evaluation/evaluation.py
+      - src/gold_data_preprocessing/power_transformer.py
+      - src/gold_data_preprocessing/scaler.py
+      - src/model_training/train.py
+      - src/shared/config/config_gold.py
+      - src/shared/config/config_logging.py
+      - src/shared/config/config_training.py
+      - src/shared/utils.py
       - data/gold_engineered_data/processed/train.parquet
       - data/gold_engineered_data/processed/validation.parquet
     params:
