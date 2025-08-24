@@ -11,11 +11,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
-
 from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
-
 
 # A mapping from model names to their respective classes for easy instantiation.
 MODEL_CLASS_MAP: Dict[str, Any] = {
@@ -31,39 +29,51 @@ MODEL_CLASS_MAP: Dict[str, Any] = {
 }
 
 
-def train_model(
-    train_x: pd.DataFrame,
-    train_y: pd.Series,
+def get_model(
     model_to_train: str,
     model_params: Dict[str, Any],
-):
+) -> Any:
     """
-    Instantiates and trains a specified regression model.
+    Instantiates a regression model from its string name and parameters.
 
     Args:
-        train_x: The training features.
-        train_y: The training target.
-        model_to_train: The name of the model to train.
+        model_to_train: The name of the model to instantiate. Must be a key
+                        in the MODEL_CLASS_MAP.
         model_params: Hyperparameters for the model.
 
     Returns:
-        A trained regressor model.
+        An unfitted regressor model instance.
 
     Raises:
         ValueError: If the specified model_to_train is not supported.
     """
-    model_class = MODEL_CLASS_MAP.get(model_to_train)
-    if not model_class:
+    if not (model_class := MODEL_CLASS_MAP.get(model_to_train)):
         raise ValueError(
-            f"Unsupported model type: '{model_to_train}'. "
-            f"Supported models are: {list(MODEL_CLASS_MAP.keys())}"
+            f"Unsupported model: '{model_to_train}'. Supported models are: "
+            f"{list(MODEL_CLASS_MAP.keys())}"
         )
 
     logger.info(f"Instantiating model: {model_to_train} with params: {model_params}")
-    model = model_class(**model_params)
+    return model_class(**model_params)
 
-    logger.info(f"Training model: {model_to_train}...")
+
+def train_model(
+    train_x: pd.DataFrame,
+    train_y: pd.Series,
+    model: Any,
+) -> Any:
+    """
+    Trains a given regression model instance.
+
+    Args:
+        train_x: The training features.
+        train_y: The training target.
+        model: An unfitted, instantiated regressor model instance.
+
+    Returns:
+        A trained regressor model.
+    """
+    logger.info(f"Training model: {model.__class__.__name__}...")
     model.fit(train_x, train_y)
     logger.info("Model training complete.")
-
     return model
