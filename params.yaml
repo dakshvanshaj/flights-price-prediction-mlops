@@ -10,49 +10,200 @@ data_splits:
 # --- HYPERPARAMETERS FOR GOLD PIPELINE STAGES ---
 # =================================================================
 gold_pipeline:
-  # --- Imputation (Stage 3) ---
   imputation:
     median: ["price", "time", "distance"]
     mode: ["agency", "flight_type"]
     constant:
       from_location: "Unknown"
       to_location: "Unknown"
-
-  # --- Rare Category Grouping (Stage 5) ---
   rare_category_grouping:
-    # Threshold for grouping. Categories appearing in less than this fraction
-    # of the data will be grouped into a single 'Other' category.
     cardinality_threshold: 0.01
-
-  # --- Outlier Handling (Stage 7) ---
   outlier_handling:
-    # Strategy can be 'iqr', 'zscore' 'isolation_forest'.
     detection_strategy: "iqr"
-    # Handling can be 'trim', 'winsorize'.
     handling_strategy: "trim"
-    # The expected percentage of outliers in the data for Isolation Forest.
-    # iso_forest_contamination: 0.01
-
-  # --- Power Transformations (Stage 8) ---
   power_transformer:
-    # Strategy can be 'log', 'yeo-johnson' or 'box-cox'.
     strategy: "yeo-johnson"
-
-  # --- Scaling (Stage 9) ---
   scaler:
-    # Strategy can be 'standard', 'robust', or 'minmax'
     strategy: "standard"
 
+# =================================================================
+# --- PARAMETERS FOR MODEL TRAINING ---
+# =================================================================
 training_pipeline:
-  model_to_train: "LinearRegression"
-  name: "LinearRegression_v1"
-  # Specify a list of columns to drop to handle multicollinearity.
-  # e.g., ["distance"] or ["time"]. Set to null or [] to keep all columns.
-  drop_multicollinear_cols: ["time"]
-  training_params:
-    n_jobs: -1
+  # -----------------------------------------------------------------
+  # >> The ONLY line you need to change to run a different model <<
+  # This key points to one of the configurations in the 'models' dictionary below.
+  model_config_to_run: "LinearRegression_Simple_Base"
+  # -----------------------------------------------------------------
 
+  # --- Dictionary of all available model configurations ---
+  models:
+    # -----------------------------------------------------------------
+    # 1. Linear Regression (Baseline)
+    # -----------------------------------------------------------------
+    LinearRegression_Simple_Base:
+      model_class: "LinearRegression"
+      name: "LinearRegression_Simple_Base"
+      run_name: "LinearRegression_Simple_Base"
+      log_model_artifact: false
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        n_jobs: -1
+        fit_intercept: true
+      cross_validation:
+        enabled: false
+
+    LinearRegression_CV_Base:
+      model_class: "LinearRegression"
+      name: "LinearRegression_CV_Base"
+      run_name: "LinearRegression_CV_Base"
+      log_model_artifact: false
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        n_jobs: -1
+        fit_intercept: true
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 2. Ridge Regression (L2 Regularization)
+    # -----------------------------------------------------------------
+    Ridge_Simple_Base:
+      model_class: "Ridge"
+      name: "Ridge_Simple_Base"
+      run_name: "Ridge_Simple_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: false
+
+    Ridge_CV_Base:
+      model_class: "Ridge"
+      name: "Ridge_CV_Base"
+      run_name: "Ridge_CV_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 3. Lasso Regression (L1 Regularization)
+    # -----------------------------------------------------------------
+    Lasso_Simple_Base:
+      model_class: "Lasso"
+      name: "Lasso_Simple_Base"
+      run_name: "Lasso_Simple_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: false
+
+    Lasso_CV_Base:
+      model_class: "Lasso"
+      name: "Lasso_CV_Base"
+      run_name: "Lasso_CV_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 4. ElasticNet (L1 + L2 Regularization)
+    # -----------------------------------------------------------------
+    ElasticNet_Simple_Base:
+      model_class: "ElasticNet"
+      name: "ElasticNet_Simple_Base"
+      run_name: "ElasticNet_Simple_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: false
+
+    ElasticNet_CV_Base:
+      model_class: "ElasticNet"
+      name: "ElasticNet_CV_Base"
+      run_name: "ElasticNet_CV_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: ["time"]
+      training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 5. XGBoost Regressor
+    # -----------------------------------------------------------------
+    XGBRegressor_Simple_Base:
+      model_class: "XGBRegressor"
+      name: "XGBRegressor_Simple_Base"
+      run_name: "XGBRegressor_Simple_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: []
+      training_params:
+        n_jobs: -1
+      cross_validation:
+        enabled: false
+
+    XGBRegressor_CV_Base:
+      model_class: "XGBRegressor"
+      name: "XGBRegressor_CV_Base"
+      run_name: "XGBRegressor_CV_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: []
+      training_params:
+        n_jobs: -1
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 6. LightGBM Regressor
+    # -----------------------------------------------------------------
+    LGBMRegressor_Simple_Base:
+      model_class: "LGBMRegressor"
+      name: "LGBMRegressor_Simple_Base"
+      run_name: "LGBMRegressor_Simple_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: []
+      training_params:
+        n_jobs: -1
+      cross_validation:
+        enabled: false
+
+    LGBMRegressor_CV_Base:
+      model_class: "LGBMRegressor"
+      name: "LGBMRegressor_CV_Base"
+      run_name: "LGBMRegressor_CV_Base"
+      log_model_artifact: true
+      log_predictions: true
+      drop_multicollinear_cols: []
+      training_params:
+        n_jobs: -1
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+# =================================================================
+# --- PARAMETERS FOR MLFLOW ---
+# =================================================================
 mlflow_params:
-  experiment_name: "Flights_Price_Prediction"
-  # experiment_id:
-  run_name: "test_run"
+  experiment_name: "Flights_Price_Prediction_Linear_Models"
