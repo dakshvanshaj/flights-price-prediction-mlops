@@ -46,7 +46,9 @@ training_pipeline:
       name: "LinearRegression_Simple_Base"
       run_name: "LinearRegression_Simple_Base"
       log_model_artifact: false
-      log_predictions: true
+      register_model: false
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
         n_jobs: -1
@@ -59,7 +61,9 @@ training_pipeline:
       name: "LinearRegression_CV_Base"
       run_name: "LinearRegression_CV_Base"
       log_model_artifact: false
-      log_predictions: true
+      register_model: false
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
         n_jobs: -1
@@ -76,7 +80,9 @@ training_pipeline:
       name: "Ridge_Simple_Base"
       run_name: "Ridge_Simple_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -87,9 +93,59 @@ training_pipeline:
       name: "Ridge_CV_Base"
       run_name: "Ridge_CV_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # --- Tuned Ridge Configurations ---
+    Ridge_Simple_Tuned:
+      model_class: "Ridge"
+      name: "Ridge_Simple_Tuned"
+      run_name: "Ridge_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # alpha: Regularization strength. Larger values mean stronger regularization.
+        # This helps prevent overfitting by penalizing large coefficients.
+        # Default: 1.0. Try values like 0.1, 1, 10, 100.
+        alpha: 1.0
+        # fit_intercept: Whether to calculate the intercept for this model.
+        # Default: true. Usually kept as true unless you know your data is centered.
+        fit_intercept: true
+        # solver: Algorithm to use for computation. 'auto' chooses the best one.
+        # Other options: 'svd', 'cholesky', 'lsqr', 'sparse_cg', 'sag', 'saga'.
+        # Default: 'auto'.
+        solver: "auto"
+        # random_state: Seed for the random number generator.
+        # Only used by 'sag' and 'saga' solvers. Ensures reproducibility.
+        # Default: null. Set to an integer like 42 for consistent results.
+        random_state: 42
+      cross_validation:
+        enabled: false
+
+    Ridge_CV_Tuned:
+      model_class: "Ridge"
+      name: "Ridge_CV_Tuned"
+      run_name: "Ridge_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # Same parameters as Ridge_Simple_Tuned.
+        alpha: 1.0
+        fit_intercept: true
+        solver: "auto"
+        random_state: 42
       cross_validation:
         enabled: true
         n_splits: 5
@@ -102,7 +158,9 @@ training_pipeline:
       name: "Lasso_Simple_Base"
       run_name: "Lasso_Simple_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -113,9 +171,57 @@ training_pipeline:
       name: "Lasso_CV_Base"
       run_name: "Lasso_CV_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # --- Tuned Lasso Configurations ---
+    Lasso_Simple_Tuned:
+      model_class: "Lasso"
+      name: "Lasso_Simple_Tuned"
+      run_name: "Lasso_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # alpha: Regularization strength. Lasso can shrink some coefficients to zero,
+        # effectively performing feature selection.
+        # Default: 1.0.
+        alpha: 1.0
+        # fit_intercept: Whether to calculate the intercept.
+        # Default: true.
+        fit_intercept: true
+        # selection: How coefficients are updated. 'cyclic' loops through features,
+        # 'random' updates a random feature each iteration, which can be faster.
+        # Default: 'cyclic'.
+        selection: "cyclic"
+        # random_state: Seed for 'random' selection.
+        # Default: null.
+        random_state: 42
+      cross_validation:
+        enabled: false
+
+    Lasso_CV_Tuned:
+      model_class: "Lasso"
+      name: "Lasso_CV_Tuned"
+      run_name: "Lasso_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        alpha: 1.0
+        fit_intercept: true
+        selection: "cyclic"
+        random_state: 42
       cross_validation:
         enabled: true
         n_splits: 5
@@ -128,7 +234,9 @@ training_pipeline:
       name: "ElasticNet_Simple_Base"
       run_name: "ElasticNet_Simple_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -139,22 +247,233 @@ training_pipeline:
       name: "ElasticNet_CV_Base"
       run_name: "ElasticNet_CV_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
         enabled: true
         n_splits: 5
 
+    # --- Tuned ElasticNet Configurations ---
+    ElasticNet_Simple_Tuned:
+      model_class: "ElasticNet"
+      name: "ElasticNet_Simple_Tuned"
+      run_name: "ElasticNet_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # alpha: Overall regularization strength (combines L1 and L2).
+        # Default: 1.0.
+        alpha: 1.0
+        # l1_ratio: The mix between L1 (Lasso) and L2 (Ridge) penalties.
+        # l1_ratio=1 is Lasso, l1_ratio=0 is Ridge. 0 < ratio < 1 is a mix.
+        # Good for datasets with highly correlated features.
+        # Default: 0.5.
+        l1_ratio: 0.5
+        # fit_intercept: Whether to calculate the intercept.
+        # Default: true.
+        fit_intercept: true
+        # selection: How coefficients are updated ('cyclic' or 'random').
+        # Default: 'cyclic'.
+        selection: "cyclic"
+        # random_state: Seed for 'random' selection.
+        # Default: null.
+        random_state: 42
+      cross_validation:
+        enabled: false
+
+    ElasticNet_CV_Tuned:
+      model_class: "ElasticNet"
+      name: "ElasticNet_CV_Tuned"
+      run_name: "ElasticNet_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # Same parameters as ElasticNet_Simple_Tuned.
+        alpha: 1.0
+        l1_ratio: 0.5
+        fit_intercept: true
+        selection: "cyclic"
+        random_state: 42
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
     # -----------------------------------------------------------------
-    # 5. XGBoost Regressor
+    # 5. SGD Regressor (Stochastic Gradient Descent)
+    # -----------------------------------------------------------------
+    SGDRegressor_Simple_Base:
+      model_class: "SGDRegressor"
+      name: "SGDRegressor_Simple_Base"
+      run_name: "SGDRegressor_Simple_Base"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: true
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        random_state: 42
+      cross_validation:
+        enabled: false
+
+    SGDRegressor_CV_Base:
+      model_class: "SGDRegressor"
+      name: "SGDRegressor_CV_Base"
+      run_name: "SGDRegressor_CV_Base"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: true
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        random_state: 42
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # --- Tuned SGDRegressor Configurations ---
+    SGDRegressor_Simple_Tuned:
+      model_class: "SGDRegressor"
+      name: "SGDRegressor_Simple_Tuned"
+      run_name: "SGDRegressor_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        # loss: The loss function. 'squared_error' is standard for regression.
+        # Other options: 'huber', 'epsilon_insensitive', 'squared_epsilon_insensitive'.
+        loss: "squared_error"
+        # penalty: The regularization term. 'l2' is Ridge, 'l1' is Lasso, 'elasticnet' is a mix.
+        # Default: 'l2'.
+        penalty: "l2"
+        # alpha: Constant that multiplies the regularization term.
+        # Default: 0.0001.
+        alpha: 0.0001
+        # max_iter: Maximum number of passes over the training data (epochs).
+        # Default: 1000.
+        max_iter: 1000
+        # random_state: Seed for reproducibility.
+        random_state: 42
+      cross_validation:
+        enabled: false
+
+    SGDRegressor_CV_Tuned:
+      model_class: "SGDRegressor"
+      name: "SGDRegressor_CV_Tuned"
+      run_name: "SGDRegressor_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: ["time"]
+      training_params:
+        loss: "squared_error"
+        penalty: "l2"
+        alpha: 0.0001
+        max_iter: 1000
+        random_state: 42
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 6. Support Vector Regression (SVR)
+    # -----------------------------------------------------------------
+    SVR_Simple_Base:
+      model_class: "SVR"
+      name: "SVR_Simple_Base"
+      run_name: "SVR_Simple_Base"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: true
+      drop_multicollinear_cols: []
+      training_params: {}
+      cross_validation:
+        enabled: false
+
+    SVR_CV_Base:
+      model_class: "SVR"
+      name: "SVR_CV_Base"
+      run_name: "SVR_CV_Base"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: true
+      drop_multicollinear_cols: []
+      training_params: {}
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # --- Tuned SVR Configurations ---
+    SVR_Simple_Tuned:
+      model_class: "SVR"
+      name: "SVR_Simple_Tuned"
+      run_name: "SVR_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        # kernel: Specifies the kernel type to be used in the algorithm.
+        # 'rbf' (Radial Basis Function) is a good default.
+        # Other options: 'linear', 'poly', 'sigmoid'.
+        kernel: "rbf"
+        # C: Regularization parameter. The strength of the regularization is
+        # inversely proportional to C. Must be strictly positive.
+        # Default: 1.0.
+        C: 1.0
+        # gamma: Kernel coefficient for 'rbf', 'poly' and 'sigmoid'.
+        # 'scale' (default) uses 1 / (n_features * X.var()). 'auto' uses 1 / n_features.
+        gamma: "scale"
+        # epsilon: Epsilon in the epsilon-SVR model. It specifies the epsilon-tube
+        # within which no penalty is associated.
+        # Default: 0.1.
+        epsilon: 0.1
+      cross_validation:
+        enabled: false
+
+    SVR_CV_Tuned:
+      model_class: "SVR"
+      name: "SVR_CV_Tuned"
+      run_name: "SVR_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        kernel: "rbf"
+        C: 1.0
+        gamma: "scale"
+        epsilon: 0.1
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # -----------------------------------------------------------------
+    # 7. XGBoost Regressor
     # -----------------------------------------------------------------
     XGBRegressor_Simple_Base:
       model_class: "XGBRegressor"
       name: "XGBRegressor_Simple_Base"
       run_name: "XGBRegressor_Simple_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -166,7 +485,9 @@ training_pipeline:
       name: "XGBRegressor_CV_Base"
       run_name: "XGBRegressor_CV_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -174,15 +495,89 @@ training_pipeline:
         enabled: true
         n_splits: 5
 
+    # --- Tuned XGBoost Configurations ---
+    XGBRegressor_Simple_Tuned:
+      model_class: "XGBRegressor"
+      name: "XGBRegressor_Simple_Tuned"
+      run_name: "XGBRegressor_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        # n_estimators: The number of boosting rounds or trees to build.
+        # More trees can lead to better performance but also overfitting.
+        # Default: 100.
+        n_estimators: 100
+        # learning_rate (eta): Step size shrinkage. Lower values make the model
+        # more robust to overfitting but require more n_estimators.
+        # Default: 0.3. Common values: 0.01, 0.1, 0.3.
+        learning_rate: 0.3
+        # max_depth: Maximum depth of each tree. Deeper trees can model more
+        # complex patterns but are more likely to overfit.
+        # Default: 6. Common values: 3-10.
+        max_depth: 6
+        # subsample: Fraction of training data to be randomly sampled for each tree.
+        # Helps prevent overfitting.
+        # Default: 1.0 (use all data). Common values: 0.6-1.0.
+        subsample: 1.0
+        # colsample_bytree: Fraction of columns (features) to be randomly sampled for each tree.
+        # Default: 1.0. Common values: 0.6-1.0.
+        colsample_bytree: 1.0
+        # gamma (min_split_loss): Minimum loss reduction required to make a split.
+        # A larger gamma makes the algorithm more conservative.
+        # Default: 0.
+        gamma: 0
+        # reg_alpha: L1 regularization term on weights. Encourages sparsity.
+        # Default: 0.
+        reg_alpha: 0
+        # reg_lambda: L2 regularization term on weights. Makes model more conservative.
+        # Default: 1.
+        reg_lambda: 1
+        # random_state: Seed for reproducibility.
+        # Default: null.
+        random_state: 42
+        n_jobs: -1
+      cross_validation:
+        enabled: false
+
+    XGBRegressor_CV_Tuned:
+      model_class: "XGBRegressor"
+      name: "XGBRegressor_CV_Tuned"
+      run_name: "XGBRegressor_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        # Same parameters as XGBRegressor_Simple_Tuned.
+        n_estimators: 100
+        learning_rate: 0.3
+        max_depth: 6
+        subsample: 1.0
+        colsample_bytree: 1.0
+        gamma: 0
+        reg_alpha: 0
+        reg_lambda: 1
+        random_state: 42
+        n_jobs: -1
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
     # -----------------------------------------------------------------
-    # 6. LightGBM Regressor
+    # 8. LightGBM Regressor
     # -----------------------------------------------------------------
     LGBMRegressor_Simple_Base:
       model_class: "LGBMRegressor"
       name: "LGBMRegressor_Simple_Base"
       run_name: "LGBMRegressor_Simple_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -194,9 +589,81 @@ training_pipeline:
       name: "LGBMRegressor_CV_Base"
       run_name: "LGBMRegressor_CV_Base"
       log_model_artifact: true
+      register_model: false
       log_predictions: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: []
       training_params:
+        n_jobs: -1
+      cross_validation:
+        enabled: true
+        n_splits: 5
+
+    # --- Tuned LightGBM Configurations ---
+    LGBMRegressor_Simple_Tuned:
+      model_class: "LGBMRegressor"
+      name: "LGBMRegressor_Simple_Tuned"
+      run_name: "LGBMRegressor_Simple_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        # n_estimators: Number of boosting rounds.
+        # Default: 100.
+        n_estimators: 100
+        # learning_rate: Controls the step size. Lower values require more estimators.
+        # Default: 0.1.
+        learning_rate: 0.1
+        # num_leaves: The maximum number of leaves in one tree. This is the main
+        # parameter to control the complexity of the tree model.
+        # A higher value can lead to overfitting.
+        # Default: 31.
+        num_leaves: 31
+        # max_depth: Maximum tree depth. -1 means no limit.
+        # Used to handle overfitting if num_leaves is too high.
+        # Default: -1.
+        max_depth: -1
+        # subsample (bagging_fraction): Fraction of data to be used for each tree.
+        # Default: 1.0.
+        subsample: 1.0
+        # colsample_bytree (feature_fraction): Fraction of features to be used for each tree.
+        # Default: 1.0.
+        colsample_bytree: 1.0
+        # reg_alpha: L1 regularization.
+        # Default: 0.0.
+        reg_alpha: 0.0
+        # reg_lambda: L2 regularization.
+        # Default: 0.0.
+        reg_lambda: 0.0
+        # random_state: Seed for reproducibility.
+        # Default: null.
+        random_state: 42
+        n_jobs: -1
+      cross_validation:
+        enabled: false
+
+    LGBMRegressor_CV_Tuned:
+      model_class: "LGBMRegressor"
+      name: "LGBMRegressor_CV_Tuned"
+      run_name: "LGBMRegressor_CV_Tuned"
+      log_model_artifact: true
+      register_model: false
+      log_predictions: true
+      evaluate_on_test_set: false
+      drop_multicollinear_cols: []
+      training_params:
+        # Same parameters as LGBMRegressor_Simple_Tuned.
+        n_estimators: 100
+        learning_rate: 0.1
+        num_leaves: 31
+        max_depth: -1
+        subsample: 1.0
+        colsample_bytree: 1.0
+        reg_alpha: 0.0
+        reg_lambda: 0.0
+        random_state: 42
         n_jobs: -1
       cross_validation:
         enabled: true
