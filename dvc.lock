@@ -15,11 +15,14 @@ stages:
       hash: md5
       md5: facaf4c7d2fdcd4ae02d5d52f514444e
       size: 3258
-    - path: src/shared/
+    - path: src/shared/config/config_logging.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     outs:
     - path: data/raw/train_validation_test/test.csv
       hash: md5
@@ -40,6 +43,10 @@ stages:
       hash: md5
       md5: c913f2a2f5394eba3d96badf8c07ea29
       size: 17002301
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/bronze_expectations.py
       hash: md5
       md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
@@ -52,11 +59,18 @@ stages:
       hash: md5
       md5: 461f7f20b6b83cfc53910d31b594484d
       size: 5125
-    - path: src/shared/
+    - path: src/shared/config/config_bronze.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     outs:
     - path: data/bronze_data/processed/train.csv
       hash: md5
@@ -69,6 +83,10 @@ stages:
       hash: md5
       md5: 035f4539e18954eaca370c6a5c06723a
       size: 3645658
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/bronze_expectations.py
       hash: md5
       md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
@@ -81,11 +99,18 @@ stages:
       hash: md5
       md5: 461f7f20b6b83cfc53910d31b594484d
       size: 5125
-    - path: src/shared/
+    - path: src/shared/config/config_bronze.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     outs:
     - path: data/bronze_data/processed/validation.csv
       hash: md5
@@ -98,6 +123,10 @@ stages:
       hash: md5
       md5: dfa25b636af1f48bc9d1985dcadc324e
       size: 3650705
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/bronze_expectations.py
       hash: md5
       md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
@@ -110,11 +139,18 @@ stages:
       hash: md5
       md5: 461f7f20b6b83cfc53910d31b594484d
       size: 5125
-    - path: src/shared/
+    - path: src/shared/config/config_bronze.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     outs:
     - path: data/bronze_data/processed/test.csv
       hash: md5
@@ -127,11 +163,10 @@ stages:
       hash: md5
       md5: c913f2a2f5394eba3d96badf8c07ea29
       size: 17002301
-    - path: src/data_ingestion/
+    - path: src/data_ingestion/data_loader.py
       hash: md5
-      md5: 2661bcb446d210975f34885f7df6f7de.dir
-      size: 10498
-      nfiles: 4
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/silver_expectations.py
       hash: md5
       md5: 5c6c120c4c73b6efd935a2819f074d83
@@ -144,11 +179,18 @@ stages:
       hash: md5
       md5: 488cd73a306688ae48c373ca8ed0d2fc
       size: 5574
-    - path: src/shared/
+    - path: src/shared/config/config_logging.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/config/config_silver.py
+      hash: md5
+      md5: d6149d100fe4e997932daf0ae03b2b74
+      size: 1957
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
       md5: e16891d34a4612ce47d1462b36b6dfb1.dir
@@ -166,11 +208,10 @@ stages:
       hash: md5
       md5: 035f4539e18954eaca370c6a5c06723a
       size: 3645658
-    - path: src/data_ingestion/
+    - path: src/data_ingestion/data_loader.py
       hash: md5
-      md5: 2661bcb446d210975f34885f7df6f7de.dir
-      size: 10498
-      nfiles: 4
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/silver_expectations.py
       hash: md5
       md5: 5c6c120c4c73b6efd935a2819f074d83
@@ -183,11 +224,18 @@ stages:
       hash: md5
       md5: 488cd73a306688ae48c373ca8ed0d2fc
       size: 5574
-    - path: src/shared/
+    - path: src/shared/config/config_logging.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/config/config_silver.py
+      hash: md5
+      md5: d6149d100fe4e997932daf0ae03b2b74
+      size: 1957
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
       md5: e16891d34a4612ce47d1462b36b6dfb1.dir
@@ -205,11 +253,10 @@ stages:
       hash: md5
       md5: dfa25b636af1f48bc9d1985dcadc324e
       size: 3650705
-    - path: src/data_ingestion/
+    - path: src/data_ingestion/data_loader.py
       hash: md5
-      md5: 2661bcb446d210975f34885f7df6f7de.dir
-      size: 10498
-      nfiles: 4
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/silver_expectations.py
       hash: md5
       md5: 5c6c120c4c73b6efd935a2819f074d83
@@ -222,11 +269,18 @@ stages:
       hash: md5
       md5: 488cd73a306688ae48c373ca8ed0d2fc
       size: 5574
-    - path: src/shared/
+    - path: src/shared/config/config_logging.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/config/config_silver.py
+      hash: md5
+      md5: d6149d100fe4e997932daf0ae03b2b74
+      size: 1957
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
       md5: e16891d34a4612ce47d1462b36b6dfb1.dir
@@ -252,11 +306,10 @@ stages:
       hash: md5
       md5: 4ab1e09c3bfe882e9a34dcd9438a0ed3
       size: 399605
-    - path: src/data_ingestion/
+    - path: src/data_ingestion/data_loader.py
       hash: md5
-      md5: 2661bcb446d210975f34885f7df6f7de.dir
-      size: 10498
-      nfiles: 4
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
     - path: src/data_validation/expectations/gold_expectations.py
       hash: md5
       md5: 9ad9ba114b3691686ba918328dca87cc
@@ -267,18 +320,25 @@ stages:
       size: 13316
     - path: src/gold_data_preprocessing/
       hash: md5
-      md5: 9d572cc1a0a650a8d1b893ab98b0c652.dir
-      size: 122570
+      md5: e29571f4557871e8ddfb6a7683d81e04.dir
+      size: 129556
       nfiles: 19
     - path: src/pipelines/gold_pipeline.py
       hash: md5
       md5: 35e707ca947d4d94fa012241aec393c0
       size: 12567
-    - path: src/shared/
+    - path: src/shared/config/config_gold.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 33ee1291d1d420c6d874297c544e7be8
+      size: 5440
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     params:
       params.yaml:
         gold_pipeline.imputation:
@@ -342,7 +402,7 @@ stages:
       size: 219
   training_pipeline:
     cmd: python src/pipelines/training_pipeline.py train.parquet 
-      validation.parquet
+      validation.parquet test.parquet
     deps:
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
@@ -352,29 +412,233 @@ stages:
       hash: md5
       md5: 0e2d9d902ad34998e9cd555f08be7e9b
       size: 331314
-    - path: src/model_training/
+    - path: src/data_ingestion/data_loader.py
       hash: md5
-      md5: 09a8da420dddc0291524d70765d1ab4f.dir
-      size: 4127
-      nfiles: 2
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
+    - path: src/gold_data_preprocessing/power_transformer.py
+      hash: md5
+      md5: 2a2aa997e483587e5b1a1c9a9d34bc9a
+      size: 8591
+    - path: src/gold_data_preprocessing/scaler.py
+      hash: md5
+      md5: ab41a984ea574e402bbcc5acb3f7b5f7
+      size: 7319
+    - path: src/model_evaluation/evaluation.py
+      hash: md5
+      md5: 9a05bd0da8e4b125b7cb4fd908b4a6ac
+      size: 5188
+    - path: src/model_training/train.py
+      hash: md5
+      md5: 8fcfe71fa0cb289773fa4f2601ca5b75
+      size: 2146
     - path: src/pipelines/training_pipeline.py
       hash: md5
-      md5: f0bd271702d75a739985b66e5cae555b
-      size: 10702
-    - path: src/shared/
+      md5: 70e9befc870101397cce57462728bd74
+      size: 15041
+    - path: src/shared/config/config_gold.py
       hash: md5
-      md5: d57a3f8d655bde9e8ba007465c200fed.dir
-      size: 38432
-      nfiles: 22
+      md5: 33ee1291d1d420c6d874297c544e7be8
+      size: 5440
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: 0ffc329b538ff23f61f120c678681f0f
+      size: 402
+    - path: src/shared/config/config_training.py
+      hash: md5
+      md5: 07ddab748239700a869fb1592b25a702
+      size: 1205
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
     params:
       params.yaml:
         mlflow_params:
           experiment_name: Flights_Price_Prediction_Linear_Models
-          run_name: LinearRegression_Base
         training_pipeline:
-          model_to_train: LinearRegression
-          name: LinearRegression_Base
-          drop_multicollinear_cols:
-          - time
-          training_params:
-            n_jobs: -1
+          model_config_to_run: LinearRegression_Simple_Base
+          models:
+            LinearRegression_Simple_Base:
+              model_class: LinearRegression
+              name: LinearRegression_Simple_Base
+              run_name: LinearRegression_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                n_jobs: -1
+                fit_intercept: true
+              cross_validation:
+                enabled: false
+            LinearRegression_CV_Base:
+              model_class: LinearRegression
+              name: LinearRegression_CV_Base
+              run_name: LinearRegression_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                n_jobs: -1
+                fit_intercept: true
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            LinearRegression_Simple_Tuned:
+              model_class: LinearRegression
+              name: LinearRegression_Simple_Base
+              run_name: LinearRegression_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                n_jobs: -1
+                fit_intercept: true
+              cross_validation:
+                enabled: false
+            LinearRegression_CV_Tuned:
+              model_class: LinearRegression
+              name: LinearRegression_CV_Base
+              run_name: LinearRegression_CV_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                n_jobs: -1
+                fit_intercept: true
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            Ridge_Simple_Base:
+              model_class: Ridge
+              name: Ridge_Simple_Base
+              run_name: Ridge_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: false
+            Ridge_CV_Base:
+              model_class: Ridge
+              name: Ridge_CV_Base
+              run_name: Ridge_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            Lasso_Simple_Base:
+              model_class: Lasso
+              name: Lasso_Simple_Base
+              run_name: Lasso_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: false
+            Lasso_CV_Base:
+              model_class: Lasso
+              name: Lasso_CV_Base
+              run_name: Lasso_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            ElasticNet_Simple_Base:
+              model_class: ElasticNet
+              name: ElasticNet_Simple_Base
+              run_name: ElasticNet_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: false
+            ElasticNet_CV_Base:
+              model_class: ElasticNet
+              name: ElasticNet_CV_Base
+              run_name: ElasticNet_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols:
+              - time
+              training_params: {}
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            XGBRegressor_Simple_Base:
+              model_class: XGBRegressor
+              name: XGBRegressor_Simple_Base
+              run_name: XGBRegressor_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: false
+            XGBRegressor_CV_Base:
+              model_class: XGBRegressor
+              name: XGBRegressor_CV_Base
+              run_name: XGBRegressor_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            LGBMRegressor_Simple_Base:
+              model_class: LGBMRegressor
+              name: LGBMRegressor_Simple_Base
+              run_name: LGBMRegressor_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: false
+            LGBMRegressor_CV_Base:
+              model_class: LGBMRegressor
+              name: LGBMRegressor_CV_Base
+              run_name: LGBMRegressor_CV_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: true
+                n_splits: 5
