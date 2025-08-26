@@ -1,19 +1,18 @@
-version: 1  # Schema version (required)
+version: 1 # Schema version (required)
 
-disable_existing_loggers: false  # Keep existing loggers active
+disable_existing_loggers: false # Keep existing loggers active
 
 formatters:
   # JSON formatter for file logs
   json:
-  
-    '()': pythonjsonlogger.json.JsonFormatter  # Use python-json-logger
-    format: "%(asctime)s %(levelname)s %(name)s %(lineno)d %(message)s"  # Include line number
+    "()": pythonjsonlogger.json.JsonFormatter # Use python-json-logger
+    format: "%(asctime)s %(levelname)s %(name)s %(lineno)d %(message)s" # Include line number
     rename_fields:
-      asctime: timestamp  # Rename 'asctime' to 'timestamp' in output
+      asctime: timestamp # Rename 'asctime' to 'timestamp' in output
 
   # Simple formatter for console output
   simple:
-    format: "[%(levelname)-8s] [%(name)s:%(lineno)d] %(message)s"  # Show line number in console logs
+    format: "[%(levelname)-8s] [%(name)s:%(lineno)d] %(message)s" # Show line number in console logs
 
 handlers:
   # Console handler for human-readable logs
@@ -26,19 +25,27 @@ handlers:
   file:
     class: logging.handlers.RotatingFileHandler
     formatter: json
-    filename: logs/app.log  # Log file path
-    maxBytes: 5242880       # Rotate at 5 MB
-    backupCount: 3          # Keep 3 backups
+    filename: logs/app.log # Log file path
+    maxBytes: 5242880 # Rotate at 5 MB
+    backupCount: 3 # Keep 3 backups
     encoding: utf8
 
 root:
-  level: DEBUG  # Default log level
-  handlers: [console, file]  # Send logs to both handlers
+  level: DEBUG # Default log level
+  handlers: [console, file] # Send logs to both handlers
 
 loggers:
   great_expectations:
-    level: WARNING  # Suppress lower-level logs from this library
+    level: WARNING # Suppress lower-level logs from this library
   urllib3:
     level: WARNING
   tzlocal:
+    level: WARNING
+  botocore:
+    level: WARNING
+  s3transfer:
+    level: WARNING
+  boto3:
+    level: WARNING
+  git.cmd:
     level: WARNING
