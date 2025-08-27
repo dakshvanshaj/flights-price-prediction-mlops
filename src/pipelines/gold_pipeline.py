@@ -56,20 +56,20 @@ def gold_engineering_pipeline(
     logger.info(f"--- Starting Gold Engineering Pipeline for: {file_name} ---")
 
     # === STAGE 1: DATA INGESTION ===
-    logger.info("=" * 25 + " STAGE 1/10: DATA INGESTION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 1/11: DATA INGESTION " + "=" * 25)
     df = load_data(input_filepath)
     if df is None:
         return False, None, None, None, None, None, None
     logger.info(f"Successfully loaded {len(df)} rows.")
 
     # === STAGE 2: DATA CLEANING ===
-    logger.info("=" * 25 + " STAGE 2/10: DATA CLEANING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 2/11: DATA CLEANING " + "=" * 25)
     df = drop_columns(df, columns_to_drop=config_gold.GOLD_DROP_COLS)
     df = drop_duplicates(df, keep="first")
     df = drop_missing_target_rows(df, config_gold.TARGET_COLUMN)
 
     # === STAGE 3: IMPUTATION ===
-    logger.info("=" * 25 + " STAGE 3/10: IMPUTATION " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 3/11: IMPUTATION " + "=" * 25)
     fitted_imputer = None
     if imputer_to_apply:
         df = imputer_to_apply.transform(df)
@@ -80,14 +80,14 @@ def gold_engineering_pipeline(
         fitted_imputer = imputer
 
     # === STAGE 4: FEATURE ENGINEERING ===
-    logger.info("=" * 25 + " STAGE 4/10: FEATURE ENGINEERING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 4/11: FEATURE ENGINEERING " + "=" * 25)
     df = create_cyclical_features(df, cyclical_map=config_gold.CYCLICAL_FEATURES_MAP)
     df = create_categorical_interaction_features(
         df, interaction_map=config_gold.INTERACTION_FEATURES_CONFIG
     )
 
     # === STAGE 5: RARE CATEGORY GROUPING ===
-    logger.info("=" * 25 + " STAGE 5/10: RARE CATEGORY GROUPING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 5/11: RARE CATEGORY GROUPING " + "=" * 25)
     fitted_grouper = None
     if grouper_to_apply:
         df = grouper_to_apply.transform(df)
@@ -102,7 +102,7 @@ def gold_engineering_pipeline(
         fitted_grouper = grouper
 
     # === STAGE 6: ENCODE CATEGORICAL COLUMNS ===
-    logger.info("=" * 25 + " STAGE 6/10: ENCODING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 6/11: ENCODING " + "=" * 25)
     fitted_encoder = None
     if encoder_to_apply:
         df = encoder_to_apply.transform(df)
@@ -112,7 +112,7 @@ def gold_engineering_pipeline(
         fitted_encoder = encoder
 
     # === STAGE 7: OUTLIER DETECTION AND HANDLING ===
-    logger.info("=" * 25 + " STAGE 7/10: OUTLIER HANDLING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 7/11: OUTLIER HANDLING " + "=" * 25)
     fitted_outlier_handler = None
     if outlier_handler_to_apply:
         df = outlier_handler_to_apply.transform(df)
@@ -132,7 +132,7 @@ def gold_engineering_pipeline(
         fitted_outlier_handler = outlier_handler
 
     # === STAGE 8: POWER TRANSFORMATIONS ===
-    logger.info("=" * 25 + " STAGE 8/10: POWER TRANSFORMATIONS " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 8/11: POWER TRANSFORMATIONS " + "=" * 25)
     fitted_power_transformer = None
     if power_transformer_to_apply:
         df = power_transformer_to_apply.transform(df)
@@ -147,7 +147,7 @@ def gold_engineering_pipeline(
         fitted_power_transformer = power_transformer
 
     # === STAGE 9: SCALING ===
-    logger.info("=" * 25 + " STAGE 9/10: SCALING " + "=" * 25)
+    logger.info("=" * 25 + " STAGE 9/11: SCALING " + "=" * 25)
     fitted_scaler = None
     if scaler_to_apply:
         df = scaler_to_apply.transform(df)
@@ -158,8 +158,13 @@ def gold_engineering_pipeline(
         df = scaler.fit_transform(df)
         fitted_scaler = scaler
 
-    # === STAGE 10: DATA VALIDATION (QUALITY GATE) ===
-    logger.info("=" * 25 + " STAGE 10/10: FINAL VALIDATION " + "=" * 25)
+    # === STAGE 10: SANITIZE COLUMN NAMES ===
+    logger.info("=" * 25 + " STAGE 10/11: SANITIZE COLUMN NAMES " + "=" * 25)
+    df.columns = df.columns.str.replace(" ", "_", regex=False).str.lower()
+    logger.info("Sanitized column names to be lowercase and snake_case.")
+
+    # === STAGE 11: DATA VALIDATION (QUALITY GATE) ===
+    logger.info("=" * 25 + " STAGE 11/11: FINAL VALIDATION " + "=" * 25)
 
     final_cols_path = config_gold.GOLD_FINAL_COLS_PATH
     if scaler_to_apply is None:
