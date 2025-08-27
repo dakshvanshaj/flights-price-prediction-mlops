@@ -325,8 +325,8 @@ stages:
       nfiles: 19
     - path: src/pipelines/gold_pipeline.py
       hash: md5
-      md5: 35e707ca947d4d94fa012241aec393c0
-      size: 12567
+      md5: 88c6bfda90e650a43ee50e97674165e7
+      size: 12841
     - path: src/shared/config/config_gold.py
       hash: md5
       md5: 33ee1291d1d420c6d874297c544e7be8
@@ -362,15 +362,15 @@ stages:
     outs:
     - path: data/gold_engineered_data/processed/test.parquet
       hash: md5
-      md5: 481ecbba85bec8dbe015a58c7955e8d6
+      md5: 76ff49ef088ca681472ee740d17bdd8a
       size: 374839
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: ab2d8d868ed2d5b7ef181ead8b238a1b
+      md5: 6867c976341f8af0d0112c515b505c4a
       size: 961853
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: 0e2d9d902ad34998e9cd555f08be7e9b
+      md5: ff2818dbacfd6b8d1d74b48e977d7b4a
       size: 331314
     - path: models/categorical_encoder.joblib
       hash: md5
@@ -378,7 +378,7 @@ stages:
       size: 8322
     - path: models/gold_final_columns.json
       hash: md5
-      md5: 2b1258e76f55f7bd8b231feace1a791e
+      md5: dcb302b9e5080c3e6050e4d10aa81734
       size: 3770
     - path: models/outlier_handler.joblib
       hash: md5
@@ -406,11 +406,11 @@ stages:
     deps:
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: ab2d8d868ed2d5b7ef181ead8b238a1b
+      md5: 6867c976341f8af0d0112c515b505c4a
       size: 961853
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: 0e2d9d902ad34998e9cd555f08be7e9b
+      md5: ff2818dbacfd6b8d1d74b48e977d7b4a
       size: 331314
     - path: src/data_ingestion/data_loader.py
       hash: md5
@@ -434,8 +434,8 @@ stages:
       size: 2146
     - path: src/pipelines/training_pipeline.py
       hash: md5
-      md5: 70e9befc870101397cce57462728bd74
-      size: 15041
+      md5: d18bc8faf0d2c639a29d3c236af2ba92
+      size: 15739
     - path: src/shared/config/config_gold.py
       hash: md5
       md5: 33ee1291d1d420c6d874297c544e7be8
@@ -455,17 +455,18 @@ stages:
     params:
       params.yaml:
         mlflow_params:
-          experiment_name: Flights_Price_Prediction_Linear_Models
+          experiment_name: Flights_Price_Baselines
         training_pipeline:
-          model_config_to_run: LinearRegression_Simple_Base
+          model_config_to_run: LinearRegression_CV_Base
           models:
             LinearRegression_Simple_Base:
               model_class: LinearRegression
               name: LinearRegression_Simple_Base
               run_name: LinearRegression_Simple_Base
-              log_model_artifact: true
+              log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params:
@@ -477,38 +478,10 @@ stages:
               model_class: LinearRegression
               name: LinearRegression_CV_Base
               run_name: LinearRegression_CV_Base
-              log_model_artifact: true
-              register_model: false
-              log_predictions: true
-              drop_multicollinear_cols:
-              - time
-              training_params:
-                n_jobs: -1
-                fit_intercept: true
-              cross_validation:
-                enabled: true
-                n_splits: 5
-            LinearRegression_Simple_Tuned:
-              model_class: LinearRegression
-              name: LinearRegression_Simple_Base
-              run_name: LinearRegression_Simple_Base
-              log_model_artifact: true
-              register_model: false
-              log_predictions: true
-              drop_multicollinear_cols:
-              - time
-              training_params:
-                n_jobs: -1
-                fit_intercept: true
-              cross_validation:
-                enabled: false
-            LinearRegression_CV_Tuned:
-              model_class: LinearRegression
-              name: LinearRegression_CV_Base
-              run_name: LinearRegression_CV_Base
               log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params:
@@ -521,9 +494,10 @@ stages:
               model_class: Ridge
               name: Ridge_Simple_Base
               run_name: Ridge_Simple_Base
-              log_model_artifact: true
+              log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params: {}
@@ -533,12 +507,48 @@ stages:
               model_class: Ridge
               name: Ridge_CV_Base
               run_name: Ridge_CV_Base
-              log_model_artifact: true
+              log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params: {}
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            Ridge_Simple_Tuned:
+              model_class: Ridge
+              name: Ridge_Simple_Tuned
+              run_name: Ridge_Simple_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 1.0
+                fit_intercept: true
+                solver: auto
+                random_state: 42
+              cross_validation:
+                enabled: false
+            Ridge_CV_Tuned:
+              model_class: Ridge
+              name: Ridge_CV_Tuned
+              run_name: Ridge_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 1.0
+                fit_intercept: true
+                solver: auto
+                random_state: 42
               cross_validation:
                 enabled: true
                 n_splits: 5
@@ -546,9 +556,10 @@ stages:
               model_class: Lasso
               name: Lasso_Simple_Base
               run_name: Lasso_Simple_Base
-              log_model_artifact: true
+              log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params: {}
@@ -557,13 +568,50 @@ stages:
             Lasso_CV_Base:
               model_class: Lasso
               name: Lasso_CV_Base
-              run_name: Lasso_CV_Base
+              run_name: Lasso_CV_Base_alpha_0.01
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 0.01
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            Lasso_Simple_Tuned:
+              model_class: Lasso
+              name: Lasso_Simple_Tuned
+              run_name: Lasso_Simple_Tuned
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
-              training_params: {}
+              training_params:
+                alpha: 1.0
+                fit_intercept: true
+                selection: cyclic
+                random_state: 42
+              cross_validation:
+                enabled: false
+            Lasso_CV_Tuned:
+              model_class: Lasso
+              name: Lasso_CV_Tuned
+              run_name: Lasso_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 1.0
+                fit_intercept: true
+                selection: cyclic
+                random_state: 42
               cross_validation:
                 enabled: true
                 n_splits: 5
@@ -571,9 +619,10 @@ stages:
               model_class: ElasticNet
               name: ElasticNet_Simple_Base
               run_name: ElasticNet_Simple_Base
-              log_model_artifact: true
+              log_model_artifact: false
               register_model: false
-              log_predictions: true
+              log_predictions: false
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
               training_params: {}
@@ -582,13 +631,251 @@ stages:
             ElasticNet_CV_Base:
               model_class: ElasticNet
               name: ElasticNet_CV_Base
-              run_name: ElasticNet_CV_Base
+              run_name: ElasticNet_CV_Base_alpha_0.001_l1ratio_0.2
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 0.001
+                l1_ratio: 0.2
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            ElasticNet_Simple_Tuned:
+              model_class: ElasticNet
+              name: ElasticNet_Simple_Tuned
+              run_name: ElasticNet_Simple_Tuned
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: false
               drop_multicollinear_cols:
               - time
+              training_params:
+                alpha: 1.0
+                l1_ratio: 0.5
+                fit_intercept: true
+                selection: cyclic
+                random_state: 42
+              cross_validation:
+                enabled: false
+            ElasticNet_CV_Tuned:
+              model_class: ElasticNet
+              name: ElasticNet_CV_Tuned
+              run_name: ElasticNet_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                alpha: 1.0
+                l1_ratio: 0.5
+                fit_intercept: true
+                selection: cyclic
+                random_state: 42
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            SGDRegressor_Simple_Base:
+              model_class: SGDRegressor
+              name: SGDRegressor_Simple_Base
+              run_name: SGDRegressor_Simple_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                random_state: 42
+              cross_validation:
+                enabled: false
+            SGDRegressor_CV_Base:
+              model_class: SGDRegressor
+              name: SGDRegressor_CV_Base
+              run_name: SGDRegressor_CV_Base_eta0_0.0001_maxiter_2000
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                loss: squared_error
+                penalty: l2
+                alpha: 0.01
+                learning_rate: constant
+                eta0: 0.0001
+                max_iter: 2000
+                random_state: 42
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            SGDRegressor_Simple_Tuned:
+              model_class: SGDRegressor
+              name: SGDRegressor_Simple_Tuned
+              run_name: SGDRegressor_Simple_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                loss: squared_error
+                penalty: l2
+                alpha: 0.0001
+                max_iter: 1000
+                random_state: 42
+              cross_validation:
+                enabled: false
+            SGDRegressor_CV_Tuned:
+              model_class: SGDRegressor
+              name: SGDRegressor_CV_Tuned
+              run_name: SGDRegressor_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols:
+              - time
+              training_params:
+                loss: squared_error
+                penalty: l2
+                alpha: 0.0001
+                max_iter: 1000
+                random_state: 42
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            SVR_Simple_Base:
+              model_class: SVR
+              name: SVR_Simple_Base
+              run_name: SVR_Simple_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
               training_params: {}
+              cross_validation:
+                enabled: false
+            SVR_CV_Base:
+              model_class: SVR
+              name: SVR_CV_Base
+              run_name: SVR_CV_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params: {}
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            SVR_Simple_Tuned:
+              model_class: SVR
+              name: SVR_Simple_Tuned
+              run_name: SVR_Simple_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                kernel: rbf
+                C: 1.0
+                gamma: scale
+                epsilon: 0.1
+              cross_validation:
+                enabled: false
+            SVR_CV_Tuned:
+              model_class: SVR
+              name: SVR_CV_Tuned
+              run_name: SVR_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                kernel: rbf
+                C: 1.0
+                gamma: scale
+                epsilon: 0.1
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            RandomForestRegressor_Simple_Base:
+              model_class: RandomForestRegressor
+              name: RandomForestRegressor_Simple_Base
+              run_name: RandomForestRegressor_Simple_Base
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: true
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+                random_state: 42
+              cross_validation:
+                enabled: false
+            RandomForestRegressor_CV_Base:
+              model_class: RandomForestRegressor
+              name: RandomForestRegressor_CV_Base
+              run_name: RandomForestRegressor_CV_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+                random_state: 42
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            RandomForestRegressor_Simple_Tuned:
+              model_class: RandomForestRegressor
+              name: RandomForestRegressor_Simple_Tuned
+              run_name: RandomForestRegressor_Simple_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_estimators: 100
+                max_depth:
+                min_samples_split: 2
+                min_samples_leaf: 1
+                max_features: sqrt
+                random_state: 42
+                n_jobs: -1
+              cross_validation:
+                enabled: false
+            RandomForestRegressor_CV_Tuned:
+              model_class: RandomForestRegressor
+              name: RandomForestRegressor_CV_Tuned
+              run_name: RandomForestRegressor_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_estimators: 100
+                max_depth:
+                min_samples_split: 2
+                min_samples_leaf: 1
+                max_features: sqrt
+                random_state: 42
+                n_jobs: -1
               cross_validation:
                 enabled: true
                 n_splits: 5
@@ -599,6 +886,7 @@ stages:
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: true
               drop_multicollinear_cols: []
               training_params:
                 n_jobs: -1
@@ -608,11 +896,57 @@ stages:
               model_class: XGBRegressor
               name: XGBRegressor_CV_Base
               run_name: XGBRegressor_CV_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            XGBRegressor_Simple_Tuned:
+              model_class: XGBRegressor
+              name: XGBRegressor_Simple_Tuned
+              run_name: XGBRegressor_Simple_Tuned
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: false
               drop_multicollinear_cols: []
               training_params:
+                n_estimators: 100
+                learning_rate: 0.3
+                max_depth: 6
+                subsample: 1.0
+                colsample_bytree: 1.0
+                gamma: 0
+                reg_alpha: 0
+                reg_lambda: 1
+                random_state: 42
+                n_jobs: -1
+              cross_validation:
+                enabled: false
+            XGBRegressor_CV_Tuned:
+              model_class: XGBRegressor
+              name: XGBRegressor_CV_Tuned
+              run_name: XGBRegressor_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_estimators: 100
+                learning_rate: 0.3
+                max_depth: 6
+                subsample: 1.0
+                colsample_bytree: 1.0
+                gamma: 0
+                reg_alpha: 0
+                reg_lambda: 1
+                random_state: 42
                 n_jobs: -1
               cross_validation:
                 enabled: true
@@ -624,6 +958,7 @@ stages:
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: true
               drop_multicollinear_cols: []
               training_params:
                 n_jobs: -1
@@ -633,11 +968,57 @@ stages:
               model_class: LGBMRegressor
               name: LGBMRegressor_CV_Base
               run_name: LGBMRegressor_CV_Base
+              log_model_artifact: false
+              register_model: false
+              log_predictions: false
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_jobs: -1
+              cross_validation:
+                enabled: true
+                n_splits: 5
+            LGBMRegressor_Simple_Tuned:
+              model_class: LGBMRegressor
+              name: LGBMRegressor_Simple_Tuned
+              run_name: LGBMRegressor_Simple_Tuned
               log_model_artifact: true
               register_model: false
               log_predictions: true
+              evaluate_on_test_set: false
               drop_multicollinear_cols: []
               training_params:
+                n_estimators: 100
+                learning_rate: 0.1
+                num_leaves: 31
+                max_depth: -1
+                subsample: 1.0
+                colsample_bytree: 1.0
+                reg_alpha: 0.0
+                reg_lambda: 0.0
+                random_state: 42
+                n_jobs: -1
+              cross_validation:
+                enabled: false
+            LGBMRegressor_CV_Tuned:
+              model_class: LGBMRegressor
+              name: LGBMRegressor_CV_Tuned
+              run_name: LGBMRegressor_CV_Tuned
+              log_model_artifact: true
+              register_model: false
+              log_predictions: true
+              evaluate_on_test_set: false
+              drop_multicollinear_cols: []
+              training_params:
+                n_estimators: 100
+                learning_rate: 0.1
+                num_leaves: 31
+                max_depth: -1
+                subsample: 1.0
+                colsample_bytree: 1.0
+                reg_alpha: 0.0
+                reg_lambda: 0.0
+                random_state: 42
                 n_jobs: -1
               cross_validation:
                 enabled: true
