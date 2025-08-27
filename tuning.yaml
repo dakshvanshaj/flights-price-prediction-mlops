@@ -1,0 +1,268 @@
+# tuning.yaml
+
+# The ONLY line you need to change to run a different tuning experiment
+model_to_tune: "RandomForestRegressor_CV_Tuning"
+
+# MLflow configuration for all tuning experiments
+mlflow_params:
+  experiment_name: "Flights_Price_Tuning_Experiments"
+
+# --- Dictionary of all available tuning configurations ---
+tuning_configs:
+  LinearRegression_CV_Tuning:
+    enabled: false
+    model_class: "LinearRegression"
+    log_model_artifact: true
+    register_model: false
+    base_params:
+      n_jobs: -1
+    run_name: "Tuning_LinearRegression_CV"
+    tuner_type: "optuna"
+    tuner_params:
+      n_trials: 1
+      scoring: "neg_mean_squared_error"
+      direction: "maximize"
+      cv: 5
+    param_space:
+      fit_intercept:
+        type: "categorical"
+        choices: [true, false]
+        # --- fit_intercept ---
+        # Description: Whether to calculate the intercept for this model.
+        # Impact: If your data is already centered, you can set this to false.
+        #         Usually, it's better to let the model fit an intercept.
+
+  RandomForestRegressor_CV_Tuning:
+    enabled: true
+    model_class: "RandomForestRegressor"
+    log_model_artifact: true
+    register_model: false
+    base_params:
+      random_state: 42
+      n_jobs: -1
+    run_name: "Tuning_RandomForestRegressor_CV"
+    tuner_type: "optuna"
+    tuner_params:
+      n_trials: 50
+      scoring: "neg_mean_squared_error"
+      direction: "maximize"
+      cv: 5
+    param_space:
+      n_estimators:
+        type: "int"
+        low: 100
+        high: 500
+        step: 50
+        # --- n_estimators ---
+        # Description: The number of trees in the forest.
+        # Impact: More trees generally improve performance and make predictions more stable,
+        #         but also increase computation time. Too many trees can lead to diminishing returns.
+        # Range: A good starting range is 100 to 1000.
+
+      max_features:
+        type: "float"
+        low: 0.5
+        high: 1.0
+        # --- max_features ---
+        # Description: The fraction of features to consider when looking for the best split.
+        # Impact: Lowering this value reduces variance and can help prevent overfitting, but
+        #         setting it too low might lead to underfitting.
+        # Range: 'sqrt' (a common default) or values between 0.5 and 1.0 are typical.
+
+      max_depth:
+        type: "int"
+        low: 10
+        high: 50
+        step: 5
+        # --- max_depth ---
+        # Description: The maximum depth of each tree.
+        # Impact: Deeper trees can capture more complex patterns but are more prone to overfitting.
+        #         A shallower depth can make the model more general.
+        # Range: Often tuned in a range like 10 to 50, or even left unlimited (by not setting it).
+
+      min_samples_split:
+        type: "int"
+        low: 2
+        high: 16
+        # --- min_samples_split ---
+        # Description: The minimum number of samples required to split an internal node.
+        # Impact: Higher values prevent the model from learning relationships that might be specific
+        #         to a particular sample, thus acting as a regularization parameter.
+        # Range: Common values are from 2 to 20.
+
+      min_samples_leaf:
+        type: "int"
+        low: 1
+        high: 10
+        # --- min_samples_leaf ---
+        # Description: The minimum number of samples required to be at a leaf node.
+        # Impact: Similar to min_samples_split, this controls overfitting. A larger value
+        #         ensures that leaves are not based on very few, potentially noisy, samples.
+        # Range: Common values are from 1 to 20.
+
+  XGBRegressor_CV_Tuning:
+    enabled: true
+    model_class: "XGBRegressor"
+    log_model_artifact: true
+    register_model: false
+    base_params:
+      random_state: 42
+      n_jobs: -1
+    run_name: "Tuning_XGBRegressor_CV"
+    tuner_type: "optuna"
+    tuner_params:
+      n_trials: 75
+      scoring: "neg_mean_squared_error"
+      direction: "maximize"
+      cv: 5
+    param_space:
+      n_estimators:
+        type: "int"
+        low: 100
+        high: 1000
+        step: 100
+        # --- n_estimators ---
+        # Description: Number of boosting rounds.
+        # Impact: More rounds can improve accuracy but also increase risk of overfitting and training time.
+        # Range: Typically 100-2000. Often tuned alongside learning_rate.
+
+      learning_rate:
+        type: "float"
+        low: 0.01
+        high: 0.3
+        log: true
+        # --- learning_rate (eta) ---
+        # Description: Step size shrinkage to prevent overfitting.
+        # Impact: A smaller learning rate requires more estimators but makes the model more robust.
+        # Range: Usually between 0.01 and 0.3. A logarithmic scale is good for tuning.
+
+      max_depth:
+        type: "int"
+        low: 3
+        high: 10
+        # --- max_depth ---
+        # Description: Maximum depth of a tree.
+        # Impact: Controls model complexity. Deeper trees can overfit easily.
+        # Range: Typically 3-10 for gradient boosted trees.
+
+      subsample:
+        type: "float"
+        low: 0.6
+        high: 1.0
+        # --- subsample ---
+        # Description: Fraction of training data to be randomly sampled for each tree.
+        # Impact: Setting it below 1.0 can prevent overfitting.
+        # Range: 0.5 to 1.0 is a common range.
+
+      colsample_bytree:
+        type: "float"
+        low: 0.6
+        high: 1.0
+        # --- colsample_bytree ---
+        # Description: Fraction of columns (features) to be randomly sampled for each tree.
+        # Impact: Helps prevent overfitting, similar to subsample.
+        # Range: 0.5 to 1.0 is a common range.
+
+      gamma:
+        type: "float"
+        low: 0
+        high: 5
+        # --- gamma (min_split_loss) ---
+        # Description: Minimum loss reduction required to make a further partition on a leaf node.
+        # Impact: A larger gamma makes the algorithm more conservative. Acts as a regularization parameter.
+        # Range: 0 to 5 is a reasonable starting point.
+
+      reg_alpha:
+        type: "float"
+        low: 1e-8
+        high: 1.0
+        log: true
+        # --- reg_alpha (L1 regularization) ---
+        # Description: L1 regularization term on weights.
+        # Impact: Encourages sparsity (can push weights to zero). Useful for feature selection.
+        # Range: Often tuned on a log scale from very small values up to 1.0 or more.
+
+      reg_lambda:
+        type: "float"
+        low: 1e-8
+        high: 1.0
+        log: true
+        # --- reg_lambda (L2 regularization) ---
+        # Description: L2 regularization term on weights.
+        # Impact: Makes the model more conservative by penalizing large weights.
+        # Range: Often tuned on a log scale.
+
+  LGBMRegressor_CV_Tuning:
+    enabled: true
+    model_class: "LGBMRegressor"
+    log_model_artifact: true
+    register_model: false
+    base_params:
+      random_state: 42
+      n_jobs: -1
+    run_name: "Tuning_LGBMRegressor_CV"
+    tuner_type: "optuna"
+    tuner_params:
+      n_trials: 75
+      scoring: "neg_mean_squared_error"
+      direction: "maximize"
+      cv: 5
+    param_space:
+      n_estimators:
+        type: "int"
+        low: 100
+        high: 1000
+        step: 100
+        # --- n_estimators ---
+        # Description: Number of boosting rounds.
+        # Impact: Similar to XGBoost, more rounds can improve accuracy but risk overfitting.
+        # Range: 100-2000.
+
+      learning_rate:
+        type: "float"
+        low: 0.01
+        high: 0.3
+        log: true
+        # --- learning_rate ---
+        # Description: Step size shrinkage.
+        # Impact: Smaller learning rate requires more estimators but improves robustness.
+        # Range: 0.01 to 0.3.
+
+      num_leaves:
+        type: "int"
+        low: 20
+        high: 150
+        # --- num_leaves ---
+        # Description: The maximum number of leaves in one tree. This is a key parameter for LightGBM.
+        # Impact: Controls model complexity. A higher value can lead to overfitting. Should be
+        #         less than 2^(max_depth).
+        # Range: Depends on the dataset, but 20-150 is a common search space.
+
+      max_depth:
+        type: "int"
+        low: -1
+        high: 50
+        # --- max_depth ---
+        # Description: Maximum tree depth. -1 means no limit.
+        # Impact: Used to handle overfitting if num_leaves is too high.
+        # Range: -1 (no limit) or a specific range like 5-50.
+
+      reg_alpha:
+        type: "float"
+        low: 1e-8
+        high: 10.0
+        log: true
+        # --- reg_alpha (L1 regularization) ---
+        # Description: L1 regularization.
+        # Impact: Can help with feature selection.
+        # Range: Wide range, often searched on a log scale.
+
+      reg_lambda:
+        type: "float"
+        low: 1e-8
+        high: 10.0
+        log: true
+        # --- reg_lambda (L2 regularization) ---
+        # Description: L2 regularization.
+        # Impact: Helps prevent overfitting by penalizing large weights.
+        # Range: Wide range, often searched on a log scale.
