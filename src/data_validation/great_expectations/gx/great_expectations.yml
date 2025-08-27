@@ -109,15 +109,15 @@ fluent_datasources:
             partitioner:
   pandas_parquet_datasource:
     type: pandas
-    id: 78362cf4-ad38-4958-b51f-4c3619587e53
+    id: 43acf613-7047-40b0-b7c3-2956f6d30dad
     assets:
       gold_in_memory_asset:
         type: dataframe
-        id: 18e4e19c-346f-486f-a970-48fac357ea3c
+        id: c4147fa7-595d-4590-804b-dce3adcd6588
         batch_metadata: {}
         batch_definitions:
           gold_batch_definition:
-            id: 0536083c-e7aa-42e4-8561-3d2effc34fdc
+            id: 2574f70f-da49-4d87-b918-f534a71c939a
             partitioner:
 analytics_enabled:
 data_context_id: 7a163a9b-e890-4167-a8ef-7192f2a657b5
