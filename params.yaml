@@ -27,13 +27,19 @@ gold_pipeline:
     strategy: "standard"
 
 # =================================================================
+# --- PARAMETERS FOR MLFLOW ---
+# =================================================================
+mlflow_params:
+  experiment_name: "Flights_Price_Baselines"
+
+# =================================================================
 # --- PARAMETERS FOR MODEL TRAINING ---
 # =================================================================
 training_pipeline:
   # -----------------------------------------------------------------
   # >> The ONLY line you need to change to run a different model <<
   # This key points to one of the configurations in the 'models' dictionary below.
-  model_config_to_run: "LinearRegression_Simple_Base"
+  model_config_to_run: "LinearRegression_CV_Base"
   # -----------------------------------------------------------------
 
   # --- Dictionary of all available model configurations ---
@@ -79,10 +85,10 @@ training_pipeline:
       model_class: "Ridge"
       name: "Ridge_Simple_Base"
       run_name: "Ridge_Simple_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -92,10 +98,10 @@ training_pipeline:
       model_class: "Ridge"
       name: "Ridge_CV_Base"
       run_name: "Ridge_CV_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -157,10 +163,10 @@ training_pipeline:
       model_class: "Lasso"
       name: "Lasso_Simple_Base"
       run_name: "Lasso_Simple_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -169,13 +175,14 @@ training_pipeline:
     Lasso_CV_Base:
       model_class: "Lasso"
       name: "Lasso_CV_Base"
-      run_name: "Lasso_CV_Base"
-      log_model_artifact: true
+      run_name: "Lasso_CV_Base_alpha_0.01"
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
-      training_params: {}
+      training_params:
+        alpha: 0.01
       cross_validation:
         enabled: true
         n_splits: 5
@@ -233,10 +240,10 @@ training_pipeline:
       model_class: "ElasticNet"
       name: "ElasticNet_Simple_Base"
       run_name: "ElasticNet_Simple_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params: {}
       cross_validation:
@@ -245,13 +252,15 @@ training_pipeline:
     ElasticNet_CV_Base:
       model_class: "ElasticNet"
       name: "ElasticNet_CV_Base"
-      run_name: "ElasticNet_CV_Base"
-      log_model_artifact: true
+      run_name: "ElasticNet_CV_Base_alpha_0.001_l1ratio_0.2"
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
-      training_params: {}
+      training_params:
+        alpha: 0.001
+        l1_ratio: 0.2
       cross_validation:
         enabled: true
         n_splits: 5
@@ -314,10 +323,10 @@ training_pipeline:
       model_class: "SGDRegressor"
       name: "SGDRegressor_Simple_Base"
       run_name: "SGDRegressor_Simple_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
         random_state: 42
@@ -327,13 +336,19 @@ training_pipeline:
     SGDRegressor_CV_Base:
       model_class: "SGDRegressor"
       name: "SGDRegressor_CV_Base"
-      run_name: "SGDRegressor_CV_Base"
-      log_model_artifact: true
+      run_name: "SGDRegressor_CV_Base_eta0_0.0001_maxiter_2000"
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
+        loss: "squared_error" # Standard loss function
+        penalty: "l2" # Add L2 regularization (like Ridge)
+        alpha: 0.01 # Strength of regularization
+        learning_rate: "constant" # Use a fixed learning rate
+        eta0: 0.0001 # VERY small learning rate
+        max_iter: 2000 # Give it more time to converge
         random_state: 42
       cross_validation:
         enabled: true
@@ -393,10 +408,10 @@ training_pipeline:
       model_class: "SVR"
       name: "SVR_Simple_Base"
       run_name: "SVR_Simple_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params: {}
       cross_validation:
@@ -406,10 +421,10 @@ training_pipeline:
       model_class: "SVR"
       name: "SVR_CV_Base"
       run_name: "SVR_CV_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params: {}
       cross_validation:
@@ -485,10 +500,10 @@ training_pipeline:
       model_class: "RandomForestRegressor"
       name: "RandomForestRegressor_CV_Base"
       run_name: "RandomForestRegressor_CV_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -573,10 +588,10 @@ training_pipeline:
       model_class: "XGBRegressor"
       name: "XGBRegressor_CV_Base"
       run_name: "XGBRegressor_CV_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -677,10 +692,10 @@ training_pipeline:
       model_class: "LGBMRegressor"
       name: "LGBMRegressor_CV_Base"
       run_name: "LGBMRegressor_CV_Base"
-      log_model_artifact: true
+      log_model_artifact: false
       register_model: false
-      log_predictions: true
-      evaluate_on_test_set: true
+      log_predictions: false
+      evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
         n_jobs: -1
@@ -757,9 +772,3 @@ training_pipeline:
       cross_validation:
         enabled: true
         n_splits: 5
-
-# =================================================================
-# --- PARAMETERS FOR MLFLOW ---
-# =================================================================
-mlflow_params:
-  experiment_name: "Flights_Price_Prediction_Linear_Models"
