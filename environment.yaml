@@ -36,6 +36,10 @@ dependencies:
   - pytest
 
   - pyyaml
+
+  # Optuna for hyperparameter tuning
+  - optuna
+
   # Pip-installed packages (only for things not on conda channels)
   - pip
   - pip:
