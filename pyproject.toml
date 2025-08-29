@@ -1,18 +1,22 @@
 # This file configures the Python project, its dependencies,
 # and defines custom script commands.
 
+#This section is mandatory. It tells pip which tools are needed to build this project
 [build-system]
-requires = ["setuptools>=61.2"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.2"] # project needs setuptools to be built.
+build-backend = "setuptools.build_meta"  #This specifies the function that pip will call to generate the package file (a "wheel").
 
 [project]
 name = "flight_price_prediction_mlops"
-version = "0.1.0"
-# readme = "README.md"  # Uncomment this if you have a README.md file
+version = "1.1.0"
+readme = "README.md"  
 requires-python = ">=3.12"
 
-# --- Core Dependencies ---
-# These are the libraries required for project to run.
+# -------------------------------------------------------------------------- 
+#                            Core Dependencies                           
+# -------------------------------------------------------------------------- 
+# It declares the minimum libraries required for your project to run.
+# When this package is installed, pip will ensure these dependencies are also installed.
 dependencies = [
     "pandas",
     "numpy",
@@ -21,31 +25,52 @@ dependencies = [
     "great-expectations",
     "openpyxl",
     "dvc",
-    "dvc-s3"
+    "dvc-s3",
+    "pyyaml",
+    "python-json-logger",
+    "requests",
+    "mlflow",
+    "xgboost",
+    "lightgbm",
+    "optuna",
+    "scipy",
+    "pendulum",
+    "python-dotenv"
 ]
 
+# -------------------------------------------------------------------------- 
+#                            Optional Dependencies                           
+# -------------------------------------------------------------------------- 
 # if want to test code use pip install -e .[test]
 [project.optional-dependencies]
 test = ["pytest"]
 
-# --- Setuptools Configuration ---
+# -------------------------------------------------------------------------- 
+#                            Setuptools Configuration                           
+# -------------------------------------------------------------------------- 
 # This tells setuptools where to find the Python packages.
 [tool.setuptools.packages.find]
 where = ["src"]  # Look for packages in the 'src' directory
 
-# --- Project URLs ---
+# -------------------------------------------------------------------------- 
+#                            Project URLs                           
+# -------------------------------------------------------------------------- 
 [project.urls]
-Homepage = "https://github.com/your_username/your_project" # Example URL
-Issues = "https://github.com/your_username/your_project/issues" # Example URL
+Homepage = "https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs" # Example URL
 
-# --- Command-Line Scripts ---
+# -------------------------------------------------------------------------- 
+#                           Command-Line Scripts                           
+# -------------------------------------------------------------------------- 
 # This section registers  pipeline scripts as runnable commands
 # after installing the package (e.g., with `pip install -e .`).
+# The -e flag stands for "editable". Instead of copying your code into your Python environment's site-packages directory, pip creates a special link (.egg-link file) that points back to your src directory.
 [project.scripts]
+run-split-data = "data_split.split_data:split_data_chronologically"
 run-bronze-pipeline = "pipelines.bronze_pipeline:main"
 run-silver-pipeline = "pipelines.silver_pipeline:main"
 run-gold-pipeline = "pipelines.gold_pipeline:main"
-run-split-data = "data_split.split_data:split_data_chronologically"
+run-training-pipeline = "pipelines.training_pipeline:main"
+run-tuning-pipeline = "pipelines.tuning_pipeline:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
