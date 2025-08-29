@@ -28,6 +28,32 @@ from model_evaluation.evaluation import (
 logger = logging.getLogger(__name__)
 
 
+def _log_sklearn_cv_results(cv_results: Dict[str, Any]):
+    """Logs results from a scikit-learn CV search as nested MLflow runs."""
+    logger.info("Logging CV results to MLflow as nested runs...")
+    
+    # Number of candidate parameter settings
+    num_candidates = len(cv_results["params"])
+
+    for i in range(num_candidates):
+        with mlflow.start_run(run_name=f"trial_{i}", nested=True) as child_run:
+            # Log parameters for this trial
+            params = cv_results["params"][i]
+            mlflow.log_params(params)
+
+            # Log metrics for this trial
+            metrics = {}
+            for key, value in cv_results.items():
+                if key.startswith(("mean_", "std_", "rank_")):
+                    metrics[key] = value[i]
+                # Also log individual split scores
+                elif key.startswith("split") and "_test_score" in key:
+                    metrics[key] = value[i]
+            
+            mlflow.log_metrics(metrics)
+            mlflow.set_tag("trial_number", i)
+
+
 def grid_search(
     estimator: BaseEstimator,
     param_grid: Dict[str, Any],
@@ -37,6 +63,7 @@ def grid_search(
     scoring: str = "neg_mean_squared_error",
     n_jobs: int = -1,
     verbose: int = 1,
+    log_model_artifact: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
     Performs Grid Search CV to find the best hyperparameters.
@@ -50,6 +77,7 @@ def grid_search(
         scoring: Scoring metric to evaluate predictions.
         n_jobs: Number of jobs to run in parallel (-1 means using all processors).
         verbose: Controls the verbosity of the output.
+        log_model_artifact: If True, refit the best model and return it.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
@@ -66,8 +94,12 @@ def grid_search(
         cv=time_series_cv,
         n_jobs=n_jobs,
         verbose=verbose,
+        refit=log_model_artifact,  # Conditionally refit
     )
     grid_search_cv.fit(X_train, y_train)
+
+    # Log all trials as nested runs
+    _log_sklearn_cv_results(grid_search_cv.cv_results_)
 
     best_estimator = grid_search_cv.best_estimator_
     best_params = grid_search_cv.best_params_
@@ -90,9 +122,10 @@ def random_search(
     n_jobs: int = -1,
     verbose: int = 1,
     random_state: int = 42,
+    log_model_artifact: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
-    Performs Randomized Search CV to find the best hyperparameters.
+    Performs Randomized Search CV and logs each trial as a nested MLflow run.
 
     Args:
         estimator: The model instance for which to tune hyperparameters.
@@ -105,6 +138,7 @@ def random_search(
         n_jobs: Number of jobs to run in parallel.
         verbose: Controls the verbosity of the output.
         random_state: Seed for the random number generator.
+        log_model_artifact: If True, refit the best model and return it.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
@@ -123,8 +157,12 @@ def random_search(
         n_jobs=n_jobs,
         verbose=verbose,
         random_state=random_state,
+        refit=log_model_artifact,  # Conditionally refit
     )
     random_search_cv.fit(X_train, y_train)
+
+    # Log all trials as nested runs
+    _log_sklearn_cv_results(random_search_cv.cv_results_)
 
     best_estimator = random_search_cv.best_estimator_
     best_params = random_search_cv.best_params_
@@ -148,9 +186,10 @@ def halving_grid_search(
     n_jobs: int = -1,
     verbose: int = 1,
     factor: int = 3,
+    log_model_artifact: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
-    Performs Halving Grid Search CV, a resource-efficient tuning method.
+    Performs Halving Grid Search CV and logs each trial as a nested MLflow run.
 
     Args:
         estimator: The model instance for which to tune hyperparameters.
@@ -162,6 +201,7 @@ def halving_grid_search(
         n_jobs: Number of jobs to run in parallel.
         verbose: Controls the verbosity of the output.
         factor: The 'halving' parameter that controls resource reduction.
+        log_model_artifact: If True, refit the best model and return it.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
@@ -179,8 +219,12 @@ def halving_grid_search(
         n_jobs=n_jobs,
         verbose=verbose,
         factor=factor,
+        refit=log_model_artifact,  # Conditionally refit
     )
     halving_search.fit(X_train, y_train)
+
+    # Log all trials as nested runs
+    _log_sklearn_cv_results(halving_search.cv_results_)
 
     best_estimator = halving_search.best_estimator_
     best_params = halving_search.best_params_
@@ -205,9 +249,10 @@ def halving_random_search(
     verbose: int = 1,
     random_state: int = 42,
     factor: int = 3,
+    log_model_artifact: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
-    Performs Halving Randomized Search CV.
+    Performs Halving Randomized Search CV and logs each trial as a nested MLflow run.
 
     Args:
         estimator: The model instance for which to tune hyperparameters.
@@ -220,6 +265,7 @@ def halving_random_search(
         verbose: Controls the verbosity of the output.
         random_state: Seed for the random number generator.
         factor: The 'halving' parameter that controls resource reduction.
+        log_model_artifact: If True, refit the best model and return it.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
@@ -238,8 +284,12 @@ def halving_random_search(
         verbose=verbose,
         random_state=random_state,
         factor=factor,
+        refit=log_model_artifact,  # Conditionally refit
     )
     halving_search.fit(X_train, y_train)
+
+    # Log all trials as nested runs
+    _log_sklearn_cv_results(halving_search.cv_results_)
 
     best_estimator = halving_search.best_estimator_
     best_params = halving_search.best_params_
@@ -264,6 +314,7 @@ def optuna_search(
     direction: str = "maximize",
     scaler: Scaler = None,
     power_transformer: PowerTransformer = None,
+    log_model_artifact: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
     Performs hyperparameter optimization using Optuna.
@@ -279,85 +330,75 @@ def optuna_search(
         direction: Direction of optimization ('minimize' or 'maximize').
         scaler: Fitted scaler for unscaling predictions.
         power_transformer: Fitted transformer for unscaling predictions.
+        log_model_artifact: If True, refit the best model and return it.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
+        The best_estimator will be None if log_model_artifact is False.
     """
     import os
 
     def _objective(trial: optuna.trial.Trial) -> float:
         """Internal objective function for Optuna to optimize."""
-        params = param_definer(trial)
-        estimator = estimator_class(**params)
+        with mlflow.start_run(run_name=f"trial_{trial.number}", nested=True):
+            params = param_definer(trial)
+            estimator = estimator_class(**params)
 
-        # Log parameters for each trial for better traceability
-        mlflow.log_params(
-            {f"trial_{trial.number}_param_{k}": v for k, v in params.items()}
-        )
+            mlflow.log_params(params)
+            mlflow.set_tag("trial_number", trial.number)
 
-        try:
-            cv_results = time_based_cross_validation(
-                estimator,
-                X_train,
-                y_train,
-                n_splits=cv,
-                power_transformer=power_transformer,
-                scaler=scaler,
-            )
-        except Exception as e:
-            logger.warning(
-                f"Trial {trial.number} failed during CV with error: {e}. Pruning trial."
-            )
-            raise optuna.exceptions.TrialPruned()
+            try:
+                cv_results = time_based_cross_validation(
+                    estimator,
+                    X_train,
+                    y_train,
+                    n_splits=cv,
+                    power_transformer=power_transformer,
+                    scaler=scaler,
+                )
+            except Exception as e:
+                logger.warning(
+                    f"Trial {trial.number} failed during CV with error: {e}. Pruning trial."
+                )
+                mlflow.set_tag("status", "FAILED")
+                raise optuna.exceptions.TrialPruned()
 
-        # Log metrics and artifacts for each trial
-        for scale_type, df in cv_results.items():
-            if not df.empty:
-                mean_metrics = {
-                    f"trial/{trial.number}/cv/{scale_type}/mean/{k}": v
-                    for k, v in df.mean().items()
-                }
-                std_metrics = {
-                    f"trial/{trial.number}/cv/{scale_type}/std/{k}": v
-                    for k, v in df.std().items()
-                }
-                mlflow.log_metrics({**mean_metrics, **std_metrics})
+            for scale_type, df in cv_results.items():
+                if not df.empty:
+                    mean_metrics = {
+                        f"cv/{scale_type}/mean/{k}": v for k, v in df.mean().items()
+                    }
+                    std_metrics = {
+                        f"cv/{scale_type}/std/{k}": v for k, v in df.std().items()
+                    }
+                    mlflow.log_metrics({**mean_metrics, **std_metrics})
 
-                # FIX: Log artifact to a unique path per trial to avoid overwriting
-                csv_path = f"cv_results_{scale_type}_trial_{trial.number}.csv"
-                df.to_csv(csv_path, index=True)
-                mlflow.log_artifact(csv_path, f"cv_results/trial_{trial.number}")
-                os.remove(csv_path)  # Clean up the temporary file
+                    csv_path = f"cv_results_{scale_type}.csv"
+                    df.to_csv(csv_path, index=True)
+                    mlflow.log_artifact(csv_path, "cv_results")
+                    os.remove(csv_path)
 
-        # Determine the score for Optuna to optimize
-        score_df = cv_results.get("unscaled")
-        score_metric = (
-            "mean_squared_error"  # This is hardcoded as in your original implementation
-        )
+            score_df = cv_results.get("unscaled")
+            score_metric = "mean_squared_error"
 
-        if score_df is None or score_df.empty:
-            logger.info(
-                "Unscaled results not found, using scaled results for objective score."
-            )
-            score_df = cv_results.get("scaled")
+            if score_df is None or score_df.empty:
+                logger.info(
+                    "Unscaled results not found, using scaled results for objective score."
+                )
+                score_df = cv_results.get("scaled")
 
-        if score_df is None or score_df.empty:
-            logger.error("No results available to score objective. Pruning trial.")
-            raise optuna.exceptions.TrialPruned()
+            if score_df is None or score_df.empty:
+                logger.error("No results available to score objective. Pruning trial.")
+                raise optuna.exceptions.TrialPruned()
 
-        # FIX: The objective function must return a single float value (e.g., the mean of the scores)
-        final_score = score_df[score_metric].mean()
-        mlflow.log_metric(f"trial/{trial.number}/final_score", final_score)
-        return final_score
+            final_score = score_df[score_metric].mean()
+            mlflow.log_metric("final_score", final_score)
+            mlflow.set_tag("status", "COMPLETED")
+            return final_score
 
     logger.info(f"Starting Optuna search for {estimator_class.__name__}...")
     study = optuna.create_study(direction=direction)
-
-    study.optimize(
-        _objective,
-        n_trials=n_trials,
-        show_progress_bar=True,
-    )
+    study.optimize(_objective, n_trials=n_trials, show_progress_bar=True)
 
     best_params = study.best_trial.params
     best_score = study.best_trial.value
@@ -365,12 +406,15 @@ def optuna_search(
     logger.info(f"Optuna search complete. Best score ({scoring}): {best_score:.4f}")
     logger.info(f"Best parameters found: {best_params}")
 
-    # Log best trial info for easy access in MLflow
     mlflow.log_params({f"best_param_{k}": v for k, v in best_params.items()})
     mlflow.log_metric("best_trial_score", best_score)
     mlflow.log_metric("best_trial_number", study.best_trial.number)
 
-    logger.info("Refitting the best model on the entire training dataset...")
-    best_estimator = estimator_class(**best_params).fit(X_train, y_train)
+    best_estimator = None
+    if log_model_artifact:
+        logger.info("Refitting the best model on the entire training dataset...")
+        best_estimator = estimator_class(**best_params).fit(X_train, y_train)
+    else:
+        logger.info("Skipping final model refit as log_model_artifact is false.")
 
     return best_estimator, best_params, best_score
