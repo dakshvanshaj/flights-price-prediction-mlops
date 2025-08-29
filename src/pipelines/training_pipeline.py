@@ -14,6 +14,7 @@ from typing import Any, Dict, Optional
 import mlflow
 import pandas as pd
 import yaml
+from dotenv import load_dotenv
 
 from data_ingestion.data_loader import load_data
 from model_evaluation.evaluation import (
@@ -381,6 +382,7 @@ def main():
     Main entry point for the script.
     """
     # === SETUP ===
+    load_dotenv()
     setup_logging_from_yaml(
         log_path=config_logging.TRAINING_PIPELINE_LOGS_PATH,
         default_yaml_path=config_logging.LOGGING_YAML,
