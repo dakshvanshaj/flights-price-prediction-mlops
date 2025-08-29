@@ -5,7 +5,7 @@ model_to_tune: "RandomForestRegressor_CV_Tuning"
 
 # MLflow configuration for all tuning experiments
 mlflow_params:
-  experiment_name: "Flights_Price_Tuning_Experiments"
+  experiment_name: "Flights_Hyper_Param_Tuning_Experiments"
 
 # --- Dictionary of all available tuning configurations ---
 tuning_configs:
@@ -35,24 +35,24 @@ tuning_configs:
   RandomForestRegressor_CV_Tuning:
     enabled: true
     model_class: "RandomForestRegressor"
-    log_model_artifact: true
+    log_model_artifact: false
     register_model: false
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_RandomForestRegressor_CV"
+    run_name: "Tuning_RFR_Optuna_LessRegularization"
     tuner_type: "optuna"
     tuner_params:
-      n_trials: 50
+      n_trials: 30
       scoring: "neg_mean_squared_error"
       direction: "maximize"
-      cv: 5
+      cv: 3
     param_space:
       n_estimators:
         type: "int"
-        low: 100
-        high: 500
-        step: 50
+        low: 300
+        high: 800
+        step: 100
         # --- n_estimators ---
         # Description: The number of trees in the forest.
         # Impact: More trees generally improve performance and make predictions more stable,
@@ -61,8 +61,8 @@ tuning_configs:
 
       max_features:
         type: "float"
-        low: 0.5
-        high: 1.0
+        low: 0.6
+        high: 0.9
         # --- max_features ---
         # Description: The fraction of features to consider when looking for the best split.
         # Impact: Lowering this value reduces variance and can help prevent overfitting, but
@@ -72,8 +72,8 @@ tuning_configs:
       max_depth:
         type: "int"
         low: 10
-        high: 50
-        step: 5
+        high: 44
+        step: 4
         # --- max_depth ---
         # Description: The maximum depth of each tree.
         # Impact: Deeper trees can capture more complex patterns but are more prone to overfitting.
@@ -83,7 +83,7 @@ tuning_configs:
       min_samples_split:
         type: "int"
         low: 2
-        high: 16
+        high: 10
         # --- min_samples_split ---
         # Description: The minimum number of samples required to split an internal node.
         # Impact: Higher values prevent the model from learning relationships that might be specific
@@ -93,7 +93,7 @@ tuning_configs:
       min_samples_leaf:
         type: "int"
         low: 1
-        high: 10
+        high: 4
         # --- min_samples_leaf ---
         # Description: The minimum number of samples required to be at a leaf node.
         # Impact: Similar to min_samples_split, this controls overfitting. A larger value
@@ -111,10 +111,10 @@ tuning_configs:
     run_name: "Tuning_XGBRegressor_CV"
     tuner_type: "optuna"
     tuner_params:
-      n_trials: 75
+      n_trials: 30
       scoring: "neg_mean_squared_error"
       direction: "maximize"
-      cv: 5
+      cv: 3
     param_space:
       n_estimators:
         type: "int"
@@ -139,7 +139,7 @@ tuning_configs:
       max_depth:
         type: "int"
         low: 3
-        high: 10
+        high: 7
         # --- max_depth ---
         # Description: Maximum depth of a tree.
         # Impact: Controls model complexity. Deeper trees can overfit easily.
@@ -148,7 +148,7 @@ tuning_configs:
       subsample:
         type: "float"
         low: 0.6
-        high: 1.0
+        high: 0.9
         # --- subsample ---
         # Description: Fraction of training data to be randomly sampled for each tree.
         # Impact: Setting it below 1.0 can prevent overfitting.
@@ -157,7 +157,7 @@ tuning_configs:
       colsample_bytree:
         type: "float"
         low: 0.6
-        high: 1.0
+        high: 0.9
         # --- colsample_bytree ---
         # Description: Fraction of columns (features) to be randomly sampled for each tree.
         # Impact: Helps prevent overfitting, similar to subsample.
@@ -165,7 +165,7 @@ tuning_configs:
 
       gamma:
         type: "float"
-        low: 0
+        low: 0.5
         high: 5
         # --- gamma (min_split_loss) ---
         # Description: Minimum loss reduction required to make a further partition on a leaf node.
@@ -203,10 +203,10 @@ tuning_configs:
     run_name: "Tuning_LGBMRegressor_CV"
     tuner_type: "optuna"
     tuner_params:
-      n_trials: 75
+      n_trials: 30
       scoring: "neg_mean_squared_error"
       direction: "maximize"
-      cv: 5
+      cv: 3
     param_space:
       n_estimators:
         type: "int"
@@ -230,8 +230,8 @@ tuning_configs:
 
       num_leaves:
         type: "int"
-        low: 20
-        high: 150
+        low: 15
+        high: 60
         # --- num_leaves ---
         # Description: The maximum number of leaves in one tree. This is a key parameter for LightGBM.
         # Impact: Controls model complexity. A higher value can lead to overfitting. Should be
@@ -240,8 +240,8 @@ tuning_configs:
 
       max_depth:
         type: "int"
-        low: -1
-        high: 50
+        low: 5
+        high: 20
         # --- max_depth ---
         # Description: Maximum tree depth. -1 means no limit.
         # Impact: Used to handle overfitting if num_leaves is too high.
