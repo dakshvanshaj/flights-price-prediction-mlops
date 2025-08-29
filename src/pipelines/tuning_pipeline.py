@@ -174,6 +174,7 @@ def tuning_pipeline(
                 y_train=y_train,
                 scaler=scaler,
                 power_transformer=power_transformer,
+                log_model_artifact=tuning_config.get("log_model_artifact", False),
                 **tuner_kwargs,
             )
         else:
@@ -191,6 +192,7 @@ def tuning_pipeline(
                 estimator=estimator,
                 X_train=X_train,
                 y_train=y_train,
+                log_model_artifact=tuning_config.get("log_model_artifact", False),
                 **tuner_kwargs,
             )
 
