@@ -1,4 +1,6 @@
 import logging
+import math
+import mlflow
 from typing import Any, Callable, Dict, Tuple
 
 import numpy as np
@@ -6,13 +8,20 @@ import optuna
 import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.experimental import enable_halving_search_cv  # noqa
+from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import (
     GridSearchCV,
     HalvingGridSearchCV,
     HalvingRandomSearchCV,
     RandomizedSearchCV,
     TimeSeriesSplit,
-    cross_val_score,
+)
+from model_evaluation.evaluation import time_based_cross_validation
+from gold_data_preprocessing.power_transformer import PowerTransformer
+from gold_data_preprocessing.scaler import Scaler
+from model_evaluation.evaluation import (
+    calculate_all_regression_metrics,
+    unscale_predictions,
 )
 
 # Initialize logger for this module
@@ -253,6 +262,8 @@ def optuna_search(
     cv: int = 5,
     scoring: str = "neg_mean_squared_error",
     direction: str = "maximize",
+    scaler: Scaler = None,
+    power_transformer: PowerTransformer = None,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
     Performs hyperparameter optimization using Optuna.
@@ -266,32 +277,98 @@ def optuna_search(
         cv: Number of cross-validation folds.
         scoring: Scoring metric to evaluate predictions.
         direction: Direction of optimization ('minimize' or 'maximize').
+        scaler: Fitted scaler for unscaling predictions.
+        power_transformer: Fitted transformer for unscaling predictions.
 
     Returns:
         A tuple containing (best_estimator, best_params, best_score).
     """
+    import os
 
     def _objective(trial: optuna.trial.Trial) -> float:
         """Internal objective function for Optuna to optimize."""
         params = param_definer(trial)
         estimator = estimator_class(**params)
-        
-        time_series_cv = TimeSeriesSplit(n_splits=cv)
 
-        scores = cross_val_score(
-            estimator, X_train, y_train, cv=time_series_cv, scoring=scoring, n_jobs=-1
+        # Log parameters for each trial for better traceability
+        mlflow.log_params(
+            {f"trial_{trial.number}_param_{k}": v for k, v in params.items()}
         )
-        return np.mean(scores)
+
+        try:
+            cv_results = time_based_cross_validation(
+                estimator,
+                X_train,
+                y_train,
+                n_splits=cv,
+                power_transformer=power_transformer,
+                scaler=scaler,
+            )
+        except Exception as e:
+            logger.warning(
+                f"Trial {trial.number} failed during CV with error: {e}. Pruning trial."
+            )
+            raise optuna.exceptions.TrialPruned()
+
+        # Log metrics and artifacts for each trial
+        for scale_type, df in cv_results.items():
+            if not df.empty:
+                mean_metrics = {
+                    f"trial/{trial.number}/cv/{scale_type}/mean/{k}": v
+                    for k, v in df.mean().items()
+                }
+                std_metrics = {
+                    f"trial/{trial.number}/cv/{scale_type}/std/{k}": v
+                    for k, v in df.std().items()
+                }
+                mlflow.log_metrics({**mean_metrics, **std_metrics})
+
+                # FIX: Log artifact to a unique path per trial to avoid overwriting
+                csv_path = f"cv_results_{scale_type}_trial_{trial.number}.csv"
+                df.to_csv(csv_path, index=True)
+                mlflow.log_artifact(csv_path, f"cv_results/trial_{trial.number}")
+                os.remove(csv_path)  # Clean up the temporary file
+
+        # Determine the score for Optuna to optimize
+        score_df = cv_results.get("unscaled")
+        score_metric = (
+            "mean_squared_error"  # This is hardcoded as in your original implementation
+        )
+
+        if score_df is None or score_df.empty:
+            logger.info(
+                "Unscaled results not found, using scaled results for objective score."
+            )
+            score_df = cv_results.get("scaled")
+
+        if score_df is None or score_df.empty:
+            logger.error("No results available to score objective. Pruning trial.")
+            raise optuna.exceptions.TrialPruned()
+
+        # FIX: The objective function must return a single float value (e.g., the mean of the scores)
+        final_score = score_df[score_metric].mean()
+        mlflow.log_metric(f"trial/{trial.number}/final_score", final_score)
+        return final_score
 
     logger.info(f"Starting Optuna search for {estimator_class.__name__}...")
     study = optuna.create_study(direction=direction)
-    study.optimize(_objective, n_trials=n_trials, show_progress_bar=True)
+
+    study.optimize(
+        _objective,
+        n_trials=n_trials,
+        show_progress_bar=True,
+    )
 
     best_params = study.best_trial.params
     best_score = study.best_trial.value
 
     logger.info(f"Optuna search complete. Best score ({scoring}): {best_score:.4f}")
     logger.info(f"Best parameters found: {best_params}")
+
+    # Log best trial info for easy access in MLflow
+    mlflow.log_params({f"best_param_{k}": v for k, v in best_params.items()})
+    mlflow.log_metric("best_trial_score", best_score)
+    mlflow.log_metric("best_trial_number", study.best_trial.number)
 
     logger.info("Refitting the best model on the entire training dataset...")
     best_estimator = estimator_class(**best_params).fit(X_train, y_train)
