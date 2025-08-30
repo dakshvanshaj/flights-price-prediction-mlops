@@ -118,10 +118,11 @@ def data_preprocessing_pipeline_taskflow():
     def run_training_pipeline():
         """Runs the training pipeline."""
         # Define the command and environment separately for clarity and security.
-        command = f"python {TRAINING_SCRIPT} train.parquet validation.parquet"
-        mlflow_env = {"MLFLOW_TRACKING_URI": "http://65.2.142.127:5000"}
+        command = (
+            f"python {TRAINING_SCRIPT} train.parquet validation.parquet test.parquet"
+        )
 
-        run_command(command, FLIGHTS_MLOPS_DIR, env=mlflow_env)
+        run_command(command, FLIGHTS_MLOPS_DIR)
 
     # --- Define Dependencies ---
     fetch_task = fetch_data_with_dvc()
