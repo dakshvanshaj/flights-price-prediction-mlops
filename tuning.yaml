@@ -1,11 +1,11 @@
 # tuning.yaml
 
 # The ONLY line you need to change to run a different tuning experiment
-model_to_tune: "RandomForestRegressor_CV_Tuning"
+model_to_tune: "LGBMRegressor_CV_Tuning"
 
 # MLflow configuration for all tuning experiments
 mlflow_params:
-  experiment_name: "Flights_Hyper_Param_Tuning_Experiments"
+  experiment_name: "Tuning_LGBMR_Flights"
 
 # --- Dictionary of all available tuning configurations ---
 tuning_configs:
@@ -20,8 +20,8 @@ tuning_configs:
     tuner_type: "optuna"
     tuner_params:
       n_trials: 1
-      scoring: "neg_mean_squared_error"
-      direction: "maximize"
+      scoring: "mean_squared_error"
+      direction: "minimize"
       cv: 5
     param_space:
       fit_intercept:
@@ -40,18 +40,18 @@ tuning_configs:
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_RFR_Optuna_LessRegularization"
+    run_name: "Tuning_RFR_Optuna_MediumRegularization"
     tuner_type: "optuna"
     tuner_params:
       n_trials: 30
-      scoring: "neg_mean_squared_error"
-      direction: "maximize"
+      scoring: "mean_squared_error"
+      direction: "minimize"
       cv: 3
     param_space:
       n_estimators:
         type: "int"
-        low: 300
-        high: 800
+        low: 100
+        high: 600
         step: 100
         # --- n_estimators ---
         # Description: The number of trees in the forest.
@@ -61,7 +61,7 @@ tuning_configs:
 
       max_features:
         type: "float"
-        low: 0.6
+        low: 0.5
         high: 0.9
         # --- max_features ---
         # Description: The fraction of features to consider when looking for the best split.
@@ -71,9 +71,9 @@ tuning_configs:
 
       max_depth:
         type: "int"
-        low: 10
-        high: 44
-        step: 4
+        low: 8
+        high: 14
+        step: 2
         # --- max_depth ---
         # Description: The maximum depth of each tree.
         # Impact: Deeper trees can capture more complex patterns but are more prone to overfitting.
@@ -82,8 +82,9 @@ tuning_configs:
 
       min_samples_split:
         type: "int"
-        low: 2
-        high: 10
+        low: 8
+        high: 20
+        step: 2
         # --- min_samples_split ---
         # Description: The minimum number of samples required to split an internal node.
         # Impact: Higher values prevent the model from learning relationships that might be specific
@@ -92,34 +93,56 @@ tuning_configs:
 
       min_samples_leaf:
         type: "int"
-        low: 1
-        high: 4
+        low: 4
+        high: 20
+        step: 2
         # --- min_samples_leaf ---
         # Description: The minimum number of samples required to be at a leaf node.
         # Impact: Similar to min_samples_split, this controls overfitting. A larger value
         #         ensures that leaves are not based on very few, potentially noisy, samples.
         # Range: Common values are from 1 to 20.
 
-  XGBRegressor_CV_Tuning:
-    enabled: true
-    model_class: "XGBRegressor"
-    log_model_artifact: true
+  RandomForestRegressor_Grid_Search_Tuning:
+    enabled: false # Set to true to run this experiment
+    model_class: "RandomForestRegressor"
+    log_model_artifact: false
     register_model: false
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_XGBRegressor_CV"
+    run_name: "Tuning_RFR_GridSearch"
+    tuner_type: "grid" # Use the grid search tuner
+    tuner_params:
+      scoring: "neg_mean_squared_error"
+      cv: 3
+    # For grid search, you define a 'param_grid' with lists of exact values to test.
+    param_grid:
+      n_estimators: [100, 200, 300]
+      max_depth: [10, 20, 30]
+      min_samples_split: [2, 5]
+      min_samples_leaf: [1, 2]
+      max_features: ["sqrt", "log2"]
+
+  XGBRegressor_CV_Tuning:
+    enabled: true
+    model_class: "XGBRegressor"
+    log_model_artifact: false
+    register_model: false
+    base_params:
+      random_state: 42
+      n_jobs: -1
+    run_name: "Tuning_XGBR_Optuna_LowRegularization"
     tuner_type: "optuna"
     tuner_params:
-      n_trials: 30
-      scoring: "neg_mean_squared_error"
-      direction: "maximize"
+      n_trials: 50
+      scoring: "mean_squared_error"
+      direction: "minimize"
       cv: 3
     param_space:
       n_estimators:
         type: "int"
-        low: 100
-        high: 1000
+        low: 500
+        high: 1200
         step: 100
         # --- n_estimators ---
         # Description: Number of boosting rounds.
@@ -128,7 +151,7 @@ tuning_configs:
 
       learning_rate:
         type: "float"
-        low: 0.01
+        low: 0.05
         high: 0.3
         log: true
         # --- learning_rate (eta) ---
@@ -138,8 +161,8 @@ tuning_configs:
 
       max_depth:
         type: "int"
-        low: 3
-        high: 7
+        low: 2
+        high: 12
         # --- max_depth ---
         # Description: Maximum depth of a tree.
         # Impact: Controls model complexity. Deeper trees can overfit easily.
@@ -147,7 +170,7 @@ tuning_configs:
 
       subsample:
         type: "float"
-        low: 0.6
+        low: 0.5
         high: 0.9
         # --- subsample ---
         # Description: Fraction of training data to be randomly sampled for each tree.
@@ -156,7 +179,7 @@ tuning_configs:
 
       colsample_bytree:
         type: "float"
-        low: 0.6
+        low: 0.5
         high: 0.9
         # --- colsample_bytree ---
         # Description: Fraction of columns (features) to be randomly sampled for each tree.
@@ -174,7 +197,7 @@ tuning_configs:
 
       reg_alpha:
         type: "float"
-        low: 1e-8
+        low: 1.0e-8
         high: 1.0
         log: true
         # --- reg_alpha (L1 regularization) ---
@@ -184,7 +207,7 @@ tuning_configs:
 
       reg_lambda:
         type: "float"
-        low: 1e-8
+        low: 1.0e-8
         high: 1.0
         log: true
         # --- reg_lambda (L2 regularization) ---
@@ -195,22 +218,23 @@ tuning_configs:
   LGBMRegressor_CV_Tuning:
     enabled: true
     model_class: "LGBMRegressor"
-    log_model_artifact: true
+    log_model_artifact: false
     register_model: false
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_LGBMRegressor_CV"
+      verbose: -1
+    run_name: "Tuning_LGBMR_Optuna_ModerateRegularization"
     tuner_type: "optuna"
     tuner_params:
-      n_trials: 30
-      scoring: "neg_mean_squared_error"
-      direction: "maximize"
+      n_trials: 50
+      scoring: "mean_squared_error"
+      direction: "minimize"
       cv: 3
     param_space:
       n_estimators:
         type: "int"
-        low: 100
+        low: 500
         high: 1000
         step: 100
         # --- n_estimators ---
@@ -231,7 +255,7 @@ tuning_configs:
       num_leaves:
         type: "int"
         low: 15
-        high: 60
+        high: 25
         # --- num_leaves ---
         # Description: The maximum number of leaves in one tree. This is a key parameter for LightGBM.
         # Impact: Controls model complexity. A higher value can lead to overfitting. Should be
@@ -241,7 +265,7 @@ tuning_configs:
       max_depth:
         type: "int"
         low: 5
-        high: 20
+        high: 15
         # --- max_depth ---
         # Description: Maximum tree depth. -1 means no limit.
         # Impact: Used to handle overfitting if num_leaves is too high.
@@ -249,7 +273,7 @@ tuning_configs:
 
       reg_alpha:
         type: "float"
-        low: 1e-8
+        low: 1.0e-8
         high: 10.0
         log: true
         # --- reg_alpha (L1 regularization) ---
@@ -259,7 +283,7 @@ tuning_configs:
 
       reg_lambda:
         type: "float"
-        low: 1e-8
+        low: 1.0e-8
         high: 10.0
         log: true
         # --- reg_lambda (L2 regularization) ---
