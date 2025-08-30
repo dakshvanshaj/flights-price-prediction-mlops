@@ -151,7 +151,9 @@ def tuning_pipeline(
 
             base_params = tuning_config.get("base_params", {})
             fixed_params = {
-                k: v for k, v in base_params.items() if k in ["random_state", "n_jobs"]
+                k: v
+                for k, v in base_params.items()
+                if k in ["random_state", "n_jobs", "verbose"]
             }
 
             param_definer_func = create_optuna_param_definer(param_space, fixed_params)
