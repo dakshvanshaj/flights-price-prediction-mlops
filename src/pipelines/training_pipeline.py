@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Orchestration script for the model training pipeline.
-
-This script manages the end-to-end process of training, evaluating, and logging
-a machine learning model, including a final evaluation on a hold-out test set.
-"""
-
 import argparse
 import logging
 import sys
@@ -81,6 +73,7 @@ def _evaluate_and_log_set(
     scaler: Optional[Scaler],
     power_transformer: Optional[PowerTransformer],
     log_predictions: bool = False,
+    log_interpretability_artifacts: bool = True,
 ) -> None:
     """
     Evaluates a model on a given dataset and logs all relevant information.
@@ -122,6 +115,20 @@ def _evaluate_and_log_set(
                 unscaled_preds_dict,
                 f"predictions/{log_prefix}_unscaled_predictions.json",
             )
+    if log_interpretability_artifacts:
+        if hasattr(model, "coef_"):
+            logger.info(f"Logging model coefficients for '{log_prefix}'...")
+            coefficients_dict = dict(zip(X.columns, model.coef_))
+            mlflow.log_dict(
+                coefficients_dict, f"coefficients/{log_prefix}_coefficients.json"
+            )
+        if hasattr(model, "feature_importances_"):
+            logger.info(f"Logging feature importances for '{log_prefix}'...")
+            feature_importances_dict = dict(zip(X.columns, model.feature_importances_))
+            mlflow.log_dict(
+                feature_importances_dict,
+                f"feature_importances/{log_prefix}_feature_importances.json",
+            )
 
 
 def _run_simple_validation(
@@ -148,8 +155,16 @@ def _run_simple_validation(
     )
 
     should_log_preds = model_config.get("log_predictions", False)
+    should_log_coefs = model_config.get("log_coeficients", True)
     _evaluate_and_log_set(
-        model, val_x, val_y, "validation", scaler, power_transformer, should_log_preds
+        model,
+        val_x,
+        val_y,
+        "validation",
+        scaler,
+        power_transformer,
+        should_log_preds,
+        should_log_coefs,
     )
 
     return model
@@ -227,6 +242,7 @@ def _run_cross_validation(
         scaler,
         power_transformer,
         model_config.get("log_predictions", False),
+        model_config.get("log_interpretability_artifacts", True),
     )
 
     return final_model
@@ -286,11 +302,13 @@ def training_pipeline(
         if model_library and model_library in config_training.LOG_MODEL_MAPPING:
             try:
                 auto_log_func = config_training.AUTOLOG_MAPPING[model_library]
-                model_info = auto_log_func(
-                    log_models=model_config.get("log_model_artifact", False),
+                # Disable model artifact logging in autolog to avoid logging intermediate models.
+                # We will manually log the final, retrained model later.
+                auto_log_func(
+                    log_models=False,
                     log_input_examples=True,
                     silent=True,
-                    disable=False,  # Ensure autologging is enabled
+                    disable=False,
                 )
             except Exception as e:
                 logger.error(f"Autologging failed: {e}", exc_info=True)
@@ -303,7 +321,7 @@ def training_pipeline(
         model_instance = get_model(model_class_name, model_config["training_params"])
 
         if model_config.get("cross_validation", {}).get("enabled", False):
-            mlflow.set_tag("run_type", "cross_validation")
+            mlflow.set_tag("run_type", "combined_cross_validation")
             final_model = _run_cross_validation(
                 model_instance,
                 train_x,
@@ -353,26 +371,43 @@ def training_pipeline(
                 "'evaluate_on_test_set' is false in config. Skipping final test set evaluation to prevent bias."
             )
 
-        # === STAGE 5: MODEL REGISTRATION (OPTIONAL) ===
-        if model_config.get("register_model", False):
-            logger.info(f"Registering model '{model_name}' to MLflow Model Registry...")
+        # === STAGE 5: MODEL LOGGING AND REGISTRATION (OPTIONAL) ===
+        if model_config.get("log_model_artifact", False):
+            logger.info("Logging final model artifact to MLflow...")
             model_library = get_model_library(model_class_name)
+
+            registered_model_name = None
+            if model_config.get("register_model", False):
+                registered_model_name = model_name
+                logger.info(
+                    f"Model will also be registered as '{registered_model_name}'."
+                )
+
             if model_library and model_library in config_training.LOG_MODEL_MAPPING:
                 try:
                     log_model_func = config_training.LOG_MODEL_MAPPING[model_library]
                     model_arg_name = config_training.LOG_MODEL_ARG_NAME[model_library]
+
                     model_info = log_model_func(
                         **{model_arg_name: final_model},
                         artifact_path="model",
-                        registered_model_name=model_name,
+                        registered_model_name=registered_model_name,
                     )
                     logger.info(
                         f"Model registered successfully. URI: {model_info.model_uri}"
                     )
                 except Exception as e:
-                    logger.error(f"Model registration failed: {e}", exc_info=True)
+                    logger.error(
+                        f"Model logging/registration failed: {e}", exc_info=True
+                    )
             else:
-                logger.warning(f"No registration mapping for '{model_class_name}'")
+                logger.warning(
+                    f"No logging/registration mapping for '{model_class_name}'"
+                )
+        else:
+            logger.info(
+                "Skipping final model logging as 'log_model_artifact' is false."
+            )
 
     logger.info(f"--- Model Training Pipeline COMPLETED for run '{run_name}' ---")
 
@@ -394,7 +429,11 @@ def main():
     parser.add_argument(
         "validation_file_name", help="Name of the gold validation data file."
     )
-    parser.add_argument("test_file_name", help="Name of the gold test data file.")
+    parser.add_argument(
+        "--test_file_name",
+        default=None,
+        help="Optional:Name of the gold test data file.",
+    )
     args = parser.parse_args()
 
     # === EXECUTION ===
@@ -405,9 +444,14 @@ def main():
         validation_df = load_data(
             config_gold.GOLD_PROCESSED_DIR / args.validation_file_name
         )
-        test_df = load_data(config_gold.GOLD_PROCESSED_DIR / args.test_file_name)
+        test_df = None
+        if args.test_file_name:
+            logger.info(f"Loading test data from '{args.test_file_name}'...")
+            test_df = load_data(config_gold.GOLD_PROCESSED_DIR / args.test_file_name)
+        else:
+            logger.info("No test data provided. Skipping loading...")
 
-        if train_df is None or validation_df is None or test_df is None:
+        if train_df is None or validation_df is None:
             logger.critical("Failed to load one or more data files. Aborting.")
             sys.exit(1)
 
