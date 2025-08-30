@@ -1,14 +1,10 @@
 import logging
-import math
 import mlflow
 from typing import Any, Callable, Dict, Tuple
-
-import numpy as np
 import optuna
 import pandas as pd
 from sklearn.base import BaseEstimator
 from sklearn.experimental import enable_halving_search_cv  # noqa
-from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import (
     GridSearchCV,
     HalvingGridSearchCV,
@@ -19,10 +15,6 @@ from sklearn.model_selection import (
 from model_evaluation.evaluation import time_based_cross_validation
 from gold_data_preprocessing.power_transformer import PowerTransformer
 from gold_data_preprocessing.scaler import Scaler
-from model_evaluation.evaluation import (
-    calculate_all_regression_metrics,
-    unscale_predictions,
-)
 
 # Initialize logger for this module
 logger = logging.getLogger(__name__)
@@ -31,12 +23,12 @@ logger = logging.getLogger(__name__)
 def _log_sklearn_cv_results(cv_results: Dict[str, Any]):
     """Logs results from a scikit-learn CV search as nested MLflow runs."""
     logger.info("Logging CV results to MLflow as nested runs...")
-    
+
     # Number of candidate parameter settings
     num_candidates = len(cv_results["params"])
 
     for i in range(num_candidates):
-        with mlflow.start_run(run_name=f"trial_{i}", nested=True) as child_run:
+        with mlflow.start_run(run_name=f"trial_{i}", nested=True) as child_run:  # noqa
             # Log parameters for this trial
             params = cv_results["params"][i]
             mlflow.log_params(params)
@@ -49,7 +41,7 @@ def _log_sklearn_cv_results(cv_results: Dict[str, Any]):
                 # Also log individual split scores
                 elif key.startswith("split") and "_test_score" in key:
                     metrics[key] = value[i]
-            
+
             mlflow.log_metrics(metrics)
             mlflow.set_tag("trial_number", i)
 
@@ -310,8 +302,8 @@ def optuna_search(
     y_train: pd.Series,
     n_trials: int = 100,
     cv: int = 5,
-    scoring: str = "neg_mean_squared_error",
-    direction: str = "maximize",
+    scoring: str = "mean_squared_error",
+    direction: str = "minimize",
     scaler: Scaler = None,
     power_transformer: PowerTransformer = None,
     log_model_artifact: bool = False,
@@ -381,11 +373,11 @@ def optuna_search(
             score_df = cv_results.get("unscaled")
             score_metric = "mean_squared_error"
 
-            if score_df is None or score_df.empty:
-                logger.info(
-                    "Unscaled results not found, using scaled results for objective score."
-                )
-                score_df = cv_results.get("scaled")
+            # if score_df is None or score_df.empty:
+            #     logger.info(
+            #         "Unscaled results not found, using scaled results for objective score."
+            #     )
+            #     score_df = cv_results.get("scaled")
 
             if score_df is None or score_df.empty:
                 logger.error("No results available to score objective. Pruning trial.")
