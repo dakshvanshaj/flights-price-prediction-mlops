@@ -30,7 +30,7 @@ gold_pipeline:
 # --- PARAMETERS FOR MLFLOW ---
 # =================================================================
 mlflow_params:
-  experiment_name: "Model_Bake_Off"
+  experiment_name: "Challengers"
 
 # =================================================================
 # --- PARAMETERS FOR MODEL TRAINING ---
@@ -39,7 +39,8 @@ training_pipeline:
   # -----------------------------------------------------------------
   # >> The ONLY line you need to change to run a different model <<
   # This key points to one of the configurations in the 'models' dictionary below.
-  model_config_to_run: "RandomForestRegressor"
+  model_config_to_run: "XGBRegressor"
+
   # -----------------------------------------------------------------
 
   # --- Dictionary of all available model configurations ---
@@ -49,17 +50,19 @@ training_pipeline:
     # =================================================================
     LinearRegression:
       model_class: "LinearRegression"
-      name: "LinearRegression_Tuned"
-      run_name: "LinearRegression"
-      log_model_artifact: true
+      name: "LinearRegression_Base"
+      run_name: "LR_Base"
+      log_model_artifact: false
       register_model: false
       log_predictions: false
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
         n_jobs: -1
         fit_intercept: true
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5
@@ -72,6 +75,7 @@ training_pipeline:
       register_model: false
       log_predictions: true
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
@@ -79,6 +83,7 @@ training_pipeline:
         fit_intercept: true
         solver: "auto"
         random_state: 42
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5
@@ -91,6 +96,7 @@ training_pipeline:
       register_model: false
       log_predictions: true
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
@@ -98,6 +104,7 @@ training_pipeline:
         fit_intercept: true
         selection: "cyclic"
         random_state: 42
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5
@@ -110,6 +117,7 @@ training_pipeline:
       register_model: false
       log_predictions: true
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
@@ -118,6 +126,7 @@ training_pipeline:
         fit_intercept: true
         selection: "cyclic"
         random_state: 42
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5
@@ -127,13 +136,14 @@ training_pipeline:
     # =================================================================
     RandomForestRegressor:
       model_class: "RandomForestRegressor"
-      name: "RFR_Tuned"
-      run_name: "RFR_CV_Tuned_BakeOff"
+      name: "RFR_Best"
+      run_name: "RFR_Test"
       log_model_artifact: false
       register_model: false
-      log_predictions: false
+      log_predictions: true
       log_interpretability_artifacts: true
-      evaluate_on_test_set: false
+      log_plots: true
+      evaluate_on_test_set: true
       drop_multicollinear_cols: []
       training_params:
         n_estimators: 600
@@ -143,59 +153,65 @@ training_pipeline:
         max_features: 0.5062662102018453
         random_state: 42
         n_jobs: -1
+      train_model_only: true
       cross_validation:
-        enabled: true
+        enabled: false
         n_splits: 5
 
     XGBRegressor:
       model_class: "XGBRegressor"
-      name: "XGBR_Tuned"
-      run_name: "XBGR_CV_Tuned_BakeOff"
+      name: "XGBR_Best"
+      run_name: "XGBR_Challenger"
       log_model_artifact: true
       register_model: false
-      log_predictions: true
+      log_predictions: false
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
-        n_estimators: 100
-        learning_rate: 0.3
-        max_depth: 6
-        subsample: 1.0
-        colsample_bytree: 1.0
-        gamma: 0
-        reg_alpha: 0
-        reg_lambda: 1
+        n_estimators: 1100
+        learning_rate: 0.064
+        max_depth: 12
+        subsample: 0.8484233884504717
+        colsample_bytree: 0.6535905760097056
+        gamma: 0.5111157004979503
+        reg_alpha: 8.325147849527994e-06
+        reg_lambda: 1.035392577097126e-08
         random_state: 42
         n_jobs: -1
+      train_model_only: true
       cross_validation:
-        enabled: true
+        enabled: false
         n_splits: 5
 
     LGBMRegressor:
       model_class: "LGBMRegressor"
-      name: "LGBM_Tuned"
-      run_name: "LGBMRegressor_Tuned"
+      name: "LGBMR"
+      run_name: "LGBMR_Champion"
       log_model_artifact: true
-      register_model: false
-      log_predictions: true
+      register_model: true
+      log_predictions: false
       log_interpretability_artifacts: true
-      evaluate_on_test_set: false
+      log_plots: true
       drop_multicollinear_cols: []
       training_params:
-        n_estimators: 100
-        learning_rate: 0.1
-        num_leaves: 31
-        max_depth: -1
-        subsample: 1.0
-        colsample_bytree: 1.0
-        reg_alpha: 0.0
-        reg_lambda: 0.0
+        n_estimators: 700
+        learning_rate: 0.16627974464599812
+        num_leaves: 15
+        max_depth: 5
+        subsample: 0.8337243366457066
+        colsample_bytree: 0.6144913771873575
+        reg_alpha: 4.999937468073592e-05
+        reg_lambda: 0.33053572287139826
         random_state: 42
         n_jobs: -1
+        verbose: -1
       cross_validation:
-        enabled: true
+        enabled: false
         n_splits: 5
+      train_model_only: true # ! for final model training wont log or calculate any metrics or cross validation (trainset + valset + best hyperparams)
+      evaluate_on_test_set: false
 
     # =================================================================
     # 3. Other Models
@@ -208,6 +224,7 @@ training_pipeline:
       register_model: false
       log_predictions: true
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: ["time"]
       training_params:
@@ -216,6 +233,7 @@ training_pipeline:
         alpha: 0.0001
         max_iter: 1000
         random_state: 42
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5
@@ -228,6 +246,7 @@ training_pipeline:
       register_model: false
       log_predictions: true
       log_interpretability_artifacts: true
+      log_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
@@ -235,6 +254,7 @@ training_pipeline:
         C: 1.0
         gamma: "scale"
         epsilon: 0.1
+      train_model_only: false
       cross_validation:
         enabled: true
         n_splits: 5

@@ -1,11 +1,9 @@
-# tuning.yaml
-
-# The ONLY line you need to change to run a different tuning experiment
-model_to_tune: "LGBMRegressor_CV_Tuning"
+# The ONLY line i need to change to run a different tuning experiment
+model_to_tune: "XGBRegressor_CV_Tuning"
 
 # MLflow configuration for all tuning experiments
 mlflow_params:
-  experiment_name: "Tuning_LGBMR_Flights"
+  experiment_name: "Tuning_XGBR_Flights"
 
 # --- Dictionary of all available tuning configurations ---
 tuning_configs:
@@ -40,7 +38,7 @@ tuning_configs:
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_RFR_Optuna_MediumRegularization"
+    run_name: "Tuning_RFR_Optuna_MediumRegularization_sub_col_sample"
     tuner_type: "optuna"
     tuner_params:
       n_trials: 30
@@ -131,7 +129,7 @@ tuning_configs:
     base_params:
       random_state: 42
       n_jobs: -1
-    run_name: "Tuning_XGBR_Optuna_LowRegularization"
+    run_name: "Tuning_XGBR_Optuna_LowRegularization_v2"
     tuner_type: "optuna"
     tuner_params:
       n_trials: 50
@@ -141,8 +139,8 @@ tuning_configs:
     param_space:
       n_estimators:
         type: "int"
-        low: 500
-        high: 1200
+        low: 700
+        high: 1500
         step: 100
         # --- n_estimators ---
         # Description: Number of boosting rounds.
@@ -161,8 +159,9 @@ tuning_configs:
 
       max_depth:
         type: "int"
-        low: 2
-        high: 12
+        low: 10
+        high: 25
+        step: 2
         # --- max_depth ---
         # Description: Maximum depth of a tree.
         # Impact: Controls model complexity. Deeper trees can overfit easily.
@@ -170,7 +169,7 @@ tuning_configs:
 
       subsample:
         type: "float"
-        low: 0.5
+        low: 0.7
         high: 0.9
         # --- subsample ---
         # Description: Fraction of training data to be randomly sampled for each tree.
@@ -179,7 +178,7 @@ tuning_configs:
 
       colsample_bytree:
         type: "float"
-        low: 0.5
+        low: 0.7
         high: 0.9
         # --- colsample_bytree ---
         # Description: Fraction of columns (features) to be randomly sampled for each tree.
@@ -290,3 +289,13 @@ tuning_configs:
         # Description: L2 regularization.
         # Impact: Helps prevent overfitting by penalizing large weights.
         # Range: Wide range, often searched on a log scale.
+
+      subsample:
+        type: "float"
+        low: 0.5
+        high: 0.9
+
+      colsample_bytree:
+        type: "float"
+        low: 0.5
+        high: 0.9
