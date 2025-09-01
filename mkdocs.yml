@@ -1,0 +1,30 @@
+site_name: Flight Prices
+site_url: https://mydomain.org/Flights_Price_Prediction_MLOPS
+theme:
+  name: material
+  favicon: img/favicon.ico
+  palette:
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+  primary: teal
+  accent: amber
+nav:
+  - Quick Start Guide: README.md
+  - Model Experimentation Reports:
+      - Model Selection: model_selection_report.md
+      - Production Model: LGBMR_production_model_details.md
+
+features:
+  - navigation.tabs
+  - navigation.instant
+  - content.code.annotate
+
+repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
+repo_name: Flights-Price-Prediction-MLOPs
