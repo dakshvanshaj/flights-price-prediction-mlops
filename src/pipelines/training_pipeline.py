@@ -19,6 +19,13 @@ from gold_data_preprocessing.scaler import Scaler
 from model_training.train import get_model, train_model
 from shared.config import config_gold, config_logging, config_training
 from shared.utils import flatten_params, setup_logging_from_yaml
+from model_evaluation.evaluation_plots import (
+    scatter_plot,
+    residual_plot,
+    qq_plot_residuals,
+    plot_feature_importance,
+)
+
 
 # Initialize logger for this module
 logger = logging.getLogger(__name__)
@@ -74,6 +81,7 @@ def _evaluate_and_log_set(
     power_transformer: Optional[PowerTransformer],
     log_predictions: bool = False,
     log_interpretability_artifacts: bool = True,
+    log_plots: bool = True,
 ) -> None:
     """
     Evaluates a model on a given dataset and logs all relevant information.
@@ -86,12 +94,17 @@ def _evaluate_and_log_set(
         scaler: The fitted Scaler object for inverse transformation.
         power_transformer: The fitted PowerTransformer for inverse transformation.
         log_predictions: If True, logs predictions as a JSON artifact.
+        log_interpretability_artifacts: If True, logs coefficients or feature importances.
+        log_plots: If True, generates and logs evaluation plots.
     """
     logger.info(f"--- Evaluating model on '{log_prefix}' data ---")
     y_pred = model.predict(X)
 
+    # Calculate and log metrics on the scaled data
     _calculate_and_log_metrics(y_true, y_pred, log_prefix=f"{log_prefix}/scaled")
 
+    # Unscale predictions and true values for more interpretable metrics and plots
+    y_true_unscaled, y_pred_unscaled = None, None
     if scaler and power_transformer:
         y_true_unscaled, y_pred_unscaled = unscale_predictions(
             y_true, y_pred, scaler, power_transformer
@@ -100,13 +113,14 @@ def _evaluate_and_log_set(
             y_true_unscaled, y_pred_unscaled, log_prefix=f"{log_prefix}/unscaled"
         )
 
+    # Log predictions as a JSON artifact if enabled
     if log_predictions:
         logger.info(f"Logging prediction artifacts for '{log_prefix}'...")
         scaled_preds_dict = {"y_true": y_true.tolist(), "y_pred": y_pred.tolist()}
         mlflow.log_dict(
             scaled_preds_dict, f"predictions/{log_prefix}_scaled_predictions.json"
         )
-        if scaler and power_transformer:
+        if scaler and power_transformer and y_true_unscaled is not None:
             unscaled_preds_dict = {
                 "y_true": y_true_unscaled.tolist(),
                 "y_pred": y_pred_unscaled.tolist(),
@@ -115,6 +129,8 @@ def _evaluate_and_log_set(
                 unscaled_preds_dict,
                 f"predictions/{log_prefix}_unscaled_predictions.json",
             )
+
+    # Log interpretability artifacts if enabled
     if log_interpretability_artifacts:
         if hasattr(model, "coef_"):
             logger.info(f"Logging model coefficients for '{log_prefix}'...")
@@ -129,6 +145,51 @@ def _evaluate_and_log_set(
                 feature_importances_dict,
                 f"feature_importances/{log_prefix}_feature_importances.json",
             )
+        # Generate and log plots if enabled
+    if log_plots and y_true_unscaled is not None and y_pred_unscaled is not None:
+        logger.info(f"Generating and logging plots for '{log_prefix}'...")
+        scatter_plot(
+            x=y_true_unscaled,
+            y=y_pred_unscaled,
+            x_label="Actual Values",
+            y_label="Predicted Values",
+            title=f"[{log_prefix}] Actual vs. Predicted Values",
+        )
+        residual_plot(
+            y_true=y_true_unscaled,
+            y_pred=y_pred_unscaled,
+            xlabel="Predicted Values",
+            ylabel="Residuals",
+            title=f"[{log_prefix}] Residuals vs. Predicted Values",
+        )
+        qq_plot_residuals(
+            y_true=y_true_unscaled,
+            y_pred=y_pred_unscaled,
+            title=f"[{log_prefix}] Q-Q Plot of Residuals",
+        )
+        plot_feature_importance(
+            list(X.columns), model, title=f"[{log_prefix}] Feature Importance"
+        )
+        logger.info(f"Successfully logged all plots for '{log_prefix}'.")
+
+
+def _run_simple_training(
+    model_instance: Any,
+    train_x: pd.DataFrame,
+    train_y: pd.DataFrame,
+) -> Any:
+    """
+    Trains a model on combination of training and validation sets.
+
+    Returns:
+        The trained model instance.
+    """
+    logger.info("=" * 25 + " SIMPLE  MODEL TRAINING " + "=" * 25)
+
+    # Just train the model and return the model No evaluation will be done
+    model = train_model(train_x, train_y, model_instance)
+    logger.info("Model training completed...")
+    return model
 
 
 def _run_simple_validation(
@@ -147,15 +208,27 @@ def _run_simple_validation(
     Returns:
         The trained model instance.
     """
-    logger.info("=" * 25 + " SIMPLE VALIDATION " + "=" * 25)
+    logger.info("Running Simple Validation (Train/Validation Split)...")
     model = train_model(train_x, train_y, model_instance)
 
-    _evaluate_and_log_set(
-        model, train_x, train_y, "training", scaler, power_transformer
+    should_log_plots = model_config.get("log_plots", True)
+    should_log_preds = model_config.get("log_predictions", False)
+    should_log_interpretability = model_config.get(
+        "log_interpretability_artifacts", True
     )
 
-    should_log_preds = model_config.get("log_predictions", False)
-    should_log_coefs = model_config.get("log_coeficients", True)
+    _evaluate_and_log_set(
+        model,
+        train_x,
+        train_y,
+        "training",
+        scaler,
+        power_transformer,
+        log_plots=should_log_plots,
+        log_predictions=should_log_preds,
+        log_interpretability_artifacts=should_log_interpretability,
+    )
+
     _evaluate_and_log_set(
         model,
         val_x,
@@ -163,8 +236,9 @@ def _run_simple_validation(
         "validation",
         scaler,
         power_transformer,
-        should_log_preds,
-        should_log_coefs,
+        log_predictions=should_log_preds,
+        log_interpretability_artifacts=should_log_interpretability,
+        log_plots=should_log_plots,
     )
 
     return model
@@ -187,9 +261,10 @@ def _run_cross_validation(
     Returns:
         The final model instance trained on the combined dataset.
     """
-    logger.info("=" * 25 + " CROSS VALIDATION " + "=" * 25)
+    logger.info("Running Time-Based Cross-Validation...")
 
     # --- 1. Run Time-Based Cross-Validation ---
+    logger.info("Combining train and validation sets for CV...")
     combined_x = pd.concat([train_x, val_x], ignore_index=True)
     combined_y = pd.concat([train_y, val_y], ignore_index=True)
 
@@ -212,19 +287,17 @@ def _run_cross_validation(
     )
 
     # --- 2. Log Aggregated CV Results ---
+    logger.info("Logging aggregated CV results...")
     for scale_type, df in cv_results.items():
         if not df.empty:
             logger.info(f"Logging mean/std of {scale_type} CV metrics...")
-
             mean_metrics = {
                 f"cv/{scale_type}/mean/{k}": v for k, v in df.mean().items()
             }
             std_metrics = {f"cv/{scale_type}/std/{k}": v for k, v in df.std().items()}
             all_cv_metrics = {**mean_metrics, **std_metrics}
-
             for key, value in all_cv_metrics.items():
                 mlflow.log_metric(key, value)
-
             csv_path = f"cv_results_{scale_type}.csv"
             df.to_csv(csv_path, index=True)
             mlflow.log_artifact(csv_path, "cv_results")
@@ -241,8 +314,11 @@ def _run_cross_validation(
         "final_model_on_all_data",
         scaler,
         power_transformer,
-        model_config.get("log_predictions", False),
-        model_config.get("log_interpretability_artifacts", True),
+        log_predictions=model_config.get("log_predictions", False),
+        log_interpretability_artifacts=model_config.get(
+            "log_interpretability_artifacts", True
+        ),
+        log_plots=model_config.get("log_plots", True),
     )
 
     return final_model
@@ -261,67 +337,85 @@ def training_pipeline(
     """
     logger.info("--- Starting Model Training Pipeline ---")
 
-    # === STAGE 1: LOAD CONFIGURATION ===
+    # === STAGE 1: CONFIGURATION & SETUP ===
+    logger.info("=" * 25 + " STAGE 1/5: CONFIGURATION & SETUP " + "=" * 25)
     logger.info("Loading configurations from params.yaml...")
     model_config_key = training_params["model_config_to_run"]
     model_config = training_params["models"][model_config_key]
     model_class_name = model_config["model_class"]
-    model_name = model_config["name"]
+    model_name = model_config.get("name", model_config_key)  # Use key as fallback name
     run_name = model_config["run_name"]
+    logger.info(f"Configuration selected: '{model_config_key}'")
 
     mlflow.set_experiment(mlflow_params["experiment_name"])
+    logger.info(f"MLflow experiment set to: '{mlflow_params['experiment_name']}'")
 
-    # === STAGE 2: PREPARE DATA AND PREPROCESSORS ===
-    logger.info("Preparing data splits and loading preprocessors...")
+    # === STAGE 2: DATA PREPARATION ===
+    logger.info("=" * 25 + " STAGE 2/5: DATA PREPARATION " + "=" * 25)
+    logger.info("Preparing data splits (X, y)...")
     train_x = train_df.drop(columns=config_training.TARGET_COLUMN)
     train_y = train_df[config_training.TARGET_COLUMN]
-    val_x = val_df.drop(columns=config_training.TARGET_COLUMN)
-    val_y = val_df[config_training.TARGET_COLUMN]
+
+    val_x, val_y = None, None
+    if val_df is not None:
+        val_x = val_df.drop(columns=config_training.TARGET_COLUMN)
+        val_y = val_df[config_training.TARGET_COLUMN]
 
     cols_to_drop = model_config.get("drop_multicollinear_cols")
     if cols_to_drop:
+        logger.info(f"Dropping specified multicollinear columns: {cols_to_drop}")
         train_x = train_x.drop(columns=cols_to_drop, errors="ignore")
-        val_x = val_x.drop(columns=cols_to_drop, errors="ignore")
+        if val_x is not None:
+            val_x = val_x.drop(columns=cols_to_drop, errors="ignore")
 
+    logger.info("Loading Scaler and PowerTransformer objects...")
     try:
         scaler = Scaler.load(config_gold.SCALER_PATH)
         power_transformer = PowerTransformer.load(config_gold.POWER_TRANSFORMER_PATH)
+        logger.info("Successfully loaded Scaler and PowerTransformer objects.")
     except FileNotFoundError:
         scaler, power_transformer = None, None
         logger.warning(
             "Scaler or PowerTransformer not found. Unscaled metrics will be unavailable."
         )
 
-    # === STAGE 3: EXECUTE MLFLOW RUN ===
+    # === STAGE 3: MODEL TRAINING & VALIDATION ===
+    logger.info("=" * 25 + " STAGE 3/5: MODEL TRAINING & VALIDATION " + "=" * 25)
     with mlflow.start_run(run_name=run_name) as run:
         run_id = run.info.run_id
         logger.info(f"Starting MLflow Run: '{run_name}' (ID: {run_id})")
 
         # --- Autologging and Manual Parameter Logging ---
+        logger.info("Setting up MLflow autologging and logging parameters...")
         model_library = get_model_library(model_class_name)
         if model_library and model_library in config_training.LOG_MODEL_MAPPING:
             try:
                 auto_log_func = config_training.AUTOLOG_MAPPING[model_library]
-                # Disable model artifact logging in autolog to avoid logging intermediate models.
-                # We will manually log the final, retrained model later.
                 auto_log_func(
                     log_models=False,
                     log_input_examples=True,
                     silent=True,
                     disable=False,
                 )
+                logger.info(f"Enabled autologging for '{model_library}'.")
             except Exception as e:
                 logger.error(f"Autologging failed: {e}", exc_info=True)
 
         mlflow.log_params(flatten_params({"gold_pipeline": gold_pipeline_params}))
         mlflow.log_params(flatten_params({model_config_key: model_config}))
         mlflow.set_tags({"model_name": model_name, "model_class": model_class_name})
+        logger.info("Logged pipeline parameters and model tags.")
 
         # --- Model Instantiation and Training ---
+        logger.info(f"Instantiating model: {model_class_name}")
         model_instance = get_model(model_class_name, model_config["training_params"])
 
-        if model_config.get("cross_validation", {}).get("enabled", False):
-            mlflow.set_tag("run_type", "combined_cross_validation")
+        if model_config.get("train_model_only", False):
+            mlflow.set_tag("run_type", "model_training_only")
+            final_model = _run_simple_training(model_instance, train_x, train_y)
+
+        elif model_config.get("cross_validation", {}).get("enabled", False):
+            mlflow.set_tag("run_type", "cross_validation")
             final_model = _run_cross_validation(
                 model_instance,
                 train_x,
@@ -347,8 +441,9 @@ def training_pipeline(
             )
 
         # === STAGE 4: FINAL EVALUATION ON TEST SET ===
+        logger.info("=" * 25 + " STAGE 4/5: FINAL EVALUATION ON TEST SET " + "=" * 25)
         if model_config.get("evaluate_on_test_set", False) and test_df is not None:
-            logger.info("--- Performing final evaluation on the hold-out test set ---")
+            logger.info("Performing final evaluation on the hold-out test set...")
             test_x = test_df.drop(columns=config_training.TARGET_COLUMN)
             test_y = test_df[config_training.TARGET_COLUMN]
 
@@ -363,15 +458,17 @@ def training_pipeline(
                 scaler=scaler,
                 power_transformer=power_transformer,
                 log_predictions=True,
+                log_plots=model_config.get("log_plots", True),
             )
         elif test_df is None:
             logger.warning("No test dataset provided. Skipping final evaluation.")
         else:
             logger.info(
-                "'evaluate_on_test_set' is false in config. Skipping final test set evaluation to prevent bias."
+                "'evaluate_on_test_set' is false in config. Skipping final test set evaluation."
             )
 
-        # === STAGE 5: MODEL LOGGING AND REGISTRATION (OPTIONAL) ===
+        # === STAGE 5: MODEL LOGGING & REGISTRATION ===
+        logger.info("=" * 25 + " STAGE 5/5: MODEL LOGGING & REGISTRATION " + "=" * 25)
         if model_config.get("log_model_artifact", False):
             logger.info("Logging final model artifact to MLflow...")
             model_library = get_model_library(model_class_name)
@@ -390,11 +487,12 @@ def training_pipeline(
 
                     model_info = log_model_func(
                         **{model_arg_name: final_model},
-                        artifact_path="model",
+                        name=model_name,
                         registered_model_name=registered_model_name,
+                        input_example=train_x.iloc[:5],
                     )
                     logger.info(
-                        f"Model registered successfully. URI: {model_info.model_uri}"
+                        f"Model logged successfully. URI: {model_info.model_uri}"
                     )
                 except Exception as e:
                     logger.error(
@@ -438,27 +536,57 @@ def main():
 
     # === EXECUTION ===
     try:
-        # --- Load Data and Parameters ---
-        logger.info("Loading data and params.yaml...")
-        train_df = load_data(config_gold.GOLD_PROCESSED_DIR / args.train_file_name)
-        validation_df = load_data(
-            config_gold.GOLD_PROCESSED_DIR / args.validation_file_name
-        )
-        test_df = None
-        if args.test_file_name:
-            logger.info(f"Loading test data from '{args.test_file_name}'...")
-            test_df = load_data(config_gold.GOLD_PROCESSED_DIR / args.test_file_name)
-        else:
-            logger.info("No test data provided. Skipping loading...")
-
-        if train_df is None or validation_df is None:
-            logger.critical("Failed to load one or more data files. Aborting.")
-            sys.exit(1)
-
+        # ---------------------------------------------------------------------------- #
+        #                           Read the params.yaml file                          #
+        # ---------------------------------------------------------------------------- #
         with open("params.yaml", "r") as f:
             params = yaml.safe_load(f)
 
-        # --- Run Pipeline ---
+        model_config_key = params["training_pipeline"]["model_config_to_run"]
+        model_config = params["training_pipeline"]["models"][model_config_key]
+        is_train_only_run = model_config.get("train_model_only", False)
+
+        # ---------------------------------------------------------------------------- #
+        #                                   Load Data                                  #
+        # ---------------------------------------------------------------------------- #
+        test_df = None
+        if is_train_only_run:
+            logger.info("Training only mode (no evaluation) is enabled")
+            logger.info("Loading Data...")
+            train_df_part = load_data(
+                config_gold.GOLD_PROCESSED_DIR / args.train_file_name
+            )
+            val_df_part = load_data(
+                config_gold.GOLD_PROCESSED_DIR / args.validation_file_name
+            )
+            train_df = pd.concat([train_df_part, val_df_part], ignore_index=True)
+            validation_df = None
+        else:
+            logger.info("Loading Data...")
+            train_df = load_data(config_gold.GOLD_PROCESSED_DIR / args.train_file_name)
+            validation_df = load_data(
+                config_gold.GOLD_PROCESSED_DIR / args.validation_file_name
+            )
+
+        # ---------------------------------------------------------------------------- #
+        #               Load Test Data If Test Set Evaluation Is Enabled               #
+        # ---------------------------------------------------------------------------- #
+        if model_config.get("evaluate_on_test_set", False):
+            logger.info("Loading Test Data...")
+            if args.test_file_name:
+                logger.info(f"Loading test data from '{args.test_file_name}'...")
+                test_df = load_data(
+                    config_gold.GOLD_PROCESSED_DIR / args.test_file_name
+                )
+            else:
+                logger.critical(
+                    "No test data provided. Cannot perform test set evaluation..."
+                )
+                sys.exit(1)
+
+        # ---------------------------------------------------------------------------- #
+        #                             Run Training Pipeline                            #
+        # ---------------------------------------------------------------------------- #
         training_pipeline(
             train_df=train_df,
             val_df=validation_df,
