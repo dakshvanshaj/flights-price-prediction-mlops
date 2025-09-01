@@ -49,3 +49,11 @@ loggers:
     level: WARNING
   git.cmd:
     level: WARNING
+  matplotlib:
+    level: WARNING
+    handlers: [console, file]
+    propagate: no
+  PIL:
+    level: WARNING
+    handlers: [console, file]
+    propagate: no
