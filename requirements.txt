@@ -45,6 +45,13 @@ optuna==4.5.0
 # dotenv for environment variable management
 python-dotenv==1.1.0
 
+seaborn==0.13.2 
+
+statsmodels==0.14.5
+
+mkdocs_material==9.6.18
+
+shap==0.48.0
 # Your custom package from GitHub
 # This format allows pip to install directly from a specific commit
 -e git+ssh://git@github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs.git@9a61519c82de5646b15d37e3c84f6e4b40a139ad#egg=flight_price_prediction_mlops
