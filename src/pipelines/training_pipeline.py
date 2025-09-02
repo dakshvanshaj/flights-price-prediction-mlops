@@ -25,7 +25,7 @@ from model_evaluation.evaluation_plots import (
     qq_plot_residuals,
     plot_feature_importance,
 )
-
+from model_explainability.shap_explain import shap_plots
 
 # Initialize logger for this module
 logger = logging.getLogger(__name__)
@@ -79,9 +79,11 @@ def _evaluate_and_log_set(
     log_prefix: str,
     scaler: Optional[Scaler],
     power_transformer: Optional[PowerTransformer],
+    model_config: Dict[str, Any],
     log_predictions: bool = False,
     log_interpretability_artifacts: bool = True,
     log_plots: bool = True,
+    log_shap_plots: bool = True,
 ) -> None:
     """
     Evaluates a model on a given dataset and logs all relevant information.
@@ -93,6 +95,7 @@ def _evaluate_and_log_set(
         log_prefix: Prefix for naming metrics and artifacts (e.g., "validation").
         scaler: The fitted Scaler object for inverse transformation.
         power_transformer: The fitted PowerTransformer for inverse transformation.
+        model_config: The configuration dictionary for the current model.
         log_predictions: If True, logs predictions as a JSON artifact.
         log_interpretability_artifacts: If True, logs coefficients or feature importances.
         log_plots: If True, generates and logs evaluation plots.
@@ -172,6 +175,15 @@ def _evaluate_and_log_set(
         )
         logger.info(f"Successfully logged all plots for '{log_prefix}'.")
 
+    if log_shap_plots:
+        n_local_plots = model_config.get("n_shap_local_plots", 3)
+        shap_plots(
+            model=model,
+            X=X,
+            log_prefix=log_prefix,
+            n_local_plots=n_local_plots,
+        )
+
 
 def _run_simple_training(
     model_instance: Any,
@@ -216,7 +228,7 @@ def _run_simple_validation(
     should_log_interpretability = model_config.get(
         "log_interpretability_artifacts", True
     )
-
+    should_log_shap_plots = model_config.get("log_shap_plots", True)
     _evaluate_and_log_set(
         model,
         train_x,
@@ -224,9 +236,11 @@ def _run_simple_validation(
         "training",
         scaler,
         power_transformer,
+        model_config=model_config,
         log_plots=should_log_plots,
         log_predictions=should_log_preds,
         log_interpretability_artifacts=should_log_interpretability,
+        log_shap_plots=should_log_shap_plots,
     )
 
     _evaluate_and_log_set(
@@ -236,9 +250,11 @@ def _run_simple_validation(
         "validation",
         scaler,
         power_transformer,
+        model_config=model_config,
         log_predictions=should_log_preds,
         log_interpretability_artifacts=should_log_interpretability,
         log_plots=should_log_plots,
+        log_shap_plots=should_log_shap_plots,
     )
 
     return model
@@ -314,11 +330,13 @@ def _run_cross_validation(
         "final_model_on_all_data",
         scaler,
         power_transformer,
+        model_config=model_config,
         log_predictions=model_config.get("log_predictions", False),
         log_interpretability_artifacts=model_config.get(
             "log_interpretability_artifacts", True
         ),
         log_plots=model_config.get("log_plots", True),
+        log_shap_plots=model_config.get("log_shap_plots", True),
     )
 
     return final_model
@@ -457,8 +475,10 @@ def training_pipeline(
                 log_prefix="test",
                 scaler=scaler,
                 power_transformer=power_transformer,
+                model_config=model_config,
                 log_predictions=True,
                 log_plots=model_config.get("log_plots", True),
+                log_shap_plots=model_config.get("log_shap_plots", True),
             )
         elif test_df is None:
             logger.warning("No test dataset provided. Skipping final evaluation.")
