@@ -167,6 +167,7 @@ training_pipeline:
       log_predictions: false
       log_interpretability_artifacts: true
       log_plots: true
+      log_shap_plots: true
       evaluate_on_test_set: false
       drop_multicollinear_cols: []
       training_params:
