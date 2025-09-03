@@ -476,7 +476,7 @@ def training_pipeline(
                 scaler=scaler,
                 power_transformer=power_transformer,
                 model_config=model_config,
-                log_predictions=True,
+                log_predictions=model_config.get("log_predictions", False),
                 log_plots=model_config.get("log_plots", True),
                 log_shap_plots=model_config.get("log_shap_plots", True),
             )
