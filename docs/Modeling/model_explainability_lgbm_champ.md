@@ -67,13 +67,15 @@ These plots show how the model arrived at its final prediction for a single inst
 
 The data for these specific instances can be found in scaled preprocessed format in the accompanying CSV file: [shap_local_instances.csv](../shap_local_instances.csv).
 
-And the raw unscaled data is below
+And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
 
-| travel_code | user_code | from_location | to_location | flight_type | price | time | distance | agency | date | year | month | day | day_of_week | day_of_year | week_of_year |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1555 | 85997 | Rio de Janeiro (RJ) | Sao Paulo (SP) | economic | 446.75 | 0.86 | 331.89 | CloudFy | 2022-02-27 | 2022 | 2 | 27 | 6 | 58 | 8 |
-| 19696 | 108330 | Salvador (BH) | Florianopolis (SC) | firstClass | 1654.09 | 2.44 | 937.77 | Rainbow | 2022-07-16 | 2022 | 7 | 16 | 5 | 197 | 28 |
-| 23885 | 25207 | Recife (PE) | Florianopolis (SC) | firstClass | 1371.83 | 1.76 | 676.53 | Rainbow | 2022-08-25 | 2022 | 8 | 25 | 3 | 237 | 34 | 
+
+| | price | time | distance | flight_type |
+| :--- | :--- | :--- | :--- | :--- |
+| 1555 | 1566.260009765626 | 2.0899999141693124 | 806.4799804687501 | firstClass |
+| 19696 | 517.8200073242191 | 0.7200000286102295 | 277.7000122070313 | economic |
+| 23885 | 826.0200195312505 | 2.160000085830689 | 830.859985351624 | economic |
+
 
 #### Instance 0
 
