@@ -163,7 +163,7 @@ class Scaler:
         df_copy = df.copy()
         logger.info(f"Applying inverse '{self.strategy}' scaling.")
 
-        for col in df_copy.columns:
+        for col in self.columns:
             if col not in self.params_:
                 logger.warning(
                     f"Column '{col}' not found in scaler params. Skipping inverse transform."
