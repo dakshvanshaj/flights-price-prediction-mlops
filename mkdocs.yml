@@ -29,7 +29,7 @@ plugins:
 nav:
   - Home: README.md
   - Data Science:
-      - Model Selection: model_selection_report.md
+      - Model Selection: Data Science/model_selection_report.md
       - Production Model: LGBMR_production_model_details.md
   - Exploratory Data Analysis:
       - Exploratory Data Analysis: EDA/flights_eda.ipynb
