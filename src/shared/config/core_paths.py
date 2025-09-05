@@ -10,6 +10,7 @@ MODELS_DIR = PROJECT_ROOT / "models"
 SRC_DIR = PROJECT_ROOT / "src"
 GE_ROOT_DIR = SRC_DIR / "data_validation" / "great_expectations"
 REPORTS_DIR = PROJECT_ROOT / "reports"
+DOCS_DIR = PROJECT_ROOT / "docs"
 
 
 # Raw Data Directory
