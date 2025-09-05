@@ -27,17 +27,26 @@ plugins:
   - mkdocs-jupyter
 
 nav:
-  - Home: README.md
-  - Data Science:
-      - Model Selection: Data Science/model_selection_report.md
-      - Production Model: LGBMR_production_model_details.md
-  - Exploratory Data Analysis:
-      - Exploratory Data Analysis: EDA/flights_eda.ipynb
-      - Automated EDA Report: EDA/flights_training_eda_report.html
-
+  - Home: index.md
+  - Data journey:
+      - Exploratory Data Analysis:
+          - Exploratory Data Analysis: EDA/flights_eda.ipynb
+          - Automated EDA Report: EDA/flights_training_eda_report.html
+      - Data Processing and Validation Pipelines:
+          - Data Pipelines: Data Pipelines/data_pipelines.md
+  - Modeling:
+      - Model Selection & Evaluation: Modeling/model_selection_report.md
+      - Model Prediction Explanations: Modeling/model_explanability.md
+      - Production Model: Modeling/LGBMR_production_model_details.md
+      - Modeling Pipelines:
+          - Training & Evaluation: Modeling/training_pipeline.py
+          - HyperParameter Tuning: Modeling/tuning_pipeline.py
+  - MLOps:
+      - Project architecture: MLOps/architecture.md
+      - Tooling: MLOps/tools.md
 features:
   - navigation.tabs
-  # - navigation.sections
+  - navigation.sections
   - navigation.instant
   - content.code.annotate
   - navigation.top
