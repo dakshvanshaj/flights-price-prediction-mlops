@@ -276,7 +276,7 @@ LightGBM provides a unique perspective on what drives flight prices, different f
 
 - **Top Influencers:** Uniquely, **`time`** emerges as the single most important feature for LightGBM, followed closely by `flight_type`.
 - **Airline & Class Dominance:** The model heavily relies on the airline and the class of service (e.g., `cloudfy_firstclass`, `rainbow_economic`), which occupy the majority of the top 10 feature slots.
-- **Actionable Insight:** This model has learned that the combination of *when* a flight is and *who* is operating it are the most powerful predictors, more so than `distance` which is ranked lower. This provides a clear focus for business strategy.
+- **Actionable Insight:** This model has learned that the combination of flight duration (`time`) and *who* is operating it are the most powerful predictors, more so than `distance` which is ranked lower. This provides a clear focus for business strategy.
 
 ![Feature Importance](../img//lgbm_feature_importance.png)
 
