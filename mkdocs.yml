@@ -1,30 +1,55 @@
 site_name: Flight Prices
 site_url: https://mydomain.org/Flights_Price_Prediction_MLOPS
+site_description: "MLOps project for flight price prediction."
+site_author: "Daksh Vanshaj"
+
 theme:
   name: material
   favicon: img/favicon.ico
+  logo: img/favicon.ico
   palette:
     - scheme: slate
       toggle:
-        icon: material/toggle-switch
+        icon: material/weather-sunny
         name: Switch to light mode
 
     - scheme: default
       toggle:
-        icon: material/toggle-switch-off-outline
+        icon: material/weather-night
         name: Switch to dark mode
   primary: teal
   accent: amber
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocs-jupyter
+
 nav:
-  - Quick Start Guide: README.md
-  - Model Experimentation Reports:
+  - Home: README.md
+  - Data Science:
       - Model Selection: model_selection_report.md
       - Production Model: LGBMR_production_model_details.md
+  - Exploratory Data Analysis:
+      - Exploratory Data Analysis: EDA/flights_eda.ipynb
+      - Automated EDA Report: EDA/flights_training_eda_report.html
 
 features:
   - navigation.tabs
+  # - navigation.sections
   - navigation.instant
   - content.code.annotate
+  - navigation.top
+  - search.highlight
+  - search.suggest
 
 repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/dakshvanshaj
+
+copyright: Copyright &copy; 2025 Daksh Vanshaj
