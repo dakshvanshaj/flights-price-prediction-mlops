@@ -36,7 +36,8 @@ nav:
           - Data Pipelines: Data Pipelines/data_pipelines.md
   - Modeling:
       - Model Selection & Evaluation: Modeling/model_selection_report.md
-      - Model Prediction Explanations: Modeling/model_explanability.md
+      - Model Explanability (Champion): Modeling/model_explainability_lgbm_champ.md
+      - Model Comparison (Champ vs Challenger): Modeling/model_explainability_lgbm_vs_xgb.md
       - Production Model: Modeling/LGBMR_production_model_details.md
       - Modeling Pipelines:
           - Training & Evaluation: Modeling/training_pipeline.py
