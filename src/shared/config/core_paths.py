@@ -9,6 +9,8 @@ LOGS_DIR = PROJECT_ROOT / "logs"
 MODELS_DIR = PROJECT_ROOT / "models"
 SRC_DIR = PROJECT_ROOT / "src"
 GE_ROOT_DIR = SRC_DIR / "data_validation" / "great_expectations"
+REPORTS_DIR = PROJECT_ROOT / "reports"
+
 
 # Raw Data Directory
 RAW_DATA_DIR = DATA_DIR / "raw"
