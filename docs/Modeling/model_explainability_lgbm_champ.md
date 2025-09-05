@@ -65,9 +65,15 @@ Waterfall plots provide a detailed breakdown of a single prediction, showing how
 
 These plots show how the model arrived at its final prediction for a single instance. The `f(x)` value at the top of the plot is the model's predicted output, and the `E[f(x)]` at the bottom is the base value (the average prediction over the entire dataset). Each bar in between shows how the value of each feature instance has pushed the prediction higher or lower.
 
-The data for these specific instances can be found in the accompanying CSV file: [shap_local_instances.csv](../shap_local_instances.csv).
+The data for these specific instances can be found in scaled preprocessed format in the accompanying CSV file: [shap_local_instances.csv](../shap_local_instances.csv).
 
+And the raw unscaled data is below
 
+| travel_code | user_code | from_location | to_location | flight_type | price | time | distance | agency | date | year | month | day | day_of_week | day_of_year | week_of_year |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1555 | 85997 | Rio de Janeiro (RJ) | Sao Paulo (SP) | economic | 446.75 | 0.86 | 331.89 | CloudFy | 2022-02-27 | 2022 | 2 | 27 | 6 | 58 | 8 |
+| 19696 | 108330 | Salvador (BH) | Florianopolis (SC) | firstClass | 1654.09 | 2.44 | 937.77 | Rainbow | 2022-07-16 | 2022 | 7 | 16 | 5 | 197 | 28 |
+| 23885 | 25207 | Recife (PE) | Florianopolis (SC) | firstClass | 1371.83 | 1.76 | 676.53 | Rainbow | 2022-08-25 | 2022 | 8 | 25 | 3 | 237 | 34 | 
 
 #### Instance 0
 
