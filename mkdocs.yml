@@ -38,10 +38,12 @@ nav:
       - Model Selection & Evaluation: Modeling/model_selection_report.md
       - Model Explanability (Champion): Modeling/model_explainability_lgbm_champ.md
       - Model Comparison (Champ vs Challenger): Modeling/model_explainability_lgbm_vs_xgb.md
-      - Production Model: Modeling/LGBMR_production_model_details.md
       - Modeling Pipelines:
           - Training & Evaluation: Modeling/training_pipeline.py
           - HyperParameter Tuning: Modeling/tuning_pipeline.py
+  - Production Model Guide:
+      - LightGBM: LGBM_summary/LGBMR_production_model_details.md
+
   - MLOps:
       - Project architecture: MLOps/architecture.md
       - Tooling: MLOps/tools.md
