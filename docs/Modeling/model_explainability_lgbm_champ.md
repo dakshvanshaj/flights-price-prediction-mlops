@@ -6,14 +6,15 @@ The LightGBM model was selected as the champion for its exceptional performance,
 
 The analysis confirms that the model has learned logical and robust patterns from the data. Key drivers of price predictions include **`time`**, **`flight_type`**, and **`from_location`**, which aligns with the feature importance identified during model evaluation. The model's behavior is consistent and its predictions can be trusted.
 
-### A Note on Interpreting Aggregated Features
-In the SHAP plots throughout this document, you may notice features like `agency` and `route` displaying numerical values greater than 1 (e.g., `agency=2`). This is a cosmetic artifact of the visualization process and does not indicate an error in the model itself.
-
-This occurs because the explanation script aggregates multiple feature effects. For example, it groups the main `agency` feature with the engineered interaction feature `agency_flight_type`. The value `2` appears when both the base feature and the interaction feature are active for a given prediction.
-
-Therefore, the importance shown for a feature like `agency` represents the **combined impact of its main effect and its interactions**.
-> However, the model importance for agency_flight_type and route_agency is near None so it does not have a effect on the final conclusion. But it will be added to fix list. 
-The underlying SHAP calculations are sound, but this grouping should be kept in mind during interpretation.
+> **A Note on Interpreting Aggregated Features**
+>
+> In the SHAP plots throughout this document, you may notice features like `agency` and `route` displaying numerical values greater than 1 (e.g., `agency=2`). This is a cosmetic artifact of the visualization process and does not indicate an error in the model itself.
+>
+> This occurs because the explanation script aggregates multiple feature effects. For example, it groups the main `agency` feature with the engineered interaction feature `agency_flight_type`. The value `2` appears when both the base feature and the interaction feature are active for a given prediction.
+>
+> Therefore, the importance shown for a feature like `agency` represents the **combined impact of its main effect and its interactions**.
+> However, the model importance for `agency_flight_type` and `route_agency` is near None, so it does not have an effect on the final conclusion. But it will be added to the fix list.
+> The underlying SHAP calculations are sound, but this grouping should be kept in mind during interpretation.
 
 ## 2. Global Model Explainability
 
@@ -57,7 +58,7 @@ In essence, while the temporal features do have a relationship with price when v
 ### A. SHAP Force Plot
 
 The force plot visualizes the SHAP values for a single prediction, showing how each feature contributes to pushing the prediction away from the base value.
-Fot this interactive plot we placed multiple force plots for 2000 instances vertically and can visualize the patterns over the dataset.
+For this interactive plot we placed multiple force plots for 2000 instances vertically and can visualize the patterns over the dataset.
 
 [View the interactive force plot](../img/shap_lgbm_force_plot.html)
 
@@ -96,6 +97,14 @@ These plots show how the model arrived at its final prediction for a single inst
 
 The data for these specific instances can be found in scaled preprocessed format in the accompanying CSV file: [shap_local_instances.csv](../shap_local_instances.csv).
 
+
+|scaled price|
+| :---  |
+| 1.568 |
+| -1.273 |
+| -0.223 |
+
+
 And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
 
 | | price | time | distance | flight_type |
@@ -104,20 +113,23 @@ And the raw unscaled data is below(for only some columns to avoid complex revers
 | 19696 | 517.820007 | 0.72 | 277.700012 | economic |
 | 23885 | 826.020020 | 2.16 | 830.859985 | economic |
 
+> Check out these prediction comparison here for [lightgbm(champion) vs xgboost(challenger)](model_explainability_lgbm_vs_xgb.md) model to get even more clearer understanding on why lightgbm is performing better. 
+
 #### Instance 0
 
 ![Waterfall Plot for Instance 0](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%200.png)
 
 *   **Predicted Value (Scaled):** `1.567`
 *   **True Value (Scaled):** `1.569`
-*   **Insight:** The prediction is extremely accurate. The model correctly identified that the long flight `time` (duration) and `flight_type` (firstclass) were the primary drivers of the **high** price and accuracy was increased from other minor factors like agency also had a additional positive impact on price increase while destination `to_location` has a minor decrease on price.
+*   **Insight:** The prediction is extremely accurate. The model correctly identified that the long flight `time` (duration) and `flight_type` (firstclass) were the primary drivers of the **high** price. Accuracy was increased from other minor factors; `agency` also had an additional positive impact on price increase while destination `to_location` has a minor decrease on price.
+
 #### Instance 1
 
 ![Waterfall Plot for Instance 1](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%201.png)
 
 *   **Predicted Value (Scaled):** `-1.274`
 *   **True Value (Scaled):** `-1.274`
-*   **Insight:** Another perfect prediction. The model correctly identified that the `flight_type`(economy) and a shorter `time` (duration) were the main factors driving the price down and accuracy was further improved by cheaper `agency`, minor contributions from `distance` and `route`.
+*   **Insight:** Another perfect prediction. The model correctly identified that the `flight_type`(economy) and a shorter `time` (duration) were the main factors driving the price down. Accuracy was further improved by a cheaper `agency`, and minor contributions from `distance` and `route`.
 
 #### Instance 2
 
@@ -125,7 +137,7 @@ And the raw unscaled data is below(for only some columns to avoid complex revers
 
 *   **Predicted Value (Scaled):** `-0.224`
 *   **True Value (Scaled):** `-0.224`
-*   **Insight:** A perfect prediction. The model correctly identified that the `flight_type`(economy) was the main factor driving the price down, but this was counteracted by a longer `time` (duration), resulting in a lower price. However here accuracy was further improved by deductions in price from `agency` and `from_location` but a increase from `distance` these all made it a accurate prediction.
+*   **Insight:** A perfect prediction. The model correctly identified that the `flight_type`(economy) was the main factor driving the price down, but this was counteracted by a longer `time` (duration), resulting in a lower price. However, here accuracy was further improved by deductions in price from `agency` and `from_location`, but an increase from `distance`. These all made it an accurate prediction.
 
 ## 5. Feature Dependence Plots
 
