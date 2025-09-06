@@ -6,6 +6,15 @@ The LightGBM model was selected as the champion for its exceptional performance,
 
 The analysis confirms that the model has learned logical and robust patterns from the data. Key drivers of price predictions include **`time`**, **`flight_type`**, and **`from_location`**, which aligns with the feature importance identified during model evaluation. The model's behavior is consistent and its predictions can be trusted.
 
+### A Note on Interpreting Aggregated Features
+In the SHAP plots throughout this document, you may notice features like `agency` and `route` displaying numerical values greater than 1 (e.g., `agency=2`). This is a cosmetic artifact of the visualization process and does not indicate an error in the model itself.
+
+This occurs because the explanation script aggregates multiple feature effects. For example, it groups the main `agency` feature with the engineered interaction feature `agency_flight_type`. The value `2` appears when both the base feature and the interaction feature are active for a given prediction.
+
+Therefore, the importance shown for a feature like `agency` represents the **combined impact of its main effect and its interactions**.
+> However, the model importance for agency_flight_type and route_agency is near None so it does not have a effect on the final conclusion. But it will be added to fix list. 
+The underlying SHAP calculations are sound, but this grouping should be kept in mind during interpretation.
+
 ## 2. Global Model Explainability
 
 ### A. SHAP Summary Plot
@@ -23,8 +32,7 @@ The summary plot provides a global overview of the model's feature importance an
 
 ### B. SHAP Feature Importance (Bar Plot)
 
-This plot aggregates the absolute SHAP values for each feature, providing a more traditional feature importance view.
-
+This plot shows the mean absolute SHAP value for each feature across all of the data. This quantifies, on average, the magnitude (positive or negative) of each feature's contribution towards the predicted prices. 
 ![SHAP Feature Importance](../img/shap_lgbm_Feature%20Importance%20(Bar).png)
 
 **Insights:**
@@ -49,11 +57,32 @@ In essence, while the temporal features do have a relationship with price when v
 ### A. SHAP Force Plot
 
 The force plot visualizes the SHAP values for a single prediction, showing how each feature contributes to pushing the prediction away from the base value.
+Fot this interactive plot we placed multiple force plots for 2000 instances vertically and can visualize the patterns over the dataset.
 
 [View the interactive force plot](../img/shap_lgbm_force_plot.html)
 
-**Insights:**
+**Feature Combination Resulting In Low Price**
+![Low Price](../img/forceplot_low_price.png)
 
+**Insights:**
+* We can see that a combination of lower time (flight duration) results in a significant decrease in price in combination with economy class a lower price is predicted which is intuitively sound.
+* A costlier from_location in the particular selected instance pushed a price up little bit from the mean.
+
+**Feature Combination Resulting In High Price**
+![High Price](../img/forceplot_high_price1.png)
+
+![High Price](../img/forceplot_high_price.png)
+
+**Insights:**
+* A higher flight duration(time) causes a massive increase in price.
+* And when paired with Firstclass(Firstclass > Premium) of flights causes the highest price for flights.
+
+**Feature Combination Resulting in Medium Price**
+![Medium Price](../img/forceplot_Ltime_flightT2.png)
+* This shows a combinational effect of low time duration but firstclass flightype including expensive from_location and route resulting in a medium level of price.
+* Time being lower in this case is pulling the price down aggressively.
+
+**Usage**
 *   This interactive plot allows for the exploration of individual predictions.
 *   Red bars represent features that increase the prediction, while blue bars represent features that decrease it.
 *   The length of the bar indicates the magnitude of the feature's impact.
@@ -69,13 +98,11 @@ The data for these specific instances can be found in scaled preprocessed format
 
 And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
 
-
 | | price | time | distance | flight_type |
 | :--- | :--- | :--- | :--- | :--- |
-| 1555 | 1566.260009765626 | 2.0899999141693124 | 806.4799804687501 | firstClass |
-| 19696 | 517.8200073242191 | 0.7200000286102295 | 277.7000122070313 | economic |
-| 23885 | 826.0200195312505 | 2.160000085830689 | 830.859985351624 | economic |
-
+| 1555 | 1566.260010 | 2.09 | 806.479980 | firstClass |
+| 19696 | 517.820007 | 0.72 | 277.700012 | economic |
+| 23885 | 826.020020 | 2.16 | 830.859985 | economic |
 
 #### Instance 0
 
@@ -83,15 +110,14 @@ And the raw unscaled data is below(for only some columns to avoid complex revers
 
 *   **Predicted Value (Scaled):** `1.567`
 *   **True Value (Scaled):** `1.569`
-*   **Insight:** The prediction is extremely accurate. The model correctly identified that the long flight `time` (duration) and `flight_type` were the primary drivers of the high price.
-
+*   **Insight:** The prediction is extremely accurate. The model correctly identified that the long flight `time` (duration) and `flight_type` (firstclass) were the primary drivers of the **high** price and accuracy was increased from other minor factors like agency also had a additional positive impact on price increase while destination `to_location` has a minor decrease on price.
 #### Instance 1
 
 ![Waterfall Plot for Instance 1](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%201.png)
 
 *   **Predicted Value (Scaled):** `-1.274`
 *   **True Value (Scaled):** `-1.274`
-*   **Insight:** Another perfect prediction. The model correctly identified that the `flight_type` and a shorter `time` (duration) were the main factors driving the price down.
+*   **Insight:** Another perfect prediction. The model correctly identified that the `flight_type`(economy) and a shorter `time` (duration) were the main factors driving the price down and accuracy was further improved by cheaper `agency`, minor contributions from `distance` and `route`.
 
 #### Instance 2
 
@@ -99,7 +125,7 @@ And the raw unscaled data is below(for only some columns to avoid complex revers
 
 *   **Predicted Value (Scaled):** `-0.224`
 *   **True Value (Scaled):** `-0.224`
-*   **Insight:** A perfect prediction. The model correctly identified that the `flight_type` was the main factor driving the price down, but this was counteracted by a longer `time` (duration), resulting in a prediction close to the average.
+*   **Insight:** A perfect prediction. The model correctly identified that the `flight_type`(economy) was the main factor driving the price down, but this was counteracted by a longer `time` (duration), resulting in a lower price. However here accuracy was further improved by deductions in price from `agency` and `from_location` but a increase from `distance` these all made it a accurate prediction.
 
 ## 5. Feature Dependence Plots
 
@@ -109,7 +135,7 @@ Dependence plots show how the SHAP value for a single feature changes as the fea
 
 ![Dependence Plot - time](../img/shap_lgbm_Dependence%20Plot%20-%20time.png)
 
-**Insight:** There is a clear positive linear relationship between `time` and its SHAP value. As the flight duration increases, the predicted price increases.
+**Insight:** There is a clear positive linear relationship between `time` and its SHAP value. As the flight duration increases, the predicted price increases and due to `flighttype` there is some level of deviation for shap values for each flighttype.
 
 ### B. Flight Type
 
@@ -127,7 +153,7 @@ Dependence plots show how the SHAP value for a single feature changes as the fea
 
 ![Dependence Plot - distance](../img/shap_lgbm_Dependence%20Plot%20-%20distance.png)
 
-**Insight:** The relationship between `distance` and its SHAP value is mostly linear, with a slight curve. As distance increases, the impact on the price also increases.
+**Insight:** The relationship between `distance` and its SHAP value is mostly linear, with a slight curve. As distance increases, the impact on the price also increases. But time has much for well defined relation.
 
 ## 6. Conclusion
 
