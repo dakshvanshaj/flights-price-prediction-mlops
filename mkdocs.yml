@@ -8,12 +8,14 @@ theme:
   favicon: img/favicon.ico
   logo: img/favicon.ico
   palette:
+    # Palette toggle for dark mode
     - scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
 
-    - scheme: default
+    # Palette toggle for dark mode
+    - scheme: slate
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -21,40 +23,37 @@ theme:
   accent: amber
   icon:
     repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.instant
+    - content.code.annotate
+    - navigation.top
+    - search.highlight
+    - search.suggest
 
 plugins:
   - search
   - mkdocs-jupyter
 
+# The top-level items here will become your navigation tabs
 nav:
   - Home: index.md
-  - Data journey:
-      - Exploratory Data Analysis:
-          - Exploratory Data Analysis: EDA/flights_eda.ipynb
-          - Automated EDA Report: EDA/flights_training_eda_report.html
-      - Data Processing and Validation Pipelines:
-          - Data Pipelines: Data Pipelines/data_pipelines.md
+  - Data Journey:
+      - "Exploratory Data Analysis": EDA/flights_eda.ipynb
+      - "Automated EDA Report": EDA/flights_training_eda_report.html
+      - "Data Pipelines": Data Pipelines/data_pipelines.md
   - Modeling:
-      - Model Selection & Evaluation: Modeling/model_selection_report.md
-      - Model Explanability (Champion): Modeling/model_explainability_lgbm_champ.md
-      - Model Comparison (Champ vs Challenger): Modeling/model_explainability_lgbm_vs_xgb.md
-      - Modeling Pipelines:
-          - Training & Evaluation: Modeling/training_pipeline.py
-          - HyperParameter Tuning: Modeling/tuning_pipeline.py
+      - "Model Selection & Evaluation": Modeling/model_selection_report.md
+      - "Model Explanability (Champion)": Modeling/model_explainability_lgbm_champ.md
+      - "Model Comparison (Champ vs Challenger)": Modeling/model_explainability_lgbm_vs_xgb.md
+      - "Training & Evaluation Pipeline": Modeling/training_pipeline.py
+      - "HyperParameter Tuning Pipeline": Modeling/tuning_pipeline.py
   - Production Model Guide:
-      - LightGBM: LGBM_summary/LGBMR_production_model_details.md
-
+      - "LightGBM Details": LGBM_summary/LGBMR_production_model_details.md
   - MLOps:
-      - Project architecture: MLOps/architecture.md
-      - Tooling: MLOps/tools.md
-features:
-  - navigation.tabs
-  - navigation.sections
-  - navigation.instant
-  - content.code.annotate
-  - navigation.top
-  - search.highlight
-  - search.suggest
+      - "Project Architecture": MLOps/architecture.md
+      - "Tooling": MLOps/tools.md
 
 repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs

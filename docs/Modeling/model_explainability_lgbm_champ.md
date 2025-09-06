@@ -1,4 +1,7 @@
 # Explaining the LightGBM Champion Model
+This report provides a deep dive into our champion model, LightGBM, which was chosen in the **[Model Selection Report](model_selection_report.md)** for its superior performance. Here, we use SHAP to understand *why* the model makes its decisions.
+
+---
 
 ## 1. Executive Summary
 
@@ -100,9 +103,9 @@ The data for these specific instances can be found in scaled preprocessed format
 
 |scaled price|
 | :---  |
-| 1.568 |
-| -1.273 |
-| -0.223 |
+| 1.569 |
+| -1.274 |
+| -0.224 |
 
 
 And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
@@ -170,3 +173,11 @@ Dependence plots show how the SHAP value for a single feature changes as the fea
 ## 6. Conclusion
 
 The SHAP analysis confirms that the LightGBM model is not a "black box". It has learned intuitive and explainable patterns from the data. The model's predictions are driven by logical features, and its behavior is consistent and trustworthy. This transparency is crucial for deploying the model in a production environment.
+
+---
+
+## Next Steps: Final Validation
+
+The analysis confirms that our champion model has learned sound, logical patterns. To further solidify our confidence, the final step is to compare its decision-making process directly against our main challenger, XGBoost. This ensures the patterns it found are stable and not just an artifact of the LightGBM algorithm.
+
+* **[Compare LightGBM vs. XGBoost Head-to-Head &raquo;](model_explainability_lgbm_vs_xgb.md)**

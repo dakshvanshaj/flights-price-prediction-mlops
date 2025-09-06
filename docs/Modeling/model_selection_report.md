@@ -110,7 +110,7 @@ The "Actual vs. Predicted" plot shows a near-perfect diagonal line, which is the
 
 - **Insight:** The points are tightly clustered around the red line, indicating a very strong positive correlation between the model's predictions and the true flight prices. There are no significant deviations, confirming the low error rates seen in the metrics.
 
-![Actual vs. Predicted](../img//rf_actual_vs_predicted.png)
+![Actual vs. Predicted](../img/rf_actual_vs_predicted.png)
 
 ### **B. Error Analysis (Residuals vs. Predicted)**
 
@@ -298,3 +298,12 @@ This is the crucial question. A model this accurate on a real-world problem is r
 While we must remain cautious due to the extraordinary score, the evidence strongly suggests this is a **true Champion model, not an overfit one.** The consistency between its robust cross-validation performance and its final test set performance is the key piece of evidence. The model has successfully learned the powerful, clean signals present in this dataset.
 
 **This LightGBM model is the definitive winner of the bake-off.**
+
+---
+
+## Next Steps: Understanding the Champion
+
+The metrics clearly show that **LightGBM** is our champion model. But why is it so effective? The next stage of our analysis is to dive deep into its behavior to ensure it has learned logical and robust patterns from the data.
+
+* **[Deep Dive into LightGBM's Behavior &raquo;](model_explainability_lgbm_champ.md)**
+* **[See How LightGBM Compares to the XGBoost Challenger &raquo;](model_explainability_lgbm_vs_xgb.md)**

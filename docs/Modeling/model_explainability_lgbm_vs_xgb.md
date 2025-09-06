@@ -57,7 +57,7 @@ The data for these specific instances can be found in scaled preprocessed format
 | :---  |
 | 1.569 |
 | -1.274 |
-| -0.223 |
+| -0.224 |
 
 And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
 
