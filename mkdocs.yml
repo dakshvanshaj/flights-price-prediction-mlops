@@ -43,16 +43,17 @@ nav:
       - "Exploratory Data Analysis": EDA/flights_eda.ipynb
       - "Automated EDA Report": EDA/flights_training_eda_report.html
       - "Data Pipelines":
-          - Architecture: Data Pipelines/data_pipelines.md
+          - Data Architecture: Data Pipelines/data_pipelines.md
           - Bronze Pipeline: Data Pipelines/bronze_pipeline.md
           - Silver Pipeline: Data Pipelines/silver_pipeline.md
           - Gold Pipeline: Data Pipelines/gold_pipeline.md
   - Modeling:
+      - "Training & Evaluation Pipeline": Modeling/training_pipeline.md
+      - "HyperParameter Tuning Pipeline": Modeling/tuning_pipeline.md
       - "Model Selection & Evaluation": Modeling/model_selection_report.md
       - "Model Explanability (Champion)": Modeling/model_explainability_lgbm_champ.md
       - "Model Comparison (Champ vs Challenger)": Modeling/model_explainability_lgbm_vs_xgb.md
-      - "Training & Evaluation Pipeline": Modeling/training_pipeline.py
-      - "HyperParameter Tuning Pipeline": Modeling/tuning_pipeline.py
+
   - Production Model Guide:
       - "LightGBM Details": LGBM_summary/LGBMR_production_model_details.md
   - MLOps:
