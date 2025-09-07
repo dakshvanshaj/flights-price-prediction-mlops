@@ -8,175 +8,56 @@ The data flows through a series of pipelines, each responsible for a specific le
 
 ```mermaid
 graph TD
-    A[Raw Data (.csv)] --> B{Bronze Pipeline};
-    B -- Validation Pass --> C[Bronze Data (.csv)];
-    B -- Validation Fail --> D[Quarantined Raw Data];
-    C --> E{Silver Pipeline};
-    E -- Validation Pass --> F[Silver Data (.parquet)];
-    E -- Validation Fail --> G[Quarantined Bronze Data];
-    F --> H{Gold Pipeline};
-    H -- Validation Pass --> I[Gold Data (.parquet)];
-    H -- Validation Fail --> J[Quarantined Silver Data];
-    I --> K{Training Pipeline};
-    I --> L{Tuning Pipeline};
-    K -- Logs --> M[MLflow Tracking];
-    L -- Logs --> M;
-    K -- Produces --> N[Trained Model];
-    L -- Produces --> O[Best Hyperparameters];
+  A[Raw Data .csv] --> B{Bronze Pipeline}
+  B -- Validation Pass --> C[Bronze Data .csv]
+  B -- Validation Fail --> D[Quarantined Raw Data]
+  C --> E{Silver Pipeline}
+  E -- Validation Pass --> F[Silver Data .parquet]
+  E -- Validation Fail --> G[Quarantined Bronze Data]
+  F --> H{Gold Pipeline}
+  H -- Validation Pass --> I[Gold Data .parquet]
+  H -- Validation Fail --> J[Quarantined Silver Data]
+  I --> K{Training Pipeline}
+  I --> L{Tuning Pipeline}
+  K -- Logs --> M[MLflow Tracking]
+  L -- Logs --> M
+  K -- Produces --> N[Trained Model]
+  L -- Produces --> O[Best Hyperparameters]
 ```
+
+### Key Technologies
+
+-   **Great Expectations**: Acts as the primary data validation and quality control tool. It is used to define "expectation suites" at the end of the Bronze, Silver, and Gold pipelines, ensuring that the data meets specific quality standards before being promoted to the next layer. This prevents data quality issues from propagating downstream.
+
+-   **Parquet**: The chosen storage format for the Silver and Gold data layers. As a columnar storage format, Parquet offers significant performance advantages and storage efficiency over row-based formats like CSV, which is especially beneficial for the wider, more complex datasets used in modeling.
+
+### Design Principles: The Medallion Architecture
+
+This project adopts the Medallion architecture (Bronze, Silver, Gold) to progressively refine data. This layered approach provides several key benefits:
+
+-   **Data Quality and Governance**: Each layer enforces an increasing level of data quality. The Bronze layer validates the source, Silver cleans and conforms the data, and Gold prepares it for a specific, high-value use case (modeling). This ensures that business-critical datasets are reliable and well-documented.
+-   **Traceability and Debugging**: When an issue arises in the final dataset, it's easy to trace it back through the layers. We can inspect the data at the Gold, Silver, and Bronze stages to pinpoint exactly where the error was introduced, dramatically simplifying debugging.
+-   **Idempotency and Reprocessing**: The separation of layers allows for robust reprocessing. If a bug is found in the Gold pipeline's logic, we can fix it and re-run it on the trusted Silver data without needing to re-ingest and re-validate the raw source data. This saves significant time and computational resources.
 
 ---
 
-## 1. Bronze Pipeline
+## Pipeline Stages
 
-The Bronze pipeline is the first entry point for raw data into the system. Its primary responsibility is to act as an initial quality gate, ensuring that incoming data conforms to a basic, expected schema and structure.
+### Bronze Stage
 
--   **Source Code:** `src/pipelines/bronze_pipeline.py`
+The Bronze pipeline is the first quality gate for raw data. It validates the basic structure and schema of incoming files using Great Expectations, separating valid data from invalid data to ensure a reliable foundation for subsequent processing.
 
-### Purpose
+[Learn more about the Bronze Pipeline &raquo;](bronze_pipeline.md)
 
--   To validate the structure and basic quality of raw data files using Great Expectations.
--   To separate valid data from invalid data, preventing "garbage in, garbage out."
+### Silver Stage
 
-### Key Steps
+The Silver pipeline focuses on cleaning and conforming the data. It takes validated Bronze data and applies transformations like standardizing formats, enriching features (e.g., from dates), and handling duplicates to create a clean, consistent, and queryable dataset.
 
-1.  **Initialize Great Expectations (GE) Context**: Sets up the GE environment.
-2.  **Define Data Source and Asset**: Points GE to the raw data directory and specifies how to read the CSV files.
-3.  **Build and Apply Expectation Suite**: Uses the `build_bronze_expectations` suite to check for things like column presence, non-nullness, and basic type adherence.
-4.  **Run Checkpoint**: Executes the validation.
-5.  **Move File Based on Result**:
-    -   **On Success**: Moves the raw file to the `data/bronze_data/processed/` directory.
-    -   **On Failure**: Moves the raw file to the `data/bronze_data/quarantined/` directory.
+[Learn more about the Silver Pipeline &raquo;](silver_pipeline.md)
 
-### How to Run
+### Gold Stage
 
-Execute the script from the root directory, providing the name of the raw data file.
+The Gold pipeline prepares the data for its final use case: machine learning. It applies complex feature engineering, imputation, encoding, and scaling transformations to the Silver data, producing a feature-rich, model-ready dataset.
 
-```bash
-python src/pipelines/bronze_pipeline.py <file_name.csv>
-```
+[Learn more about the Gold Pipeline &raquo;](gold_pipeline.md)
 
-**Example:**
-
-```bash
-python src/pipelines/bronze_pipeline.py train.csv
-```
-
----
-
-## 2. Silver Pipeline
-
-The Silver pipeline takes the validated data from the Bronze layer and begins the process of cleaning, standardizing, and enriching it.
-
--   **Source Code:** `src/pipelines/silver_pipeline.py`
-
-### Purpose
-
--   To clean and standardize data.
--   To perform initial feature engineering, such as extracting features from dates.
--   To enforce a consistent schema and data types.
-
-### Key Steps
-
-1.  **Data Ingestion**: Loads a file from the Bronze processed directory.
-2.  **Preprocessing & Cleaning**:
-    -   Renames columns for clarity.
-    -   Standardizes column names to a consistent format (e.g., snake_case).
-    -   Optimizes data types (e.g., converting strings to numeric/datetime).
-    -   Sorts data by date to prepare for time-series analysis.
-    -   Handles erroneous duplicates.
-3.  **Feature Engineering**: Creates new features from existing ones (e.g., `day`, `month`, `year` from a `date` column).
-4.  **Enforce Schema**: Reorders columns to a predefined, consistent order.
-5.  **Data Validation**: Runs a `silver_expectations` suite with Great Expectations to ensure the output data meets higher quality standards (e.g., correct data types, no nulls in critical columns).
-6.  **Save Data**:
-    -   **On Success**: Saves the processed DataFrame as a Parquet file to `data/silver_data/processed/`.
-    -   **On Failure**: Saves the failed DataFrame to `data/silver_data/quarantined/`.
-
-### How to Run
-
-Execute the script with the name of the file from the Bronze processed directory.
-
-```bash
-python src/pipelines/silver_pipeline.py <bronze_file_name.csv>
-```
-
-**Example:**
-
-```bash
-python src/pipelines/silver_pipeline.py train.csv
-```
-
----
-
-## 3. Gold Pipeline
-
-The Gold pipeline is the final and most intensive transformation stage. It prepares the data specifically for machine learning by applying complex feature engineering and preprocessing steps.
-
--   **Source Code:** `src/pipelines/gold_pipeline.py`
-
-### Purpose
-
--   To create a feature-rich, analysis-ready dataset for modeling.
--   To handle missing values, encode categorical variables, scale numerical features, and manage outliers.
--   To save the fitted preprocessing objects (like scalers and encoders) from the training run so they can be applied to validation and test data consistently.
-
-### Key Steps
-
-The pipeline is executed differently for training data versus validation/test data.
-
-**On Training Data:**
-1.  **Data Ingestion**: Loads data from the Silver layer.
-2.  **Data Cleaning**: Drops unnecessary columns and duplicates.
-3.  **Imputation**: Fits an imputer on the training data to learn strategies for filling missing values and then transforms the data.
-4.  **Feature Engineering**: Creates cyclical and interaction features.
-5.  **Rare Category Grouping**: Groups infrequent categorical values into a single "rare" category.
-6.  **Categorical Encoding**: Fits an encoder and transforms categorical columns into a numerical format.
-7.  **Outlier Handling**: Detects and mitigates the effect of outliers.
-8.  **Power Transformations**: Applies transformations (e.g., Yeo-Johnson) to make data distributions more Gaussian-like.
-9.  **Scaling**: Fits a scaler (e.g., StandardScaler) and scales numerical features.
-10. **Final Validation**: Runs a `gold_expectations` suite to ensure the final data is ready for modeling.
-11. **Save Data & Objects**: Saves the processed Gold data and serializes all the fitted preprocessing objects (imputer, encoder, scaler, etc.) to disk.
-
-**On Validation/Test Data:**
-- The pipeline loads the already-fitted preprocessing objects and uses them to `transform` the new data. This prevents data leakage and ensures consistent transformations.
-
-### How to Run
-
-The main function in the script orchestrates the processing for the `train`, `validation`, and `test` splits automatically.
-
-```bash
-python src/pipelines/gold_pipeline.py
-```
-
----
-
-## 4. Training & Tuning Pipelines
-
-Once the Gold data is ready, it can be used for model training and hyperparameter tuning.
-
-### Training Pipeline
-
--   **Source Code:** `src/pipelines/training_pipeline.py`
--   **Purpose**: To train a model, evaluate its performance, and log all relevant artifacts (metrics, parameters, plots, and the model itself) to MLflow.
--   **Features**:
-    -   Supports both simple train/validation splits and time-based cross-validation.
-    -   Logs detailed evaluation metrics for both scaled and unscaled predictions.
-    -   Generates and logs interpretability artifacts like feature importance and SHAP plots.
-    -   Can register the trained model in the MLflow Model Registry.
--   **How to Run**:
-    ```bash
-    python src/pipelines/training_pipeline.py <train_file.parquet> <validation_file.parquet> --test_file_name <test_file.parquet>
-    ```
-
-### Tuning Pipeline
-
--   **Source Code:** `src/pipelines/tuning_pipeline.py`
--   **Purpose**: To systematically find the best hyperparameters for a model.
--   **Features**:
-    -   Integrates with `tuning.yaml` for flexible configuration.
-    -   Supports multiple tuning strategies: Grid Search, Random Search, Halving Search, and Optuna.
-    -   Logs all trials and the best results to MLflow.
--   **How to Run**:
-    ```bash
-    python src/pipelines/tuning_pipeline.py <train_file.parquet>
-    ```

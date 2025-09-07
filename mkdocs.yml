@@ -8,14 +8,14 @@ theme:
   favicon: img/favicon.ico
   logo: img/favicon.ico
   palette:
-    # Palette toggle for dark mode
+    # Palette toggle for dark mode (now the default)
     - scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
 
-    # Palette toggle for dark mode
-    - scheme: slate
+    # Palette toggle for light mode
+    - scheme: default
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -35,14 +35,18 @@ theme:
 plugins:
   - search
   - mkdocs-jupyter
+  - mermaid2
 
-# The top-level items here will become your navigation tabs
 nav:
   - Home: index.md
   - Data Journey:
       - "Exploratory Data Analysis": EDA/flights_eda.ipynb
       - "Automated EDA Report": EDA/flights_training_eda_report.html
-      - "Data Pipelines": Data Pipelines/data_pipelines.md
+      - "Data Pipelines":
+          - Architecture: Data Pipelines/data_pipelines.md
+          - Bronze Pipeline: Data Pipelines/bronze_pipeline.md
+          - Silver Pipeline: Data Pipelines/silver_pipeline.md
+          - Gold Pipeline: Data Pipelines/gold_pipeline.md
   - Modeling:
       - "Model Selection & Evaluation": Modeling/model_selection_report.md
       - "Model Explanability (Champion)": Modeling/model_explainability_lgbm_champ.md
@@ -55,7 +59,7 @@ nav:
       - "Project Architecture": MLOps/architecture.md
       - "Tooling": MLOps/tools.md
 
-repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
+repo_url: https://github.com/dakshvanshaj/Flights-Price-Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs
 
 extra:
