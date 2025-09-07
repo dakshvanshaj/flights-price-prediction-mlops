@@ -6,23 +6,25 @@ This document outlines the architecture and execution of the data pipelines used
 
 The data flows through a series of pipelines, each responsible for a specific level of data quality and transformation.
 
+<!-- neutral, dark, default -->
 ```mermaid
+%%{init: {'theme': 'dark'}}%%
 graph TD
-  A[Raw Data .csv] --> B{Bronze Pipeline}
-  B -- Validation Pass --> C[Bronze Data .csv]
-  B -- Validation Fail --> D[Quarantined Raw Data]
-  C --> E{Silver Pipeline}
-  E -- Validation Pass --> F[Silver Data .parquet]
-  E -- Validation Fail --> G[Quarantined Bronze Data]
-  F --> H{Gold Pipeline}
-  H -- Validation Pass --> I[Gold Data .parquet]
-  H -- Validation Fail --> J[Quarantined Silver Data]
-  I --> K{Training Pipeline}
-  I --> L{Tuning Pipeline}
-  K -- Logs --> M[MLflow Tracking]
-  L -- Logs --> M
-  K -- Produces --> N[Trained Model]
-  L -- Produces --> O[Best Hyperparameters]
+    A[Raw Data csv] --> B{Bronze Pipeline<br/>Validation}
+    B -- Validation Pass --> C[Bronze Data csv]
+    B -- Validation Fail --> D[Quarantined Raw Data]
+    C --> E{Silver Pipeline<br/>Transformation + Validation}
+    E -- Validation Pass --> F[Silver Data .parquet]
+    E -- Validation Fail --> G[Quarantined Bronze Data]
+    F --> H{Gold Pipeline<br/>Feature Engineering +<br/>Transformation + Validation}
+    H -- Validation Pass --> I[Gold Data .parquet]
+    H -- Validation Fail --> J[Quarantined Silver Data]
+    I --> K{Training Pipeline}
+    I --> L{Tuning Pipeline}
+    K -- Logs --> M[MLflow Tracking]
+    L -- Logs --> M
+    K -- Produces --> N[Trained Model]
+    L -- Produces --> O[Best Hyperparameters]
 ```
 
 ### Key Technologies

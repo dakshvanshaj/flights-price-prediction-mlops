@@ -9,6 +9,23 @@ The Bronze pipeline is the first entry point for raw data into the system. Its p
 -   To validate the structure and basic quality of raw data files using Great Expectations.
 -   To separate valid data from invalid data, preventing "garbage in, garbage out."
 
+## Pipeline Workflow
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+graph TD
+    A[Start] --> B{Input: Raw CSV File};
+    B --> C{Initialize GE Context};
+    C --> D{Get Datasource & Asset};
+    D --> E{Build Expectation Suite};
+    E --> F{Run GE Checkpoint};
+    F --> G{Validation Result?};
+    G -- Success --> H[Move to Bronze Processed];
+    G -- Failure --> I[Move to Bronze Quarantined];
+    H --> J[End];
+    I --> J;
+```
+
 ## Key Steps
 
 1.  **Initialize Great Expectations (GE) Context**: Sets up the GE environment.
@@ -43,7 +60,7 @@ python src/pipelines/bronze_pipeline.py <file_name.csv>
 
 ## Configuration
 
-The Bronze pipeline's behavior is configured through constants defined within the project's Python modules, primarily in `src/shared/config.py`. Key configurable parameters include:
+The Bronze pipeline's behavior is configured through constants defined within the project's Python modules, primarily in `src/shared/config/config_bronze.py`. Key configurable parameters include:
 
 -   **Paths**: Input directory for raw data (`RAW_DATA_SOURCE`), and output directories for processed (`BRONZE_PROCESSED_DIR`) and quarantined files (`BRONZE_QUARANTINE_DIR`).
 -   **Great Expectations**: Names for the data source, asset, batch definition, expectation suite, and checkpoint.
@@ -67,3 +84,10 @@ These are generally static configurations managed by developers within the codeb
     -   A column is missing, has been renamed, or is in the wrong order.
     -   Null values are present in a column that is expected to be non-null.
     -   The data type of a column does not match the expectation (e.g., a string appears in a numeric column).
+
+---
+
+## Next Steps
+
+- [Silver Pipeline - Data Preprocessing & Validation &raquo;](silver_pipeline.md)
+- [Gold Pipeline - Feature Engineering, Preprocessing & Validation &raquo;](gold_pipeline.md)

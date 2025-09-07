@@ -10,6 +10,24 @@ The Silver pipeline takes the validated data from the Bronze layer and begins th
 -   To perform initial feature engineering, such as extracting features from dates.
 -   To enforce a consistent schema and data types.
 
+## Pipeline Workflow
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+graph TD
+    A[Start] --> B{Input: Bronze CSV};
+    B --> C{Load Data};
+    C --> D{Preprocessing & Cleaning};
+    D --> E{Feature Engineering};
+    E --> F{Enforce Schema};
+    F --> G{Run GE Checkpoint};
+    G --> H{Validation Result?};
+    H -- Success --> I[Save to Silver Processed Parquet];
+    H -- Failure --> J[Save to Silver Quarantined Parquet];
+    I --> K[End];
+    J --> K;
+```
+
 ## Key Steps
 
 1.  **Data Ingestion**: Loads a file from the Bronze processed directory.
@@ -48,7 +66,7 @@ python src/pipelines/silver_pipeline.py <bronze_file_name.csv>
 
 ## Configuration
 
-Similar to the Bronze pipeline, configuration is managed in `src/shared/config.py`. Key settings include:
+Similar to the Bronze pipeline, configuration is managed in `src/shared/config/config_silver.py`.
 
 -   **Paths**: Output directories for processed (`SILVER_PROCESSED_DIR`) and quarantined (`SILVER_QUARANTINE_DIR`) Parquet files.
 -   **Schema**: The column rename mapping (`COLUMN_RENAME_MAPPING`), the expected final column order (`SILVER_EXPECTED_COLS_ORDER`), and expected data types (`SILVER_EXPECTED_COLUMN_TYPES`).
@@ -69,3 +87,9 @@ Similar to the Bronze pipeline, configuration is managed in `src/shared/config.p
     -   An upstream change caused a data type to be inferred incorrectly.
     -   The cleaning or feature engineering logic introduced null values unexpectedly.
     -   Duplicate records were not handled as expected, violating a uniqueness constraint.
+
+---
+
+## Next Steps
+
+- [Gold Pipeline - Feature Engineering, Preprocessing & Validation &raquo;](gold_pipeline.md)
