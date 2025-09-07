@@ -47,8 +47,9 @@ dependencies:
   - statsmodels
   - mkdocs
   - mkdocs-material
-
+  - mermaid-py
   - shap
+  - mkdocs-mermaid2-plugin
   # Pip-installed packages (only for things not on conda channels)
   - pip
   - pip:
