@@ -71,21 +71,52 @@ The following hyperparameters were identified during the tuning phase and used f
 | `random_state` | 42 |
 | `n_jobs` | -1 |
 
-### 4.2. Preprocessing Pipeline Parameters
+### 4.2. Production Preprocessing Pipeline
 
-The following parameters were used in the data preprocessing pipeline (`gold_pipeline`) that feeds data into the model.
+After selecting LightGBM as the champion model in our `v0.1-experimental` phase, we optimized the preprocessing pipeline to be simpler and more efficient by leveraging the model's native strengths.
+
+**Key Optimizations:**
+- **No Scaling or Power Transforms**: LightGBM is a tree-based model and is not sensitive to the scale or distribution of numerical features. Therefore, `StandardScaler` and `PowerTransformer` steps were removed.
+- **No One-Hot Encoding**: LightGBM can handle categorical features directly when they are integer-encoded. We replaced one-hot encoding with `OrdinalEncoder`, which significantly reduces the number of features and speeds up training.
+- **No Temporal Features**: SHAP analysis revealed that features like `month` and `day_of_week` had zero importance, as their predictive information was better captured by other features like `route`. These have been removed from the final feature set.
+
+#### Optimized Pipeline Workflow
+
+This simplified workflow is faster and tailored specifically for our LightGBM model.
+
+```mermaid
+%%{init: {'theme': 'dark'}}%%
+graph TD
+    subgraph "Training Data Path"
+        A[Load Silver Train Data] --> B{Data Cleaning & Imputation};
+        B --> C{Fit & Transform<br/>Ordinal Encoder, Outlier Handler};
+        C --> D{Run GE Validation};
+        D --> E[Save Gold Train Data & Fitted Transformers];
+    end
+
+    subgraph "Validation/Test Data Path"
+        F[Load Silver Validation/Test Data] --> G[Load Fitted Transformers];
+        G --> H{Apply Transformations};
+        H --> I{Run GE Validation};
+        I --> J[Save Gold Validation/Test Data];
+    end
+```
+
+#### Final Preprocessing Parameters
+
+This table reflects the final, simplified configuration used for the production model.
 
 | Step | Parameter | Value |
 | :--- | :--- | :--- |
 | **Imputation (Median)** | `features` | `price`, `time`, `distance` |
 | **Imputation (Mode)** | `features` | `agency`, `flight_type` |
-| **Imputation (Constant)**| `from_location` | `Unknown` |
-| **Imputation (Constant)**| `to_location` | `Unknown` |
-| **Rare Category Grouping**| `cardinality_threshold` | 0.01 |
+| **Categorical Encoding** | `strategy` | `ordinal` |
 | **Outlier Handling** | `detection_strategy` | `iqr` |
 | **Outlier Handling** | `handling_strategy` | `trim` |
-| **Power Transformer** | `strategy` | `yeo-johnson` |
-| **Scaler** | `strategy` | `standard` |
+| **~~Rare Category Grouping~~** | `enabled` | `false` |
+| **~~Power Transformer~~** | `enabled` | `false` |
+| **~~Scaler~~** | `enabled` | `false` |
+
 
 ## 5. In-Depth Analysis of Model Behavior
 

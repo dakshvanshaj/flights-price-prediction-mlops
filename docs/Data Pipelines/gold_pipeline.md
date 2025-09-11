@@ -1,5 +1,9 @@
 # Gold Pipeline
 
+> **Note on Pipeline Versions:** This document describes the comprehensive, experimental Gold Pipeline designed for maximum flexibility when testing a wide variety of models (like Linear Regression, SVMs, etc.). This version includes steps like scaling and power transformations.
+>
+> After selecting **LightGBM** as our champion model (see release `v0.1-experimental`), we developed a simpler, optimized pipeline that leverages the model's native capabilities. For details on this production-specific pipeline, please see the **[Production Model Guide](../LGBM_summary/LGBMR_production_model_details.md)**.
+
 The Gold pipeline is the final and most intensive transformation stage. It prepares the data specifically for machine learning by applying complex feature engineering and preprocessing steps.
 
 -   **Source Code:** `src/pipelines/gold_pipeline.py`
