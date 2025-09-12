@@ -13,6 +13,8 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from typing import Dict, Any
 
+from typing import List, Optional
+
 logger = logging.getLogger(__name__)
 
 # A mapping from model names to their respective classes for easy instantiation.
@@ -61,6 +63,7 @@ def train_model(
     train_x: pd.DataFrame,
     train_y: pd.Series,
     model: Any,
+    categorical_features: Optional[List[str]] = None,
 ) -> Any:
     """
     Trains a given regression model instance.
@@ -69,11 +72,20 @@ def train_model(
         train_x: The training features.
         train_y: The training target.
         model: An unfitted, instantiated regressor model instance.
+        categorical_features: Optional list of column names to be treated as
+                              categorical by the model (e.g., for LightGBM).
 
     Returns:
         A trained regressor model.
     """
     logger.info(f"Training model: {model.__class__.__name__}...")
-    model.fit(train_x, train_y)
+
+    # Check if the model is a LightGBM model and if categorical features are provided
+    if isinstance(model, LGBMRegressor) and categorical_features:
+        logger.info(f"Passing categorical features to LightGBM: {categorical_features}")
+        model.fit(train_x, train_y, categorical_feature=categorical_features)
+    else:
+        model.fit(train_x, train_y)
+
     logger.info("Model training complete.")
     return model
