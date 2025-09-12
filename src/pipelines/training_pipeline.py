@@ -1,7 +1,7 @@
 import argparse
 import logging
 import sys
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 import mlflow
 import pandas as pd
@@ -103,27 +103,39 @@ def _evaluate_and_log_set(
     logger.info(f"--- Evaluating model on '{log_prefix}' data ---")
     y_pred = model.predict(X)
 
-    # Calculate and log metrics on the scaled data
-    _calculate_and_log_metrics(y_true, y_pred, log_prefix=f"{log_prefix}/scaled")
-
-    # Unscale predictions and true values for more interpretable metrics and plots
+    # --- Metric Calculation & Logging ---
+    is_scaled_run = scaler and power_transformer
     y_true_unscaled, y_pred_unscaled = None, None
-    if scaler and power_transformer:
+
+    if is_scaled_run:
+        # Log metrics on the data as seen by the model (scaled)
+        _calculate_and_log_metrics(y_true, y_pred, log_prefix=f"{log_prefix}/scaled")
+
+        # Unscale for interpretable metrics and plots
         y_true_unscaled, y_pred_unscaled = unscale_predictions(
             y_true, y_pred, scaler, power_transformer
         )
         _calculate_and_log_metrics(
             y_true_unscaled, y_pred_unscaled, log_prefix=f"{log_prefix}/unscaled"
         )
+    else:
+        # For tree models, data is already on the original scale. Log directly.
+        _calculate_and_log_metrics(y_true, y_pred, log_prefix=log_prefix)
+        # Assign original data to the 'unscaled' variables for consistent plotting
+        y_true_unscaled, y_pred_unscaled = y_true, y_pred
+
+    # --- Artifact Logging ---
 
     # Log predictions as a JSON artifact if enabled
     if log_predictions:
         logger.info(f"Logging prediction artifacts for '{log_prefix}'...")
-        scaled_preds_dict = {"y_true": y_true.tolist(), "y_pred": y_pred.tolist()}
+        # Always log the model's direct output
+        model_output_dict = {"y_true": y_true.tolist(), "y_pred": y_pred.tolist()}
         mlflow.log_dict(
-            scaled_preds_dict, f"predictions/{log_prefix}_scaled_predictions.json"
+            model_output_dict, f"predictions/{log_prefix}_model_output.json"
         )
-        if scaler and power_transformer and y_true_unscaled is not None:
+        # If unscaled values are different, log them too
+        if is_scaled_run:
             unscaled_preds_dict = {
                 "y_true": y_true_unscaled.tolist(),
                 "y_pred": y_pred_unscaled.tolist(),
@@ -148,7 +160,13 @@ def _evaluate_and_log_set(
                 feature_importances_dict,
                 f"feature_importances/{log_prefix}_feature_importances.json",
             )
-        # Generate and log plots if enabled
+            # Also plot the feature importances if plots are enabled
+            if log_plots:
+                plot_feature_importance(
+                    list(X.columns), model, title=f"[{log_prefix}] Feature Importance"
+                )
+
+    # Generate and log plots if enabled (now uses the consistently populated unscaled vars)
     if log_plots and y_true_unscaled is not None and y_pred_unscaled is not None:
         logger.info(f"Generating and logging plots for '{log_prefix}'...")
         scatter_plot(
@@ -170,9 +188,6 @@ def _evaluate_and_log_set(
             y_pred=y_pred_unscaled,
             title=f"[{log_prefix}] Q-Q Plot of Residuals",
         )
-        plot_feature_importance(
-            list(X.columns), model, title=f"[{log_prefix}] Feature Importance"
-        )
         logger.info(f"Successfully logged all plots for '{log_prefix}'.")
 
     if log_shap_plots:
@@ -189,6 +204,7 @@ def _run_simple_training(
     model_instance: Any,
     train_x: pd.DataFrame,
     train_y: pd.DataFrame,
+    categorical_features: Optional[List[str]] = None,
 ) -> Any:
     """
     Trains a model on combination of training and validation sets.
@@ -199,7 +215,9 @@ def _run_simple_training(
     logger.info("=" * 25 + " SIMPLE  MODEL TRAINING " + "=" * 25)
 
     # Just train the model and return the model No evaluation will be done
-    model = train_model(train_x, train_y, model_instance)
+    model = train_model(
+        train_x, train_y, model_instance, categorical_features=categorical_features
+    )
     logger.info("Model training completed...")
     return model
 
@@ -213,6 +231,7 @@ def _run_simple_validation(
     scaler: Optional[Scaler],
     power_transformer: Optional[PowerTransformer],
     model_config: Dict[str, Any],
+    categorical_features: Optional[List[str]] = None,
 ) -> Any:
     """
     Trains a model and evaluates it on training and validation sets.
@@ -221,7 +240,9 @@ def _run_simple_validation(
         The trained model instance.
     """
     logger.info("Running Simple Validation (Train/Validation Split)...")
-    model = train_model(train_x, train_y, model_instance)
+    model = train_model(
+        train_x, train_y, model_instance, categorical_features=categorical_features
+    )
 
     should_log_plots = model_config.get("log_plots", True)
     should_log_preds = model_config.get("log_predictions", False)
@@ -270,6 +291,7 @@ def _run_cross_validation(
     scaler: Optional[Scaler],
     power_transformer: Optional[PowerTransformer],
     model_config: Dict[str, Any],
+    categorical_features: Optional[List[str]] = None,
 ) -> Any:
     """
     Performs time-based cross-validation and retrains a final model on all data.
@@ -320,7 +342,12 @@ def _run_cross_validation(
 
     # --- 3. Retrain Final Model on All Data ---
     logger.info("Retraining final model on the full dataset (train + validation)...")
-    final_model = train_model(combined_x, combined_y, model_instance)
+    final_model = train_model(
+        combined_x,
+        combined_y,
+        model_instance,
+        categorical_features=categorical_features,
+    )
 
     # --- 4. Evaluate and Log Final Model Performance on Training Data---
     _evaluate_and_log_set(
@@ -424,13 +451,29 @@ def training_pipeline(
         mlflow.set_tags({"model_name": model_name, "model_class": model_class_name})
         logger.info("Logged pipeline parameters and model tags.")
 
+        # --- Define Categorical Features for LightGBM ---
+        categorical_features = config_gold.ENCODING_CONFIG.get("ordinal_cols", [])
+        if categorical_features:
+            # Sanitize names to match DataFrame columns (lowercase, underscores)
+            categorical_features = [
+                c.replace(" ", "_").lower() for c in categorical_features
+            ]
+            logger.info(
+                f"Identified categorical features for LightGBM: {categorical_features}"
+            )
+
         # --- Model Instantiation and Training ---
         logger.info(f"Instantiating model: {model_class_name}")
         model_instance = get_model(model_class_name, model_config["training_params"])
 
         if model_config.get("train_model_only", False):
             mlflow.set_tag("run_type", "model_training_only")
-            final_model = _run_simple_training(model_instance, train_x, train_y)
+            final_model = _run_simple_training(
+                model_instance,
+                train_x,
+                train_y,
+                categorical_features=categorical_features,
+            )
 
         elif model_config.get("cross_validation", {}).get("enabled", False):
             mlflow.set_tag("run_type", "cross_validation")
@@ -444,6 +487,7 @@ def training_pipeline(
                 scaler,
                 power_transformer,
                 model_config,
+                categorical_features=categorical_features,
             )
         else:
             mlflow.set_tag("run_type", "simple_validation")
@@ -456,6 +500,7 @@ def training_pipeline(
                 scaler,
                 power_transformer,
                 model_config,
+                categorical_features=categorical_features,
             )
 
         # === STAGE 4: FINAL EVALUATION ON TEST SET ===
@@ -565,7 +610,6 @@ def main():
         model_config_key = params["training_pipeline"]["model_config_to_run"]
         model_config = params["training_pipeline"]["models"][model_config_key]
         is_train_only_run = model_config.get("train_model_only", False)
-
         # ---------------------------------------------------------------------------- #
         #                                   Load Data                                  #
         # ---------------------------------------------------------------------------- #
