@@ -53,28 +53,44 @@ class CategoricalEncoder:
 
         if self.ordinal_cols:
             logger.info(f"Setting up Ordinal encoding for: {self.ordinal_cols}")
-            if not self.ordinal_mapping:
-                raise ValueError(
-                    "'ordinal_mapping' must be provided in config for 'ordinal_cols'."
+            # Separate columns with explicit mapping from those that need auto-inference
+            mapped_ordinal_cols = [
+                col for col in self.ordinal_cols if col in self.ordinal_mapping
+            ]
+            auto_ordinal_cols = [
+                col for col in self.ordinal_cols if col not in self.ordinal_mapping
+            ]
+
+            if mapped_ordinal_cols:
+                # Create the list of categories in the correct order for the OrdinalEncoder
+                try:
+                    ordered_categories = [
+                        self.ordinal_mapping[col] for col in mapped_ordinal_cols
+                    ]  # list of list for category's order
+                except KeyError as e:
+                    raise KeyError(
+                        f"Missing category mapping in 'ordinal_mapping' for column: {e}"
+                    )
+
+                transformers.append(
+                    (
+                        "ordinal",
+                        OrdinalEncoder(categories=ordered_categories),
+                        mapped_ordinal_cols,
+                    )
                 )
 
-            # Create the list of categories in the correct order for the OrdinalEncoder
-            try:
-                ordered_categories = [
-                    self.ordinal_mapping[col] for col in self.ordinal_cols
-                ]
-            except KeyError as e:
-                raise KeyError(
-                    f"Missing category mapping in 'ordinal_mapping' for column: {e}"
+            if auto_ordinal_cols:
+                logger.info("Using auto-inference for Integer encoding.")
+                transformers.append(
+                    (
+                        "integer_encoding",
+                        OrdinalEncoder(
+                            handle_unknown="use_encoded_value", unknown_value=-1
+                        ),
+                        auto_ordinal_cols,
+                    )
                 )
-
-            transformers.append(
-                (
-                    "ordinal",
-                    OrdinalEncoder(categories=ordered_categories),
-                    self.ordinal_cols,
-                )
-            )
 
         if not transformers:
             logger.warning(
