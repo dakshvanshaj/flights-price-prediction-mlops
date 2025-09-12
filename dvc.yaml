@@ -76,11 +76,7 @@ stages:
       - data/gold_engineered_data/processed/validation.parquet
       - data/gold_engineered_data/processed/test.parquet
       - models/simple_imputer.json
-      - models/rare_category_grouper.joblib
       - models/categorical_encoder.joblib
-      - models/outlier_handler.joblib
-      - models/power_transformer.joblib
-      - models/scaler.joblib
       - models/gold_final_columns.json
 
   training_pipeline:
