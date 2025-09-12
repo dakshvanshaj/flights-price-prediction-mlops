@@ -12,6 +12,10 @@ def create_cyclical_features(
     """
     Engineers cyclical features from a dictionary mapping columns to their periods.
     """
+    if not cyclical_map:
+        logger.info("No cyclical features provided to engineer.")
+        return df
+
     logger.info(
         f"Starting cyclical feature engineering for columns: {list(cyclical_map.keys())}..."
     )
@@ -53,6 +57,10 @@ def create_categorical_interaction_features(
     Returns:
         pd.DataFrame: The DataFrame with the new interaction features added.
     """
+    if not interaction_map:
+        logger.info("No categorical interaction features provided to engineer.")
+        return df
+
     logger.info("Creating categorical interaction features...")
     df_copy = df.copy()
 
@@ -92,6 +100,11 @@ def create_numerical_interaction_features(
     Returns:
         pd.DataFrame: The DataFrame with the new numerical features added.
     """
+
+    if not interaction_map:
+        logger.info("No numerical interaction features provided to engineer.")
+        return df
+
     logger.info("Creating numerical interaction features...")
     df_copy = df.copy()
 
