@@ -11,8 +11,15 @@ GOLD_PIPELINE_LOGS_PATH = LOGS_DIR / "gold_pipeline.log"
 # =============================================================================
 # --- STAGE 2: DATA CLEANING ---
 # =============================================================================
-# List of columns to remove at the start of the gold pipeline
-GOLD_DROP_COLS = ["travel_code", "user_code", "date", "day_of_year", "week_of_year"]
+# List of columns to remove at the start of the gold pipeline.
+# travel_code and user_code are dropped as they are identifiers not needed for modeling.
+GOLD_DROP_COLS = [
+    "travel_code",
+    "user_code",
+    "date",  # Drop the original date column as it has been used to create temporal features
+    "day_of_year",
+    "week_of_year",
+]
 
 # The target variable for the model
 TARGET_COLUMN = "price"
@@ -36,6 +43,7 @@ SIMPLE_IMPUTER_PATH = MODELS_DIR / "simple_imputer.json"
 # --- STAGE 4: FEATURE ENGINEERING ---
 # =============================================================================
 # Configuration for creating cyclical features (e.g., month_sin, month_cos)
+# No feature importance for current production model (lightgbm)
 CYCLICAL_FEATURES_MAP = {
     "month": 12,
     "day_of_week": 7,
@@ -45,8 +53,8 @@ CYCLICAL_FEATURES_MAP = {
 # Configuration for creating new features by combining categorical columns
 INTERACTION_FEATURES_CONFIG = {
     "route": ["from_location", "to_location"],
-    "agency_flight_type": ["agency", "flight_type"],
-    "route_agency": ["from_location", "to_location", "agency"],
+    # "agency_flight_type": ["agency", "flight_type"],
+    # "route_agency": ["from_location", "to_location", "agency"],
 }
 
 
@@ -57,7 +65,8 @@ INTERACTION_FEATURES_CONFIG = {
 RARE_CATEGORY_GROUPER_PATH = MODELS_DIR / "rare_category_grouper.joblib"
 
 # List of high-cardinality columns to apply the grouping strategy to
-HIGH_CARDINALITY_COLS = ["route", "route_agency"]
+# Not applicable for current production model
+# HIGH_CARDINALITY_COLS = ["route", "route_agency"]
 
 # Threshold for grouping. Categories appearing in less than this fraction
 # of the data will be grouped into a single 'Other' category.
@@ -72,19 +81,22 @@ CATEGORICAL_ENCODER_PATH = MODELS_DIR / "categorical_encoder.joblib"
 
 # Configuration for the final encoding of all categorical features
 ENCODING_CONFIG = {
-    # Columns to be one-hot encoded
-    "onehot_cols": [
-        "from_location",
-        "to_location",
-        "agency",
-        "route",
-        "agency_flight_type",
-        "route_agency",
-    ],
-    # Columns to be ordinally encoded (order matters)
-    "ordinal_cols": ["flight_type"],
-    # The specific order for the ordinal columns
+    # Columns to be Ordinal encoded
+    "ordinal_cols": ["from_location", "to_location", "agency", "route", "flight_type"],
     "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
+    # # Columns to be one-hot encoded
+    # "onehot_cols": [
+    #     "from_location",
+    #     "to_location",
+    #     "agency",
+    #     "route",
+    #     "agency_flight_type",
+    #     "route_agency",
+    # ],
+    # # Columns to be ordinally encoded (order matters)
+    # "ordinal_cols": ["flight_type"],
+    # # The specific order for the ordinal columns
+    # "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
 }
 
 # =============================================================================
@@ -100,16 +112,20 @@ OUTLIER_HANDLER_PATH = MODELS_DIR / "outlier_handler.joblib"
 # =============================================================================
 # --- STAGE 7: Power Transformations ---
 # =============================================================================
-# POWER_TRANSFORMER_STRATEGY = "yeo-johnson"
+# Not required for current production model
+POWER_TRANSFORMER_STRATEGY = ""
 POWER_TRANSFORMER_PATH = MODELS_DIR / "power_transformer.joblib"
-POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
+# POWER_TRANSFORMER_COLUMNS = ["price", "time", "distance"]
 
 # =============================================================================
 # --- STAGE 8: Scaling ---
 # =============================================================================
-SCALER_COLUMNS = ["price", "time", "distance"]
+# Not required for current production model
+SCALER_COLUMNS = []
+# SCALER_STRATEGY = "standard"
+# SCALER_COLUMNS = ["price", "time", "distance"]
 SCALER_PATH = MODELS_DIR / "scaler.joblib"
-SCALER_STRATEGY = "standard"
+
 
 # =============================================================================
 # --- STAGE 10: DATA VALIDATION  ---
@@ -129,4 +145,6 @@ GOLD_FINAL_COLS_PATH = MODELS_DIR / "gold_final_columns.json"
 
 # List of columns that have been scaled and should be checked for a specific range (e.g., 0-1).
 # This is often the same as the scaler columns.
-GOLD_SCALED_COLS = ["price", "time", "distance"]
+
+# This check is not required for current settings
+# GOLD_SCALED_COLS = ["price", "time", "distance"]
