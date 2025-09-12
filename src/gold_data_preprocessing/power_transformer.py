@@ -66,14 +66,14 @@ class PowerTransformer:
         """
         # --- 1. INPUT VALIDATION ---
         # It's always a good idea to validate inputs to fail fast.
-        if not isinstance(columns, list) or not columns:
+        if not isinstance(columns, list):
             raise ValueError("`columns` must be a non-empty list of strings.")
         if strategy not in ["log", "box-cox", "yeo-johnson"]:
             raise ValueError("Strategy must be one of 'log', 'box-cox', 'yeo-johnson'.")
 
         self.columns = columns
         self.strategy = strategy
-
+        self._is_fitted = False
         # This dictionary will store the learned lambda values for box-cox and yeo-johnson.
         self.params_: Dict[str, float] = {}
 
@@ -92,6 +92,12 @@ class PowerTransformer:
         """
         logger.info(f"Fitting PowerTransformer with '{self.strategy}' strategy.")
         self.params_ = {}  # Reset parameters on each new fit
+
+        if not self.strategy:
+            logger.info(" No strategy for PowerTransformer Provided.")
+            self._is_fitted = True
+            logger.info("Fitting Complete")
+            return self
 
         # The 'log' transform is stateless, so we don't need to learn anything.
         if self.strategy == "log":
@@ -124,6 +130,7 @@ class PowerTransformer:
             self.params_[col] = lmbda
             logger.info(f"Learned lambda for '{col}': {lmbda:.4f}")
 
+        self._is_fitted = True
         return self
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -136,11 +143,16 @@ class PowerTransformer:
         Returns:
             pd.DataFrame: The transformed DataFrame.
         """
-        if self.strategy in ["box-cox", "yeo-johnson"] and not self.params_:
+
+        if not self._is_fitted:
             raise RuntimeError("Transform called before fitting the transformer.")
 
         df_copy = df.copy()
         logger.info(f"Applying '{self.strategy}' transformation.")
+
+        if not self.strategy:
+            logger.info(" No strategy for PowerTransformer Provided.")
+            return df_copy
 
         for col in self.columns:
             if col not in df_copy.columns:
@@ -177,6 +189,16 @@ class PowerTransformer:
         Returns:
             pd.DataFrame: The DataFrame with original-scale values.
         """
+
+        if not self._is_fitted:
+            raise RuntimeError(
+                "Inverse transform called before fitting the transformer."
+            )
+
+        if not self.strategy:
+            logger.info(" No strategy for PowerTransformer was used in fit.")
+            return df
+
         if self.strategy in ["box-cox", "yeo-johnson"] and not self.params_:
             raise RuntimeError(
                 "Inverse transform called before fitting the transformer."
