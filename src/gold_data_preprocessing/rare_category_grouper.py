@@ -40,6 +40,12 @@ class RareCategoryGrouper:
         logger.info("Fitting RareCategoryGrouper...")
         df_copy = df.copy()
 
+        if not self.columns:
+            logger.info("No columns specified for fitting.")
+            self._is_fitted = True
+            logger.info("Fitting complete.")
+            return self
+
         for col in self.columns:
             if col not in df_copy.columns:
                 logger.warning(f"Column '{col}' not in DataFrame. Skipping.")
@@ -69,6 +75,10 @@ class RareCategoryGrouper:
 
         logger.info("Transforming data with RareCategoryGrouper...")
         df_copy = df.copy()
+
+        if not self.columns:
+            logger.info("No columns specified for transformation.")
+            return df_copy
 
         for col, frequent_categories in self.frequent_categories_map_.items():
             if col not in df_copy.columns:
