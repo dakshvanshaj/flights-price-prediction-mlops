@@ -28,7 +28,7 @@ class Scaler:
                                       Defaults to 'standard'.
         """
         # --- 1. INPUT VALIDATION ---
-        if not isinstance(columns, list) or not columns:
+        if not isinstance(columns, list):
             raise ValueError("`columns` must be a non-empty list of strings.")
         if strategy not in ["standard", "minmax", "robust"]:
             raise ValueError(
@@ -37,7 +37,7 @@ class Scaler:
 
         self.columns = columns
         self.strategy = strategy
-
+        self._is_fitted = False
         # This dictionary will store the learned scaling parameters for each column.
         self.params_: Dict[str, Dict[str, float]] = {}
 
@@ -52,6 +52,13 @@ class Scaler:
             self: The fitted scaler instance.
         """
         logger.info(f"Fitting Scaler with '{self.strategy}' strategy.")
+
+        if not self.columns:
+            logger.info("No columns provided for scaling.")
+            self._is_fitted = True
+            logger.info("Fitting Complete")
+            return self
+
         self.params_ = {}
 
         for col in self.columns:
@@ -86,7 +93,8 @@ class Scaler:
                 logger.info(
                     f"Learned params for '{col}': median={median:.4f}, iqr={iqr:.4f}"
                 )
-
+        self._is_fitted = True
+        logger.info("Scaler fitting complete.")
         return self
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -99,10 +107,15 @@ class Scaler:
         Returns:
             pd.DataFrame: The scaled DataFrame.
         """
-        if not self.params_:
+
+        if not self._is_fitted:
             raise RuntimeError("Transform called before fitting the scaler.")
 
         df_copy = df.copy()
+        if not self.columns:
+            logger.info("No columns provided for scaling. Skipping transform.")
+            return df_copy
+
         logger.info(f"Applying '{self.strategy}' scaling.")
 
         for col in self.columns:
@@ -157,10 +170,16 @@ class Scaler:
         Returns:
             pd.DataFrame: The DataFrame with original-scale values.
         """
-        if not self.params_:
+        if not self._is_fitted:
             raise RuntimeError("Inverse transform called before fitting the scaler.")
 
         df_copy = df.copy()
+        if not self.columns:
+            logger.info(
+                "No columns were provided for inverse scaling. Skipping inverse transform."
+            )
+            return df_copy
+
         logger.info(f"Applying inverse '{self.strategy}' scaling.")
 
         for col in self.columns:
