@@ -1,6 +1,6 @@
 from datetime import date
 from enum import Enum
-from pydantic import BaseModel, StrictFloat
+from pydantic import BaseModel, Field
 
 
 class LocationEnum(str, Enum):
@@ -36,8 +36,8 @@ class FlightInput(BaseModel):
     from_location: LocationEnum
     to_location: LocationEnum
     flight_type: FlightTypeEnum
-    time: int
-    distance: int
+    time: float = Field(..., gt=0)
+    distance: float = Field(..., gt=0)
     agency: AgencyEnum
     date: date
 
@@ -47,4 +47,4 @@ class PredictionOutput(BaseModel):
     Represents the output of a prediction request.
     """
 
-    predicted_price: StrictFloat
+    predicted_price: float
