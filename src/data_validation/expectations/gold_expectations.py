@@ -9,18 +9,22 @@ def build_gold_expectations(
     expected_cols_ordered: List[str],
     target_col: str,
     scaler_strategy: str,
+    is_tree_model: bool,
     scaled_cols: Optional[List[str]] = None,
 ) -> List:
     """
     Builds a list of Great Expectations for the Gold data layer.
 
-    These expectations adapt based on the scaler used, ensuring the
-    validation logic is always correct.
+    These expectations adapt based on the scaler used and whether the pipeline
+    is for a tree-based model, ensuring the validation logic is always correct.
     """
     logger.info("Building expectations for the Gold data quality gate...")
-    logger.info(
-        f"Applying scaler-specific expectations for strategy: '{scaler_strategy}'"
-    )
+    if is_tree_model:
+        logger.info("Applying expectations for a tree-based model path.")
+    else:
+        logger.info(
+            f"Applying scaler-specific expectations for strategy: '{scaler_strategy}'"
+        )
 
     # --- 1. Final Schema and Column Order Check ---
     expect_columns_ordered = gxe.ExpectTableColumnsToMatchOrderedList(
@@ -51,9 +55,9 @@ def build_gold_expectations(
             )
         )
 
-    # --- 4. SCALER-SPECIFIC CHECKS ---
+    # --- 4. SCALER-SPECIFIC CHECKS (Non-Tree Path) ---
     scaled_value_expectations = []
-    if scaled_cols:
+    if not is_tree_model and scaled_cols:
         if scaler_strategy == "standard":
             for col in scaled_cols:
                 scaled_value_expectations.append(
