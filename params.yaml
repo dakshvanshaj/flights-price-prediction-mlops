@@ -7,6 +7,13 @@ data_splits:
   - test
 
 # =================================================================
+# --- MODELING STRATEGY ---
+# =================================================================
+# Set to true if using a tree-based model (like LGBM or XGB) to skip
+# unnecessary preprocessing steps (scaling, power transforms, etc.)
+is_tree_model: true
+
+# =================================================================
 # --- HYPERPARAMETERS FOR GOLD PIPELINE STAGES ---
 # =================================================================
 gold_pipeline:
@@ -17,14 +24,14 @@ gold_pipeline:
       from_location: "Unknown"
       to_location: "Unknown"
   rare_category_grouping:
-    cardinality_threshold: 0.01
+  #   cardinality_threshold: 0.01
   outlier_handling:
     detection_strategy: "iqr"
     handling_strategy: "trim"
   power_transformer:
-    strategy: "yeo-johnson"
+  # strategy: "yeo-johnson"
   scaler:
-    strategy: "standard"
+    strategy: ""
 
 # =================================================================
 # --- PARAMETERS FOR MLFLOW ---
@@ -39,7 +46,7 @@ training_pipeline:
   # -----------------------------------------------------------------
   # >> The ONLY line you need to change to run a different model <<
   # This key points to one of the configurations in the 'models' dictionary below.
-  model_config_to_run: "XGBRegressor"
+  model_config_to_run: "LGBMRegressor"
 
   # -----------------------------------------------------------------
 
