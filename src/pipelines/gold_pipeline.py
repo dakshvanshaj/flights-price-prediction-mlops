@@ -34,6 +34,7 @@ def gold_engineering_pipeline(
     input_filepath: Path,
     scaler_strategy_for_validation: str,
     params: Optional[dict] = None,
+    is_tree_model: bool = False,
     imputer_to_apply: Optional[SimpleImputer] = None,
     grouper_to_apply: Optional[RareCategoryGrouper] = None,
     encoder_to_apply: Optional[CategoricalEncoder] = None,
@@ -54,6 +55,7 @@ def gold_engineering_pipeline(
     """
     file_name = input_filepath.name
     logger.info(f"--- Starting Gold Engineering Pipeline for: {file_name} ---")
+    logger.info(f"Tree-based model path: {'ENABLED' if is_tree_model else 'DISABLED'}")
 
     # === STAGE 1: DATA INGESTION ===
     logger.info("=" * 25 + " STAGE 1/11: DATA INGESTION " + "=" * 25)
@@ -86,23 +88,8 @@ def gold_engineering_pipeline(
         df, interaction_map=config_gold.INTERACTION_FEATURES_CONFIG
     )
 
-    # === STAGE 5: RARE CATEGORY GROUPING ===
-    logger.info("=" * 25 + " STAGE 5/11: RARE CATEGORY GROUPING " + "=" * 25)
-    fitted_grouper = None
-    if grouper_to_apply:
-        df = grouper_to_apply.transform(df)
-    else:
-        grouper_params = params["rare_category_grouping"]
-        CARDINALITY_THRESHOLD = grouper_params["cardinality_threshold"]
-        grouper = RareCategoryGrouper(
-            columns=config_gold.HIGH_CARDINALITY_COLS,
-            threshold=CARDINALITY_THRESHOLD,
-        )
-        df = grouper.fit_transform(df)
-        fitted_grouper = grouper
-
-    # === STAGE 6: ENCODE CATEGORICAL COLUMNS ===
-    logger.info("=" * 25 + " STAGE 6/11: ENCODING " + "=" * 25)
+    # === STAGE 5: ENCODE CATEGORICAL COLUMNS ===
+    logger.info("=" * 25 + " STAGE 5/11: ENCODING " + "=" * 25)
     fitted_encoder = None
     if encoder_to_apply:
         df = encoder_to_apply.transform(df)
@@ -111,52 +98,83 @@ def gold_engineering_pipeline(
         df = encoder.fit_transform(df)
         fitted_encoder = encoder
 
-    # === STAGE 7: OUTLIER DETECTION AND HANDLING ===
-    logger.info("=" * 25 + " STAGE 7/11: OUTLIER HANDLING " + "=" * 25)
+    fitted_grouper = None
     fitted_outlier_handler = None
-    if outlier_handler_to_apply:
-        df = outlier_handler_to_apply.transform(df)
-    else:
-        outlier_params = params["outlier_handling"]
-        OUTLIER_DETECTION_STRATEGY = outlier_params["detection_strategy"]
-        OUTLIER_HANDLING_STRATEGY = outlier_params["handling_strategy"]
-        # ISO_FOREST_CONTAMINATION = outlier_params["iso_forest_contamination"]
-        outlier_handler = OutlierTransformer(
-            detection_strategy=OUTLIER_DETECTION_STRATEGY,
-            handling_strategy=OUTLIER_HANDLING_STRATEGY,
-            columns=config_gold.OUTLIER_HANDLER_COLUMNS,
-            # contamination=ISO_FOREST_CONTAMINATION,
-            # random_state=42,
-        )
-        df = outlier_handler.fit_transform(df)
-        fitted_outlier_handler = outlier_handler
-
-    # === STAGE 8: POWER TRANSFORMATIONS ===
-    logger.info("=" * 25 + " STAGE 8/11: POWER TRANSFORMATIONS " + "=" * 25)
     fitted_power_transformer = None
-    if power_transformer_to_apply:
-        df = power_transformer_to_apply.transform(df)
-    else:
-        power_params = params["power_transformer"]
-        POWER_TRANSFORMER_STRATEGY = power_params["strategy"]
-        power_transformer = PowerTransformer(
-            columns=config_gold.POWER_TRANSFORMER_COLUMNS,
-            strategy=POWER_TRANSFORMER_STRATEGY,
-        )
-        df = power_transformer.fit_transform(df)
-        fitted_power_transformer = power_transformer
-
-    # === STAGE 9: SCALING ===
-    logger.info("=" * 25 + " STAGE 9/11: SCALING " + "=" * 25)
     fitted_scaler = None
-    if scaler_to_apply:
-        df = scaler_to_apply.transform(df)
-        SCALER_STRATEGY = scaler_strategy_for_validation
+    SCALER_STRATEGY = "none"
+
+    if not is_tree_model:
+        # === STAGE 6: RARE CATEGORY GROUPING ===
+        logger.info("=" * 25 + " STAGE 6/11: RARE CATEGORY GROUPING " + "=" * 25)
+        grouper_params = params.get("rare_category_grouping")
+        if grouper_to_apply:
+            df = grouper_to_apply.transform(df)
+            fitted_grouper = grouper_to_apply
+        elif grouper_params and grouper_params.get("cardinality_threshold"):
+            CARDINALITY_THRESHOLD = grouper_params["cardinality_threshold"]
+            grouper = RareCategoryGrouper(
+                columns=config_gold.HIGH_CARDINALITY_COLS,
+                threshold=CARDINALITY_THRESHOLD,
+            )
+            df = grouper.fit_transform(df)
+            fitted_grouper = grouper
+        else:
+            logger.info("Skipping Rare Category Grouping: not configured in params.")
+
+        # === STAGE 7: OUTLIER DETECTION AND HANDLING ===
+        logger.info("=" * 25 + " STAGE 7/11: OUTLIER HANDLING " + "=" * 25)
+        outlier_params = params.get("outlier_handling")
+        if outlier_handler_to_apply:
+            df = outlier_handler_to_apply.transform(df)
+            fitted_outlier_handler = outlier_handler_to_apply
+        elif outlier_params and outlier_params.get("detection_strategy"):
+            outlier_handler = OutlierTransformer(
+                detection_strategy=outlier_params["detection_strategy"],
+                handling_strategy=outlier_params["handling_strategy"],
+                columns=config_gold.OUTLIER_HANDLER_COLUMNS,
+            )
+            df = outlier_handler.fit_transform(df)
+            fitted_outlier_handler = outlier_handler
+        else:
+            logger.info("Skipping Outlier Handling: not configured in params.")
+
+        # === STAGE 8: POWER TRANSFORMATIONS ===
+        logger.info("=" * 25 + " STAGE 8/11: POWER TRANSFORMATIONS " + "=" * 25)
+        power_params = params.get("power_transformer")
+        if power_transformer_to_apply:
+            df = power_transformer_to_apply.transform(df)
+            fitted_power_transformer = power_transformer_to_apply
+        elif power_params and power_params.get("strategy"):
+            power_transformer = PowerTransformer(
+                columns=config_gold.POWER_TRANSFORMER_COLUMNS,
+                strategy=power_params["strategy"],
+            )
+            df = power_transformer.fit_transform(df)
+            fitted_power_transformer = power_transformer
+        else:
+            logger.info("Skipping Power Transformations: not configured in params.")
+
+        # === STAGE 9: SCALING ===
+        logger.info("=" * 25 + " STAGE 9/11: SCALING " + "=" * 25)
+        scaler_params = params.get("scaler")
+        if scaler_to_apply:
+            df = scaler_to_apply.transform(df)
+            SCALER_STRATEGY = scaler_strategy_for_validation
+            fitted_scaler = scaler_to_apply
+        elif scaler_params and scaler_params.get("strategy"):
+            SCALER_STRATEGY = scaler_params["strategy"]
+            scaler = Scaler(
+                columns=config_gold.SCALER_COLUMNS, strategy=SCALER_STRATEGY
+            )
+            df = scaler.fit_transform(df)
+            fitted_scaler = scaler
+        else:
+            logger.info("Skipping Scaling: not configured in params.")
     else:
-        SCALER_STRATEGY = params["scaler"]["strategy"]
-        scaler = Scaler(columns=config_gold.SCALER_COLUMNS, strategy=SCALER_STRATEGY)
-        df = scaler.fit_transform(df)
-        fitted_scaler = scaler
+        logger.info(
+            "Tree model path enabled: Skipping Outlier Handling, Power Transformations, and Scaling."
+        )
 
     # === STAGE 10: SANITIZE COLUMN NAMES ===
     logger.info("=" * 25 + " STAGE 10/11: SANITIZE COLUMN NAMES " + "=" * 25)
@@ -167,7 +185,16 @@ def gold_engineering_pipeline(
     logger.info("=" * 25 + " STAGE 11/11: FINAL VALIDATION " + "=" * 25)
 
     final_cols_path = config_gold.GOLD_FINAL_COLS_PATH
-    if scaler_to_apply is None:
+    # Check if ANY optional transformer was applied in the training run
+    is_training_run = not any(
+        [
+            scaler_to_apply,
+            power_transformer_to_apply,
+            outlier_handler_to_apply,
+            grouper_to_apply,
+        ]
+    )
+    if is_training_run:
         logger.info(f"Training run: saving final column order to {final_cols_path}")
         final_cols_order = list(df.columns)
         with open(final_cols_path, "w") as f:
@@ -182,7 +209,10 @@ def gold_engineering_pipeline(
     gold_expectations = build_gold_expectations(
         expected_cols_ordered=final_cols_order,
         scaler_strategy=SCALER_STRATEGY,
-        scaled_cols=config_gold.GOLD_SCALED_COLS,
+        scaled_cols=config_gold.GOLD_SCALED_COLS
+        if not is_tree_model
+        else None,  # Pass scaled_cols conditionally
+        is_tree_model=is_tree_model,
         target_col=config_gold.TARGET_COLUMN,
     )
     result = run_checkpoint_on_dataframe(
@@ -256,12 +286,17 @@ def main():
 
     with open("params.yaml", "r") as f:
         params = yaml.safe_load(f)
-    gold_params = params["gold_pipeline"]
+
+    gold_params = params.get("gold_pipeline", {})
+    is_tree_model = params.get("is_tree_model", False)
 
     # 1. Process Training Data
-    logger.info(">>> ORCHESTRATOR: Processing training data...")
+    logger.info("=" * 25 + ">>> ORCHESTRATOR: Processing training data..." + "=" * 25)
     train_path = config_silver.SILVER_PROCESSED_DIR / "train.parquet"
-    scaler_strategy = gold_params["scaler"]["strategy"]
+
+    scaler_params = gold_params.get("scaler", {})
+    scaler_strategy = scaler_params.get("strategy", "none")
+
     (
         train_success,
         fitted_imputer,
@@ -274,52 +309,63 @@ def main():
         input_filepath=train_path,
         params=gold_params,
         scaler_strategy_for_validation=scaler_strategy,
+        is_tree_model=is_tree_model,
     )
 
-    if not all(
-        [
-            train_success,
-            fitted_imputer,
-            fitted_grouper,
-            fitted_encoder,
-            fitted_outlier_handler,
-            fitted_power_transformer,
-            fitted_scaler,
-        ]
-    ):
+    if not train_success:
         logger.critical("Training data processing failed. Aborting.")
         sys.exit(1)
 
-    fitted_imputer.save(imputer_path)
-    fitted_grouper.save(grouper_path)
-    fitted_encoder.save(encoder_path)
-    fitted_outlier_handler.save(outlier_path)
-    fitted_power_transformer.save(power_path)
-    fitted_scaler.save(scaler_path)
+    # Save only the transformers that were actually fitted
+    if fitted_imputer:
+        fitted_imputer.save(imputer_path)
+    if fitted_grouper:
+        fitted_grouper.save(grouper_path)
+    if fitted_encoder:
+        fitted_encoder.save(encoder_path)
+    if fitted_outlier_handler:
+        fitted_outlier_handler.save(outlier_path)
+    if fitted_power_transformer:
+        fitted_power_transformer.save(power_path)
+    if fitted_scaler:
+        fitted_scaler.save(scaler_path)
 
-    logger.info("Successfully fitted and saved all preprocessing objects.")
+    logger.info("Successfully fitted and saved all applicable preprocessing objects.")
 
     # 2. Process Validation & Test Data
     for data_split in ["validation", "test"]:
-        logger.info(f">>> ORCHESTRATOR: Processing {data_split} data...")
+        logger.info(
+            "=" * 25 + f">>> ORCHESTRATOR: Processing {data_split} data..." + "=" * 25
+        )
         data_path = config_silver.SILVER_PROCESSED_DIR / f"{data_split}.parquet"
 
-        imputer = SimpleImputer.load(imputer_path)
-        grouper = RareCategoryGrouper.load(grouper_path)
-        encoder = CategoricalEncoder.load(encoder_path)
-        outlier_handler = OutlierTransformer.load(outlier_path)
-        transformer = PowerTransformer.load(power_path)
-        scaler = Scaler.load(scaler_path)
+        # Load only the transformers that were saved
+        imputer = SimpleImputer.load(imputer_path) if imputer_path.exists() else None
+        grouper = (
+            RareCategoryGrouper.load(grouper_path) if grouper_path.exists() else None
+        )
+        encoder = (
+            CategoricalEncoder.load(encoder_path) if encoder_path.exists() else None
+        )
+        outlier_handler = (
+            OutlierTransformer.load(outlier_path) if outlier_path.exists() else None
+        )
+        transformer = PowerTransformer.load(power_path) if power_path.exists() else None
+        scaler = Scaler.load(scaler_path) if scaler_path.exists() else None
+
+        scaler_strategy_for_validation = scaler.strategy if scaler else "none"
 
         (success, _, _, _, _, _, _) = gold_engineering_pipeline(
             input_filepath=data_path,
             imputer_to_apply=imputer,
+            params=gold_params,
             grouper_to_apply=grouper,
             encoder_to_apply=encoder,
             outlier_handler_to_apply=outlier_handler,
             power_transformer_to_apply=transformer,
             scaler_to_apply=scaler,
-            scaler_strategy_for_validation=scaler.strategy,
+            scaler_strategy_for_validation=scaler_strategy_for_validation,
+            is_tree_model=is_tree_model,
         )
         if not success:
             logger.error(f"{data_split.capitalize()} data processing failed.")
