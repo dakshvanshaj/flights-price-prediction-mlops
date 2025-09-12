@@ -69,3 +69,5 @@ airflow/config/airflow.cfg
 mlruns/
 cv_results_scaled.csv
 cv_results_unscaled.csv
+gold_sample.csv
+*-checkpoint.ipynb
