@@ -49,7 +49,7 @@ class OutlierTransformer:
             **iso_forest_kwargs: Keyword arguments to pass to the IsolationForest model.
                                  e.g., contamination=0.1, random_state=42.
         """
-        if not isinstance(columns, list) or not columns:
+        if not isinstance(columns, list):
             raise ValueError("`columns` must be a non-empty list of strings.")
         if detection_strategy not in ["iqr", "zscore", "isolation_forest"]:
             raise ValueError(
