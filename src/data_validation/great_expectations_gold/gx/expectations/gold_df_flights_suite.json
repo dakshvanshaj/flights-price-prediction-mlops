@@ -1,0 +1,447 @@
+{
+  "expectations": [
+    {
+      "id": "734295bf-c043-4d2e-b326-4537b1c48557",
+      "kwargs": {
+        "column_list": [
+          "flight_type",
+          "from_location",
+          "to_location",
+          "agency",
+          "route",
+          "price",
+          "time",
+          "distance",
+          "year",
+          "month_sin",
+          "month_cos",
+          "day_of_week_sin",
+          "day_of_week_cos",
+          "day_sin",
+          "day_cos"
+        ]
+      },
+      "meta": {
+        "notes": "Verify the final model-ready schema and column order."
+      },
+      "type": "expect_table_columns_to_match_ordered_list"
+    },
+    {
+      "id": "863d66b3-0b34-47d7-8e69-91ebb53648e0",
+      "kwargs": {
+        "column": "price",
+        "min_value": 0.0
+      },
+      "meta": {
+        "notes": "Sanity check for the target variable's range (pre-scaling)."
+      },
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "cfedc3e3-0ca8-42f3-81dc-52f6579587b9",
+      "kwargs": {
+        "min_value": 10
+      },
+      "meta": {
+        "notes": "Ensures the gold table is not empty after processing."
+      },
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "849c6e2c-2c00-4ff7-8cd5-983ec14a6624",
+      "kwargs": {
+        "column": "flight_type",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column flight_type is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9f3fbf6f-be2b-4b0d-a861-58ebf513c2ce",
+      "kwargs": {
+        "column": "from_location",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column from_location is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "315b1e5f-1b71-45ac-9327-5c9bd554b94d",
+      "kwargs": {
+        "column": "to_location",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column to_location is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "5f4894b3-ae5c-4509-9e4d-253f6bdc0541",
+      "kwargs": {
+        "column": "agency",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column agency is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "34b3be78-6ac7-4a63-aca1-5badc7cea068",
+      "kwargs": {
+        "column": "route",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column route is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "b3b2c9cf-ccf9-4925-9c31-2c92a2fefff0",
+      "kwargs": {
+        "column": "price",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column price is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "40a86395-feae-415e-b48d-e1778ab69419",
+      "kwargs": {
+        "column": "time",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column time is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "02ab2c5a-4459-457c-a932-7fa9481f4465",
+      "kwargs": {
+        "column": "distance",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column distance is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "c7c33c97-4e26-45f9-8db7-92205ea1ef97",
+      "kwargs": {
+        "column": "year",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column year is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "92d8409f-84d0-424c-8475-38bed3b05a39",
+      "kwargs": {
+        "column": "month_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column month_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "3d7ae754-6e66-4d90-9735-69bf0e08818c",
+      "kwargs": {
+        "column": "month_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column month_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "6e38e055-c611-4001-80f4-8e13c1c738f1",
+      "kwargs": {
+        "column": "day_of_week_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_of_week_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d3d995d5-0e53-4615-95d5-5de0f8efc8ad",
+      "kwargs": {
+        "column": "day_of_week_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_of_week_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "9d805b64-df1c-4e46-840f-8efc902ec9ae",
+      "kwargs": {
+        "column": "day_sin",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_sin is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "44607f9b-05fe-4500-a102-e52668a96db5",
+      "kwargs": {
+        "column": "day_cos",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "notes": "Verify column day_cos is a numeric type for modeling."
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "d6e8a25d-e7ff-4761-8272-fd8a1aa92f02",
+      "kwargs": {
+        "column": "flight_type"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: flight_type."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "d9eb3253-0379-4357-b2b4-3074edee88fd",
+      "kwargs": {
+        "column": "from_location"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: from_location."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "60034da0-7934-4425-8188-e5d55eacc594",
+      "kwargs": {
+        "column": "to_location"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: to_location."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "47466031-a059-4ff5-88d7-419eb276adaf",
+      "kwargs": {
+        "column": "agency"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: agency."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "8afbb4c0-3954-4256-8dcf-6352de2643d3",
+      "kwargs": {
+        "column": "route"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: route."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "3ece6dcc-dd24-4355-a45b-02df1ee70826",
+      "kwargs": {
+        "column": "price"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: price."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "65b1dd35-4d8d-4260-99d3-5f3fe7f53d1e",
+      "kwargs": {
+        "column": "time"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: time."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "293b40b1-090c-467f-a469-fb8b8c82fecb",
+      "kwargs": {
+        "column": "distance"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: distance."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "fcf288f4-f60c-4dcc-9bbb-07311bacf286",
+      "kwargs": {
+        "column": "year"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: year."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "9f6e47c4-67f5-4271-9e42-80e1958e68f1",
+      "kwargs": {
+        "column": "month_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: month_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "eae42a69-8a73-4787-8047-fb093c2fd9d4",
+      "kwargs": {
+        "column": "month_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: month_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "85b65122-921d-4907-96b8-fb9bad770eae",
+      "kwargs": {
+        "column": "day_of_week_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_of_week_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "89655c38-8d15-4971-8238-f42ef4eaeaa9",
+      "kwargs": {
+        "column": "day_of_week_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_of_week_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "2e887a18-27ef-4aa7-b8df-f430a5b70d9c",
+      "kwargs": {
+        "column": "day_sin"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_sin."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "032d633a-c62b-4fd8-ab90-9b611dd5b2d3",
+      "kwargs": {
+        "column": "day_cos"
+      },
+      "meta": {
+        "notes": "Verify no missing values in final model-ready column: day_cos."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    }
+  ],
+  "id": "68026bb6-406a-426c-865c-4ae1a2b49213",
+  "meta": {
+    "great_expectations_version": "1.5.5"
+  },
+  "name": "gold_df_flights_suite",
+  "notes": null
+}

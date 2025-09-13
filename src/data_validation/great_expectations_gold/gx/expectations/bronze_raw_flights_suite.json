@@ -1,0 +1,263 @@
+{
+  "expectations": [
+    {
+      "id": "6dbaf3f9-cb48-4d8e-a117-4d6e13655e79",
+      "kwargs": {
+        "column_set": [
+          "travelCode",
+          "userCode",
+          "from",
+          "to",
+          "flightType",
+          "price",
+          "time",
+          "distance",
+          "agency",
+          "date"
+        ]
+      },
+      "meta": {
+        "name": "bronze_columns_match_set",
+        "notes": "Checks for presence of all required columns."
+      },
+      "type": "expect_table_columns_to_match_set"
+    },
+    {
+      "id": "f0990072-05a8-471b-a369-617157bbcf79",
+      "kwargs": {
+        "min_value": 1
+      },
+      "meta": {
+        "name": "bronze_table_has_rows",
+        "notes": "Ensures the raw file is not empty."
+      },
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "9df9d84f-9818-479a-9d02-9f4efe1158c8",
+      "kwargs": {
+        "column": "travelCode"
+      },
+      "meta": {
+        "name": "bronze_travelCode_not_null",
+        "notes": "Ensures the critical column 'travelCode' is always present."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "5eb6bf36-0991-49af-8d8b-87fbb80f5fb8",
+      "kwargs": {
+        "column": "date"
+      },
+      "meta": {
+        "name": "bronze_date_not_null",
+        "notes": "Ensures the critical column 'date' is always present."
+      },
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "1848fc66-6cfc-45f6-8ef7-457a3cb8650c",
+      "kwargs": {
+        "column": "price",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "name": "bronze_price_is_numeric"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "6ad6509f-6234-4877-91c6-4d9a6315db45",
+      "kwargs": {
+        "column": "price",
+        "min_value": 0.0
+      },
+      "meta": {
+        "name": "bronze_price_is_not_negative"
+      },
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "f6534d48-74fd-41e5-aa4a-f9697639492a",
+      "kwargs": {
+        "column": "time",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "name": "bronze_time_is_numeric"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "2ce153bb-5362-46ca-9852-8b68785ac725",
+      "kwargs": {
+        "column": "time",
+        "min_value": 0.0
+      },
+      "meta": {
+        "name": "bronze_time_is_not_negative"
+      },
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "b5fc6a6a-d274-45e3-b18e-172353467d60",
+      "kwargs": {
+        "column": "distance",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "name": "bronze_distance_is_numeric"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "1c5207b3-f284-40a1-b47d-57f651f65c0e",
+      "kwargs": {
+        "column": "distance",
+        "min_value": 0.0
+      },
+      "meta": {
+        "name": "bronze_distance_is_not_negative"
+      },
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "59604903-d61e-4857-a5ac-e6cb10f93ce9",
+      "kwargs": {
+        "column": "userCode",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "name": "bronze_userCode_is_numeric"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "4115602e-82f6-43dc-8649-e0240fb45af9",
+      "kwargs": {
+        "column": "travelCode",
+        "type_list": [
+          "int",
+          "int64",
+          "float",
+          "float64"
+        ]
+      },
+      "meta": {
+        "name": "bronze_travelCode_is_numeric"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "a6660fa0-25ff-4dd3-a350-aa6afa7aad15",
+      "kwargs": {
+        "column": "from",
+        "type_list": [
+          "object",
+          "str"
+        ]
+      },
+      "meta": {
+        "name": "bronze_from_is_string"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "e846e04c-56f3-4bd1-a634-b5b17b0d50cf",
+      "kwargs": {
+        "column": "to",
+        "type_list": [
+          "object",
+          "str"
+        ]
+      },
+      "meta": {
+        "name": "bronze_to_is_string"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "79c852f0-4f63-4c3a-aac5-40488a224e9e",
+      "kwargs": {
+        "column": "flightType",
+        "type_list": [
+          "object",
+          "str"
+        ]
+      },
+      "meta": {
+        "name": "bronze_flightType_is_string"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "f7dfab59-3ea4-4449-b2d1-5db0fe74a661",
+      "kwargs": {
+        "column": "agency",
+        "type_list": [
+          "object",
+          "str"
+        ]
+      },
+      "meta": {
+        "name": "bronze_agency_is_string"
+      },
+      "type": "expect_column_values_to_be_in_type_list"
+    },
+    {
+      "id": "30afe91d-b017-4e03-8fdb-7ba70ed152c8",
+      "kwargs": {
+        "column": "date",
+        "strftime_format": "%Y-%m-%d"
+      },
+      "meta": {
+        "name": "bronze_date_format_is_correct",
+        "notes": "Checks if date strings match YYYY-MM-DD format."
+      },
+      "type": "expect_column_values_to_match_strftime_format"
+    },
+    {
+      "id": "227081b0-97ea-47d3-8589-b0c7b2e27bb2",
+      "kwargs": {
+        "column": "flightType",
+        "mostly": 0.98,
+        "value_set": [
+          "economic",
+          "firstClass",
+          "premium"
+        ]
+      },
+      "meta": {
+        "name": "bronze_flightType_in_known_set",
+        "notes": "Checks that most flight types are from a known list."
+      },
+      "type": "expect_column_values_to_be_in_set"
+    }
+  ],
+  "id": "16529d72-0067-4805-97e4-55b452b88dbc",
+  "meta": {
+    "great_expectations_version": "1.5.5"
+  },
+  "name": "bronze_raw_flights_suite",
+  "notes": null
+}

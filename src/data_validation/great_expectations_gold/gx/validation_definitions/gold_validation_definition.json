@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "f1e9f57a-cb6a-458b-97d6-8deab0e9ef1a",
+      "name": "gold_in_memory_asset"
+    },
+    "batch_definition": {
+      "id": "8d9e4f20-75a3-4d90-a725-fc587b132f4d",
+      "name": "gold_batch_definition"
+    },
+    "datasource": {
+      "id": "fa20b1ef-8ff7-4ab1-abb2-84d9e2e22672",
+      "name": "pandas_parquet_datasource"
+    }
+  },
+  "id": "32892fc6-d86c-4fd2-8714-5cee19da2100",
+  "name": "gold_validation_definition",
+  "suite": {
+    "id": "68026bb6-406a-426c-865c-4ae1a2b49213",
+    "name": "gold_df_flights_suite"
+  }
+}
