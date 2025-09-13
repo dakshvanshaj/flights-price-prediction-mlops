@@ -42,7 +42,7 @@ def run_bronze_pipeline(file_name: str) -> bool:
         return False
 
     # --- 1. Initialize GE Context and Datasource ---
-    context = get_ge_context(project_root_dir=core_paths.GE_ROOT_DIR)
+    context = get_ge_context(project_root_dir=core_paths.GE_BRONZE_ROOT_DIR)
     datasource = get_or_create_datasource(
         context=context,
         source_name=config_bronze.RAW_DATA_SOURCE_NAME,

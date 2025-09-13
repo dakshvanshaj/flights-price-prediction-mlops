@@ -75,7 +75,7 @@ def run_silver_pipeline(
         unique_record_cols=config_silver.ERRONEOUS_DUPE_SUBSET,
     )
     result = run_checkpoint_on_dataframe(
-        project_root_dir=core_paths.GE_ROOT_DIR,
+        project_root_dir=core_paths.GE_SILVER_ROOT_DIR,
         datasource_name=config_silver.SILVER_DATA_SOURCE_NAME,
         asset_name=config_silver.SILVER_ASSET_NAME,
         batch_definition_name=config_silver.SILVER_BATCH_DEFINITION_NAME,

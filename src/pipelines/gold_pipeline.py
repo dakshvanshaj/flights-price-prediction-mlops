@@ -216,7 +216,7 @@ def gold_engineering_pipeline(
         target_col=config_gold.TARGET_COLUMN,
     )
     result = run_checkpoint_on_dataframe(
-        project_root_dir=core_paths.GE_ROOT_DIR,
+        project_root_dir=core_paths.GE_GOLD_ROOT_DIR,
         datasource_name=config_gold.GOLD_DATA_SOURCE_NAME,
         asset_name=config_gold.GOLD_ASSET_NAME,
         batch_definition_name=config_gold.GOLD_BATCH_DEFINITION_NAME,
