@@ -80,7 +80,7 @@ stages:
       - models/gold_final_columns.json
 
   training_pipeline:
-    cmd: python src/pipelines/training_pipeline.py train.parquet validation.parquet test.parquet
+    cmd: python src/pipelines/training_pipeline.py train.parquet validation.parquet --test_file_name test.parquet
     deps:
       - src/pipelines/training_pipeline.py
       - src/data_ingestion/data_loader.py
