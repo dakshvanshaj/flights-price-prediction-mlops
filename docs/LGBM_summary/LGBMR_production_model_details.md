@@ -2,61 +2,40 @@
 
 ## 1. Executive Summary
 
-This report provides a comprehensive overview of the LightGBM model, which was selected as the **champion model** for the flight price prediction task.
+This report provides a comprehensive overview of the final LightGBM model, which was selected as the **champion model** for the flight price prediction task after a rigorous process of evaluation, investigation, and refinement.
 
-The analysis conclusively identifies this model as the champion due to its superior combination of predictive accuracy, high stability, and exceptional training efficiency. It demonstrates state-of-the-art performance, achieving a Cross-Validation RMSE of **$1.02** and a final Test Set RMSE of **$0.86**. This document details the model's selection process, performance metrics, final parameters, and an in-depth analysis of its behavior.
+Initial modeling yielded a version that was suspiciously accurate. A deep-dive analysis revealed a subtle overfitting issue caused by a leaky feature (`route`). After correcting this, the final model emerged, demonstrating a superior combination of predictive accuracy and stability. It achieves a **Cross-Validation RMSE of $9.57** and a final **Test Set RMSE of $7.60**. This document details the model's final performance, parameters, and an in-depth analysis of its behavior.
 
-## 2. Model Selection: The Final Bake-Off
+## 2. Model Performance Metrics
 
-The LightGBM model was chosen after a rigorous "bake-off" against other tuned candidates (Random Forest, XGBoost) and a Linear Regression baseline. The results clearly favored LightGBM for its accuracy and stability.
+The model's performance was validated through both rigorous cross-validation and a final evaluation on an unseen test set, confirming its stability and real-world predictive power.
 
-| Model | CV R² Score | CV RMSE | **CV RMSE Std Dev (Stability)** | CV MAE | Duration |
-| --- | --- | --- | --- | --- | --- |
-| **LGBMRegressor (Tuned)** | **~1.000** | **$1.02** | **$0.38** | **$0.61** | **2.5 min** |
-| RandomForestRegressor (Tuned) | 0.999 | $10.50 | **$0.11** | $5.38 | 6.9 min |
-| XGBoostRegressor (Tuned) | 0.999 | $11.95 | **$3.32** | $9.48 | 1.9 min |
-| LinearRegression (Base) | 0.986 | $42.64 | **$0.18** | $34.32 | 2.2 min |
+### 2.1. Cross-Validation Performance (Mean over 5 Folds)
 
-### Analysis and Insights
-
-1.  **The Clear Winner (LightGBM):** The tuned **LightGBM model** is definitively the best. Its RMSE of **$1.02** is unparalleled, and its low standard deviation of **$0.38** proves this high performance is consistent and reliable across different data slices.
-2.  **Stability Concerns with Other Models:** While XGBoost and Random Forest performed well, they couldn't match LightGBM's combination of accuracy and stability. XGBoost, in particular, showed significantly higher variance in its performance across validation folds, making it a less reliable choice.
-
-## 3. Model Performance Metrics
-
-The model's performance was validated through both rigorous cross-validation and a final evaluation on an unseen test set.
-
-### 3.1. Cross-Validation Performance (Mean over 5 Folds)
-
-These metrics represent the model's average performance during the bake-off, demonstrating its stability and generalization capabilities.
+These metrics represent the model's average performance, demonstrating its stability and generalization capabilities.
 
 | Metric | Value |
 | :--- | :--- |
-| **R² Score** | **0.999991** |
-| **Root Mean Squared Error (RMSE)** | **$1.02** |
-| **Mean Absolute Error (MAE)** | **$0.61** |
-| **Mean Squared Error (MSE)** | **$1.16** |
-| **Median Absolute Error** | **$0.42** |
-| **Max Error** | **$10.40** |
+| **R² Score** | **0.99928** |
+| **Root Mean Squared Error (RMSE)** | **$9.57** |
+| **Mean Absolute Error (MAE)** | **$7.09** |
+| **CV RMSE Standard Deviation** | **$0.43** |
 
-### 3.2. Final Test Set Performance
+### 2.2. Final Test Set Performance
 
-These metrics represent the final, official performance of the trained model on a hold-out test set, confirming its real-world predictive power.
+These metrics represent the final, official performance of the trained model on a hold-out test set.
 
 | Metric | Value |
 | :--- | :--- |
-| **R² Score** | **0.999994** |
-| **Root Mean Squared Error (RMSE)** | **$0.86** |
-| **Mean Absolute Error (MAE)** | **$0.54** |
-| **Mean Squared Error (MSE)** | **$0.74** |
-| **Median Absolute Error** | **$0.41** |
-| **Max Error** | **10.47** |
+| **R² Score** | **0.99956** |
+| **Root Mean Squared Error (RMSE)** | **$7.60** |
+| **Mean Absolute Error (MAE)** | **$5.50** |
 
-## 4. Model Configuration and Parameters
+## 3. Model Configuration and Parameters
 
-### 4.1. Optimal Hyperparameters
+### 3.1. Optimal Hyperparameters
 
-The following hyperparameters were identified during the tuning phase and used for the final model. The configuration prioritizes accuracy while maintaining a simple architecture (`max_depth: 5`, `num_leaves: 15`) to prevent overfitting.
+The following hyperparameters were identified during the tuning phase and used for the final model.
 
 | Parameter | Value |
 | :--- | :--- |
@@ -71,115 +50,82 @@ The following hyperparameters were identified during the tuning phase and used f
 | `random_state` | 42 |
 | `n_jobs` | -1 |
 
-### 4.2. Production Preprocessing Pipeline
+### 3.2. Production Preprocessing Pipeline
 
-After selecting LightGBM as the champion model in our `v0.1-experimental` phase, we optimized the preprocessing pipeline to be simpler and more efficient by leveraging the model's native strengths.
+Our final preprocessing pipeline is optimized for tree-based models by using the `is_tree_model: true` parameter. This streamlines the process and avoids unnecessary transformations.
 
 **Key Optimizations:**
-- **No Scaling or Power Transforms**: LightGBM is a tree-based model and is not sensitive to the scale or distribution of numerical features. Therefore, `StandardScaler` and `PowerTransformer` steps were removed.
-- **No One-Hot Encoding**: LightGBM can handle categorical features directly when they are integer-encoded. We replaced one-hot encoding with `OrdinalEncoder`, which significantly reduces the number of features and speeds up training.
-- **No Temporal Features**: SHAP analysis revealed that features like `month` and `day_of_week` had zero importance, as their predictive information was better captured by other features like `route`. These have been removed from the final feature set.
+
+- **No Scaling or Power Transforms**: LightGBM is not sensitive to the scale or distribution of numerical features, so these steps were removed.
+- **Integer Encoding**: We use integer-based encoding for categorical features, which is handled natively and efficiently by LightGBM.
+- **Feature Selection**: The engineered `interation features` and later `route` feature was **explicitly removed** after being identified as a source of data leakage and overfitting. The model now relies on the fundamental `from_location` and `to_location` features.
+- **Temporal Features**: Cyclical features for `month`, `day`, and `day_of_week` are included, as their signal is no longer masked by other features.
 
 #### Optimized Pipeline Workflow
-
-This simplified workflow is faster and tailored specifically for our LightGBM model.
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 graph TD
     subgraph "Training Data Path"
-        A[Load Silver Train Data] --> B{Data Cleaning & Imputation};
-        B --> C{Fit & Transform<br/>Ordinal Encoder, Outlier Handler};
-        C --> D{Run GE Validation};
-        D --> E[Save Gold Train Data & Fitted Transformers];
+        A[Load Silver Train Data] --> B{Data Cleaning & Imputation}
+        B --> C{Fit & Transform<br/> Cyclical Features, Ordinal Encoder}
+        C --> D{Run GE Validation}
+        D --> E[Save Gold Train Data & Fitted Transformers]
     end
 
     subgraph "Validation/Test Data Path"
-        F[Load Silver Validation/Test Data] --> G[Load Fitted Transformers];
-        G --> H{Apply Transformations};
-        H --> I{Run GE Validation};
-        I --> J[Save Gold Validation/Test Data];
+        F[Load Silver Validation/Test Data] --> G[Load Fitted Transformers]
+        G --> H{Apply Transformations}
+        H --> I{Run GE Validation}
+        I --> J[Save Gold Validation/Test Data]
     end
 ```
 
-#### Final Preprocessing Parameters
-
-This table reflects the final, simplified configuration used for the production model.
-
-| Step | Parameter | Value |
-| :--- | :--- | :--- |
-| **Imputation (Median)** | `features` | `price`, `time`, `distance` |
-| **Imputation (Mode)** | `features` | `agency`, `flight_type` |
-| **Categorical Encoding** | `strategy` | `ordinal` |
-| **Outlier Handling** | `detection_strategy` | `iqr` |
-| **Outlier Handling** | `handling_strategy` | `trim` |
-| **~~Rare Category Grouping~~** | `enabled` | `false` |
-| **~~Power Transformer~~** | `enabled` | `false` |
-| **~~Scaler~~** | `enabled` | `false` |
-
-
-## 5. In-Depth Analysis of Model Behavior
+## 4. In-Depth Analysis of Model Behavior
 
 ### A. Prediction Accuracy (Actual vs. Predicted)
 
-The Actual vs. Predicted plot is a flawless diagonal line, visually representing the model's extraordinary precision.
+The Actual vs. Predicted plot shows a tight diagonal line, confirming the model's high precision.
 
--   **Insight:** The points are so tightly packed along the ideal 45-degree line that they almost form a solid line themselves. This is a visual confirmation of an R² score that is nearly 1.0.
+-   **Insight:** The points are tightly clustered around the ideal 45-degree line, a visual confirmation of the high R² score and low error rates.
 
-![Actual vs. Predicted](../img/lgbm_actual_vs_predicted.png)
+![Actual vs. Predicted](../img/Final_Lightgbm_Plots/[test]%20Actual%20vs.%20Predicted%20Values.png)
 
 ### B. Error Analysis (Residuals vs. Predicted)
 
-The residuals plot is excellent, showing a random and unbiased distribution of errors.
+The residuals plot is healthy, showing a random and unbiased distribution of errors.
 
--   **Insight:** The errors are tightly clustered around the zero-line with no discernible patterns. The variance is consistent across all predicted values (homoscedasticity). This is the picture of a healthy, well-behaved model with no systematic biases.
+-   **Insight:** The errors are clustered around the zero-line with no discernible patterns. This is the picture of a healthy, well-behaved model with no systematic biases.
 
-![Residuals vs. Predicted](../img/lgbm_residuals_vs_predicted.png)
+![Residuals vs. Predicted](../img/Final_Lightgbm_Plots/[test]%20Residuals%20vs.%20Predicted%20Values.png)
 
 ### C. Normality of Residuals (Q-Q Plot)
 
-The Q-Q plot shows that the model's errors are very close to a normal distribution, with some minor deviations for the largest errors.
+The Q-Q plot shows that the model's errors are very close to a normal distribution.
 
--   **Insight:** The points follow the red line very well, especially in the central region. The slight deviation at the top-right tail indicates the model had a few predictions where the positive error was larger than a perfect normal distribution would suggest. This is reflected in the `max_error` of ~$10.48.
+-   **Insight:** The points follow the red line well, indicating that the error distribution is largely normal, which is a sign of a well-calibrated model.
 
-![Q-Q Plot](../img/lgbm_qq_plot.png)
+![Q-Q Plot](../img/Final_Lightgbm_Plots/[test]%20Q-Q%20Plot%20of%20Residuals.png)
 
 ### D. Feature Importance Analysis
+-   **Check out the model explainability document for shap analysis for feature importance.**
+-   **Top Influencers:** **`time`** (flight duration), **`locations`**, **`agency` and  **`flight_type`** remain the most dominant predictors.
+-   **Re-emergence of Temporal Features:** Crucially, the cyclical features for **`day_of_week`** and **`day`** now appear to have some level of importance. Their signal was previously being masked by the overfitting engineered features.
+-   **Actionable Insight:** The model has learned a robust hierarchy of what drives price: flight duration, location, agency,  service class, and specific temporal patterns.
 
-LightGBM provides a unique perspective on what drives flight prices, different from both Random Forest and XGBoost.
+![Feature Importance](../img/Final_Lightgbm_Plots/[test]%20Feature%20Importance.png)
 
--   **Top Influencers:** Uniquely, **`time`** emerges as the single most important feature for LightGBM, followed closely by `flight_type`.
--   **Airline & Class Dominance:** The model heavily relies on the airline and the class of service (e.g., `cloudfy_firstclass`, `rainbow_economic`), which occupy the majority of the top 10 feature slots.
--   **Actionable Insight:** This model has learned that the combination of flight duration (`time`) and *who* is operating it are the most powerful predictors, more so than `distance` which is ranked lower. This provides a clear focus for business strategy.
+## 5. Final Verdict: A True Champion
 
-![Feature Importance](../img/lgbm_feature_importance.png)
+After a thorough investigation, we can confidently declare this LightGBM model as the champion. The initial, suspiciously perfect model was correctly identified as overfit. By diagnosing the problem and correcting it, we have produced a final model that is not only highly accurate but also **stable, robust, and reliable**.
 
-## 6. In-Depth Model Explainability
+The consistency between its cross-validation performance (CV RMSE: **$9.57**) and its final test set performance (Test RMSE: **$7.60**) is the key piece of evidence that it generalizes well to new, unseen data.
 
-A full analysis of the model's decision-making process using SHAP (SHapley Additive exPlanations) has been conducted to ensure its predictions are not only accurate but also transparent and interpretable.
+---
 
-This detailed breakdown of global and local feature contributions can be found in the **[LightGBM Champion Model Explainability Report](../LGBM_summary/LGBMR_production_model_details.md)**.
+## Next Steps
 
-## 7. Comparison LightGBM vs Xgboost Model Explainability And Prediction Patterns
-A detailed analysis of comparison of xgboost and LightGBM decision-making process solidifies the position of lightgbm as a champion model even more.
-**[LightGBM Champion Model Explainability Report](../Modeling/model_explainability_lgbm_vs_xgb.md)**.
+This model is ready for production. The next steps involve deploying it as a service and monitoring its performance over time.
 
-## 8. Final Verdict: King of Overfitting or Champion of Champions?
-
-This is the crucial question. A model this accurate on a real-world problem is rare and immediately raises suspicion of overfitting.
-
-**Evidence for "Champion":**
-
-1.  **Consistency:** The test RMSE of **$0.86** is extremely close to the cross-validation RMSE of **$1.02**. This is a powerful argument that the model generalizes well. A heavily overfit model would typically see a significant drop in performance on the test set.
-2.  **Strong Regularization:** The winning parameters show a highly constrained model (`max_depth: 5`, `num_leaves: 15`). This is not a model that was allowed to "memorize" the data. It was forced to learn simple patterns, and it found incredibly powerful ones.
-
-**Evidence for "Caution":**
-
-1.  **Unusually High Score:** An R² of 0.99999 is almost unheard of on a real business problem. This suggests the underlying dataset might be simpler or have less noise than typical datasets.
-
-**Overall Conclusion:**
-
-While we must remain cautious due to the extraordinary score, the evidence strongly suggests this is a **true Champion model, not an overfit one.** The consistency between its robust cross-validation performance and its final test set performance is the key piece of evidence. The model has successfully learned the powerful, clean signals present in this dataset.
-
-**This LightGBM model is the definitive winner of the bake-off.**
+* **[Deep Dive into the Champion Model's Explainability &raquo;](../Modeling/model_explainability_lgbm_champ.md)**
 

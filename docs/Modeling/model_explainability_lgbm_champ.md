@@ -1,23 +1,14 @@
 # Explaining the LightGBM Champion Model
-This report provides a deep dive into our champion model, LightGBM, which was chosen in the **[Model Selection Report](model_selection_report.md)** for its superior performance. Here, we use SHAP to understand *why* the model makes its decisions.
+
+This report provides a deep dive into our champion model, LightGBM, which was chosen after a rigorous process of evaluation and refinement, as detailed in the **[Model Selection Report](model_selection_report.md)**. Here, we use SHAP to understand *why* the model makes its decisions.
 
 ---
 
 ## 1. Executive Summary
 
-The LightGBM model was selected as the champion for its exceptional performance, achieving a CV RMSE of **$1.02** and a test RMSE of **$0.86**. This document delves into the model's decision-making process using SHAP (SHapley Additive exPlanations) to ensure its predictions are not only accurate but also transparent and interpretable.
+After identifying and correcting an overfitting issue caused by a leaky feature, the final LightGBM model was validated as the champion. It achieves a **Test Set RMSE of $7.60** and demonstrates stable, reliable, and interpretable behavior.
 
-The analysis confirms that the model has learned logical and robust patterns from the data. Key drivers of price predictions include **`time`**, **`flight_type`**, and **`from_location`**, which aligns with the feature importance identified during model evaluation. The model's behavior is consistent and its predictions can be trusted.
-
-> **A Note on Interpreting Aggregated Features**
->
-> In the SHAP plots throughout this document, you may notice features like `agency` and `route` displaying numerical values greater than 1 (e.g., `agency=2`). This is a cosmetic artifact of the visualization process and does not indicate an error in the model itself.
->
-> This occurs because the explanation script aggregates multiple feature effects. For example, it groups the main `agency` feature with the engineered interaction feature `agency_flight_type`. The value `2` appears when both the base feature and the interaction feature are active for a given prediction.
->
-> Therefore, the importance shown for a feature like `agency` represents the **combined impact of its main effect and its interactions**.
-> However, the model importance for `agency_flight_type` and `route_agency` is near None, so it does not have an effect on the final conclusion. But it will be added to the fix list.
-> The underlying SHAP calculations are sound, but this grouping should be kept in mind during interpretation.
+This SHAP analysis confirms that the model has learned logical and robust patterns from the data. Key drivers of price predictions include **`time`**, **`flight_type`**, and now, critically, **temporal features** like `day_of_week` and `day`. The model's behavior is consistent, and its predictions can be trusted.
 
 ## 2. Global Model Explainability
 
@@ -25,159 +16,95 @@ The analysis confirms that the model has learned logical and robust patterns fro
 
 The summary plot provides a global overview of the model's feature importance and the impact of each feature on the predictions.
 
-![SHAP Summary Plot](../img/shap_lgbm_Summary%20Plot.png)
+![SHAP Summary Plot](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Summary%20Plot.png)
 
 **Insights:**
 
-*   **`time`** is the most influential feature. Higher values of `time` (longer flight duration) have a strong positive impact on the predicted price.
-*   **`flight_type`** is the second most important feature. It has a clear categorical impact, with different flight types pushing the prediction in opposite directions.
-*   **`from_location`** and **`agency`** are also significant drivers.
-*   The plot shows a clear separation of SHAP values for many features, indicating a strong predictive signal.
+*   **`time`** remains the most influential feature. Higher values (longer flights) strongly push the price prediction higher.
+*   **`flight_type`** is the second most important feature, with a clear categorical impact.
+*   **Temporal Features Matter:** Unlike previous iterations, **`day_of_week`** and **`day`** are now contributing which confirms that removing the complex feature engineering process has allowed the model to learn these more subtle patterns. This gets more clear in local shap analysis.
 
 ### B. SHAP Feature Importance (Bar Plot)
 
-This plot shows the mean absolute SHAP value for each feature across all of the data. This quantifies, on average, the magnitude (positive or negative) of each feature's contribution towards the predicted prices. 
-![SHAP Feature Importance](../img/shap_lgbm_Feature%20Importance%20(Bar).png)
+This plot shows the mean absolute SHAP value for each feature, quantifying its average impact on the model's output.
+
+![SHAP Feature Importance](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Feature%20Importance%20(Bar).png)
 
 **Insights:**
 
-*   This plot confirms the findings from the summary plot, with **`time`**, **`flight_type`**, and **`from_location`** being the top three most important features.
-*   This aligns with the feature importance from the LightGBM model itself, giving us confidence that the model is using these features as expected.
+*   This plot confirms the findings from the summary plot, with **`time`**, **`flight_type`**, **`from_location`**, **`to_location`**, and  being the top features.
+*   The feature importance is now more distributed and logical, without a single feature dominating the model's decisions.
+*   Temporal Features also have some level of importance which closely aligns with the exploratory data analysis findings.
 
-## 3. The Case of the Missing Temporal Features
+## 3. The Case of the Reappearing Temporal Features
 
-An important observation from the EDA was that temporal features like `month` and `day_of_week` showed patterns related to flight prices. However, both the LightGBM and XGBoost models assigned them zero importance. This is not an error, but rather a common outcome in powerful tree-based models. Here's why this likely happened:
+In our initial, overfit models, temporal features like `month`, `year`, `day` and `day_of_week` were assigned zero importance. This was a major red flag, as EDA showed clear seasonal patterns. The final, stable model corrects this.
 
-1.  **Feature Redundancy and Information Overlap:** The information contained in the temporal features was likely already captured by other, more powerful features. For instance, specific routes (`from_location` to `to_location`) or `agency` operations might have strong inherent seasonality. The model found that it could get more predictive power from these features, making the separate temporal features redundant.
+**Why did this happen?**
 
-2.  **The Power of High-Cardinality Features:** Features like `from_location` and `route` are very high-cardinality (they have many unique values). A single feature like `from_location` can implicitly learn seasonal effects (e.g., flights from a vacation destination are more expensive in the summer). The model found these features to be a more direct and powerful way to capture the variance in price than the more general `month` or `day_of_week` features.
+The engineered features and preprocessing like scaling, OHE were causing model to focus more on some of the features that hold most of the predictive power . It was so powerful and specific that the model could essentially memorize the price for a given route, ignoring all other features. By overfitting to `route`, the model never needed to learn the more subtle (but more generalizable) patterns related to seasonality or the day of the week.
 
-3.  **Model's Focus on the Strongest Signals:** LightGBM and XGBoost are greedy algorithms that prioritize the features that provide the biggest predictive gains. The signals from `time` (duration), `flight_type`, and the route-related features were so overwhelmingly strong that the models could achieve very high accuracy by focusing on them alone. The marginal benefit of splitting on the weaker temporal features was so small that they were never chosen.
-
-In essence, while the temporal features do have a relationship with price when viewed in isolation, their predictive information is more effectively captured by other features in the context of a multivariate model.
+By **removing the unnecessary `preprocessing` and features including `route` feature(removed in second interation)**, we forced the model to look for other signals. As a result, it correctly identified the importance of the cyclical `day_of_week` and `day` features, which now play a significant role in its predictions. This is a strong indicator that our final model is more robust and has learned a more accurate representation of the real-world factors driving flight prices.
 
 ## 4. Local Model Explainability
 
 ### A. SHAP Force Plot
 
-The force plot visualizes the SHAP values for a single prediction, showing how each feature contributes to pushing the prediction away from the base value.
-For this interactive plot we placed multiple force plots for 2000 instances vertically and can visualize the patterns over the dataset.
+The force plot visualizes the SHAP values for individual predictions. The interactive plot linked below allows for exploring the forces driving the price for thousands of different flights.
 
-[View the interactive force plot](../img/shap_lgbm_force_plot.html)
+[View the interactive force plot](../img/Final_Lightgbm_Plots/global%20force%20plot.html)
 
-**Feature Combination Resulting In Low Price**
-![Low Price](../img/forceplot_low_price.png)
-
-**Insights:**
-* We can see that a combination of lower time (flight duration) results in a significant decrease in price in combination with economy class a lower price is predicted which is intuitively sound.
-* A costlier from_location in the particular selected instance pushed a price up little bit from the mean.
-
-**Feature Combination Resulting In High Price**
-![High Price](../img/forceplot_high_price1.png)
-
-![High Price](../img/forceplot_high_price.png)
-
-**Insights:**
-* A higher flight duration(time) causes a massive increase in price.
-* And when paired with Firstclass(Firstclass > Premium) of flights causes the highest price for flights.
-
-**Feature Combination Resulting in Medium Price**
-![Medium Price](../img/forceplot_Ltime_flightT2.png)
-* This shows a combinational effect of low time duration but firstclass flightype including expensive from_location and route resulting in a medium level of price.
-* Time being lower in this case is pulling the price down aggressively.
-
-**Usage**
-*   This interactive plot allows for the exploration of individual predictions.
-*   Red bars represent features that increase the prediction, while blue bars represent features that decrease it.
-*   The length of the bar indicates the magnitude of the feature's impact.
-*   This is a powerful tool for understanding why the model made a specific prediction for a given flight.
+* It further shows the combinational power of the feature like lower `time` duration for flight and `economy` flight type reduced the price significantly.
+* Longer duration flights costs more when combined with expensive flight type like `firstclass` and expensive `agency` but also show medium price when Longer duration is combined with `economy`.
 
 ### B. SHAP Waterfall Plots
 
-Waterfall plots provide a detailed breakdown of a single prediction, showing how the SHAP values for each feature sum up to the final prediction.
+These plots show how the model arrived at its final prediction for specific instances. The `f(x)` value at the top is the model's predicted output, and `E[f(x)]` at the bottom is the base value (the average prediction).
 
-These plots show how the model arrived at its final prediction for a single instance. The `f(x)` value at the top of the plot is the model's predicted output, and the `E[f(x)]` at the bottom is the base value (the average prediction over the entire dataset). Each bar in between shows how the value of each feature instance has pushed the prediction higher or lower.
-
-The data for these specific instances can be found in scaled preprocessed format in the accompanying CSV file: [shap_local_instances.csv](../shap_local_instances.csv).
-
-
-|scaled price|
-| :---  |
-| 1.569 |
-| -1.274 |
-| -0.224 |
-
-
-And the raw unscaled data is below(for only some columns to avoid complex reverse transformations.)
-
-| | price | time | distance | flight_type |
-| :--- | :--- | :--- | :--- | :--- |
-| 1555 | 1566.260010 | 2.09 | 806.479980 | firstClass |
-| 19696 | 517.820007 | 0.72 | 277.700012 | economic |
-| 23885 | 826.020020 | 2.16 | 830.859985 | economic |
-
-> Check out these prediction comparison here for [lightgbm(champion) vs xgboost(challenger)](model_explainability_lgbm_vs_xgb.md) model to get even more clearer understanding on why lightgbm is performing better. 
+The data for these instances can be found in the accompanying CSV file: [Final_model_shap_local_instances.csv](../Final_model_shap_local_instances.csv).
 
 #### Instance 0
 
-![Waterfall Plot for Instance 0](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%200.png)
+![Waterfall Plot for Instance 0](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Waterfall%20Plot%20for%20Instance%200.png)
 
-*   **Predicted Value (Scaled):** `1.567`
-*   **True Value (Scaled):** `1.569`
-*   **Insight:** The prediction is extremely accurate. The model correctly identified that the long flight `time` (duration) and `flight_type` (firstclass) were the primary drivers of the **high** price. Accuracy was increased from other minor factors; `agency` also had an additional positive impact on price increase while destination `to_location` has a minor decrease on price.
-
+*   **Insights:** The model correctly predicts a **high price**. The primary drivers are the long flight `time` and the `flight_type` (first class). The specific `day_of_week` also contributes positively to the price, demonstrating the model's use of temporal features.
+*   `agency` also contributes here some agencies are more expensive then others which aligns with the findings during EDA.
 #### Instance 1
 
-![Waterfall Plot for Instance 1](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%201.png)
+![Waterfall Plot for Instance 1](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Waterfall%20Plot%20for%20Instance%201.png)
 
-*   **Predicted Value (Scaled):** `-1.274`
-*   **True Value (Scaled):** `-1.274`
-*   **Insight:** Another perfect prediction. The model correctly identified that the `flight_type`(economy) and a shorter `time` (duration) were the main factors driving the price down. Accuracy was further improved by a cheaper `agency`, and minor contributions from `distance` and `route`.
+*   **Insight:** The model predicts a **low price** significantly lower than the average, driven down by the `flight_type` (economy) and a short `time`. The `from_location`, `to_location` including other features all contribute to lowering the price except for **day_of_week** which is increasing the price a little.
 
 #### Instance 2
 
-![Waterfall Plot for Instance 2](../img/shap_lgbm_Waterfall%20Plot%20for%20Instance%202.png)
+![Waterfall Plot for Instance 2](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Waterfall%20Plot%20for%20Instance%202.png)
 
-*   **Predicted Value (Scaled):** `-0.224`
-*   **True Value (Scaled):** `-0.224`
-*   **Insight:** A perfect prediction. The model correctly identified that the `flight_type`(economy) was the main factor driving the price down, but this was counteracted by a longer `time` (duration), resulting in a lower price. However, here accuracy was further improved by deductions in price from `agency` and `from_location`, but an increase from `distance`. These all made it an accurate prediction.
+*   **Insight:** Here, the model balances competing factors. A long `time` pushes the price up, but this is counteracted by the `flight_type` (economy), cheaper `agency` and `from_location`, a low-impact `day_of_week`, resulting in a prediction close to the average.
 
 ## 5. Feature Dependence Plots
 
-Dependence plots show how the SHAP value for a single feature changes as the feature's value changes.
+Dependence plots show how a single feature's value affects its SHAP value, revealing the relationship it has learned.
 
 ### A. Time
 
-![Dependence Plot - time](../img/shap_lgbm_Dependence%20Plot%20-%20time.png)
+![Dependence Plot - time](../img/Final_Lightgbm_Plots/[test]%20Dependence%20Plot%20-%20time.png)
 
-**Insight:** There is a clear positive linear relationship between `time` and its SHAP value. As the flight duration increases, the predicted price increases and due to `flighttype` there is some level of deviation for shap values for each flighttype.
+**Insight:** A clear, positive linear relationship. As flight duration increases, its impact on the price increases. The vertical coloring shows interactions with `flight_type`.
 
-### B. Flight Type
+### B. Day of Week
 
-![Dependence Plot - flight_type](../img/shap_lgbm_Dependence%20Plot%20-%20flight_type.png)
+![Dependence Plot - day_of_week](../img/Final_Lightgbm_Plots/[test]%20Dependence%20Plot%20-%20day_of_week.png)
 
-**Insight:** This plot shows the categorical nature of `flight_type`. Different flight types have distinct SHAP values, indicating their different impacts on the price.
+**Insight:** This plot is crucial. It shows the model has learned a distinct, non-linear pattern for the day of the week, confirming that the cyclical features are working as intended.
 
-### C. Agency
+### C. Flight Type
 
-![Dependence Plot - agency](../img/shap_lgbm_Dependence%20Plot%20-%20agency.png)
+![Dependence Plot - flight_type](../img/Final_Lightgbm_Plots/[test]%20Dependence%20Plot%20-%20flight_type.png)
 
-**Insight:** Similar to `flight_type`, `agency` shows a categorical relationship with the predicted price.
-
-### D. Distance
-
-![Dependence Plot - distance](../img/shap_lgbm_Dependence%20Plot%20-%20distance.png)
-
-**Insight:** The relationship between `distance` and its SHAP value is mostly linear, with a slight curve. As distance increases, the impact on the price also increases. But time has much for well defined relation.
+**Insight:** Shows the clear categorical impact of `flight_type`, with each class having a distinct and separate impact on price.
 
 ## 6. Conclusion
 
-The SHAP analysis confirms that the LightGBM model is not a "black box". It has learned intuitive and explainable patterns from the data. The model's predictions are driven by logical features, and its behavior is consistent and trustworthy. This transparency is crucial for deploying the model in a production environment.
+The SHAP analysis confirms that our final, stable LightGBM model is not a "black box". It has learned intuitive and explainable patterns from the data. Its predictions are driven by a logical hierarchy of features, and its behavior is consistent and trustworthy. This transparency is crucial for deploying the model in a production environment.
 
 ---
-
-## Next Steps: Final Validation
-
-The analysis confirms that our champion model has learned sound, logical patterns. To further solidify our confidence, the final step is to compare its decision-making process directly against our main challenger, XGBoost. This ensures the patterns it found are stable and not just an artifact of the LightGBM algorithm.
-
-* **[Compare LightGBM vs. XGBoost Head-to-Head &raquo;](model_explainability_lgbm_vs_xgb.md)**

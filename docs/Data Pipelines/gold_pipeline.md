@@ -1,9 +1,5 @@
 # Gold Pipeline
 
-> **Note on Pipeline Versions:** This document describes the comprehensive, experimental Gold Pipeline designed for maximum flexibility when testing a wide variety of models (like Linear Regression, SVMs, etc.). This version includes steps like scaling and power transformations.
->
-> After selecting **LightGBM** as our champion model (see release `v0.1-experimental`), we developed a simpler, optimized pipeline that leverages the model's native capabilities. For details on this production-specific pipeline, please see the **[Production Model Guide](../LGBM_summary/LGBMR_production_model_details.md)**.
-
 The Gold pipeline is the final and most intensive transformation stage. It prepares the data specifically for machine learning by applying complex feature engineering and preprocessing steps.
 
 -   **Source Code:** `src/pipelines/gold_pipeline.py`
@@ -11,66 +7,56 @@ The Gold pipeline is the final and most intensive transformation stage. It prepa
 ## Purpose
 
 -   To create a feature-rich, analysis-ready dataset for modeling.
--   To handle missing values, encode categorical variables, scale numerical features, and manage outliers.
--   To save the fitted preprocessing objects (like scalers and encoders) from the training run so they can be applied to validation and test data consistently.
+-   To handle missing values, encode categorical variables, and apply advanced transformations.
+-   To provide a flexible workflow that can be optimized for different model architectures (e.g., linear models vs. tree-based models).
+-   To save the fitted preprocessing objects (like scalers and encoders) from the training run so they can be applied consistently across all data splits.
 
 ## Pipeline Workflow
+
+The pipeline's workflow is dynamically adjusted based on the `is_tree_model` parameter in `params.yaml`. This allows for an optimized path for tree-based models like LightGBM.
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 graph TD
-    subgraph "Orchestrator"
-        A[Start] --> B{Process Training Data};
-        B --> C{Process Validation/Test Data};
-        C --> D[End];
-    end
-
-    subgraph "Training Data Path"
-        B --> E[Load Silver Train Data];
-        E --> F{Fit & Transform<br/>Imputer, Encoder, Scaler, etc.};
-        F --> G{Run GE Validation};
-        G --> H[Save Gold Train Data];
-        H --> I[Save Fitted Transformers];
-    end
-
-    subgraph "Validation/Test Data Path"
-        C --> J[Load Silver Validation/Test Data];
-        J --> K[Load Fitted Transformers];
-        K --> L{Apply Transformations};
-        L --> M{Run GE Validation};
-        M --> N[Save Gold Validation/Test Data];
-    end
+    A[Load Silver Data] --> B{Clean & Impute Data}
+    B --> C{Feature Engineering}
+    C --> D{is_tree_model: true?}
+    D -- No --> E{Full Preprocessing<br/>Grouping, Outliers, Power Transforms, Scaling}
+    D -- Yes --> F{Optimized Preprocessing<br/>Integer Encoding}
+    E --> G{Run GE Validation}
+    F --> G
+    G --> H{Save Gold Data & Transformers}
 ```
 
 ## Key Steps
 
-The pipeline is executed differently for training data versus validation/test data.
+The pipeline has two main execution paths, controlled by the `is_tree_model` parameter.
 
-**On Training Data:**
-1.  **Data Ingestion**: Loads data from the Silver layer.
+### Default Path (`is_tree_model: false`)
 
-2.  **Data Cleaning**: Drops unnecessary columns and duplicates.
+This path is designed for models that are sensitive to feature scale and distribution, such as linear models or SVMs.
 
-3.  **Imputation**: Fits an imputer on the training data to learn strategies for filling missing values and then transforms the data.
+1.  **Data Ingestion & Cleaning**: Loads and cleans data from the Silver layer.
+2.  **Imputation**: Fills missing values based on the configured strategies.
+3.  **Feature Engineering**: Creates cyclical and interaction features.
+4.  **Rare Category Grouping**: Groups infrequent categorical values.
+5.  **Categorical Encoding**: Transforms categorical columns into a numerical format (often One-Hot Encoding).
+6.  **Outlier Handling**: Detects and mitigates the effect of outliers.
+7.  **Power Transformations**: Applies transformations (e.g., Yeo-Johnson) to make data distributions more Gaussian-like.
+8.  **Scaling**: Fits a scaler (e.g., StandardScaler) and scales numerical features.
+9.  **Final Validation & Saving**: Runs a Great Expectations checkpoint and saves the data and fitted transformers.
 
-4.  **Feature Engineering**: Creates cyclical and interaction features.
+### Optimized Tree Model Path (`is_tree_model: true`)
 
-5.  **Rare Category Grouping**: Groups infrequent categorical values into a single "rare" category.
+This streamlined path is used for tree-based models like LightGBM and XGBoost, which do not require extensive preprocessing.
 
-6.  **Categorical Encoding**: Fits an encoder and transforms categorical columns into a numerical format.
+1.  **Data Ingestion & Cleaning**: Same as the default path.
+2.  **Imputation**: Same as the default path.
+3.  **Feature Engineering**: Same as the default path.
+4.  **Categorical Encoding**: Uses efficient integer-based encoding (e.g., `OrdinalEncoder`), which is handled natively by tree-based models.
+5.  **Final Validation & Saving**: Runs a Great Expectations checkpoint and saves the data and fitted transformers.
 
-7.  **Outlier Handling**: Detects and mitigates the effect of outliers.
-
-8.  **Power Transformations**: Applies transformations (e.g., Yeo-Johnson) to make data distributions more Gaussian-like.
-
-9.  **Scaling**: Fits a scaler (e.g., StandardScaler) and scales numerical features.
-
-10. **Final Validation**: Runs a `gold_expectations` suite to ensure the final data is ready for modeling.
-
-11. **Save Data & Objects**: Saves the processed Gold data and serializes all the fitted preprocessing objects (imputer, encoder, scaler, etc.) to disk.
-
-**On Validation/Test Data:**
-- The pipeline loads the already-fitted preprocessing objects and uses them to `transform` the new data. This prevents data leakage and ensures consistent transformations.
+**Skipped Steps:** In this path, **Rare Category Grouping, Outlier Handling, Power Transformations, and Scaling** are all bypassed, leading to a much faster and more efficient pipeline.
 
 ## How to Run
 
@@ -92,7 +78,7 @@ python src/pipelines/gold_pipeline.py
 
 The Gold pipeline uses a hybrid configuration approach:
 
--   **`params.yaml`**: This file stores parameters that are treated like hyperparameters for the pipeline itself. This includes strategies for imputation, outlier handling, scaling, and thresholds for grouping rare categories. These are intended to be easily tunable.
+-   **`params.yaml`**: This file stores parameters that are treated like hyperparameters for the pipeline itself. This includes strategies for imputation, outlier handling, scaling, and thresholds for grouping rare categories. A key parameter here is `is_tree_model`, which, when set to `true`, bypasses unnecessary steps like scaling and power transformations that are not required for tree-based models like LightGBM.
 -   **`src/shared/config/config_gold.py`**: This stores more static, developer-managed configuration, such as lists of columns to be dropped, lists of columns to undergo specific transformations (e.g., `POWER_TRANSFORMER_COLUMNS`), and paths for saving processed data and fitted transformer objects.
 
 ## Dependencies and Environment
