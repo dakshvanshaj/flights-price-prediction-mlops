@@ -52,7 +52,7 @@ CYCLICAL_FEATURES_MAP = {
 
 # Configuration for creating new features by combining categorical columns
 INTERACTION_FEATURES_CONFIG = {
-    "route": ["from_location", "to_location"],
+    # "route": ["from_location", "to_location"],
     # "agency_flight_type": ["agency", "flight_type"],
     # "route_agency": ["from_location", "to_location", "agency"],
 }
@@ -82,7 +82,7 @@ CATEGORICAL_ENCODER_PATH = MODELS_DIR / "categorical_encoder.joblib"
 # Configuration for the final encoding of all categorical features
 ENCODING_CONFIG = {
     # Columns to be Ordinal encoded
-    "ordinal_cols": ["from_location", "to_location", "agency", "route", "flight_type"],
+    "ordinal_cols": ["from_location", "to_location", "agency", "flight_type"],
     "ordinal_mapping": {"flight_type": ["economic", "premium", "firstClass"]},
     # # Columns to be one-hot encoded
     # "onehot_cols": [
