@@ -307,6 +307,7 @@ def optuna_search(
     scaler: Scaler = None,
     power_transformer: PowerTransformer = None,
     log_model_artifact: bool = False,
+    is_tree_model: bool = False,
 ) -> Tuple[BaseEstimator, Dict[str, Any], float]:
     """
     Performs hyperparameter optimization using Optuna.
@@ -347,6 +348,7 @@ def optuna_search(
                     n_splits=cv,
                     power_transformer=power_transformer,
                     scaler=scaler,
+                    is_tree_model=is_tree_model,
                 )
             except Exception as e:
                 logger.warning(
@@ -355,29 +357,39 @@ def optuna_search(
                 mlflow.set_tag("status", "FAILED")
                 raise optuna.exceptions.TrialPruned()
 
-            for scale_type, df in cv_results.items():
-                if not df.empty:
+            if is_tree_model:
+                score_df = cv_results.get("score_df")
+                if score_df is not None and not score_df.empty:
                     mean_metrics = {
-                        f"cv/{scale_type}/mean/{k}": v for k, v in df.mean().items()
+                        f"cv/mean/{k}": v for k, v in score_df.mean().items()
                     }
                     std_metrics = {
-                        f"cv/{scale_type}/std/{k}": v for k, v in df.std().items()
+                        f"cv/std/{k}": v for k, v in score_df.std().items()
                     }
                     mlflow.log_metrics({**mean_metrics, **std_metrics})
-
-                    csv_path = f"cv_results_{scale_type}.csv"
-                    df.to_csv(csv_path, index=True)
+                    csv_path = "cv_results_scores.csv"
+                    score_df.to_csv(csv_path, index=True)
                     mlflow.log_artifact(csv_path, "cv_results")
                     os.remove(csv_path)
+            else:
+                for scale_type, df in cv_results.items():
+                    if not df.empty:
+                        mean_metrics = {
+                            f"cv/{scale_type}/mean/{k}": v
+                            for k, v in df.mean().items()
+                        }
+                        std_metrics = {
+                            f"cv/{scale_type}/std/{k}": v for k, v in df.std().items()
+                        }
+                        mlflow.log_metrics({**mean_metrics, **std_metrics})
 
-            score_df = cv_results.get("unscaled")
+                        csv_path = f"cv_results_{scale_type}.csv"
+                        df.to_csv(csv_path, index=True)
+                        mlflow.log_artifact(csv_path, "cv_results")
+                        os.remove(csv_path)
+
+            score_df = cv_results.get("unscaled", cv_results.get("score_df"))
             score_metric = "mean_squared_error"
-
-            # if score_df is None or score_df.empty:
-            #     logger.info(
-            #         "Unscaled results not found, using scaled results for objective score."
-            #     )
-            #     score_df = cv_results.get("scaled")
 
             if score_df is None or score_df.empty:
                 logger.error("No results available to score objective. Pruning trial.")

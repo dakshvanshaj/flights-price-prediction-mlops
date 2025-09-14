@@ -292,6 +292,7 @@ def _run_cross_validation(
     power_transformer: Optional[PowerTransformer],
     model_config: Dict[str, Any],
     categorical_features: Optional[List[str]] = None,
+    is_tree_model: bool = False,
 ) -> Any:
     """
     Performs time-based cross-validation and retrains a final model on all data.
@@ -322,6 +323,7 @@ def _run_cross_validation(
         scaler=scaler,
         power_transformer=power_transformer,
         **cv_params,
+        is_tree_model=is_tree_model,
     )
 
     # --- 2. Log Aggregated CV Results ---
@@ -376,6 +378,7 @@ def training_pipeline(
     training_params: Dict[str, Any],
     mlflow_params: Dict[str, Any],
     gold_pipeline_params: Dict[str, Any],
+    is_tree_model: bool = False,
 ):
     """
     Main orchestration function for the training pipeline.
@@ -390,6 +393,7 @@ def training_pipeline(
     model_class_name = model_config["model_class"]
     model_name = model_config.get("name", model_config_key)  # Use key as fallback name
     run_name = model_config["run_name"]
+
     logger.info(f"Configuration selected: '{model_config_key}'")
 
     mlflow.set_experiment(mlflow_params["experiment_name"])
@@ -488,6 +492,7 @@ def training_pipeline(
                 power_transformer,
                 model_config,
                 categorical_features=categorical_features,
+                is_tree_model=is_tree_model,
             )
         else:
             mlflow.set_tag("run_type", "simple_validation")
@@ -658,6 +663,7 @@ def main():
             training_params=params["training_pipeline"],
             mlflow_params=params["mlflow_params"],
             gold_pipeline_params=params["gold_pipeline"],
+            is_tree_model=params.get("is_tree_model", False),
         )
 
     except FileNotFoundError as e:

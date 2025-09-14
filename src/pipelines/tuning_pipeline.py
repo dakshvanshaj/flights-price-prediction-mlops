@@ -83,6 +83,7 @@ def tuning_pipeline(
     train_df: pd.DataFrame,
     tuning_config: Dict[str, Any],
     mlflow_params: Dict[str, Any],
+    is_tree_model: bool = False,
 ) -> None:
     """
     Main orchestration function for the hyperparameter tuning pipeline.
@@ -168,7 +169,7 @@ def tuning_pipeline(
                 logger.warning(
                     "Scaler or PowerTransformer not found. Unscaled metrics will be unavailable."
                 )
-
+            tuner_kwargs["is_tree_model"] = is_tree_model
             best_estimator, best_params, best_score = tuner_func(
                 estimator_class=estimator_class,
                 param_definer=param_definer_func,
@@ -259,6 +260,9 @@ def main():
         with open("tuning.yaml", "r") as f:
             all_configs = yaml.safe_load(f)
 
+        with open("params.yaml", "r") as f:
+            params = yaml.safe_load(f)
+
         # --- Get Model and Tuning Config ---
         mlflow_params = all_configs["mlflow_params"]
         model_key_to_tune = all_configs["model_to_tune"]
@@ -277,6 +281,7 @@ def main():
             train_df=train_df,
             tuning_config=tuning_config,
             mlflow_params=mlflow_params,
+            is_tree_model=params.get("is_tree_model", False),
         )
 
     except FileNotFoundError as e:

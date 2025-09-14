@@ -86,6 +86,7 @@ def time_based_cross_validation(
     gap: int = 0,
     scaler: Optional[Scaler] = None,
     power_transformer: Optional[PowerTransformer] = None,
+    is_tree_model: bool = False,
 ) -> Dict[str, pd.DataFrame]:
     """
     Performs time-based cross-validation on pre-sorted data.
@@ -109,37 +110,66 @@ def time_based_cross_validation(
     tscv = TimeSeriesSplit(
         n_splits=n_splits, max_train_size=max_train_size, test_size=test_size, gap=gap
     )
-    all_scaled_scores, all_unscaled_scores = [], []
 
-    for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
-        logger.info(f"--- Fold {fold}/{n_splits} ---")
-        X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
-        y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+    if is_tree_model:
+        logger.info("Tree model: Enabled")
+        logger.info(
+            "No inverse-transformation will be used, Original metrics will be logged"
+        )
+        all_scores = []
 
-        logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_val)
+        for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
+            logger.info(f"--- Fold {fold}/{n_splits} ---")
+            X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+            y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
-        scaled_scores = calculate_all_regression_metrics(y_val, y_pred)
-        scaled_scores["fold"] = fold
-        all_scaled_scores.append(scaled_scores)
+            logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_val)
+
+            scores = calculate_all_regression_metrics(y_val, y_pred)
+            scores["fold"] = fold
+            all_scores.append(scores)
+
+        logger.info("--- Time-Based Cross-Validation Complete ---")
+        score_df = pd.DataFrame(all_scores).set_index("fold")
+        logger.info(f"CV summary:{score_df.describe().T}")
+        return {"score": score_df}
+
+    else:
+        all_scaled_scores, all_unscaled_scores = [], []
+        unscaled_df = pd.DataFrame()
+        for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
+            logger.info(f"--- Fold {fold}/{n_splits} ---")
+            X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+            y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+
+            logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_val)
+
+            scaled_scores = calculate_all_regression_metrics(y_val, y_pred)
+            scaled_scores["fold"] = fold
+            all_scaled_scores.append(scaled_scores)
+
+            if scaler and power_transformer:
+                y_val_unscaled, y_pred_unscaled = unscale_predictions(
+                    y_val, y_pred, scaler, power_transformer
+                )
+                unscaled_scores = calculate_all_regression_metrics(
+                    y_val_unscaled, y_pred_unscaled
+                )
+                unscaled_scores["fold"] = fold
+                all_unscaled_scores.append(unscaled_scores)
+
+        logger.info("--- Time-Based Cross-Validation Complete ---")
+        scaled_df = pd.DataFrame(all_scaled_scores).set_index("fold")
 
         if scaler and power_transformer:
-            y_val_unscaled, y_pred_unscaled = unscale_predictions(
-                y_val, y_pred, scaler, power_transformer
-            )
-            unscaled_scores = calculate_all_regression_metrics(
-                y_val_unscaled, y_pred_unscaled
-            )
-            unscaled_scores["fold"] = fold
-            all_unscaled_scores.append(unscaled_scores)
+            unscaled_df = pd.DataFrame(all_unscaled_scores).set_index("fold")
 
-    logger.info("--- Time-Based Cross-Validation Complete ---")
-    scaled_df = pd.DataFrame(all_scaled_scores).set_index("fold")
-    unscaled_df = pd.DataFrame(all_unscaled_scores).set_index("fold")
+        logger.info(f"Scaled CV summary:{scaled_df.describe().T}")
+        if not unscaled_df.empty:
+            logger.info(f"Unscaled CV summary:{unscaled_df.describe().T}")
 
-    logger.info(f"Scaled CV summary:\n{scaled_df.describe().T}")
-    if not unscaled_df.empty:
-        logger.info(f"Unscaled CV summary:\n{unscaled_df.describe().T}")
-
-    return {"scaled": scaled_df, "unscaled": unscaled_df}
+        return {"scaled": scaled_df, "unscaled": unscaled_df}
