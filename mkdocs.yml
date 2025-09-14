@@ -26,7 +26,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.sections
-    - navigation.instant
+    # - navigation.instant
     - content.code.annotate
     - navigation.top
     - search.highlight
