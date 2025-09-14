@@ -37,7 +37,7 @@ gold_pipeline:
 # --- PARAMETERS FOR MLFLOW ---
 # =================================================================
 mlflow_params:
-  experiment_name: "Challengers"
+  experiment_name: "Champion_Model_Optimized"
 
 # =================================================================
 # --- PARAMETERS FOR MODEL TRAINING ---
@@ -168,8 +168,8 @@ training_pipeline:
     XGBRegressor:
       model_class: "XGBRegressor"
       name: "XGBR_Best"
-      run_name: "XGBR_Challenger"
-      log_model_artifact: true
+      run_name: "XGBR_CV"
+      log_model_artifact: false
       register_model: false
       log_predictions: false
       log_interpretability_artifacts: true
@@ -188,14 +188,14 @@ training_pipeline:
         reg_lambda: 1.035392577097126e-08
         random_state: 42
         n_jobs: -1
-      train_model_only: true
+      train_model_only: false
       cross_validation:
-        enabled: false
+        enabled: true
         n_splits: 5
 
     LGBMRegressor:
       model_class: "LGBMRegressor"
-      name: "LGBMR"
+      name: "LGBMR_Best"
       run_name: "LGBMR_Champion"
       log_model_artifact: true
       register_model: true
@@ -219,7 +219,7 @@ training_pipeline:
         enabled: false
         n_splits: 5
       train_model_only: true # ! for final model training wont log or calculate any metrics or cross validation (trainset + valset + best hyperparams)
-      evaluate_on_test_set: false
+      evaluate_on_test_set: true
 
     # =================================================================
     # 3. Other Models
