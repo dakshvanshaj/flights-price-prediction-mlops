@@ -5,6 +5,7 @@ from pathlib import Path
 import joblib
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder
+from shared.config import config_training
 
 logger = logging.getLogger(__name__)
 
@@ -125,14 +126,29 @@ class CategoricalEncoder:
             raise RuntimeError("Encoder has not been fitted yet. Call .fit() first.")
 
         logger.info("Transforming data with CategoricalEncoder...")
-        transformed_data = self.preprocessor.transform(df)
+
+        df_copy = df.copy()
+        target_col = config_training.TARGET_COLUMN
+
+        # Check if the target column is missing and add a dummy if needed
+        if (
+            target_col not in df_copy.columns
+            and hasattr(self.preprocessor, "feature_names_in_")
+            and target_col in self.preprocessor.feature_names_in_
+        ):
+            logger.warning(
+                f"Target column '{target_col}' not found in CategoricalEncoder. Adding a dummy column for transformation."
+            )
+            df_copy[target_col] = 0
+
+        transformed_data = self.preprocessor.transform(df_copy)
 
         # Get the new column names after transformation
         # This correctly handles one-hot, ordinal, and pass-through columns
         new_cols = self.preprocessor.get_feature_names_out()
 
         df_transformed = pd.DataFrame(
-            transformed_data, columns=new_cols, index=df.index
+            transformed_data, columns=new_cols, index=df_copy.index
         )
         logger.info(f"Transformation complete. New shape: {df_transformed.shape}")
         return df_transformed
