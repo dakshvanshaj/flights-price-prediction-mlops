@@ -52,15 +52,17 @@ nav:
       - "HyperParameter Tuning Pipeline": Modeling/tuning_pipeline.md
       - "Model Selection & Evaluation": Modeling/model_selection_report.md
       - "Model Explanability (Champion)": Modeling/model_explainability_lgbm_champ.md
-      - "Model Comparison (Champ vs Challenger)": Modeling/model_explainability_lgbm_vs_xgb.md
+      - "Model Comparison (Archived)": Modeling/model_explainability_lgbm_vs_xgb.md
 
   - Production Model Guide:
       - "LightGBM Details": LGBM_summary/LGBMR_production_model_details.md
+  - API:
+      - "API Reference": API/api_reference.md
   - MLOps:
       - "Project Architecture": MLOps/architecture.md
       - "Tooling": MLOps/tools.md
 
-repo_url: https://github.com/dakshvanshaj/Flights-Price-Prediction-MLOPs
+repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs
 
 extra:
