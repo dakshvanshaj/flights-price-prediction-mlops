@@ -4,7 +4,6 @@ Utility functions for loading the production model and preprocessing artifacts.
 
 import json
 import logging
-from pathlib import Path
 from typing import Any, Dict
 
 import mlflow
