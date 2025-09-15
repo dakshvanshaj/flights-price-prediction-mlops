@@ -27,7 +27,7 @@ class AgencyEnum(str, Enum):
     RAINBOW = "Rainbow"
 
 
-class FlightInput(BaseModel):
+class InputSchema(BaseModel):
     """
     Represents the raw features for a single flight prediction request.
     Pydantic will enforce data types and allowed values.
@@ -42,7 +42,7 @@ class FlightInput(BaseModel):
     date: date
 
 
-class PredictionOutput(BaseModel):
+class OutputSchema(BaseModel):
     """
     Represents the output of a prediction request.
     """
