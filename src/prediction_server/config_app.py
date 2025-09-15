@@ -2,5 +2,6 @@
 #                        Production Model Configuration                        #
 # ---------------------------------------------------------------------------- #
 
-MODEL_NAME = "LGBMR_Flights_Price"
-MODEL_VERSION_ALIAS = "champion"
+MODEL_NAME = "LGBMR_Champion"
+MODEL_VERSION_ALIAS = "production"
+MODEL_FLAVOR = "lightgbm"
