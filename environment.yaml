@@ -49,7 +49,10 @@ dependencies:
   - mkdocs-material
   - mermaid-py
   - shap
-  - mkdocs-mermaid2-plugin
+  - mkdocs-mermaid2-
+
+  - fastapi
+  - uvicorn
   # Pip-installed packages (only for things not on conda channels)
   - pip
   - pip:
