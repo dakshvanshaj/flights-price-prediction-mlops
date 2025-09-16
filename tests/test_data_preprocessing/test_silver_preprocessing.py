@@ -1,6 +1,17 @@
+"""
+Tests for the silver data preprocessing functions.
+
+This test suite contains individual unit tests for each function defined in the
+`src.silver_data_preprocessing.silver_preprocessing` module. The goal is to ensure
+that each data transformation step behaves as expected in isolation.
+
+A shared fixture, `preprocessing_df`, provides a consistent, messy input DataFrame
+for all tests, allowing each function to be tested against a variety of data issues
+like messy column names, incorrect data types, and duplicates.
+"""
+
 import pytest
 import pandas as pd
-import numpy as np
 
 # Import all functions to be tested from the silver_preprocessing module
 from src.silver_data_preprocessing.silver_preprocessing import (
@@ -19,11 +30,17 @@ from src.silver_data_preprocessing.silver_preprocessing import (
 @pytest.fixture
 def preprocessing_df() -> pd.DataFrame:
     """
-    Provides a realistic DataFrame for testing all silver preprocessing functions.
-    - Has messy column names for standardization.
-    - Includes various data types for optimization.
-    - Contains duplicates to test dropping logic.
-    - Has an unsorted date column.
+    Provides a realistic, messy DataFrame for testing all silver preprocessing functions.
+
+    This fixture is central to the test suite and includes:
+    - Messy column names with extra spaces and mixed casing.
+    - Numeric data stored as strings ('Age').
+    - Duplicate records to test dropping logic.
+    - An unsorted date column.
+    - A column suitable for conversion to a 'category' type.
+
+    Returns:
+        pd.DataFrame: A DataFrame designed to be a challenging input for cleaning functions.
     """
     data = {
         "  First Name  ": ["john", "jane", "john", "peter", "jane", "sue", "sue"],
@@ -39,8 +56,8 @@ def preprocessing_df() -> pd.DataFrame:
             "2023-02-01",
             "2023-02-01",
         ],
-        # FIX: Changed 'yellow' to 'red'. Now has 3 unique values out of 7 (3/7 < 0.5),
-        # which meets the criteria for conversion to 'category' type.
+        # This column has a cardinality of 3/7 (< 0.5), which meets the
+        # criteria for conversion to the 'category' dtype in `optimize_data_types`.
         "Favorite Color": ["blue", "red", "blue", "green", "red", "blue", "red"],
     }
     return pd.DataFrame(data)
@@ -68,6 +85,9 @@ def test_rename_specific_columns():
 def test_standardize_column_format(preprocessing_df: pd.DataFrame):
     """
     Tests that column names are correctly standardized (lowercase, snake_case).
+
+    Args:
+        preprocessing_df (pd.DataFrame): The fixture providing messy column names.
     """
     # ARRANGE
     df = preprocessing_df.copy()
@@ -91,10 +111,15 @@ def test_standardize_column_format(preprocessing_df: pd.DataFrame):
 
 def test_optimize_data_types(preprocessing_df: pd.DataFrame):
     """
-    Tests that data types are optimized correctly:
-    - Strings representing numbers are converted to numeric types.
-    - Low-cardinality objects are converted to 'category'.
-    - Date strings are converted to datetime objects.
+    Tests that data types are optimized correctly.
+
+    It checks for:
+    - Conversion of strings representing numbers to numeric types.
+    - Conversion of low-cardinality object columns to 'category'.
+    - Conversion of date strings to datetime objects.
+
+    Args:
+        preprocessing_df (pd.DataFrame): The fixture providing mixed data types.
     """
     # ARRANGE
     df = standardize_column_format(preprocessing_df.copy())
@@ -108,17 +133,19 @@ def test_optimize_data_types(preprocessing_df: pd.DataFrame):
     # ASSERT
     assert str(result_df["age"].dtype) == "int8"
     assert str(result_df["score"].dtype) == "float32"
-    # The fixture data now meets the < 0.5 unique ratio, so this passes.
     assert isinstance(result_df["favorite_color"].dtype, pd.CategoricalDtype)
     assert pd.api.types.is_datetime64_any_dtype(result_df["join_date"])
 
 
 def test_sort_data_by_date(preprocessing_df: pd.DataFrame):
     """
-    Tests that the DataFrame is correctly sorted by the date column.
+    Tests that the DataFrame is correctly sorted by the specified date column.
+
+    Args:
+        preprocessing_df (pd.DataFrame): The fixture providing an unsorted date column.
     """
     # ARRANGE
-    # The date column must first be converted to datetime objects
+    # The date column must first be converted to datetime objects for sorting to work correctly.
     df = optimize_data_types(preprocessing_df.copy(), date_cols=["Join Date"])
 
     # ACT
@@ -132,6 +159,9 @@ def test_handle_erroneous_duplicates(preprocessing_df: pd.DataFrame):
     """
     Tests that only the first occurrence of a duplicate record is kept,
     based on a subset of identifying columns.
+
+    Args:
+        preprocessing_df (pd.DataFrame): The fixture providing duplicate rows.
     """
     # ARRANGE
     df = preprocessing_df.copy()
@@ -149,6 +179,9 @@ def test_handle_erroneous_duplicates(preprocessing_df: pd.DataFrame):
 def test_create_date_features(preprocessing_df: pd.DataFrame):
     """
     Tests that various date components are correctly extracted from a date column.
+
+    Args:
+        preprocessing_df (pd.DataFrame): The fixture providing a date column.
     """
     # ARRANGE
     df = optimize_data_types(preprocessing_df.copy(), date_cols=["Join Date"])
@@ -167,7 +200,7 @@ def test_create_date_features(preprocessing_df: pd.DataFrame):
     # ASSERT
     for col in expected_features:
         assert col in result_df.columns
-    # Check a specific value for correctness
+    # Check a specific value for correctness to ensure logic is sound
     assert result_df.loc[0, "year"] == 2023
     assert result_df.loc[3, "year"] == 2022
 
@@ -190,11 +223,14 @@ def test_enforce_column_order():
 def test_enforce_column_order_handles_mismatch(caplog):
     """
     Tests that the function logs a warning and returns the original DataFrame
-    if the column sets do not match, preventing data loss.
+    if the column sets do not match, preventing accidental data loss.
+
+    Args:
+        caplog: A built-in pytest fixture to capture log output.
     """
     # ARRANGE
     df = pd.DataFrame({"C": [3], "A": [1], "B": [2]})
-    # The desired order is missing column 'C'
+    # The desired order is missing column 'C' from the original DataFrame
     incorrect_order = ["A", "B"]
 
     # ACT
@@ -203,5 +239,5 @@ def test_enforce_column_order_handles_mismatch(caplog):
     # ASSERT
     # The original DataFrame should be returned unchanged
     assert list(result_df.columns) == list(df.columns)
-    # Check that a warning was logged
+    # Check that a warning was logged to inform the user
     assert "Column sets do not match. Skipping reordering" in caplog.text

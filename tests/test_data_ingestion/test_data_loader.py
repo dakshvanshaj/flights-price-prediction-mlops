@@ -13,7 +13,15 @@ def test_load_data_supported_formats(
 ):
     """
     Tests that `load_data` can successfully load all supported file formats.
+
     This test is parameterized to run for each format in SUPPORTED_FORMATS.
+    It leverages fixtures to generate test data and files on the fly.
+
+    Args:
+        file_format (str): The file format to test (injected by pytest.mark.parametrize).
+        sample_df (pd.DataFrame): A fixture from conftest.py providing a sample DataFrame.
+        create_test_file: A fixture factory from conftest.py used to create a temporary
+                          file of the specified format containing the sample_df data.
     """
     # Arrange: Create the test file using our fixture factory
     test_file_path = create_test_file(file_format)
@@ -37,7 +45,8 @@ def test_load_data_supported_formats(
 
 def test_load_non_existent_file():
     """
-    Tests that `load_data` returns None when the file does not exist.
+    Tests that `load_data` returns None when the specified file does not exist.
+    This is a simple negative test case with no external dependencies.
     """
     # Act
     result = load_data("non_existent_file.csv")
@@ -47,7 +56,11 @@ def test_load_non_existent_file():
 
 def test_load_unsupported_format(create_test_file):
     """
-    Tests that `load_data` returns None for an unsupported file format.
+    Tests that `load_data` returns None for an unsupported file format (.txt).
+
+    Args:
+        create_test_file: A fixture factory from conftest.py used to create a temporary
+                          file. Here, it creates an empty .txt file.
     """
     # Arrange
     test_file_path = create_test_file("txt")  # Create a .txt file

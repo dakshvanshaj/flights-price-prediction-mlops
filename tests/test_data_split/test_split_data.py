@@ -1,3 +1,15 @@
+"""
+Tests for the data splitting script located in `src.data_split.split_data`.
+
+This test suite verifies that the chronological data splitting logic works correctly,
+ensuring that:
+1. The data is split into train, validation, and test sets with the correct proportions.
+2. The chronological order is strictly maintained between the sets (no data leakage).
+3. The script handles file system interactions and errors gracefully.
+
+The tests rely heavily on fixtures to create an isolated, temporary environment,
+preventing the tests from interfering with the actual project data.
+"""
 import pytest
 from pathlib import Path
 import pandas as pd
@@ -12,10 +24,16 @@ from src.data_split.split_data import split_data_chronologically
 @pytest.fixture
 def raw_data_for_splitting() -> pd.DataFrame:
     """
-    Creates a sample DataFrame with 100 rows and an out-of-order date column
-    to robustly test the sorting and splitting logic.
+    Creates a sample DataFrame with an out-of-order date column.
+
+    This fixture is designed to robustly test the sorting logic within the
+    `split_data_chronologically` function by ensuring the data is not
+    pre-sorted.
+
+    Returns:
+        pd.DataFrame: A DataFrame with 100 rows, a 'date' column, and a 'feature' column.
     """
-    # Create dates out of order to ensure the sorting logic is tested
+    # Create dates out of order to ensure the sorting logic is properly tested
     dates = pd.to_datetime(pd.date_range(start="2023-01-01", periods=100, freq="D"))
     np.random.shuffle(dates.values)
 
@@ -28,22 +46,35 @@ def setup_split_data_env(
     tmp_path: Path, monkeypatch, raw_data_for_splitting: pd.DataFrame
 ):
     """
-    Sets up a temporary file system and patches the config for testing split_data.
-    This fixture ensures that the function-under-test reads from and writes to
-    temporary directories, isolating the test from the actual project file system.
+    Sets up a temporary file system and patches config paths for testing.
+
+    This powerful fixture does the following:
+    1. Creates temporary 'raw' and 'splits' directories using the built-in `tmp_path` fixture.
+    2. Saves the `raw_data_for_splitting` DataFrame to a CSV file inside the temporary 'raw' directory.
+    3. Uses the `monkeypatch` fixture to redirect the global config variables (e.g., `RAW_CSV_PATH`)
+       that are used by the `split_data_chronologically` function to point to our temporary paths.
+
+    This ensures the test is completely isolated from the actual project file system.
+
+    Args:
+        tmp_path (Path): A built-in pytest fixture providing a temporary directory path.
+        monkeypatch: A built-in pytest fixture for modifying classes, methods, or variables at runtime.
+        raw_data_for_splitting (pd.DataFrame): The fixture providing the input data.
+
+    Returns:
+        dict: A dictionary containing paths and expected row counts for easy access in tests.
     """
-    # 1. Create temporary directories
+    # 1. Create temporary directories for the test environment
     raw_dir = tmp_path / "raw"
     split_dir = tmp_path / "splits"
     raw_dir.mkdir()
     split_dir.mkdir()
 
-    # 2. Create a dummy input CSV file in the temporary raw directory
+    # 2. Create the dummy input CSV file that the script will read
     input_csv_path = raw_dir / "flights.csv"
     raw_data_for_splitting.to_csv(input_csv_path, index=False)
 
-    # 3. Monkeypatch the config modules *where they are used* in the script-under-test.
-    #    This is the key to fixing the file creation failures.
+    # 3. Intercept the script's file paths and redirect them to our temporary dirs
     monkeypatch.setattr(
         "src.data_split.split_data.config_split.RAW_CSV_PATH", input_csv_path
     )
@@ -54,7 +85,7 @@ def setup_split_data_env(
         "src.data_split.split_data.core_paths.SPLIT_DATA_DIR", split_dir
     )  # Patch both for safety
 
-    # Return paths and expected counts for easy access in tests
+    # Return a dictionary of test parameters for the assertions
     return {
         "split_dir": split_dir,
         "total_rows": len(raw_data_for_splitting),
@@ -69,8 +100,12 @@ def setup_split_data_env(
 
 def test_split_data_creates_files_with_correct_counts(setup_split_data_env):
     """
-    Tests that the split function creates train, validation, and test files
-    with the correct number of rows in each.
+    Tests that the split function creates all output files (train, val, test)
+    and that they contain the correct number of rows.
+
+    Args:
+        setup_split_data_env: The fixture that prepares the temporary file system
+                              and provides expected row counts.
     """
     # ARRANGE
     split_dir = setup_split_data_env["split_dir"]
@@ -88,7 +123,7 @@ def test_split_data_creates_files_with_correct_counts(setup_split_data_env):
     assert val_file.exists(), "Validation file was not created."
     assert test_file.exists(), "Test file was not created."
 
-    # Verify row counts for each split
+    # Verify the row counts for each split file
     train_df = pd.read_csv(train_file)
     val_df = pd.read_csv(val_file)
     test_df = pd.read_csv(test_file)
@@ -102,8 +137,12 @@ def test_split_data_creates_files_with_correct_counts(setup_split_data_env):
 def test_split_is_chronological(setup_split_data_env):
     """
     Tests the most critical logic: that the data is split chronologically.
-    The latest date in the training set must be earlier than the earliest
-    date in the validation set, and so on.
+
+    It asserts that the latest date in the training set is earlier than the
+    earliest date in the validation set, and so on, preventing data leakage.
+
+    Args:
+        setup_split_data_env: The fixture that prepares the temporary file system.
     """
     # ARRANGE
     split_dir = setup_split_data_env["split_dir"]
@@ -122,10 +161,14 @@ def test_split_is_chronological(setup_split_data_env):
 
 def test_split_data_handles_missing_file(monkeypatch, caplog):
     """
-    Tests that the function logs an error and exits gracefully if the
-    input CSV file does not exist.
+    Tests that the function logs an error and exits gracefully if the input
+    CSV file does not exist.
+
+    Args:
+        monkeypatch: Fixture to redirect the script's input path to a non-existent file.
+        caplog: Fixture to capture log output to verify the error message.
     """
-    # ARRANGE
+    # ARRANGE: Point the script's input path to a file that doesn't exist
     non_existent_path = Path("/tmp/this_file_does_not_exist.csv")
     monkeypatch.setattr(
         "src.data_split.split_data.config_split.RAW_CSV_PATH", non_existent_path
@@ -134,6 +177,6 @@ def test_split_data_handles_missing_file(monkeypatch, caplog):
     # ACT
     split_data_chronologically()
 
-    # ASSERT
+    # ASSERT: Check that the expected error message was logged
     assert "Failed to load data" in caplog.text
     assert str(non_existent_path) in caplog.text

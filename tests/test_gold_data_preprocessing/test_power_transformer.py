@@ -46,12 +46,22 @@ class TestPowerTransformer:
         ):
             PowerTransformer(columns=["col_pos"], strategy="invalid_strategy")
 
-    def test_initialization_empty_columns(self):
-        """Tests that an empty column list raises a ValueError."""
-        with pytest.raises(
-            ValueError, match="`columns` must be a non-empty list of strings."
-        ):
-            PowerTransformer(columns=[])
+    def test_initialization_empty_columns_is_noop(self, df_positive_skew):
+        """
+        Tests that initializing with an empty column list creates a no-op transformer
+        that returns the input DataFrame unchanged.
+        """
+        # ARRANGE
+        # Strategy doesn't matter when columns list is empty
+        transformer = PowerTransformer(columns=[], strategy="log")
+
+        # ACT
+        # fit_transform should work and do nothing.
+        transformed_df = transformer.fit_transform(df_positive_skew)
+
+        # ASSERT
+        # The output should be identical to the input
+        pd.testing.assert_frame_equal(transformed_df, df_positive_skew)
 
     # 2. Fit Tests
     def test_fit_log_is_stateless(self, df_positive_skew):

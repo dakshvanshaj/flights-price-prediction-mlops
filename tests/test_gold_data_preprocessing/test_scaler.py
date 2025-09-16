@@ -39,12 +39,20 @@ class TestScaler:
         ):
             Scaler(columns=["col_standard"], strategy="invalid_strategy")
 
-    def test_initialization_empty_columns(self):
-        """Tests that an empty column list raises a ValueError."""
-        with pytest.raises(
-            ValueError, match="`columns` must be a non-empty list of strings."
-        ):
-            Scaler(columns=[])
+    def test_initialization_empty_columns_is_noop(self, df_for_scaling):
+        """
+        Tests that initializing with an empty column list creates a no-op transformer
+        that returns the input DataFrame unchanged.
+        """
+        # ARRANGE
+        # Strategy doesn't matter when columns list is empty
+        scaler = Scaler(columns=[], strategy="standard")
+
+        # ACT
+        transformed_df = scaler.fit_transform(df_for_scaling)
+
+        # ASSERT
+        pd.testing.assert_frame_equal(transformed_df, df_for_scaling)
 
     # 2. Fit Tests
     def test_fit_standard(self, df_for_scaling):
