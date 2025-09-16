@@ -93,15 +93,17 @@ class PowerTransformer:
         logger.info(f"Fitting PowerTransformer with '{self.strategy}' strategy.")
         self.params_ = {}  # Reset parameters on each new fit
 
-        if not self.strategy:
-            logger.info(" No strategy for PowerTransformer Provided.")
+        if not self.strategy or not self.columns:
+            logger.info(
+                "No strategy or columns provided for PowerTransformer. Skipping fit."
+            )
             self._is_fitted = True
-            logger.info("Fitting Complete")
             return self
 
         # The 'log' transform is stateless, so we don't need to learn anything.
         if self.strategy == "log":
             logger.info("'log' strategy is stateless. No parameters were learned.")
+            self._is_fitted = True
             return self
 
         # For 'box-cox' and 'yeo-johnson', we need to find the best lambda.
