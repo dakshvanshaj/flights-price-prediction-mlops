@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 import json
 from pathlib import Path
 import joblib
-from sklearn.experimental import enable_iterative_imputer
+from sklearn.experimental import enable_iterative_imputer  # noqa
 from sklearn.impute import IterativeImputer
 
 logger = logging.getLogger(__name__)
