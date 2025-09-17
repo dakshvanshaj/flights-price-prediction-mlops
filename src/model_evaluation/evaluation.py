@@ -36,21 +36,23 @@ def unscale_predictions(
     Returns:
         A tuple containing the unscaled true values and unscaled predicted values.
     """
-    y_true_unscaled = power_transformer.inverse_transform(
-        scaler.inverse_transform(pd.DataFrame(y_true_scaled))
-    )[config_training.TARGET_COLUMN]
+    target_col = config_training.TARGET_COLUMN
 
-    y_pred_unscaled = power_transformer.inverse_transform(
-        scaler.inverse_transform(
-            pd.DataFrame(
-                y_pred_scaled,
-                index=y_true_scaled.index,
-                columns=[config_training.TARGET_COLUMN],
-            )
-        )
-    )[config_training.TARGET_COLUMN]
+    # Create DataFrames for inverse transformation, ensuring column names are correct
+    y_true_df = pd.DataFrame(y_true_scaled, columns=[target_col])
+    y_pred_df = pd.DataFrame(
+        y_pred_scaled, index=y_true_scaled.index, columns=[target_col]
+    )
 
-    return y_true_unscaled, y_pred_unscaled
+    # Inverse transform both using the same pipeline
+    y_true_unscaled_df = power_transformer.inverse_transform(
+        scaler.inverse_transform(y_true_df)
+    )
+    y_pred_unscaled_df = power_transformer.inverse_transform(
+        scaler.inverse_transform(y_pred_df)
+    )
+
+    return y_true_unscaled_df[target_col], y_pred_unscaled_df[target_col]
 
 
 def calculate_all_regression_metrics(
@@ -111,65 +113,40 @@ def time_based_cross_validation(
         n_splits=n_splits, max_train_size=max_train_size, test_size=test_size, gap=gap
     )
 
-    if is_tree_model:
-        logger.info("Tree model: Enabled")
-        logger.info(
-            "No inverse-transformation will be used, Original metrics will be logged"
-        )
-        all_scores = []
+    all_scores = []
+    all_unscaled_scores = []
 
-        for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
-            logger.info(f"--- Fold {fold}/{n_splits} ---")
-            X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
-            y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
+    for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
+        logger.info(f"--- Fold {fold}/{n_splits} ---")
+        X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
+        y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
 
-            logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_val)
+        logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_val)
 
-            scores = calculate_all_regression_metrics(y_val, y_pred)
-            scores["fold"] = fold
-            all_scores.append(scores)
+        scores = calculate_all_regression_metrics(y_val, y_pred)
+        scores["fold"] = fold
+        all_scores.append(scores)
 
-        logger.info("--- Time-Based Cross-Validation Complete ---")
-        score_df = pd.DataFrame(all_scores).set_index("fold")
-        logger.info(f"CV summary:{score_df.describe().T}")
+        # If it's a non-tree model, unscale the predictions and get a second set of scores
+        if not is_tree_model and scaler and power_transformer:
+            y_val_unscaled, y_pred_unscaled = unscale_predictions(
+                y_val, y_pred, scaler, power_transformer
+            )
+            unscaled_scores = calculate_all_regression_metrics(
+                y_val_unscaled, y_pred_unscaled
+            )
+            unscaled_scores["fold"] = fold
+            all_unscaled_scores.append(unscaled_scores)
+
+    logger.info("--- Time-Based Cross-Validation Complete ---")
+    score_df = pd.DataFrame(all_scores).set_index("fold")
+    logger.info(f"CV summary (scaled or original):\n{score_df.describe().T}")
+
+    if not all_unscaled_scores:
         return {"score": score_df}
-
     else:
-        all_scaled_scores, all_unscaled_scores = [], []
-        unscaled_df = pd.DataFrame()
-        for fold, (train_idx, val_idx) in enumerate(tscv.split(X), 1):
-            logger.info(f"--- Fold {fold}/{n_splits} ---")
-            X_train, X_val = X.iloc[train_idx], X.iloc[val_idx]
-            y_train, y_val = y.iloc[train_idx], y.iloc[val_idx]
-
-            logger.info(f"Training on {len(X_train)}, validating on {len(X_val)}.")
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_val)
-
-            scaled_scores = calculate_all_regression_metrics(y_val, y_pred)
-            scaled_scores["fold"] = fold
-            all_scaled_scores.append(scaled_scores)
-
-            if scaler and power_transformer:
-                y_val_unscaled, y_pred_unscaled = unscale_predictions(
-                    y_val, y_pred, scaler, power_transformer
-                )
-                unscaled_scores = calculate_all_regression_metrics(
-                    y_val_unscaled, y_pred_unscaled
-                )
-                unscaled_scores["fold"] = fold
-                all_unscaled_scores.append(unscaled_scores)
-
-        logger.info("--- Time-Based Cross-Validation Complete ---")
-        scaled_df = pd.DataFrame(all_scaled_scores).set_index("fold")
-
-        if scaler and power_transformer:
-            unscaled_df = pd.DataFrame(all_unscaled_scores).set_index("fold")
-
-        logger.info(f"Scaled CV summary:{scaled_df.describe().T}")
-        if not unscaled_df.empty:
-            logger.info(f"Unscaled CV summary:{unscaled_df.describe().T}")
-
-        return {"scaled": scaled_df, "unscaled": unscaled_df}
+        unscaled_df = pd.DataFrame(all_unscaled_scores).set_index("fold")
+        logger.info(f"Unscaled CV summary:\n{unscaled_df.describe().T}")
+        return {"scaled": score_df, "unscaled": unscaled_df}
