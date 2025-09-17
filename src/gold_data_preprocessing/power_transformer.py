@@ -197,28 +197,27 @@ class PowerTransformer:
                 "Inverse transform called before fitting the transformer."
             )
 
-        if not self.strategy:
-            logger.info(" No strategy for PowerTransformer was used in fit.")
-            return df
-
-        if self.strategy in ["box-cox", "yeo-johnson"] and not self.params_:
-            raise RuntimeError(
-                "Inverse transform called before fitting the transformer."
-            )
-
         df_copy = df.copy()
         logger.info(f"Applying inverse '{self.strategy}' transformation.")
 
-        for col in df_copy.columns:
+        if not self.strategy or not self.columns:
+            logger.info("No strategy or columns provided. Skipping inverse transform.")
+            return df_copy
+
+        for col in self.columns:
+            if col not in df_copy.columns:
+                logger.warning(
+                    f"Column '{col}' not found in DataFrame. Skipping inverse transform."
+                )
+                continue
+
             if self.strategy == "log":
                 # Inverse of log1p is expm1
                 df_copy[col] = np.expm1(df_copy[col])
             else:
-                # For stateful strategies, ensure we have learned params for the column
                 if col not in self.params_:
                     logger.warning(
-                        f"Column '{col}' not found in transformer params. "
-                        "Skipping inverse transform."
+                        f"Column '{col}' was not transformed. Skipping inverse transform."
                     )
                     continue
 
