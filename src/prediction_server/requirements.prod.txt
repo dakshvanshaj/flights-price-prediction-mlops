@@ -1,8 +1,11 @@
+dvc==3.61.0
+dvc-s3==3.2.2 
+
 fastapi==0.116.1
 uvicorn==0.35.0
 mlflow==3.2.0
 lightgbm==4.6.0
-scikit-learn==1.7.0
+scikit-learn==1.7.1
 pandas==2.1.4
 numpy==1.26.4
 python-dotenv==1.1.0
