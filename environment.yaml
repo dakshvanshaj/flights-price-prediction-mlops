@@ -6,8 +6,7 @@ channels: # The channels to search for packages, in order of priority
 
 dependencies:
   # Core Python version
-  - python=3.12
-
+  - python=3.12.9
   # Core Data Science Libraries (let conda handle versions)
   - pandas
   - numpy
