@@ -17,8 +17,8 @@ stages:
       size: 3258
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/utils.py
       hash: md5
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
@@ -65,8 +65,8 @@ stages:
       size: 676
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/utils.py
       hash: md5
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
@@ -105,8 +105,8 @@ stages:
       size: 676
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/utils.py
       hash: md5
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
@@ -145,8 +145,8 @@ stages:
       size: 676
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/utils.py
       hash: md5
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
@@ -181,8 +181,8 @@ stages:
       size: 5581
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/config/config_silver.py
       hash: md5
       md5: d6149d100fe4e997932daf0ae03b2b74
@@ -193,13 +193,13 @@ stages:
       size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
-      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      md5: 01b0da1d742ba2a88b1a46d6a5596646.dir
       size: 18729
       nfiles: 4
     outs:
     - path: data/silver_data/processed/train.parquet
       hash: md5
-      md5: 88a6331128b077c7b13f6d2215673220
+      md5: 9c04839d67de437d7ca6b1c6bd4523fa
       size: 1866293
   silver_pipeline@validation:
     cmd: python src/pipelines/silver_pipeline.py validation.csv
@@ -226,8 +226,8 @@ stages:
       size: 5581
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/config/config_silver.py
       hash: md5
       md5: d6149d100fe4e997932daf0ae03b2b74
@@ -238,13 +238,13 @@ stages:
       size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
-      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      md5: 01b0da1d742ba2a88b1a46d6a5596646.dir
       size: 18729
       nfiles: 4
     outs:
     - path: data/silver_data/processed/validation.parquet
       hash: md5
-      md5: 20ebc00d5d7e6ee1d3fb5a71c6031a9c
+      md5: 4ab1e09c3bfe882e9a34dcd9438a0ed3
       size: 399605
   silver_pipeline@test:
     cmd: python src/pipelines/silver_pipeline.py test.csv
@@ -271,8 +271,8 @@ stages:
       size: 5581
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/config/config_silver.py
       hash: md5
       md5: d6149d100fe4e997932daf0ae03b2b74
@@ -283,28 +283,28 @@ stages:
       size: 5299
     - path: src/silver_data_preprocessing/
       hash: md5
-      md5: e16891d34a4612ce47d1462b36b6dfb1.dir
+      md5: 01b0da1d742ba2a88b1a46d6a5596646.dir
       size: 18729
       nfiles: 4
     outs:
     - path: data/silver_data/processed/test.parquet
       hash: md5
-      md5: 98959273d6bd0fe23b6b361436f9b8c1
+      md5: 9c564881e84853faad55461550b362ac
       size: 402967
   gold_pipeline:
     cmd: python src/pipelines/gold_pipeline.py
     deps:
     - path: data/silver_data/processed/test.parquet
       hash: md5
-      md5: 98959273d6bd0fe23b6b361436f9b8c1
+      md5: 9c564881e84853faad55461550b362ac
       size: 402967
     - path: data/silver_data/processed/train.parquet
       hash: md5
-      md5: 88a6331128b077c7b13f6d2215673220
+      md5: 9c04839d67de437d7ca6b1c6bd4523fa
       size: 1866293
     - path: data/silver_data/processed/validation.parquet
       hash: md5
-      md5: 20ebc00d5d7e6ee1d3fb5a71c6031a9c
+      md5: 4ab1e09c3bfe882e9a34dcd9438a0ed3
       size: 399605
     - path: src/data_ingestion/data_loader.py
       hash: md5
@@ -320,8 +320,8 @@ stages:
       size: 13316
     - path: src/gold_data_preprocessing/
       hash: md5
-      md5: e4d157ad2949f1bf8f1874ec805a25d4.dir
-      size: 122610
+      md5: 03806a9900cb73cbcba415d2dd01124e.dir
+      size: 123930
       nfiles: 18
     - path: src/pipelines/gold_pipeline.py
       hash: md5
@@ -333,8 +333,8 @@ stages:
       size: 6127
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/utils.py
       hash: md5
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
@@ -360,15 +360,15 @@ stages:
     outs:
     - path: data/gold_engineered_data/processed/test.parquet
       hash: md5
-      md5: afca903385a41f2ff880150c3b77108f
+      md5: 1f371bcbd675421db66b7bf6af4c23e4
       size: 140051
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: 5d4680cae5cafe1585c4b10a2752267c
+      md5: 780994c70990c2ab5b6e69e1367f31a1
       size: 410174
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: 5681eabeb796f4fa679e8bd8ca9588f7
+      md5: 3cde27b5d6415ce2b7ad32746ed417e7
       size: 118720
     - path: models/categorical_encoder.joblib
       hash: md5
@@ -388,11 +388,11 @@ stages:
     deps:
     - path: data/gold_engineered_data/processed/train.parquet
       hash: md5
-      md5: 5d4680cae5cafe1585c4b10a2752267c
+      md5: 780994c70990c2ab5b6e69e1367f31a1
       size: 410174
     - path: data/gold_engineered_data/processed/validation.parquet
       hash: md5
-      md5: 5681eabeb796f4fa679e8bd8ca9588f7
+      md5: 3cde27b5d6415ce2b7ad32746ed417e7
       size: 118720
     - path: src/data_ingestion/data_loader.py
       hash: md5
@@ -400,16 +400,16 @@ stages:
       size: 4344
     - path: src/gold_data_preprocessing/power_transformer.py
       hash: md5
-      md5: c4036354e4958cdcfc059bddda971784
-      size: 9214
+      md5: a778cc5db54c7bb66dba5ec1189ebb24
+      size: 9194
     - path: src/gold_data_preprocessing/scaler.py
       hash: md5
       md5: 5d5556bf996e92c8f043ccae39f732bf
       size: 7936
     - path: src/model_evaluation/evaluation.py
       hash: md5
-      md5: 590d40efaae63611961da52648521d5e
-      size: 6418
+      md5: 451518fddd14f3f2c5fa1b848059f14c
+      size: 5507
     - path: src/model_training/train.py
       hash: md5
       md5: 54a9b674b335d3aae0da56432bf8078e
@@ -424,8 +424,8 @@ stages:
       size: 6127
     - path: src/shared/config/config_logging.py
       hash: md5
-      md5: b6705f54ee554fb6ed891cfb44776873
-      size: 463
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
     - path: src/shared/config/config_training.py
       hash: md5
       md5: 07ddab748239700a869fb1592b25a702
@@ -437,7 +437,7 @@ stages:
     params:
       params.yaml:
         mlflow_params:
-          experiment_name: Champion_Model_Optimized
+          experiment_name: test-runs
         training_pipeline:
           model_config_to_run: LGBMRegressor
           models:
@@ -578,11 +578,12 @@ stages:
               model_class: LGBMRegressor
               name: LGBMR_Best
               run_name: LGBMR_Champion
-              log_model_artifact: true
-              register_model: true
+              log_model_artifact: false
+              register_model: false
               log_predictions: false
-              log_interpretability_artifacts: true
-              log_plots: true
+              log_interpretability_artifacts: false
+              log_plots: false
+              log_shap_plots: false
               drop_multicollinear_cols: []
               training_params:
                 n_estimators: 700
@@ -643,3 +644,111 @@ stages:
               cross_validation:
                 enabled: true
                 n_splits: 5
+  bronze_processing@train:
+    cmd: python src/pipelines/bronze_pipeline.py train.csv
+    deps:
+    - path: data/raw/train_validation_test
+      hash: md5
+      md5: 71f268960938259e98e4a9c5ec99c3a1.dir
+      size: 24298664
+      nfiles: 3
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
+    - path: src/data_validation/expectations/bronze_expectations.py
+      hash: md5
+      md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
+      size: 4212
+    - path: src/data_validation/ge_components.py
+      hash: md5
+      md5: 312a7b57f107e84894946050b1d80206
+      size: 13316
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: ed0a3004aa721f10a12f445ae5759397
+      size: 5132
+    - path: src/shared/config/config_bronze.py
+      hash: md5
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
+  bronze_processing@validation:
+    cmd: python src/pipelines/bronze_pipeline.py validation.csv
+    deps:
+    - path: data/raw/train_validation_test
+      hash: md5
+      md5: 71f268960938259e98e4a9c5ec99c3a1.dir
+      size: 24298664
+      nfiles: 3
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
+    - path: src/data_validation/expectations/bronze_expectations.py
+      hash: md5
+      md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
+      size: 4212
+    - path: src/data_validation/ge_components.py
+      hash: md5
+      md5: 312a7b57f107e84894946050b1d80206
+      size: 13316
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: ed0a3004aa721f10a12f445ae5759397
+      size: 5132
+    - path: src/shared/config/config_bronze.py
+      hash: md5
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
+  bronze_processing@test:
+    cmd: python src/pipelines/bronze_pipeline.py test.csv
+    deps:
+    - path: data/raw/train_validation_test
+      hash: md5
+      md5: 71f268960938259e98e4a9c5ec99c3a1.dir
+      size: 24298664
+      nfiles: 3
+    - path: src/data_ingestion/data_loader.py
+      hash: md5
+      md5: fc8d34e7fc64691d0f633c8752b51254
+      size: 4344
+    - path: src/data_validation/expectations/bronze_expectations.py
+      hash: md5
+      md5: 8d7a1a77c5fbc8f2c312a09ca12b765f
+      size: 4212
+    - path: src/data_validation/ge_components.py
+      hash: md5
+      md5: 312a7b57f107e84894946050b1d80206
+      size: 13316
+    - path: src/pipelines/bronze_pipeline.py
+      hash: md5
+      md5: ed0a3004aa721f10a12f445ae5759397
+      size: 5132
+    - path: src/shared/config/config_bronze.py
+      hash: md5
+      md5: 910da23f93b83eba07d7c16a44a17b36
+      size: 676
+    - path: src/shared/config/config_logging.py
+      hash: md5
+      md5: c2d19f4f0498b43b19929eebc863e690
+      size: 520
+    - path: src/shared/utils.py
+      hash: md5
+      md5: 8a7b7e80c76b5e65f29c70b402b8cad2
+      size: 5299
