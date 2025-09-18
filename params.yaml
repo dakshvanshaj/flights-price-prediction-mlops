@@ -37,7 +37,7 @@ gold_pipeline:
 # --- PARAMETERS FOR MLFLOW ---
 # =================================================================
 mlflow_params:
-  experiment_name: "Champion_Model_Optimized"
+  experiment_name: "test-runs"
 
 # =================================================================
 # --- PARAMETERS FOR MODEL TRAINING ---
@@ -197,11 +197,12 @@ training_pipeline:
       model_class: "LGBMRegressor"
       name: "LGBMR_Best"
       run_name: "LGBMR_Champion"
-      log_model_artifact: true
-      register_model: true
+      log_model_artifact: false
+      register_model: false
       log_predictions: false
-      log_interpretability_artifacts: true
-      log_plots: true
+      log_interpretability_artifacts: false
+      log_plots: false
+      log_shap_plots: false
       drop_multicollinear_cols: []
       training_params:
         n_estimators: 700
