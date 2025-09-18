@@ -73,3 +73,6 @@ gold_sample.csv
 *-checkpoint.ipynb
 cv_results_score_df.csv
 cv_results_score.csv
+
+# Environment variables
+*.env
