@@ -46,8 +46,13 @@ def load_production_model(
     try:
         model_flavor_module = getattr(mlflow, model_flavor)
     except AttributeError:
-        logger.error(f"Invalid MLflow model flavor specified: '{model_flavor}'")
-        raise ValueError(f"'{model_flavor}' is not a valid model flavor.")
+        logger.critical(
+            f"The model flavor '{model_flavor}' is not supported or its required library is not installed."
+        )
+        raise ImportError(
+            f"Could not import the necessary library for model flavor '{model_flavor}'. "
+            f"Please ensure the correct libraries are installed in your environment."
+        )
 
     model_uri = f"models:/{model_name}@{model_version_alias}"
     model = model_flavor_module.load_model(model_uri)
