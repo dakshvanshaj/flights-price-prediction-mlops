@@ -1,26 +1,28 @@
 # Use a slim Python image for a smaller footprint
 FROM python:3.12.9-slim
 
-# Set the working directory
 WORKDIR /app
 
-# Install uv, a faster package installer
-RUN pip install uv
-
-# Copy the production requirements file to the container
+# 1. Copy only the requirements file
 COPY src/prediction_server/requirements.prod.txt .
 
-# Install dependencies using uv
-RUN uv pip install -r requirements.prod.txt --system
+# 2. Install dependencies. This layer is now cached.
+RUN pip install uv && uv pip install -r requirements.prod.txt --system
 
-# Install dependencies using pip(takes around 7 minutes using pip)
-# RUN pip install --no-cache-dir -r requirements.prod.txt
+# 3. Now, copy the rest of the project files.
+COPY . .
 
-# Copy the application source code
-COPY src/ ./src
+# 4. Set the PYTHONPATH to include the 'src' directory
+ENV PYTHONPATH="${PYTHONPATH}:/app/src"
+
+# 5. Make the entrypoint script executable
+RUN chmod +x /app/docker-entrypoint.sh
+
+# 6. Set the entrypoint script to handle runtime setup
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Command to run the Uvicorn server
-CMD ["uvicorn", "src.prediction_server.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# 7. Set the default command to be executed by the entrypoint
+CMD ["uvicorn", "prediction_server.main:app", "--host", "0.0.0.0", "--port", "8000"]
