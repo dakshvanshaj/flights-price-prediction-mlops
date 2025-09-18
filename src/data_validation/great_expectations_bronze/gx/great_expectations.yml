@@ -83,14 +83,14 @@ data_docs_sites:
 fluent_datasources:
   raw_flight_data_source:
     type: pandas_filesystem
-    id: 2162e55a-55ea-497b-91a4-17fa853c2380
+    id: 38861001-a73f-409a-a0e1-4f69a753ceaa
     assets:
       raw_flights_csv_files:
         type: csv
-        id: 336b37ee-e390-4a02-ac56-271371c1f36d
+        id: 76487d4a-8706-4526-ad80-5d67ea872973
         batch_definitions:
           bronze_batch_definition:
-            id: 391a9386-11bc-4d2b-895b-568fb09d2513
+            id: 31b651e9-3a91-40e0-af4a-46b786c69345
             partitioner:
               regex: test.csv$
               param_names: []
