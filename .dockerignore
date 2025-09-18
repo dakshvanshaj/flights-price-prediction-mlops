@@ -10,7 +10,7 @@
 
 # DVC tracked data and models are pulled at runtime.
 data/
-models/
+# models/
 
 # --- Local Logs & Reports ---
 logs/
