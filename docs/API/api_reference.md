@@ -20,8 +20,24 @@ To run the server locally, navigate to the project's root directory and use `uvi
 If you have installed the project using pyproject.toml then
 
 ```bash
-uvicorn prediction_server.main:app --reload 
+uvicorn prediction_server.main:app 
 ```
+
+We can pass in other optional parameters like
+```bash
+uvicorn prediction_server.main:app --reload --host 0.0.0.0 --port 80
+```
+
+or directly 
+```bash
+fastapi run main.py
+```
+
+for development
+```bash
+fastapi dev main.py
+```
+
 
 Once running, the interactive API documentation (provided by Swagger UI) will be available at:
 
