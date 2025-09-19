@@ -13,9 +13,10 @@ stages:
       - src/shared/config/config_logging.py
       - data/raw/flights.csv
     outs:
-      - data/raw/train_validation_test/train.csv
-      - data/raw/train_validation_test/validation.csv
-      - data/raw/train_validation_test/test.csv
+      - data/raw/train_validation_test
+      # - data/raw/train_validation_test/train.csv
+      # - data/raw/train_validation_test/validation.csv
+      # - data/raw/train_validation_test/test.csv
 
   bronze_pipeline:
     foreach: ${data_splits}
@@ -72,12 +73,11 @@ stages:
       - gold_pipeline.outlier_handling
       - gold_pipeline.power_transformer
     outs:
-      - data/gold_engineered_data/processed/train.parquet
-      - data/gold_engineered_data/processed/validation.parquet
-      - data/gold_engineered_data/processed/test.parquet
-      - models/simple_imputer.json
-      - models/categorical_encoder.joblib
-      - models/gold_final_columns.json
+      # - data/gold_engineered_data/processed/train.parquet
+      # - data/gold_engineered_data/processed/validation.parquet
+      # - data/gold_engineered_data/processed/test.parquet
+      - data/gold_engineered_data/processed
+      - models
 
   training_pipeline:
     cmd: python src/pipelines/training_pipeline.py train.parquet validation.parquet --test_file_name test.parquet
