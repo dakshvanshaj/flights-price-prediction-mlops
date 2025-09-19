@@ -2,6 +2,7 @@ import sys
 import logging
 import yaml
 import json
+import os
 from data_ingestion.data_loader import load_data
 from shared.config import config_gold, config_logging, config_silver, core_paths
 from shared.utils import setup_logging_from_yaml, save_dataframe_based_on_validation
@@ -197,6 +198,7 @@ def gold_engineering_pipeline(
     if is_training_run:
         logger.info(f"Training run: saving final column order to {final_cols_path}")
         final_cols_order = list(df.columns)
+        os.makedirs(os.path.dirname(final_cols_path), exist_ok=True)
         with open(final_cols_path, "w") as f:
             json.dump(final_cols_order, f)
     else:
