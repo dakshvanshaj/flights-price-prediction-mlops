@@ -24,18 +24,11 @@ stages:
       md5: 8a7b7e80c76b5e65f29c70b402b8cad2
       size: 5299
     outs:
-    - path: data/raw/train_validation_test/test.csv
+    - path: data/raw/train_validation_test
       hash: md5
-      md5: dfa25b636af1f48bc9d1985dcadc324e
-      size: 3650705
-    - path: data/raw/train_validation_test/train.csv
-      hash: md5
-      md5: c913f2a2f5394eba3d96badf8c07ea29
-      size: 17002301
-    - path: data/raw/train_validation_test/validation.csv
-      hash: md5
-      md5: 035f4539e18954eaca370c6a5c06723a
-      size: 3645658
+      md5: 71f268960938259e98e4a9c5ec99c3a1.dir
+      size: 24298664
+      nfiles: 3
   bronze_pipeline@train:
     cmd: python src/pipelines/bronze_pipeline.py train.csv
     deps:
@@ -325,8 +318,8 @@ stages:
       nfiles: 18
     - path: src/pipelines/gold_pipeline.py
       hash: md5
-      md5: ed5db5b8020dc2ad6d0e961ff17eb873
-      size: 15007
+      md5: 1090409970ba6f5196f3bc2cd1e3fde1
+      size: 15086
     - path: src/shared/config/config_gold.py
       hash: md5
       md5: df04b2c0c7484ad0425bbaabb524ba02
@@ -358,30 +351,16 @@ stages:
         gold_pipeline.power_transformer:
         gold_pipeline.rare_category_grouping:
     outs:
-    - path: data/gold_engineered_data/processed/test.parquet
+    - path: data/gold_engineered_data/processed
       hash: md5
-      md5: 1f371bcbd675421db66b7bf6af4c23e4
-      size: 140051
-    - path: data/gold_engineered_data/processed/train.parquet
+      md5: 0f911794544736e0cc541926debfb995.dir
+      size: 668945
+      nfiles: 3
+    - path: models
       hash: md5
-      md5: 780994c70990c2ab5b6e69e1367f31a1
-      size: 410174
-    - path: data/gold_engineered_data/processed/validation.parquet
-      hash: md5
-      md5: 3cde27b5d6415ce2b7ad32746ed417e7
-      size: 118720
-    - path: models/categorical_encoder.joblib
-      hash: md5
-      md5: e9179cd4150d5db392ef62630e7f69cf
-      size: 4166
-    - path: models/gold_final_columns.json
-      hash: md5
-      md5: 560fd944b763c6ac791f5cac8c1935d4
-      size: 180
-    - path: models/simple_imputer.json
-      hash: md5
-      md5: 4a939e5d5a7cfb3346567524080f6b6d
-      size: 219
+      md5: 96ca1ee11ae038ec836f60bbe445bba0.dir
+      size: 4565
+      nfiles: 3
   training_pipeline:
     cmd: python src/pipelines/training_pipeline.py train.parquet 
       validation.parquet --test_file_name test.parquet
