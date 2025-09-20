@@ -9,6 +9,7 @@ if [ -z "$DVC_AWS_ACCESS_KEY_ID" ] || [ -z "$DVC_AWS_SECRET_ACCESS_KEY" ]; then
   exit 1
 fi
 
+
 # Configure DVC remote with DVC-specific credentials
 echo "Configuring DVC remote for S3..."
 dvc remote add  -d -f "$DVC_REMOTE_NAME" s3://"$DVC_BUCKET_NAME"
@@ -19,7 +20,8 @@ dvc remote modify  --local "$DVC_REMOTE_NAME" secret_access_key "$DVC_AWS_SECRET
 
 # Pull the DVC-tracked models
 echo "Pulling DVC tracked directories..."
-dvc pull models
+# use no source control management to avoid not a git repo error
+dvc pull models  
 
 echo "DVC pull complete. Starting application..."
 
