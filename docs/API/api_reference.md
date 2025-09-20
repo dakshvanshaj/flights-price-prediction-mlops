@@ -112,30 +112,55 @@ FROM python:3.12.9-slim
 
 WORKDIR /app
 
-# 1. Copy only the requirements file
-COPY src/prediction_server/requirements.prod.txt .
+# 1. Install system dependencies and a faster package installer (uv)
+# This is done in a single layer to reduce image size.
+# libgomp1 is required by LightGBM.
+RUN apt-get update && \
+    apt-get install -y libgomp1  && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install uv
 
-# 2. Install dependencies. This layer is now cached.
-RUN pip install uv && uv pip install -r requirements.prod.txt --system
-# LightGBM system dependency
-RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
 
-# 3. Now, copy the rest of the project files.
-COPY . .
+# 2. Copy only the requirements file and install dependencies
+# This layer is cached and only re-runs if requirements change, speeding up builds.
+COPY src/prediction_server/requirements.prod.txt ./requirements.prod.txt
+RUN uv pip install -r requirements.prod.txt --system
 
-# 4. Set the PYTHONPATH to include the 'src' directory
-ENV PYTHONPATH="${PYTHONPATH}:/app/src"
 
-# 5. Make the entrypoint script executable
+# 3. Set the PYTHONPATH environment variable
+# This allows Python to find modules inside the 'src' directory, which is
+# essential because the prediction_server code imports from shared, gold, and silver.
+ENV PYTHONPATH="${PYTHONPATH}/app/src"
+
+# 4. Selectively copy only the necessary source code and configuration
+# This creates a lean, secure, and cache-friendly image.
+COPY src/prediction_server /app/src/prediction_server
+COPY src/shared /app/src/shared
+COPY src/gold_data_preprocessing /app/src/gold_data_preprocessing
+COPY src/silver_data_preprocessing /app/src/silver_data_preprocessing
+
+COPY params.yaml /app/params.yaml
+
+# 5. Copy DVC files required by the entrypoint to pull the 'models' directory
+# dvc.yaml and dvc.lock define the 'models' output from the training pipeline.
+COPY dvc.yaml .
+COPY dvc.lock .
+
+# Initialize DVC
+RUN dvc init --no-scm 
+
+# 6. Make the entrypoint script executable
+# The script is copied in step 4, so we reference its final location.
 RUN chmod +x /app/src/prediction_server/docker-entrypoint.sh
 
-# 6. Set the entrypoint script to handle runtime setup
+# 7. Set the entrypoint script to handle runtime setup
 ENTRYPOINT ["/app/src/prediction_server/docker-entrypoint.sh"]
 
-# Expose the port the app runs on
+# 8. Expose the port the app runs on
 EXPOSE 8000
 
-# 7. Set the default command to be executed by the entrypoint
+# 9. Set the default command to be executed by the entrypoint
+# This starts the uvicorn server after the entrypoint script finishes.
 CMD ["uvicorn", "prediction_server.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
@@ -155,6 +180,7 @@ if [ -z "$DVC_AWS_ACCESS_KEY_ID" ] || [ -z "$DVC_AWS_SECRET_ACCESS_KEY" ]; then
   exit 1
 fi
 
+
 # Configure DVC remote with DVC-specific credentials
 echo "Configuring DVC remote for S3..."
 dvc remote add  -d -f "$DVC_REMOTE_NAME" s3://"$DVC_BUCKET_NAME"
@@ -165,12 +191,14 @@ dvc remote modify  --local "$DVC_REMOTE_NAME" secret_access_key "$DVC_AWS_SECRET
 
 # Pull the DVC-tracked models
 echo "Pulling DVC tracked directories..."
-dvc pull models
+# use no source control management to avoid not a git repo error
+dvc pull models  
 
 echo "DVC pull complete. Starting application..."
 
 # Execute the command passed to this script (e.g., uvicorn)
 exec "$@"
+
 ```
 ### 5.3. prediction_app.ev
 ```env
@@ -212,17 +240,17 @@ DVC_AWS_SECRET_ACCESS_KEY=DVCAWSSECRETKEY
 1.  **Build the Docker Image**
     Navigate to the project root directory (where the `Dockerfile` is located) and run:
     ```bash
-    docker build -t prediction-server:latest -f prediction_server/Dockerfile .
+    docker build -t prediction-server:0.4 . -f src/prediction_server/Dockerfile
     ```
 
 2.  **Run the Docker Container**
     To run the container, you need to provide the DVC/AWS credentials as environment variables. It is highly recommended to use an `.env` file for this (refer to the [MLflow Integration and Deployment](MLOps/mlflow.md) documentation for details on creating `prediction_app.env`).
 
     ```bash
-    docker run --env-file ./src/prediction_server/prediction_app.env -p 8000:8000 prediction-server:0.2
+    docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:8000 prediction-server:0.4
     ```
 
     -   `--env-file ./src/prediction_server/prediction_app.env`: Injects environment variables from the specified file into the container.
-    -   `-p 8000:8000`: Maps port 8000 of the host to port 8000 inside the container.
+    -   `-p 9000:8000`: Maps port 9000 of the host to port 8000 inside the container.
 
-    The API will then be accessible via `http://localhost:8000` (or the host's IP address).
+    The API will then be accessible via `http://localhost:9000` (or the host's IP address).

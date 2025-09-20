@@ -52,7 +52,7 @@ AWS_DEFAULT_REGION="<YOUR_S3_BUCKET_REGION>"
 **2. Run the container with the `--env-file` flag:**
 This injects the variables into the container at runtime.
 ```bash
-docker run --env-file ./prediction_app.env -p 8000:8000 your-image-name
+docker run --env-file ./src/prediction_server/prediction_app.env -p 8000:8000 your-image-name
 ```
 
 ## 2. Deploying an MLflow Tracking Server on AWS
@@ -263,7 +263,7 @@ Proceed with MLflow application setup on the secured server.
     ```bash
     python3 -m venv mlflow-env
     source mlflow-env/bin/activate
-    pip install mlflow boto3 #psycopg2-binary (caution)
+    pip install mlflow boto3 psycopg2-binary
     ```
     `boto3` (AWS SDK for Python) is essential for MLflow to interact with AWS services like S3 for artifact storage.
 
@@ -383,7 +383,7 @@ To ensure the MLflow server runs continuously as a **background service**, confi
     User=daksh_linux
     Restart=on-failure
     ExecStart=/home/daksh_linux/mlflow-env/bin/mlflow server \
-        --backend-store-uri postgresql://mlflow_user:YOUR_RDS_PASSWORD@YOUR_RDS_ENDPOINT db_name \
+        --backend-store-uri postgresql://mlflow_user:YOUR_RDS_PASSWORD@YOUR_RDS_ENDPOINT/mlflow_db \
         --default-artifact-root s3://your-s3-bucket-name/ \
         --host 127.0.0.1 \
         --port 5000
@@ -391,7 +391,7 @@ To ensure the MLflow server runs continuously as a **background service**, confi
     [Install]
     WantedBy=multi-user.target
     ```
-    *Note: `--host` is set to `127.0.0.1` for enhanced security, accepting connections only from the server itself (a reverse proxy like Nginx can handle public traffic).* 
+    *Note: `--host` is set to `127.0.0.1` for enhanced security, accepting connections only from the server itself (a reverse proxy like Nginx can handle public traffic).*
 
 4.  **Enable and Start the Service**:
     ```bash
