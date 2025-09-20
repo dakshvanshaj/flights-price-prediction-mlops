@@ -15,29 +15,17 @@ The server is designed with production best practices in mind:
 
 ## 2. Running the API Server
 
-To run the server locally, navigate to the project's root directory and use `uvicorn`:
-
-If you have installed the project using pyproject.toml then
+To run the server locally for development, navigate to the project's root directory and use `uvicorn` with the `--reload` flag:
 
 ```bash
-uvicorn prediction_server.main:app 
+uvicorn src.prediction_server.main:app --reload
 ```
 
-We can pass in other optional parameters like
+For a production-style local run, you can specify the host and port:
+
 ```bash
-uvicorn prediction_server.main:app --reload --host 0.0.0.0 --port 80
+uvicorn src.prediction_server.main:app --host 0.0.0.0 --port 8000
 ```
-
-or directly 
-```bash
-fastapi run main.py
-```
-
-for development
-```bash
-fastapi dev main.py
-```
-
 
 Once running, the interactive API documentation (provided by Swagger UI) will be available at:
 
@@ -200,7 +188,7 @@ echo "DVC pull complete. Starting application..."
 exec "$@"
 
 ```
-### 5.3. prediction_app.ev
+### 5.3. prediction_app.env
 ```env
 # SAMPLE ONLY 
 # ----------------------------------
@@ -238,7 +226,7 @@ DVC_AWS_SECRET_ACCESS_KEY=DVCAWSSECRETKEY
 ### 5.4. Building and Running the Docker Image
 
 1.  **Build the Docker Image**
-    Navigate to the project root directory (where the `Dockerfile` is located) and run:
+    Navigate to the project root directory and run:
     ```bash
     docker build -t prediction-server:0.4 . -f src/prediction_server/Dockerfile
     ```
