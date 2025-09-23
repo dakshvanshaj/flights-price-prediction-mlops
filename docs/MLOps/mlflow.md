@@ -66,6 +66,7 @@ S3 is the initial component due to its simplicity and standalone nature, serving
 1.  **Navigate to the S3 Service**
     *   Log in to your AWS account.
     *   In the console search bar, type **`S3`** and select the service.
+
 2.  **Create the Bucket**
     *   On the S3 dashboard, click **"Create bucket"**.
     *   Configure the following:
@@ -75,6 +76,7 @@ S3 is the initial component due to its simplicity and standalone nature, serving
         *   **Bucket Versioning**: **Enable** this to maintain object history and protect against accidental data loss.
         *   **Tags (Optional but recommended)**: Add a tag (e.g., `Key: Project`, `Value: mlflow-server`) for cost tracking.
         *   **Default encryption**: Retain the default (`Amazon S3-managed keys (SSE-S3)`).
+
 3.  **Finalize Creation**
     *   Review settings and estimated costs.
     *   Click **"Create bucket"**.
@@ -87,6 +89,7 @@ Next, the managed PostgreSQL database will be created using **AWS RDS**, serving
 
 1.  **Navigate to the RDS Service**
     *   In the AWS Console search bar, type **`RDS`** and select it.
+
 2.  **Create the Database**
     *   On the RDS dashboard, click **"Create database"**.
     *   Follow these settings in the creation wizard:
@@ -104,6 +107,7 @@ Next, the managed PostgreSQL database will be created using **AWS RDS**, serving
             *   **VPC security group**: Choose **"Create new"** and name it (e.g., `mlflow-db-security-group`). This acts as a firewall for the database.
         *   **Database options** (under "Additional configuration"):
             *   **Initial database name**: Enter `mlflow_db`. This is crucial for automatic database creation.
+
 3.  **Finalize Creation**
     *   Review settings and estimated monthly costs.
     *   Click **"Create database"**.
@@ -116,6 +120,7 @@ This EC2 instance will serve as the MLflow server, connecting to the RDS databas
 
 1.  **Navigate to the EC2 Service**
     *   In the AWS Console search bar, type **`EC2`** and select it.
+
 2.  **Launch a New Instance**
     *   Click **"Launch instance"**.
     *   Configure the following:
@@ -133,11 +138,14 @@ This EC2 instance will serve as the MLflow server, connecting to the RDS databas
             *   **Subnet**: No specific preference is required.
             *   **Firewall (security groups)**: Create a new security group and configure these rules:
                 1.  **Rule 1 (SSH)**: Allow SSH traffic. For enhanced security, restrict "Source type" to "My IP" instead of "Anywhere" (`0.0.0.0/0`).
+
                 2.  **Rule 2 (HTTP)**: Allow HTTP traffic from "Anywhere" (`0.0.0.0/0`).
+
                 3.  **Rule 3 (Custom TCP)**: Allow custom TCP traffic on port **`5000`** from "Anywhere" (`0.0.0.0/0`). This is the MLflow application port.
             *   Name the security group (e.g., `mlflow-server-sg`).
         *   **Configure storage**: The default 8 GB is sufficient.
         *   **Advanced details**: Can be left as default.
+
 3.  **Launch the Instance**
     *   Review the summary.
     *   Click **"Launch instance"**.
@@ -151,12 +159,17 @@ The instance will launch within a few minutes. Once its status is "Running" in t
 Establish a firewall rule to allow secure communication between your EC2 instance and RDS database over the private AWS network.
 
 1.  Navigate to the **RDS** dashboard, select **"Databases"**, and choose your `mlflow-db`.
+
 2.  Go to the **"Connectivity & security"** tab.
+
 3.  Under "Security", click on the active **VPC security group** (e.g., `mlflow-db-security-group`).
+
 4.  In the EC2 security group console, select the group, go to the **"Inbound rules"** tab, and click **"Edit inbound rules"**.
+
 5.  Click **"Add rule"** and configure:
     *   **Type**: Select **PostgreSQL** (port `5432` will auto-fill).
     *   **Source**: Type and select your EC2 security group (e.g., `mlflow-server-sg`).
+
 6.  Click **"Save rules"**. This rule permits connections to the database only from servers within the `mlflow-server-sg` group.
 
 #### 2.4.2. Connect to Your EC2 Instance
@@ -166,14 +179,14 @@ Log in to the newly created EC2 server.
 1.  Go to the **EC2** dashboard and select your `mlflow-server` instance.
 2.  Copy the **"Public IPv4 address"**.
 3.  Open a terminal. Make your key file private:
-    ```bash
-    chmod 400 /path/to/your/mlflow-key.pem
-    ```
+```bash
+chmod 400 /path/to/your/mlflow-key.pem
+```
 4.  Connect via SSH, replacing placeholders with your key file's path and the server's public IP:
-    ```bash
-    ssh -i /path/to/your/mlflow-key.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
-    # Example: ssh -i flights-mlflow-key.pem ubuntu@65.2.142.127
-    ```
+```bash
+ssh -i /path/to/your/mlflow-key.pem ubuntu@YOUR_PUBLIC_IP_ADDRESS
+# Example: ssh -i flights-mlflow-key.pem ubuntu@65.2.142.127
+```
 5.  Type `yes` if prompted to confirm the connection.
 
 #### 2.4.3. Creating and Attaching an IAM Role (for S3 Access)
@@ -191,19 +204,24 @@ Grant your EC2 instance the necessary permissions to interact with your S3 artif
         **Explanation of S3 ARNs:**
         S3 distinguishes between the bucket and its objects. Permissions must be granted for both levels.
         1.  **`arn:aws:s3:::your-bucket-name`**: For `ListBucket` permission.
+
         2.  **`arn:aws:s3:::your-bucket-name/*`**: For `GetObject`, `PutObject`, `DeleteObject` permissions.
 
         To add these ARNs in the IAM policy editor:
         1.  In the "Resources" section, select **"Specific"**.
+
         2.  Click **"Add ARN"** under "bucket". Enter your S3 bucket name (e.g., `yourname-mlflow-artifacts-2025`). Click **"Add ARN"**.
+
         3.  Click **"Add ARN"** again. Check **"Any"** for "Object name" to add the `/*` wildcard. Click **"Add ARN"**.
     *   Name the policy (e.g., `MLflowS3AccessPolicy`).
+
 2.  **Create an IAM Role**:
     *   In IAM, go to **"Roles"** > **"Create role"**.
     *   **Trusted entity type**: Select **"AWS service"**.
     *   **Use case**: Select **"EC2"**.
     *   Attach the `MLflowS3AccessPolicy` created previously.
     *   Name the role (e.g., `MLflowEC2Role`).
+
 3.  **Attach the Role to Your EC2 Instance**:
     *   In the **EC2** dashboard, select your `mlflow-server` instance.
     *   Go to **"Actions"** > **"Security"** > **"Modify IAM role"**.
@@ -216,20 +234,20 @@ Your EC2 instance now has the necessary permissions to read and write to your S3
 Perform initial setup steps on your new Ubuntu server for enhanced security and manageability.
 
 1.  **Update Your System**
-    ```bash
-    sudo apt update
-    sudo apt upgrade -y
-    ```
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
 2.  **Create a New User**
     Create a new user account with administrative privileges for daily work, avoiding the default `ubuntu` or `root` user.
-    ```bash
-    # Replace 'your_username' with a chosen name
-    sudo adduser your_username
-    ```
+```bash
+# Replace 'your_username' with a chosen name
+sudo adduser your_username
+```
     Set a password and optional information when prompted. Grant `sudo` privileges:
-    ```bash
-    sudo usermod -aG sudo your_username
-    ```
+```bash
+sudo usermod -aG sudo your_username
+```
     *   `-a` (or `--append`): Appends specified groups to the user's existing supplementary groups.
     *   `-G` (or `--groups`): Specifies groups to add the user to (e.g., `sudo`).
 
@@ -237,17 +255,18 @@ Perform initial setup steps on your new Ubuntu server for enhanced security and 
 
 3.  **Set Up a Basic Firewall**
     Enable `ufw` (Uncomplicated Firewall) to allow only necessary connections (SSH, HTTP, and MLflow port).
-    ```bash
-    # Allow SSH connections
-    sudo ufw allow OpenSSH
 
-    # Allow HTTP and MLflow port
-    sudo ufw allow 80/tcp
-    sudo ufw allow 5000/tcp
+```bash
+# Allow SSH connections
+sudo ufw allow OpenSSH
 
-    # Enable the firewall
-    sudo ufw enable
-    ```
+# Allow HTTP and MLflow port
+sudo ufw allow 80/tcp
+sudo ufw allow 5000/tcp
+
+# Enable the firewall
+sudo ufw enable
+```
     The firewall will now block other incoming connections, enhancing security.
 
 ### 2.5. Step 5: Install MLflow Software
@@ -255,16 +274,16 @@ Perform initial setup steps on your new Ubuntu server for enhanced security and 
 Proceed with MLflow application setup on the secured server.
 
 1.  **Install basic tools**
-    ```bash
-    sudo apt update
-    sudo apt install python3-pip python3-venv -y
-    ```
+```bash
+sudo apt update
+sudo apt install python3-pip python3-venv -y
+```
 2.  **Create a virtual environment and install MLflow**
-    ```bash
-    python3 -m venv mlflow-env
-    source mlflow-env/bin/activate
-    pip install mlflow boto3 psycopg2-binary
-    ```
+```bash
+python3 -m venv mlflow-env
+source mlflow-env/bin/activate
+pip install mlflow boto3 psycopg2-binary
+```
     `boto3` (AWS SDK for Python) is essential for MLflow to interact with AWS services like S3 for artifact storage.
 
 ### 2.6. Step 6: Launch the MLflow Server
@@ -273,9 +292,12 @@ This command integrates all components. Required information includes your **RDS
 
 **Determining the SQLAlchemy Connection String Format:**
 1.  **Identify Standard**: MLflow documentation specifies a "SQLAlchemy-compatible string."
+
 2.  **Search Standard**: Search for "SQLAlchemy PostgreSQL connection string format."
+
 3.  **Find Pattern**: The standard format for PostgreSQL is:
     `postgresql://<user>:<password>@<host>:<port>/<database>`
+
 4.  **Map to AWS Setup**: Map your RDS information to this pattern:
     *   `<user>`: `mlflow_user`
     *   `<password>`: `YOUR_RDS_PASSWORD`
@@ -321,10 +343,10 @@ Project code is not required on the EC2 server. Local Python ML code can log res
 Configure your **local machine**:
 
 *   **Set the Tracking URI**: Define the MLflow server address via an environment variable.
-    ```bash
-    # In your local terminal (macOS/Linux)
-    export MLFLOW_TRACKING_URI="http://YOUR_EC2_PUBLIC_IP:5000"
-    ```
+```bash
+# In your local terminal (macOS/Linux)
+export MLFLOW_TRACKING_URI="http://YOUR_EC2_PUBLIC_IP:5000"
+```
     MLflow scripts executed in this terminal session will automatically log to the remote server.
 
 *   **Configure AWS Credentials**: Grant your local machine permissions to upload artifacts to your S3 bucket. Install and configure the AWS CLI:
@@ -333,18 +355,18 @@ Configure your **local machine**:
 
 1.  **Install the AWS CLI**
     Install the command-line tool on your local machine:
-    ```bash
-    pip install awscli
-    # or for conda:
-    # conda install -c conda-forge awscli
-    # if incompatible, create a new environment:
-    # conda create -n aws-tools -c conda-forge awscli python=3.13
-    ```
+```bash
+pip install awscli
+# or for conda:
+# conda install -c conda-forge awscli
+# if incompatible, create a new environment:
+# conda create -n aws-tools -c conda-forge awscli python=3.13
+```
 2.  **Run the Configure Command**
     Execute in your terminal:
-    ```bash
-    aws configure
-    ```
+```bash
+aws configure
+```
 3.  **Enter Your Credentials**
     Provide the four requested pieces of information. The first two are obtained by creating an IAM user with S3 access permissions in your AWS account.
     *   **AWS Access Key ID**: Paste your access key.
@@ -353,13 +375,13 @@ Configure your **local machine**:
     *   **Default output format**: Press Enter for default (`json`).
 
     Example process:
-    ```bash
-    $ aws configure
-    AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
-    AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-    Default region name [None]: ap-south-1
-    Default output format [None]: json
-    ```
+```bash
+$ aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: ap-south-1
+Default output format [None]: json
+```
     The CLI securely stores credentials in a `.aws` folder. MLflow will automatically detect and use them for S3 access.
 
 Your local `train.py` script will now send results to your production server without code changes.
@@ -370,44 +392,46 @@ To ensure the MLflow server runs continuously as a **background service**, confi
 
 1.  **SSH into your EC2 server**.
 2.  **Create a `systemd` service file**
-    ```bash
-    sudo nano /etc/systemd/system/mlflow-server.service
-    ```
+```bash
+sudo nano /etc/systemd/system/mlflow-server.service
+```
 3.  **Paste the following configuration**, replacing placeholders with your database URI, S3 bucket, and ensuring `ExecStart` points to the `mlflow` executable within your virtual environment.
-    ```toml
-    [Unit]
-    Description=MLflow Tracking Server
-    After=network.target
+```ini
+[Unit]
+Description=MLflow Tracking Server
+After=network.target
 
-    [Service]
-    User=daksh_linux
-    Restart=on-failure
-    ExecStart=/home/daksh_linux/mlflow-env/bin/mlflow server \
-        --backend-store-uri postgresql://mlflow_user:YOUR_RDS_PASSWORD@YOUR_RDS_ENDPOINT/mlflow_db \
-        --default-artifact-root s3://your-s3-bucket-name/ \
-        --host 127.0.0.1 \
-        --port 5000
+[Service]
+User=daksh_linux
+Restart=on-failure
+ExecStart=/home/daksh_linux/mlflow-env/bin/mlflow server \
+    --backend-store-uri postgresql://mlflow_user:YOUR_RDS_PASSWORD@YOUR_RDS_ENDPOINT/mlflow_db \
+    --default-artifact-root s3://your-s3-bucket-name/ \
+    --host 127.0.0.1 \
+    --port 5000
 
-    [Install]
-    WantedBy=multi-user.target
-    ```
+[Install]
+WantedBy=multi-user.target
+```
+
     *Note: `--host` is set to `127.0.0.1` for enhanced security, accepting connections only from the server itself (a reverse proxy like Nginx can handle public traffic).*
 
 4.  **Enable and Start the Service**:
-    ```bash
-    # Reload systemd to recognize the new file
-    sudo systemctl daemon-reload
+```bash
+# Reload systemd to recognize the new file
+sudo systemctl daemon-reload
 
-    # Enable the service to start on boot
-    sudo systemctl enable mlflow-server.service
+# Enable the service to start on boot
+sudo systemctl enable mlflow-server.service
 
-    # Start the service now
-    sudo systemctl start mlflow-server.service
+# Start the service now
+sudo systemctl start mlflow-server.service
 
-    # Check its status
-    sudo systemctl status mlflow-server.service
+# Check its status
+sudo systemctl status mlflow-server.service
 
-    # View logs
-    journalctl -u mlflow-server.service -f
-    ```
+# View logs
+journalctl -u mlflow-server.service -f
+```
+
     You can now safely log out of your SSH session. The MLflow server will continue running in the background, ready to accept data from your projects.
