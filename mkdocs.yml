@@ -64,8 +64,9 @@ nav:
       - "MLflow": MLOps/mlflow.md
       - "Docker": MLOps/docker.md
       - "DVC": MLOps/dvc.md
+      - "Airflow": MLOps/airflow.md
   - Testing:
-      - "Testing": testing_strategy.md
+      - "Testing": Testing/testing_strategy.md
 
 repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs
