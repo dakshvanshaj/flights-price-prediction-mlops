@@ -33,7 +33,7 @@ COPY src/silver_data_preprocessing /app/src/silver_data_preprocessing
 COPY params.yaml /app/params.yaml
 
 # 5. Copy DVC files required by the entrypoint to pull the 'models' directory
-# dvc.yaml and dvc.lock define the 'models' output from the training pipeline.
+# dvc.yaml and dvc.lock define the dvc tracked data and models.
 COPY dvc.yaml .
 COPY dvc.lock .
 
