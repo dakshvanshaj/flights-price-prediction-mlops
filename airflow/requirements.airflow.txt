@@ -1,0 +1,63 @@
+# Core Data Science Libraries
+pandas==2.1.4
+numpy==1.26.4
+scikit-learn==1.7.0
+scipy==1.16.0
+pyarrow==20.0.0
+
+# Data Visualization
+altair==4.2.2
+
+# Data Quality & Validation
+great-expectations==1.5.5
+openpyxl==3.1
+
+# Data Versioning
+dvc==3.61.0
+dvc-s3==3.2.2 
+
+# Testing
+pytest==8.4.1
+
+# Web & API
+requests==2.32.4
+
+# yaml
+pyyaml==6.0.2  
+
+# for airflow
+pendulum==3.1.0  
+
+# for logger
+python-json-logger==3.3.0
+# node js is installed for gemini cli will need to be removed later.
+
+# Experiment tracking and model versioning with mlflow
+mlflow==3.2.0
+
+# gradient boosting libraries
+xgboost==3.0.1      
+lightgbm==4.6.0
+
+# optuna for hyperparameter tuning
+optuna==4.5.0   
+
+# dotenv for environment variable management
+python-dotenv==1.1.0
+
+seaborn==0.13.2 
+
+statsmodels==0.14.5
+
+mkdocs_material==9.6.18
+
+shap==0.48.0
+
+mermaid-py==0.8.0
+mkdocs-mermaid2-plugin==1.2.2
+
+fastapi==0.116.1
+uvicorn==0.35.0
+# Your custom package from GitHub
+# This format allows pip to install directly from a specific commit
+# -e git+ssh://git@github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs.git@9a61519c82de5646b15d37e3c84f6e4b40a139ad#egg=flight_price_prediction_mlops
