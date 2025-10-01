@@ -1,7 +1,6 @@
 import pandas as pd
 import pytest
 from pathlib import Path
-import joblib
 
 # Assuming the file is in src/gold_data_preprocessing/
 from gold_data_preprocessing.rare_category_grouper import RareCategoryGrouper

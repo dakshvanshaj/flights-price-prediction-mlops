@@ -46,7 +46,7 @@ def test_log_sklearn_cv_results(mock_mlflow):
     """
     # ARRANGE: Create a fake cv_results dictionary
     cv_results = {
-        "params": [{'C': 1.0}, {'C': 0.1}],
+        "params": [{"C": 1.0}, {"C": 0.1}],
         "mean_test_score": [0.9, 0.8],
         "std_test_score": [0.05, 0.08],
         "rank_test_score": [1, 2],
@@ -64,14 +64,12 @@ def test_log_sklearn_cv_results(mock_mlflow):
     assert mock_mlflow.log_metrics.call_count == 2
 
     # Check one of the calls to ensure the correct data is being logged
-    mock_mlflow.log_params.assert_called_with({'C': 0.1})
+    mock_mlflow.log_params.assert_called_with({"C": 0.1})
 
 
 @patch("hyperparameter_tuning.tuning.GridSearchCV")
 @patch("hyperparameter_tuning.tuning._log_sklearn_cv_results")
-def test_grid_search_orchestration(
-    mock_log_results, mock_grid_search_cv, sample_data
-):
+def test_grid_search_orchestration(mock_log_results, mock_grid_search_cv, sample_data):
     """
     Tests the `grid_search` function's orchestration logic.
 
@@ -86,7 +84,7 @@ def test_grid_search_orchestration(
 
     # Configure the mock GridSearchCV instance
     mock_cv_instance = MagicMock()
-    mock_cv_instance.best_estimator_ = LinearRegression() # A dummy object
+    mock_cv_instance.best_estimator_ = LinearRegression()  # A dummy object
     mock_cv_instance.best_params_ = {"C": 1.0}
     mock_cv_instance.best_score_ = 0.95
     mock_cv_instance.cv_results_ = {"params": [], "mean_test_score": []}
@@ -115,7 +113,9 @@ def test_grid_search_orchestration(
 @patch("hyperparameter_tuning.tuning.optuna.create_study")
 @patch("hyperparameter_tuning.tuning.mlflow")
 @patch("hyperparameter_tuning.tuning.time_based_cross_validation")
-def test_optuna_search_success_case(mock_time_based_cv, mock_mlflow, mock_create_study, sample_data):
+def test_optuna_search_success_case(
+    mock_time_based_cv, mock_mlflow, mock_create_study, sample_data
+):
     """
     Tests the `optuna_search` function by mocking the study and CV process.
 
@@ -124,7 +124,9 @@ def test_optuna_search_success_case(mock_time_based_cv, mock_mlflow, mock_create
     """
     # ARRANGE
     X, y = sample_data
-    mock_time_based_cv.return_value = {"unscaled": pd.DataFrame({"mean_squared_error": [0.5, 0.6]})}
+    mock_time_based_cv.return_value = {
+        "unscaled": pd.DataFrame({"mean_squared_error": [0.5, 0.6]})
+    }
 
     # Mock the Optuna study and trial objects
     mock_study = MagicMock()
@@ -140,15 +142,16 @@ def test_optuna_search_success_case(mock_time_based_cv, mock_mlflow, mock_create
 
     mock_study.optimize.side_effect = run_objective_once
 
-    def param_definer(trial): return {"alpha": 0.5}
+    def param_definer(trial):
+        return {"alpha": 0.5}
 
     # ACT
     tuning.optuna_search(
-        estimator_class=Ridge, # Use Ridge since it accepts 'alpha'
+        estimator_class=Ridge,  # Use Ridge since it accepts 'alpha'
         param_definer=param_definer,
         X_train=X,
         y_train=y,
-        n_trials=1, # We only run one trial in the test
+        n_trials=1,  # We only run one trial in the test
     )
 
     # ASSERT
@@ -182,7 +185,8 @@ def test_optuna_search_failure_case(mock_time_based_cv, mock_create_study, sampl
 
     mock_study.optimize.side_effect = run_objective_once
 
-    def param_definer(trial): return {}
+    def param_definer(trial):
+        return {}
 
     # ACT & ASSERT
     # The test passes if the TrialPruned exception is caught by the side_effect function

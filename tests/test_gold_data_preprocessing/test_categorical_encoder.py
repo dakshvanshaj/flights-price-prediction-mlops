@@ -125,7 +125,9 @@ class TestCategoricalEncoder:
                 "Initialization failed for an ordinal column without an explicit mapping."
             )
 
-    def test_mixed_mapped_and_auto_ordinal_encoding(self, sample_df_for_encoding: pd.DataFrame):
+    def test_mixed_mapped_and_auto_ordinal_encoding(
+        self, sample_df_for_encoding: pd.DataFrame
+    ):
         """
         Tests that the encoder correctly handles a mix of mapped ordinal and
         auto-inferred integer encoding in the same transformation.

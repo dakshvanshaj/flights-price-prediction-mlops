@@ -363,9 +363,7 @@ def optuna_search(
                     mean_metrics = {
                         f"cv/mean/{k}": v for k, v in score_df.mean().items()
                     }
-                    std_metrics = {
-                        f"cv/std/{k}": v for k, v in score_df.std().items()
-                    }
+                    std_metrics = {f"cv/std/{k}": v for k, v in score_df.std().items()}
                     mlflow.log_metrics({**mean_metrics, **std_metrics})
                     csv_path = "cv_results_scores.csv"
                     score_df.to_csv(csv_path, index=True)
@@ -375,8 +373,7 @@ def optuna_search(
                 for scale_type, df in cv_results.items():
                     if not df.empty:
                         mean_metrics = {
-                            f"cv/{scale_type}/mean/{k}": v
-                            for k, v in df.mean().items()
+                            f"cv/{scale_type}/mean/{k}": v for k, v in df.mean().items()
                         }
                         std_metrics = {
                             f"cv/{scale_type}/std/{k}": v for k, v in df.std().items()
