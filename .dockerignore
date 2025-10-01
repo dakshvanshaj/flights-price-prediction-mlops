@@ -1,48 +1,68 @@
-# --- Version Control ---
-# .git
+# .dockerignore - Tailored for the Prediction Server Build
 
+# Version control metadata
+.git
 
-# --- DVC Cache & Local Data ---
-#  We ignore the cache and tmp files,
-# but we KEEP the rest of the .dvc directory.
+# DVC local cache and temporary files - CRITICAL to ignore
 .dvc/cache
 .dvc/tmp
 
-# DVC tracked data and models are pulled at runtime.
-data/
-models/
+# Python virtual environments
+.venv
+venv
 
-# --- Local Logs & Reports ---
-logs/
-reports/
-
-# --- Development, Build & Cache Artifacts ---
-Notebooks/
-tests/
-build/
-dist/
+# Python cache and compiled files
 __pycache__/
 *.pyc
-*.egg-info/
+*.pyo
+*.pyd
+
+# All data directories - the image pulls what it needs
+/data/
+
+# Local development and testing artifacts
 .pytest_cache/
 .coverage
+htmlcov/
 
-# --- Virtual Environments & Local Configs ---
-.env
-.venv
-airflow/.env
-
-# --- Editor & OS Specific ---
+# IDE and OS-specific files
 .vscode/
+.idea/
 .DS_Store
 
-# --- Airflow Local Artifacts ---
-airflow/logs/
-airflow/plugins/
-airflow/postgres-db-volume/
-airflow/config/
+# Build artifacts
+/build/
+/dist/
+*.egg-info
 
-# --- Great Expectations Local Artifacts ---
-src/data_validation/great_expectations/gx/uncommitted/
+# Local logs
+/logs/
 
-src/flight_price_prediction_mlops.egg-info
+# Entire local Airflow setup
+/airflow/
+
+# Notebooks, documentation, and reports
+/Notebooks/
+/docs/
+/reports/
+/site/
+
+# Local MLflow runs
+/mlruns/
+
+# Top-level config and markdown files not needed by the server
+*.md
+*.yml
+*.yaml
+# Exclusions to the above to ensure necessary files are included
+!dvc.yaml
+!dvc.lock
+!params.yaml
+
+# Local environment files
+.env
+*.local
+*.env
+
+# Shell scripts not used in this image
+docker-entrypoint.sh
