@@ -7,6 +7,7 @@ This module sets up and runs the FastAPI application, including:
 - Handling prediction requests, including data validation, preprocessing,
   prediction, and postprocessing.
 """
+
 import logging
 from contextlib import asynccontextmanager
 
@@ -62,7 +63,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Flight Price Prediction API",
     description="An API to predict flight prices using a pre-trained LightGBM model.",
-    version="1.0.0",
+    version="1.5",
     lifespan=lifespan,
 )
 
