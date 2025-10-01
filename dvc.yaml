@@ -17,6 +17,7 @@ stages:
       # - data/raw/train_validation_test/train.csv
       # - data/raw/train_validation_test/validation.csv
       # - data/raw/train_validation_test/test.csv
+  # Note: intial dataset data/raw/flights.csv isnt in any outs so needs to be explicitly added to dvc tracking
 
   bronze_pipeline:
     foreach: ${data_splits}
