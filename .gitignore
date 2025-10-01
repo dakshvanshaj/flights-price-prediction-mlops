@@ -45,9 +45,19 @@ logs/
 .coverage
 
 # --- DVC TRACKED FILES ---
-data/
-models/
+# Ignore DVC-tracked files and directories
+/data/raw/train_validation_test/
+/data/bronze_data/processed/
+/data/bronze_data/quarantine
 
+/data/silver_data/processed/
+/data/silver_data/quarantine/
+
+/data/gold_engineered_data/processed/
+/data/gold_engineered_data/quarantine/
+
+/models/
+/data/raw/flights.csv
 # --- Airflow Local Environment ---
 # Ignore the local postgres database data
 airflow/postgres-db-volume/
@@ -76,3 +86,9 @@ cv_results_score.csv
 
 # Environment variables
 *.env
+
+openapi.yaml
+openapi.yml
+openapi*
+
+.secrets
