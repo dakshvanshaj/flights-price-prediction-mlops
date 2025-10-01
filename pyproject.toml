@@ -8,42 +8,96 @@ build-backend = "setuptools.build_meta"  #This specifies the function that pip w
 
 [project]
 name = "flight_price_prediction_mlops"
-version = "1.1.0"
+version = "1.5"
+description = "A complete end to end flights price prediction ml system with mlops"
 readme = "README.md"  
 requires-python = ">=3.12"
 
 # -------------------------------------------------------------------------- 
 #                            Core Dependencies                           
-# -------------------------------------------------------------------------- 
-# It declares the minimum libraries required for your project to run.
-# When this package is installed, pip will ensure these dependencies are also installed.
+# --------------------------------------------------------------------------
+# These are the essential libraries required for the core functionality of the
+# project, such as data processing and model training pipelines.
 dependencies = [
-    "pandas",
-    "numpy",
-    "scikit-learn",
-    "pyarrow",
-    "great-expectations",
-    "openpyxl",
-    "dvc",
-    "dvc-s3",
-    "pyyaml",
-    "python-json-logger",
-    "requests",
-    "mlflow",
-    "xgboost",
-    "lightgbm",
-    "optuna",
-    "scipy",
-    "pendulum",
-    "python-dotenv"
+    "pandas>=2.1.4",
+    "numpy>=1.26.4",
+    "scikit-learn>=1.7.0",
+    "scipy>=1.16.0",
+    "pyarrow>=20.0.0",
+    "great-expectations>=1.5.5",
+    "openpyxl>=3.1",
+    "dvc>=3.61.0",
+    "dvc-s3>=3.2.2",
+    "pyyaml>=6.0.2",
+    "python-json-logger>=3.3.0",
+    "requests>=2.32.4",
+    "mlflow>=3.2.0",
+    "xgboost>=3.0.1",
+    "lightgbm>=4.6.0",
+    "python-dotenv>=1.1.0",
+    "awscli>=1.42.18",
 ]
 
 # -------------------------------------------------------------------------- 
 #                            Optional Dependencies                           
 # -------------------------------------------------------------------------- 
-# if want to test code use pip install -e .[test]
+# These "extras" allow for installing dependencies for specific environments,
+# keeping the base installation lightweight.
+# Example Usage:
+#   uv pip install -e .[test]
+#   uv pip install -e .[dev]
 [project.optional-dependencies]
-test = ["pytest"]
+# For running automated tests
+test = [
+    "pytest>=8.4.1",
+]
+# For data analysis and visualization 
+visualization = [
+    "altair>=4.2.2",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.5",
+    "shap>=0.48.0",
+    "matplotlib",
+]
+# For building project documentation
+docs = [
+    "mkdocs-material>=9.6.18",
+    "mermaid-py>=0.8.0",
+    "mkdocs-jupyter",
+    "mkdocs-mermaid2-plugin>=1.2.2",
+    "shap>=0.48.0",
+]
+# For running the prediction API server
+api = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]
+# For Airflow integration
+airflow = [
+    "pendulum>=3.1.0",
+]
+# For hyperparameter tuning
+tuning = [
+    "optuna>=4.5.0",
+]
+# Ruff for format and lint
+linting = [
+    "ruff>=0.13"
+]
+# 'dev' group: A convenient bundle for local development
+dev = [
+    "flight_price_prediction_mlops[test]",
+    "flight_price_prediction_mlops[visualization]",
+    "flight_price_prediction_mlops[docs]",
+    "flight_price_prediction_mlops[api]",
+    "flight_price_prediction_mlops[tuning]",
+]
+# 'all' group: Installs everything, useful for CI or a complete setup
+all = [
+    "flight_price_prediction_mlops[dev]",
+    "flight_price_prediction_mlops[airflow]",
+]
+
 
 # -------------------------------------------------------------------------- 
 #                            Setuptools Configuration                           
@@ -56,7 +110,7 @@ where = ["src"]  # Look for packages in the 'src' directory
 #                            Project URLs                           
 # -------------------------------------------------------------------------- 
 [project.urls]
-Homepage = "https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs" # Example URL
+Homepage = "https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs" 
 
 # -------------------------------------------------------------------------- 
 #                           Command-Line Scripts                           
@@ -74,3 +128,6 @@ run-tuning-pipeline = "pipelines.tuning_pipeline:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.uv.workspace]
+members = []
