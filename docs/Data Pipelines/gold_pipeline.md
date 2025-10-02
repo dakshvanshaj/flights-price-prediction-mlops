@@ -1,17 +1,17 @@
-# Gold Pipeline
+# 🥇 Gold Pipeline
 
 The Gold pipeline is the final and most intensive transformation stage. It prepares the data specifically for machine learning by applying complex feature engineering and preprocessing steps.
 
 -   **Source Code:** `src/pipelines/gold_pipeline.py`
 
-## Purpose
+## 🎯 Purpose
 
 -   To create a feature-rich, analysis-ready dataset for modeling.
 -   To handle missing values, encode categorical variables, and apply advanced transformations.
 -   To provide a flexible workflow that can be optimized for different model architectures (e.g., linear models vs. tree-based models).
 -   To save the fitted preprocessing objects (like scalers and encoders) from the training run so they can be applied consistently across all data splits.
 
-## Pipeline Workflow
+## 🔄 Pipeline Workflow
 
 The pipeline's workflow is dynamically adjusted based on the `is_tree_model` parameter in `params.yaml`. This allows for an optimized path for tree-based models like LightGBM.
 
@@ -28,7 +28,7 @@ graph TD
     G --> H{Save Gold Data & Transformers}
 ```
 
-## Key Steps
+## 🔑 Key Steps
 
 The pipeline has two main execution paths, controlled by the `is_tree_model` parameter.
 
@@ -58,7 +58,7 @@ This streamlined path is used for tree-based models like LightGBM and XGBoost, w
 
 **Skipped Steps:** In this path, **Rare Category Grouping, Outlier Handling, Power Transformations, and Scaling** are all bypassed, leading to a much faster and more efficient pipeline.
 
-## How to Run
+## ▶️ How to Run
 
 The main function in the script orchestrates the processing for the `train`, `validation`, and `test` splits automatically.
 
@@ -74,19 +74,19 @@ run-gold-pipeline
 python src/pipelines/gold_pipeline.py
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 The Gold pipeline uses a hybrid configuration approach:
 
 -   **`params.yaml`**: This file stores parameters that are treated like hyperparameters for the pipeline itself. This includes strategies for imputation, outlier handling, scaling, and thresholds for grouping rare categories. A key parameter here is `is_tree_model`, which, when set to `true`, bypasses unnecessary steps like scaling and power transformations that are not required for tree-based models like LightGBM.
 -   **`src/shared/config/config_gold.py`**: This stores more static, developer-managed configuration, such as lists of columns to be dropped, lists of columns to undergo specific transformations (e.g., `POWER_TRANSFORMER_COLUMNS`), and paths for saving processed data and fitted transformer objects.
 
-## Dependencies and Environment
+## 📦 Dependencies and Environment
 
 -   **Key Libraries**: `pandas`, `scikit-learn`, `great-expectations`.
 -   **Input Schema**: The pipeline expects Parquet files from the `data/silver_data/processed/` directory, conforming to the schema produced by the Silver pipeline.
 
-## Error Handling and Quarantining
+## 🐛 Error Handling and Quarantining
 
 -   **Process**: Similar to the Silver pipeline, if the final DataFrame fails the Gold validation checkpoint, it is saved to the quarantine directory (`data/gold_data/quarantined/`). The pipeline logs are particularly helpful here, as they print a summary of the failing expectations directly to the console.
 -   **Debugging**:

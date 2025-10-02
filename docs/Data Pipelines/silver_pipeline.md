@@ -1,16 +1,16 @@
-# Silver Pipeline
+# 🥈 Silver Pipeline
 
 The Silver pipeline takes the validated data from the Bronze layer and begins the process of cleaning, standardizing, and enriching it.
 
 -   **Source Code:** `src/pipelines/silver_pipeline.py`
 
-## Purpose
+## 🎯 Purpose
 
 -   To clean and standardize data.
 -   To perform initial feature engineering, such as extracting features from dates.
 -   To enforce a consistent schema and data types.
 
-## Pipeline Workflow
+## 🔄 Pipeline Workflow
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
@@ -28,7 +28,7 @@ graph TD
     J --> K;
 ```
 
-## Key Steps
+## 🔑 Key Steps
 
 1.  **Data Ingestion**: Loads a file from the Bronze processed directory.
 2.  **Preprocessing & Cleaning**:
@@ -44,7 +44,7 @@ graph TD
     -   **On Success**: Saves the processed DataFrame as a Parquet file to `data/silver_data/processed/`.
     -   **On Failure**: Saves the failed DataFrame to `data/silver_data/quarantined/`.
 
-## How to Run
+## ▶️ How to Run
 
 **Using CLI Shortcut:**
 
@@ -64,7 +64,7 @@ run-silver-pipeline train.csv
 python src/pipelines/silver_pipeline.py <bronze_file_name.csv>
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 Similar to the Bronze pipeline, configuration is managed in `src/shared/config/config_silver.py`.
 
@@ -72,12 +72,12 @@ Similar to the Bronze pipeline, configuration is managed in `src/shared/config/c
 -   **Schema**: The column rename mapping (`COLUMN_RENAME_MAPPING`), the expected final column order (`SILVER_EXPECTED_COLS_ORDER`), and expected data types (`SILVER_EXPECTED_COLUMN_TYPES`).
 -   **Validation**: Column lists for non-null checks and identifying unique records.
 
-## Dependencies and Environment
+## 📦 Dependencies and Environment
 
 -   **Key Libraries**: `great-expectations`, `pandas`, `pyarrow`.
 -   **Input Schema**: The pipeline expects a CSV file from the `data/bronze_data/processed/` directory, conforming to the schema validated by the Bronze pipeline.
 
-## Error Handling and Quarantining
+## 🐛 Error Handling and Quarantining
 
 -   **Process**: If the transformed DataFrame fails the Silver validation checkpoint, the `save_dataframe_based_on_validation` function saves the entire failing DataFrame as a Parquet file to the quarantine directory (`data/silver_data/quarantined/`).
 -   **Debugging**:
@@ -90,6 +90,6 @@ Similar to the Bronze pipeline, configuration is managed in `src/shared/config/c
 
 ---
 
-## Next Steps
+## ➡️ Next Steps
 
 - [Gold Pipeline - Feature Engineering, Preprocessing & Validation &raquo;](gold_pipeline.md)

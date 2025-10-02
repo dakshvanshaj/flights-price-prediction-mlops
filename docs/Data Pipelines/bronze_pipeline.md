@@ -1,15 +1,15 @@
-# Bronze Pipeline
+# 🥉 Bronze Pipeline
 
 The Bronze pipeline is the first entry point for raw data into the system. Its primary responsibility is to act as an initial quality gate, ensuring that incoming data conforms to a basic, expected schema and structure.
 
 -   **Source Code:** `src/pipelines/bronze_pipeline.py`
 
-## Purpose
+## 🎯 Purpose
 
 -   To validate the structure and basic quality of raw data files using Great Expectations.
 -   To separate valid data from invalid data, preventing "garbage in, garbage out."
 
-## Pipeline Workflow
+## 🔄 Pipeline Workflow
 
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
@@ -26,7 +26,7 @@ graph TD
     I --> J;
 ```
 
-## Key Steps
+## 🔑 Key Steps
 
 1.  **Initialize Great Expectations (GE) Context**: Sets up the GE environment.
 2.  **Define Data Source and Asset**: Points GE to the raw data directory and specifies how to read the CSV files.
@@ -36,7 +36,7 @@ graph TD
     -   **On Success**: Moves the raw file to the `data/bronze_data/processed/` directory.
     -   **On Failure**: Moves the raw file to the `data/bronze_data/quarantined/` directory.
 
-## How to Run
+## ▶️ How to Run
 
 After installing the project in editable mode (`pip install -e .`), you can use the CLI shortcut defined in `pyproject.toml`.
 
@@ -58,7 +58,7 @@ run-bronze-pipeline train.csv
 python src/pipelines/bronze_pipeline.py <file_name.csv>
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 The Bronze pipeline's behavior is configured through constants defined within the project's Python modules, primarily in `src/shared/config/config_bronze.py`. Key configurable parameters include:
 
@@ -68,12 +68,12 @@ The Bronze pipeline's behavior is configured through constants defined within th
 
 These are generally static configurations managed by developers within the codebase.
 
-## Dependencies and Environment
+## 📦 Dependencies and Environment
 
 -   **Key Libraries**: `great-expectations`, `pandas`, `pyyaml`, `python-json-logger`.
 -   **Input Schema**: The pipeline expects raw CSV files. The exact schema is defined in the `BronzeExpectations` suite. A typical file is expected to contain columns related to flight details.
 
-## Error Handling and Quarantining
+## 🐛 Error Handling and Quarantining
 
 -   **Process**: If the input file fails the Great Expectations validation checkpoint, the pipeline's execution is marked as failed. The `handle_file_based_on_validation` utility function moves the entire source file from the raw data directory to the quarantine directory (`data/bronze_data/quarantined/`).
 -   **Debugging**: To debug a quarantined file, a developer should:
@@ -87,7 +87,7 @@ These are generally static configurations managed by developers within the codeb
 
 ---
 
-## Next Steps
+## ➡️ Next Steps
 
 - [Silver Pipeline - Data Preprocessing & Validation &raquo;](silver_pipeline.md)
 - [Gold Pipeline - Feature Engineering, Preprocessing & Validation &raquo;](gold_pipeline.md)

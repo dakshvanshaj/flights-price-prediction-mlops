@@ -1,43 +1,54 @@
-# API Reference
+# 🚀 API Reference & Deployment Guide
 
-This document provides a detailed reference for the FastAPI prediction server.
+This document provides a comprehensive technical reference for the FastAPI prediction server, including an in-depth analysis of its architecture, containerization, and cloud deployment workflow on Google Cloud.
 
 -   **Source Code:** `src/prediction_server/`
 
-## 1. Overview
+## 🎯 Overview
 
-The prediction server is a high-performance API built with FastAPI that serves the champion LightGBM model. Its primary purpose is to provide real-time flight price predictions based on input features.
+The prediction server is a high-performance API built with **FastAPI** that serves the champion LightGBM model. It is designed with production best practices to provide low-latency, reliable flight price predictions.
 
-The server is designed with production best practices in mind:
--   **Startup & Shutdown Logic**: It loads the model and all necessary preprocessing artifacts into memory on startup to ensure low-latency predictions and gracefully releases them on shutdown.
--   **Data Validation**: It uses Pydantic schemas to enforce a strict contract for all incoming requests and outgoing responses, preventing invalid data from causing errors.
--   **Centralized Configuration**: Key settings, like the production model name, are managed in a dedicated configuration module.
+Key architectural features include:
 
-## 2. Running the API Server
+-   **Asynchronous by Default**: Built on FastAPI for high throughput.
+-   **Robust Data Validation**: Uses **Pydantic** schemas to define a strict, self-documenting contract for all API requests and responses, preventing invalid data from ever reaching the model.
+-   **Efficient Startup/Shutdown**: Loads the MLflow model and all DVC-tracked preprocessing artifacts into memory on startup to minimize prediction latency. These resources are gracefully released on shutdown.
+-   **Decoupled Configuration**: The specific model to be served is managed in a dedicated configuration file, allowing for model updates without changing the application code.
 
-To run the server locally for development, navigate to the project's root directory and use `uvicorn` with the `--reload` flag:
+## ⚙️ Core Components Analysis
 
-```bash
-uvicorn src.prediction_server.main:app --reload
-```
+The server's logic is modularized across several key files.
 
-For a production-style local run, you can specify the host and port:
+### `main.py`: The FastAPI Application
 
-```bash
-uvicorn src.prediction_server.main:app --host 0.0.0.0 --port 8000
-```
+This is the core of the server. It uses a `lifespan` context manager to load all necessary ML artifacts into a global `ml_artifacts` dictionary upon startup. This is a crucial performance optimization, as it means the model and transformers are loaded only once, not on every prediction request.
 
-Once running, the interactive API documentation (provided by Swagger UI) will be available at:
+### `schemas.py`: The Data Contract
 
-[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+This file defines the API's data contract using Pydantic. The `InputSchema` is particularly important, as it uses Python's `Enum` types for categorical features like `from_location` and `flight_type`. This provides automatic, built-in validation, ensuring that only valid categories are accepted by the API.
 
-## 3. API Endpoints
+### `predict.py`: The Transformation Engine
+
+This module is the bridge between raw API input and the model's required feature format.
+
+1.  **`preprocessing_for_prediction`**: This function meticulously replicates the entire training pipeline. It takes the raw DataFrame from the API request and applies the exact same sequence of transformations (Silver and Gold steps) using the pre-loaded preprocessor objects. This guarantees that the data fed to the model at inference time has the exact same structure, encoding, and scale as the data it was trained on.
+2.  **`postprocessing_for_target`**: Since the model predicts a transformed target (due to scaling and power transformations), this function reverses those steps. It takes the model's raw output and applies the inverse transformations from the `Scaler` and `PowerTransformer` objects to return a final price in its original, interpretable currency format.
+
+### `model_loader.py`: Artifact Loading
+
+This module is responsible for loading all ML assets.
+
+-   `load_production_model()`: Connects to the **MLflow Tracking Server** using environment variables, and pulls the model specified by `MODEL_NAME` and `MODEL_VERSION_ALIAS` from the Model Registry.
+-   `load_preprocessing_artifacts()`: Loads all the data transformers (imputer, encoder, scaler, etc.) that were fitted during the `gold_pipeline` run and saved by DVC.
+
+## 📡 API Endpoints
 
 ### Health Check
 
 -   **Endpoint:** `GET /`
--   **Description:** A simple health check endpoint to confirm that the API is running and responsive.
--   **Response:**
+-   **Description:** A simple health check to confirm that the API is running and responsive.
+-   **Success Response (200):**
+
     ```json
     {
       "status": "ok",
@@ -50,9 +61,9 @@ Once running, the interactive API documentation (provided by Swagger UI) will be
 -   **Endpoint:** `POST /prediction`
 -   **Description:** The core endpoint that takes flight details, preprocesses them, runs the prediction, and returns the final estimated price.
 
-#### Request Body
+#### Request Body (`InputSchema`)
 
-The request body must be a JSON object conforming to the following structure. The API will automatically validate the data types and constraints (e.g., `time` and `distance` must be greater than 0).
+The request body must be a JSON object conforming to the `InputSchema`.
 
 ```json
 {
@@ -66,9 +77,7 @@ The request body must be a JSON object conforming to the following structure. Th
 }
 ```
 
-#### Response Body
-
-A successful request will return a JSON object with the predicted price.
+#### Success Response (200 - `OutputSchema`)
 
 ```json
 {
@@ -76,169 +85,71 @@ A successful request will return a JSON object with the predicted price.
 }
 ```
 
-## 4. Configuration
+## 🐳 Containerization & Execution
 
-The server's behavior is controlled by the `src/prediction_server/config_app.py` module. This file specifies which model to load from the MLflow Model Registry.
+The server is containerized using a multi-stage `Dockerfile` for a lean and secure production image.
 
--   `MODEL_NAME`: The registered name of the model (e.g., `LGBMR_Champion`).
--   `MODEL_VERSION_ALIAS`: The alias of the model version to use (e.g., `production`).
--   `MODEL_FLAVOR`: The MLflow flavor required to load the model (e.g., `lightgbm`).
+### The `docker-entrypoint.sh` Startup Logic
 
-This setup allows for easy updates to the production model without changing the API's source code.
+The container's startup process is managed by the entrypoint script, which performs critical setup *before* the FastAPI application starts. This two-step process is key to the server's architecture.
 
-## 5. Containerization and Deployment
-
-The prediction server is containerized using Docker to ensure a consistent and portable deployment environment. This section explains the key components involved in building and running the Docker image.
-
-### 5.1. Dockerfile
-
-The `Dockerfile` defines the steps to build the Docker image for the prediction server. It sets up the Python environment, installs dependencies, copies the application code, and configures the entrypoint.
-
-```dockerfile
-# Use a slim Python image for a smaller footprint
-FROM python:3.12.9-slim
-
-WORKDIR /app
-
-# 1. Install system dependencies and a faster package installer (uv)
-# This is done in a single layer to reduce image size.
-# libgomp1 is required by LightGBM.
-RUN apt-get update && \
-    apt-get install -y libgomp1  && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install uv
-
-
-# 2. Copy only the requirements file and install dependencies
-# This layer is cached and only re-runs if requirements change, speeding up builds.
-COPY src/prediction_server/requirements.prod.txt ./requirements.prod.txt
-RUN uv pip install -r requirements.prod.txt --system
-
-
-# 3. Set the PYTHONPATH environment variable
-# This allows Python to find modules inside the 'src' directory, which is
-# essential because the prediction_server code imports from shared, gold, and silver.
-ENV PYTHONPATH="${PYTHONPATH}/app/src"
-
-# 4. Selectively copy only the necessary source code and configuration
-# This creates a lean, secure, and cache-friendly image.
-COPY src/prediction_server /app/src/prediction_server
-COPY src/shared /app/src/shared
-COPY src/gold_data_preprocessing /app/src/gold_data_preprocessing
-COPY src/silver_data_preprocessing /app/src/silver_data_preprocessing
-
-COPY params.yaml /app/params.yaml
-
-# 5. Copy DVC files required by the entrypoint to pull the 'models' directory
-# dvc.yaml and dvc.lock define the 'models' output from the training pipeline.
-COPY dvc.yaml .
-COPY dvc.lock .
-
-# Initialize DVC
-RUN dvc init --no-scm 
-
-# 6. Make the entrypoint script executable
-# The script is copied in step 4, so we reference its final location.
-RUN chmod +x /app/src/prediction_server/docker-entrypoint.sh
-
-# 7. Set the entrypoint script to handle runtime setup
-ENTRYPOINT ["/app/src/prediction_server/docker-entrypoint.sh"]
-
-# 8. Expose the port the app runs on
-EXPOSE 8000
-
-# 9. Set the default command to be executed by the entrypoint
-# This starts the uvicorn server after the entrypoint script finishes.
-CMD ["uvicorn", "prediction_server.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```mermaid
+graph TD
+    A[Container Starts] --> B{Run `docker-entrypoint.sh`};
+    B --> C{Step 1: Configure DVC & Pull Artifacts};
+    C --> D{Step 2: Export MLflow Credentials};
+    D --> E{Step 3: `exec uvicorn`};
+    E --> F[FastAPI App Runs with All Artifacts & Credentials];
 ```
 
-### 5.2. docker-entrypoint.sh
+1.  **DVC Configuration & Pull**: The script first uses `DVC_*` and `B2_*` environment variables to configure DVC to connect to the S3-compatible remote storage. It then runs `dvc pull models` to download the fitted data transformers.
+2.  **MLflow Credential Export**: Next, the script takes the `MLFLOW_*` environment variables and exports them as standard `AWS_*` credentials. The `exec "$@"` command then replaces the script process with the Uvicorn server process, which inherits these exported variables, allowing it to connect to the MLflow Tracking Server.
 
-The `docker-entrypoint.sh` script is the entrypoint for the Docker container. Its primary role is to handle dynamic setup tasks, specifically configuring DVC and pulling necessary models, before the main application starts.
+### Building and Running the Container
 
+1.  **Build the Image**:
+    From the project root, run:
 ```bash
-#!/bin/bash
-
-# Exit immediately if a command exits with a non-zero status.
-set -e
-
-# Exit if DVC-specific environment variables are not set
-if [ -z "$DVC_AWS_ACCESS_KEY_ID" ] || [ -z "$DVC_AWS_SECRET_ACCESS_KEY" ]; then
-  echo "ERROR: DVC_AWS_ACCESS_KEY_ID and DVC_AWS_SECRET_ACCESS_KEY must be set."
-  exit 1
-fi
-
-
-# Configure DVC remote with DVC-specific credentials
-echo "Configuring DVC remote for S3..."
-dvc remote add  -d -f "$DVC_REMOTE_NAME" s3://"$DVC_BUCKET_NAME"
-dvc remote modify "$DVC_REMOTE_NAME" endpointurl "$DVC_S3_ENDPOINT_URL"
-dvc remote modify  --local "$DVC_REMOTE_NAME" region "$DVC_S3_ENDPOINT_REGION"
-dvc remote modify  --local "$DVC_REMOTE_NAME" access_key_id "$DVC_AWS_ACCESS_KEY_ID"
-dvc remote modify  --local "$DVC_REMOTE_NAME" secret_access_key "$DVC_AWS_SECRET_ACCESS_KEY"
-
-# Pull the DVC-tracked models
-echo "Pulling DVC tracked directories..."
-# use no source control management to avoid not a git repo error
-dvc pull models  
-
-echo "DVC pull complete. Starting application..."
-
-# Execute the command passed to this script (e.g., uvicorn)
-exec "$@"
-
-```
-### 5.3. prediction_app.env
-```env
-# SAMPLE ONLY 
-# ----------------------------------
-# MLflow Production Configuration
-# ----------------------------------
-# The public IP or domain of your EC2 instance running the MLflow server.
-MLFLOW_TRACKING_URI=http://PUBLICIP:5000
-
-# ----------------------------------
-# AWS Credentials for MLflow Artifacts
-# ----------------------------------
-# Credentials for an IAM user with read-only access to your S3 artifact bucket.
-AWS_ACCESS_KEY_ID=AWSACCESSKEY
-AWS_SECRET_ACCESS_KEY=AWSSECRETACCESSKEY
-AWS_DEFAULT_REGION=REGION
-
-
-# ---------------------------------------------------------------------------- #
-#                           DVC Credentials for data                           #
-# ---------------------------------------------------------------------------- #
-DVC_REMOTE_NAME=remotename
-DVC_BUCKET_NAME=bucketnameinaws
-DVC_S3_ENDPOINT_URL=https://ENDPOINT
-DVC_S3_ENDPOINT_REGION=REGION
-DVC_AWS_ACCESS_KEY_ID=DVCAWSKEY
-DVC_AWS_SECRET_ACCESS_KEY=DVCAWSSECRETKEY
+docker build -t prediction-server:latest -f src/prediction_server/Dockerfile .
 ```
 
-**Key Functions of the Entrypoint Script:**
+2.  **Run the Container**:
+    Use an `.env` file (e.g., `prediction_app.env`) to securely manage your credentials.
+```bash
+docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:9000 prediction-server:latest
+```
 
--   **DVC Configuration**: It dynamically configures the DVC remote storage using environment variables (`DVC_AWS_ACCESS_KEY_ID`, `DVC_AWS_SECRET_ACCESS_KEY`, `DVC_REMOTE_NAME`, `DVC_BUCKET_NAME`, `DVC_S3_ENDPOINT_URL`, `DVC_S3_ENDPOINT_REGION`). This allows the container to fetch DVC-tracked data from S3.
--   **Model Pulling**: It executes `dvc pull models` to download the necessary model artifacts into the container before the FastAPI application starts. This ensures the application has access to the latest models.
--   **Application Execution**: Finally, `exec "$@"` ensures that the command passed to `docker run` (e.g., `uvicorn prediction_server.main:app ...`) is executed as the main process within the container.
+    The API will be available at [http://localhost:9000/docs](http://localhost:9000/docs).
 
-### 5.4. Building and Running the Docker Image
+## ☁️ Cloud Deployment: Google Cloud Run
 
-1.  **Build the Docker Image**
-    Navigate to the project root directory and run:
-    ```bash
-    docker build -t prediction-server:0.4 . -f src/prediction_server/Dockerfile
-    ```
+Deploying to Google Cloud Run provides a secure, scalable, and cost-effective serverless environment. The primary deployment is automated via the [CD workflow](cd.md).
 
-2.  **Run the Docker Container**
-    To run the container, you need to provide the DVC/AWS credentials as environment variables. It is highly recommended to use an `.env` file for this (refer to the [MLflow Integration and Deployment](MLOps/mlflow.md) documentation for details on creating `prediction_app.env`).
+### 🔑 Step 1: Secure Credentials with Google Secret Manager
 
-    ```bash
-    docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:8000 prediction-server:0.4
-    ```
+Before deployment, all secrets (from your `.env` file) must be stored securely in **Google Secret Manager**. Each variable (`MLFLOW_TRACKING_URI`, `AWS_ACCESS_KEY_ID`, `B2_ACCESS_KEY_ID`, etc.) should be created as a separate secret.
 
-    -   `--env-file ./src/prediction_server/prediction_app.env`: Injects environment variables from the specified file into the container.
-    -   `-p 9000:8000`: Maps port 9000 of the host to port 8000 inside the container.
+### 👤 Step 2: Create a Dedicated Service Account
 
-    The API will then be accessible via `http://localhost:9000` (or the host's IP address).
+A best practice is to create a dedicated service account for the Cloud Run service with minimal permissions:
+
+-   **Secret Manager Secret Accessor**: Allows it to read the secrets.
+-   **Artifact Registry Reader**: Allows it to pull the container image.
+
+### 🚀 Step 3: Deploy the Service
+
+While this is automated in CI/CD, here is how to do it manually via the Google Cloud Console:
+
+1.  Navigate to **Cloud Run** and click **"Create service"**.
+2.  **Container Image**: Select the image you pushed to **Artifact Registry**.
+3.  **Authentication**: Choose **"Require authentication"** for a private API.
+4.  **Container Port**: Set to `9000`.
+5.  **Autoscaling**: Set **Min instances** to `0` (to scale to zero) and **Max instances** to a reasonable number (e.g., `3`) to control costs.
+6.  **Security Tab**: Attach the dedicated service account you created.
+7.  **Variables & Secrets Tab**: This is the most critical step.
+    -   For every environment variable your application needs, add a new variable.
+    -   Choose **"Reference a secret"**, select the corresponding secret from Secret Manager, and use the `latest` version.
+    -   **Do not enter any secrets in plain text.**
+8.  Click **"Create"** to deploy.
+
+Once deployed, Cloud Run provides a secure, public URL for your service. In a full production setup, this URL would be fronted by a **Google Cloud API Gateway** to handle API key authentication and rate limiting.

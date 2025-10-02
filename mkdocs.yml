@@ -8,17 +8,18 @@ theme:
   favicon: img/favicon.ico
   logo: img/favicon.ico
   palette:
-    # Palette toggle for dark mode (now the default)
-    - scheme: slate
-      toggle:
-        icon: material/weather-sunny
-        name: Switch to light mode
-
     # Palette toggle for light mode
     - scheme: default
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
   primary: teal
   accent: amber
   icon:
@@ -39,6 +40,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - QuickStart: quickstart.md
   - Data Journey:
       - "Exploratory Data Analysis": EDA/flights_eda.ipynb
       - "Automated EDA Report": EDA/flights_training_eda_report.html
@@ -61,13 +63,17 @@ nav:
   - MLOps:
       - "Project Architecture": MLOps/architecture.md
       - "Tooling": MLOps/tools.md
+      - "DVC Pipeline": MLOps/dvc_pipeline.md
       - "MLflow": MLOps/mlflow.md
       - "Docker": MLOps/docker.md
       - "DVC": MLOps/dvc.md
       - "Airflow": MLOps/airflow.md
+
   - Testing:
       - "Testing": Testing/testing_strategy.md
-
+  - CI-CD:
+      - "Continuous Integration": CI/ci.md
+      - "Continuous Deployment": CD/cd.md
 repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
 repo_name: Flights-Price-Prediction-MLOPs
 

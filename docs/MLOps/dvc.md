@@ -1,8 +1,8 @@
-# DVC (Data Version Control) Integration
+# 💿 DVC (Data Version Control) Integration
 
 This document details the role of DVC in managing and versioning large data files and models within the project, ensuring reproducibility and collaboration.
 
-## 1. Overview and Purpose
+## 📝 1. Overview and Purpose
 
 DVC (Data Version Control) extends Git's capabilities to handle large files, datasets, and machine learning models. In this project, DVC is used to:
 
@@ -11,7 +11,7 @@ DVC (Data Version Control) extends Git's capabilities to handle large files, dat
 -   **Manage Large Files**: Keeps large files out of the Git repository, storing them efficiently in remote storage (like AWS S3) while Git tracks only small `.dvc` metadata files.
 -   **Facilitate Collaboration**: Provides a streamlined way for team members to work with consistent versions of data and models.
 
-## 2. DVC Setup and Configuration
+## ⚙️ 2. DVC Setup and Configuration
 
 ### 2.1. Initial Setup
 
@@ -21,7 +21,7 @@ After initializing a Git repository, DVC is initialized in the project root:
 dvc init
 ```
 
-The primary configuration involves setting up a remote storage location, which in this project is an Blackblaze b2 S3 bucket.
+The primary configuration involves setting up a remote storage location, which in this project is a Backblaze B2 S3-compatible bucket.
 
 ### 2.2. Dynamic Remote Configuration
 
@@ -46,14 +46,14 @@ DVC requires credentials to access the S3 bucket. These are provided via the fol
 
 -   `DVC_REMOTE_NAME`: The name to assign to the DVC remote (e.g., `myremote`).
 -   `DVC_BUCKET_NAME`: The name of the S3 bucket where data and models are stored.
--   `DVC_S3_ENDPOINT_URL`: The S3 endpoint URL (optional, for custom S3-compatible storage).
+-   `DVC_S3_ENDPOINT_URL`: The S3 endpoint URL (for S3-compatible storage like Backblaze).
 -   `DVC_S3_ENDPOINT_REGION`: The AWS region of the S3 bucket.
 -   `DVC_AWS_ACCESS_KEY_ID`: The AWS access key ID.
 -   `DVC_AWS_SECRET_ACCESS_KEY`: The AWS secret access key.
 
-These variables are crucial for DVC operations, especially in containerized environments. Refer to the [MLflow Integration and Deployment - Production Best Practice: Using an Environment File](mlflow.md#13-production-best-practice-using-an-environment-file) documentation for details on securely managing these credentials via `.env` files.
+> For more details on securely managing these credentials, refer to the [MLflow Integration documentation](mlflow.md#13-production-best-practice-using-an-environment-file).
 
-## 3. Core Workflow
+## 🔄 3. Core Workflow
 
 ### 3.1. Versioning Data and Models
 
@@ -64,7 +64,7 @@ dvc add data/raw/flights.csv
 dvc add models/
 ```
 
-This command replaces the actual file/directory with a small `.dvc` file. This `.dvc` file is then tracked by Git:
+This command replaces the actual file/directory with a small `.dvc` file, which is then tracked by Git:
 
 ```bash
 git add data/raw/flights.csv.dvc models.dvc
@@ -98,11 +98,13 @@ dvc pull
 
 This ensures full reproducibility of any experiment or model version.
 
-## 4. DVC in the Project
+## 🏗️ 4. DVC in the Project
 
 ### 4.1. DVC in the Docker Entrypoint
 
-For the prediction server, DVC plays a critical role during container startup. The `docker-entrypoint.sh` script is configured to pull the necessary models before the FastAPI application launches. This ensures the server always starts with the correct model version. For the full script and its context, refer to the [API Reference - Containerization and Deployment](../API/api_reference.md#5-containerization-and-deployment) section.
+For the prediction server, DVC plays a critical role during container startup. The `docker-entrypoint.sh` script is configured to pull the necessary models before the FastAPI application launches. This ensures the server always starts with the correct model version.
+
+> For the full script and its context, refer to the [API Reference documentation](../API/api_reference.md#5-containerization-and-deployment).
 
 ### 4.2. DVC Pipelines
 
