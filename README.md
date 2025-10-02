@@ -17,7 +17,7 @@ This project is a comprehensive, end-to-end MLOps pipeline for predicting flight
 The architecture is designed to be modular and scalable, ensuring a robust workflow from data ingestion to model deployment.
 
 ```mermaid
-%%{init: {'theme': 'neutral'}}%%
+%%{init: {'theme': 'light'}}%%
 graph TD
     subgraph "Code & Data Versioning"
         Dev[Developer] -- "git push" --> GitHub[GitHub Repo];
