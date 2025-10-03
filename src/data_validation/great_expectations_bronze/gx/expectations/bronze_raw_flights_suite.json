@@ -1,7 +1,7 @@
 {
   "expectations": [
     {
-      "id": "b071ce0b-d03b-4162-9ced-4edb1a995b58",
+      "id": "f1f19e74-756b-4d2d-a8f8-bdf154d8deea",
       "kwargs": {
         "column_set": [
           "travelCode",
@@ -20,10 +20,11 @@
         "name": "bronze_columns_match_set",
         "notes": "Checks for presence of all required columns."
       },
+      "severity": "critical",
       "type": "expect_table_columns_to_match_set"
     },
     {
-      "id": "f9663c00-c081-479c-8888-a591673fca90",
+      "id": "3af9057f-69b8-4cc5-8345-5feb3d7a64c7",
       "kwargs": {
         "min_value": 1
       },
@@ -31,10 +32,11 @@
         "name": "bronze_table_has_rows",
         "notes": "Ensures the raw file is not empty."
       },
+      "severity": "critical",
       "type": "expect_table_row_count_to_be_between"
     },
     {
-      "id": "9b1d4ddd-b7e2-4583-8c6b-c2e9c0a202d8",
+      "id": "11b330b6-fc52-437b-9221-3fef754397ff",
       "kwargs": {
         "column": "travelCode"
       },
@@ -42,10 +44,11 @@
         "name": "bronze_travelCode_not_null",
         "notes": "Ensures the critical column 'travelCode' is always present."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "f23c702d-a1c0-48b0-9c9b-3ae730ef2fbf",
+      "id": "ee1fa115-64bd-428c-813b-7446c4e5f390",
       "kwargs": {
         "column": "date"
       },
@@ -53,10 +56,11 @@
         "name": "bronze_date_not_null",
         "notes": "Ensures the critical column 'date' is always present."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "bc1f3de6-7c90-4332-bd1d-d4b4ce4e8e93",
+      "id": "c2402679-f604-4c92-9251-3fd0fe65a130",
       "kwargs": {
         "column": "price",
         "type_list": [
@@ -69,10 +73,11 @@
       "meta": {
         "name": "bronze_price_is_numeric"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "1389caed-0077-40ce-89ea-e0916de575b9",
+      "id": "61725611-ea00-4ae7-aa29-82112ff4c4cb",
       "kwargs": {
         "column": "price",
         "min_value": 0.0
@@ -80,10 +85,11 @@
       "meta": {
         "name": "bronze_price_is_not_negative"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_between"
     },
     {
-      "id": "0b402cbc-9a24-41a8-9e76-ddf108eb5f49",
+      "id": "5c2ef5da-f67c-4234-b78c-85e2c89280a9",
       "kwargs": {
         "column": "time",
         "type_list": [
@@ -96,10 +102,11 @@
       "meta": {
         "name": "bronze_time_is_numeric"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "4869ea81-286d-4514-9055-4fa8705990df",
+      "id": "dbb16444-23c9-49d2-8a15-f557e0ac1714",
       "kwargs": {
         "column": "time",
         "min_value": 0.0
@@ -107,10 +114,11 @@
       "meta": {
         "name": "bronze_time_is_not_negative"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_between"
     },
     {
-      "id": "2343c61c-d222-4347-a792-320828138105",
+      "id": "e465bab0-9dd8-4c6b-9f4e-ad49347e474b",
       "kwargs": {
         "column": "distance",
         "type_list": [
@@ -123,10 +131,11 @@
       "meta": {
         "name": "bronze_distance_is_numeric"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "5d8df367-1c90-420f-9381-f07633c541f9",
+      "id": "53bb906b-0d07-49db-84b6-b46ea4284494",
       "kwargs": {
         "column": "distance",
         "min_value": 0.0
@@ -134,10 +143,11 @@
       "meta": {
         "name": "bronze_distance_is_not_negative"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_between"
     },
     {
-      "id": "c643727f-d89d-43e0-b8aa-c9efbd79e89b",
+      "id": "d5137f14-828c-4e07-8283-a560f1396905",
       "kwargs": {
         "column": "userCode",
         "type_list": [
@@ -150,10 +160,11 @@
       "meta": {
         "name": "bronze_userCode_is_numeric"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "3a71320c-fb2e-49b4-a2ed-a3808d41d4d5",
+      "id": "039ea7e2-98cd-4c1f-8a1e-7d7196e957ef",
       "kwargs": {
         "column": "travelCode",
         "type_list": [
@@ -166,10 +177,11 @@
       "meta": {
         "name": "bronze_travelCode_is_numeric"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "a6d8da72-8f93-4ea5-8693-691db7020c47",
+      "id": "1d44391e-8cd6-4fcd-a4e7-bedb8c3d5cca",
       "kwargs": {
         "column": "from",
         "type_list": [
@@ -180,10 +192,11 @@
       "meta": {
         "name": "bronze_from_is_string"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "45206f32-1d16-4137-85bd-7014b7f473bf",
+      "id": "3439b358-7bda-432d-872d-e496964b0bf3",
       "kwargs": {
         "column": "to",
         "type_list": [
@@ -194,10 +207,11 @@
       "meta": {
         "name": "bronze_to_is_string"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "06b1435e-92f6-42ec-b7cf-aa05ec3d3938",
+      "id": "523bca47-873d-4bf5-90f9-10a2786ec4f9",
       "kwargs": {
         "column": "flightType",
         "type_list": [
@@ -208,10 +222,11 @@
       "meta": {
         "name": "bronze_flightType_is_string"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "94e10c22-5ff0-4c1d-bf32-567372cc61ed",
+      "id": "959b9785-52c0-4001-a72b-95b144dce435",
       "kwargs": {
         "column": "agency",
         "type_list": [
@@ -222,10 +237,11 @@
       "meta": {
         "name": "bronze_agency_is_string"
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "d277c946-b2a7-4a3a-b933-536a62482f63",
+      "id": "fe1b5b35-3363-4bb7-8e5f-418f0468bff2",
       "kwargs": {
         "column": "date",
         "strftime_format": "%Y-%m-%d"
@@ -234,10 +250,11 @@
         "name": "bronze_date_format_is_correct",
         "notes": "Checks if date strings match YYYY-MM-DD format."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_match_strftime_format"
     },
     {
-      "id": "b67b7693-95fc-4617-9b61-19bfbd9a3a21",
+      "id": "a249198d-e6c8-44e4-bedc-f685b1491c6e",
       "kwargs": {
         "column": "flightType",
         "mostly": 0.98,
@@ -251,12 +268,13 @@
         "name": "bronze_flightType_in_known_set",
         "notes": "Checks that most flight types are from a known list."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_set"
     }
   ],
-  "id": "694a372d-70bb-477e-bdd1-cf5a17e2a5dc",
+  "id": "d8275017-2ec4-4384-933e-eed4ced90d6a",
   "meta": {
-    "great_expectations_version": "1.5.5"
+    "great_expectations_version": "1.6.3"
   },
   "name": "bronze_raw_flights_suite",
   "notes": null

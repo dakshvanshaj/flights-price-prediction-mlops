@@ -1,7 +1,7 @@
 {
   "expectations": [
     {
-      "id": "65e345ce-4e89-4f95-83d1-89cf65be3807",
+      "id": "37364670-7b2a-4095-94ef-2c1b8cd9b439",
       "kwargs": {
         "column_list": [
           "flight_type",
@@ -23,10 +23,11 @@
       "meta": {
         "notes": "Verify the final model-ready schema and column order."
       },
+      "severity": "critical",
       "type": "expect_table_columns_to_match_ordered_list"
     },
     {
-      "id": "d28b2056-e250-4d83-bbaa-ea96a9c23ecb",
+      "id": "02c87aad-b1d8-412d-aa96-990a45ca3982",
       "kwargs": {
         "column": "price",
         "min_value": 0.0
@@ -34,20 +35,22 @@
       "meta": {
         "notes": "Sanity check for the target variable's range (pre-scaling)."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_between"
     },
     {
-      "id": "82fca131-714a-4ca7-9a4e-55a54ff6a8fa",
+      "id": "a131325a-9e0d-4bb2-8eec-0d117fc49105",
       "kwargs": {
         "min_value": 10
       },
       "meta": {
         "notes": "Ensures the gold table is not empty after processing."
       },
+      "severity": "critical",
       "type": "expect_table_row_count_to_be_between"
     },
     {
-      "id": "567eedc2-86e6-4772-89d0-9a1cb36b6015",
+      "id": "57d49a5d-fbca-4fc2-a04d-97b15042a149",
       "kwargs": {
         "column": "flight_type",
         "type_list": [
@@ -60,10 +63,11 @@
       "meta": {
         "notes": "Verify column flight_type is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "8d135b39-6533-4693-a5d5-50475381491d",
+      "id": "454270cf-d8a7-4f04-92eb-d8cf6304c47a",
       "kwargs": {
         "column": "from_location",
         "type_list": [
@@ -76,10 +80,11 @@
       "meta": {
         "notes": "Verify column from_location is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "3e712a71-ba6d-4676-ba18-e75b868ed6bd",
+      "id": "6f85f1c6-7607-4146-9f96-6c8821c5de94",
       "kwargs": {
         "column": "to_location",
         "type_list": [
@@ -92,10 +97,11 @@
       "meta": {
         "notes": "Verify column to_location is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "b06fef89-f20c-4d8b-999a-e704e07ebfc5",
+      "id": "15ab800b-ffbe-4479-b24d-1a4f5d771ce3",
       "kwargs": {
         "column": "agency",
         "type_list": [
@@ -108,10 +114,11 @@
       "meta": {
         "notes": "Verify column agency is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "40730d0f-1138-4d7d-94ff-38189dabf2d5",
+      "id": "6758173e-8fd0-4599-b8e9-8c47725b9c1d",
       "kwargs": {
         "column": "price",
         "type_list": [
@@ -124,10 +131,11 @@
       "meta": {
         "notes": "Verify column price is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "aa38c64b-0f7f-4f86-bc9e-0ffe198b238a",
+      "id": "e5b8c952-97b1-481a-8cfb-25a697da7cef",
       "kwargs": {
         "column": "time",
         "type_list": [
@@ -140,10 +148,11 @@
       "meta": {
         "notes": "Verify column time is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "a294d57f-c096-48b9-b240-17695ae7cddf",
+      "id": "e3cf88e6-b514-4822-a269-8f99df20e00a",
       "kwargs": {
         "column": "distance",
         "type_list": [
@@ -156,10 +165,11 @@
       "meta": {
         "notes": "Verify column distance is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "50607646-8785-4240-a2a9-5decff80e568",
+      "id": "7d47be47-f027-4a04-8723-c0703a61cbda",
       "kwargs": {
         "column": "year",
         "type_list": [
@@ -172,10 +182,11 @@
       "meta": {
         "notes": "Verify column year is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "4f0a8e03-1e81-4562-8faa-1a43ff9b3d76",
+      "id": "4934715a-91ca-47a3-8c5f-acdcd5915cc8",
       "kwargs": {
         "column": "month_sin",
         "type_list": [
@@ -188,10 +199,11 @@
       "meta": {
         "notes": "Verify column month_sin is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "73e6a2cd-c1ce-4e29-a744-71f12fa88413",
+      "id": "3b461bdd-2fc5-4da3-add9-2f2493a3f0c6",
       "kwargs": {
         "column": "month_cos",
         "type_list": [
@@ -204,10 +216,11 @@
       "meta": {
         "notes": "Verify column month_cos is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "3a7f1296-c3e1-4a4b-a5b3-04eb41beda3a",
+      "id": "6a4ee356-b3ba-40ed-ac91-7a9b5373bf88",
       "kwargs": {
         "column": "day_of_week_sin",
         "type_list": [
@@ -220,10 +233,11 @@
       "meta": {
         "notes": "Verify column day_of_week_sin is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "9b8fd99d-33f5-4789-b2fd-124aa929ca7a",
+      "id": "321f7dd4-90d6-40dd-91c9-24917d94595a",
       "kwargs": {
         "column": "day_of_week_cos",
         "type_list": [
@@ -236,10 +250,11 @@
       "meta": {
         "notes": "Verify column day_of_week_cos is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "39f8ea82-46d2-4d15-abad-2a802286b00d",
+      "id": "bbb4783d-a0e6-4706-a365-658122afea79",
       "kwargs": {
         "column": "day_sin",
         "type_list": [
@@ -252,10 +267,11 @@
       "meta": {
         "notes": "Verify column day_sin is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "5ef3f053-3031-47aa-abe2-e6620c0420ef",
+      "id": "f0d338ee-e8b1-4133-b9cd-e8c248db3663",
       "kwargs": {
         "column": "day_cos",
         "type_list": [
@@ -268,152 +284,167 @@
       "meta": {
         "notes": "Verify column day_cos is a numeric type for modeling."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_in_type_list"
     },
     {
-      "id": "9876bbb8-a703-47e5-a9bc-3eb4166964c3",
+      "id": "23076430-5bb6-4767-b6d6-11b0445296a9",
       "kwargs": {
         "column": "flight_type"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: flight_type."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "2a6e5aee-af4a-414a-be68-2925f3a8e59e",
+      "id": "b27cfb04-4efb-47d2-a407-d9d97d377b08",
       "kwargs": {
         "column": "from_location"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: from_location."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "98d6854f-f385-4391-b5ae-ee4df6fd7421",
+      "id": "1cc7efe7-4eb9-41b2-86e5-56770df7370b",
       "kwargs": {
         "column": "to_location"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: to_location."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "e3fc6b8d-eed4-4e0e-b9fc-901afc159819",
+      "id": "f539f054-22e8-4099-8d83-85836f0f1c65",
       "kwargs": {
         "column": "agency"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: agency."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "758bb28f-fe58-4bfa-b302-5387a8012ec2",
+      "id": "0a5c64eb-6a1d-4614-8497-2e022e217cf7",
       "kwargs": {
         "column": "price"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: price."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "9900575d-4296-464b-b9c3-580fba40dff2",
+      "id": "f1d20f66-053b-45f2-957b-8f347fda878e",
       "kwargs": {
         "column": "time"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: time."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "7a60d868-d507-4a6f-98bb-87b0ab33641f",
+      "id": "131a1b8f-9170-4f52-8122-92901ff7110c",
       "kwargs": {
         "column": "distance"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: distance."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "795e5096-ae7a-4e18-b365-14a09163f56c",
+      "id": "33d40e4b-f727-45e8-8a67-7cbef0b31f21",
       "kwargs": {
         "column": "year"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: year."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "427a58e1-bad1-492e-851c-f7654cf2764a",
+      "id": "646af599-a327-4474-8c2e-b487eb9b0478",
       "kwargs": {
         "column": "month_sin"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: month_sin."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "da2f4f0b-79e0-438d-8a2a-7e3c144e13cb",
+      "id": "8544e075-8e6b-422a-896a-faaec732f5a6",
       "kwargs": {
         "column": "month_cos"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: month_cos."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "d472d01e-b8d6-46a2-b60d-c174e861f3cc",
+      "id": "471d70ef-919d-4e98-8f7d-70b2bd66b7b0",
       "kwargs": {
         "column": "day_of_week_sin"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: day_of_week_sin."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "3407248b-85f3-40fe-b0c2-256d2aa661d2",
+      "id": "eb4f2d49-6e1b-498e-80d4-542c7cc52ff0",
       "kwargs": {
         "column": "day_of_week_cos"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: day_of_week_cos."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "c996ed7c-4917-456d-b532-ffa2fd28c7e4",
+      "id": "76f86e54-f63f-47be-82b5-a67667908818",
       "kwargs": {
         "column": "day_sin"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: day_sin."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "40fddb5e-6c3a-4cb8-bef8-780946a2de67",
+      "id": "0c3fce9c-1b79-4cbc-bf28-a0e1bbdeb660",
       "kwargs": {
         "column": "day_cos"
       },
       "meta": {
         "notes": "Verify no missing values in final model-ready column: day_cos."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     }
   ],
-  "id": "4b52152d-8768-4f93-a666-3e774c0c466b",
+  "id": "34e7595c-25b2-40d6-bcc4-abe7915410c7",
   "meta": {
-    "great_expectations_version": "1.5.5"
+    "great_expectations_version": "1.6.3"
   },
   "name": "gold_df_flights_suite",
   "notes": null

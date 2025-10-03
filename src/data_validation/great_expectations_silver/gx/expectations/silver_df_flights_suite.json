@@ -1,7 +1,7 @@
 {
   "expectations": [
     {
-      "id": "95cc0fcf-e39c-41af-9830-2fcbb43d81fc",
+      "id": "78fb6dd6-a037-41af-b58f-15f3a674780c",
       "kwargs": {
         "column_list": [
           "travel_code",
@@ -25,10 +25,11 @@
       "meta": {
         "notes": "Verify the final schema, column names, and their exact order."
       },
+      "severity": "critical",
       "type": "expect_table_columns_to_match_ordered_list"
     },
     {
-      "id": "e6844d46-c30f-49b3-9dc0-42cc4ba20bce",
+      "id": "c0c91fe3-e4ef-4bef-a9f9-dbdfaa055471",
       "kwargs": {
         "column_list": [
           "user_code",
@@ -42,20 +43,22 @@
       "meta": {
         "notes": "Verify that there are no duplicate records based on the business key."
       },
+      "severity": "critical",
       "type": "expect_compound_columns_to_be_unique"
     },
     {
-      "id": "64dacbf7-58d2-4a3b-b03d-926e8df582fa",
+      "id": "1c6bbdba-7373-43e6-9f92-0a5af350a00d",
       "kwargs": {
         "min_value": 1
       },
       "meta": {
         "notes": "Ensures the silver table is not empty after processing."
       },
+      "severity": "critical",
       "type": "expect_table_row_count_to_be_between"
     },
     {
-      "id": "35842b4e-966f-4076-825b-34243fda730d",
+      "id": "b2036fb3-392e-40c3-b6f4-b7e1f87a23e2",
       "kwargs": {
         "column": "price",
         "max_value": 5000.0,
@@ -64,10 +67,11 @@
       "meta": {
         "notes": "Sanity check for flight prices to detect anomalies."
       },
+      "severity": "critical",
       "type": "expect_column_mean_to_be_between"
     },
     {
-      "id": "16643868-874f-43a5-8fdd-efed658b9b6b",
+      "id": "55d32aa8-52cd-4bd1-915e-9b07308b91d8",
       "kwargs": {
         "column": "travel_code",
         "type_": "int32"
@@ -75,10 +79,11 @@
       "meta": {
         "notes": "Verify data type optimization for travel_code is int32."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "c82d1c74-87da-4f57-a673-2f145c4ea462",
+      "id": "9b00f769-6ce2-43e8-9c47-e7e136270de7",
       "kwargs": {
         "column": "user_code",
         "type_": "int16"
@@ -86,10 +91,11 @@
       "meta": {
         "notes": "Verify data type optimization for user_code is int16."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "e4557a42-e756-46e3-8fac-bb5d4acf65d5",
+      "id": "63fa7574-892b-46b3-900b-52f62c22a90e",
       "kwargs": {
         "column": "from_location",
         "type_": "CategoricalDtypeType"
@@ -97,10 +103,11 @@
       "meta": {
         "notes": "Verify data type optimization for from_location is CategoricalDtypeType."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "4c51bda7-af30-4cec-b2a7-b835b207eea0",
+      "id": "db404f96-9ff0-4536-b149-fb25a86b9d7c",
       "kwargs": {
         "column": "to_location",
         "type_": "CategoricalDtypeType"
@@ -108,10 +115,11 @@
       "meta": {
         "notes": "Verify data type optimization for to_location is CategoricalDtypeType."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "3b8fcf5c-6b43-4b37-85e2-9ffebdd7a8b8",
+      "id": "9008028e-1551-4814-b3ee-8d0a45f76615",
       "kwargs": {
         "column": "flight_type",
         "type_": "CategoricalDtypeType"
@@ -119,10 +127,11 @@
       "meta": {
         "notes": "Verify data type optimization for flight_type is CategoricalDtypeType."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "fe6f75a0-9a84-45d7-acc2-1df6725cd550",
+      "id": "e8b9552a-9f91-4cfa-8618-92f7d3a93efb",
       "kwargs": {
         "column": "agency",
         "type_": "CategoricalDtypeType"
@@ -130,10 +139,11 @@
       "meta": {
         "notes": "Verify data type optimization for agency is CategoricalDtypeType."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "1307424e-be59-42f9-836a-0afcb4b73d73",
+      "id": "ddda75e6-d1bf-4bcb-b438-88e14cf45861",
       "kwargs": {
         "column": "price",
         "type_": "float32"
@@ -141,10 +151,11 @@
       "meta": {
         "notes": "Verify data type optimization for price is float32."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "cca5b9ac-df77-45b3-be60-31c455fa851c",
+      "id": "be25acd0-1ddd-46ea-9dce-d409348a56fc",
       "kwargs": {
         "column": "time",
         "type_": "float32"
@@ -152,10 +163,11 @@
       "meta": {
         "notes": "Verify data type optimization for time is float32."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "d9ed7579-cad7-4411-83b3-0e3f58332623",
+      "id": "25a655cf-c8ec-4aee-8337-59d176034f86",
       "kwargs": {
         "column": "distance",
         "type_": "float32"
@@ -163,10 +175,11 @@
       "meta": {
         "notes": "Verify data type optimization for distance is float32."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "3008fd89-d56c-4ab4-8313-c264e38bacf7",
+      "id": "ca125cec-1058-40cb-a397-14a7a34093d9",
       "kwargs": {
         "column": "date",
         "type_": "datetime64[ns]"
@@ -174,10 +187,11 @@
       "meta": {
         "notes": "Verify data type optimization for date is datetime64[ns]."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "aea3ad32-5380-4951-a3f6-9f356a3b2105",
+      "id": "68474fbc-c0a8-4710-936e-c34a285faedb",
       "kwargs": {
         "column": "year",
         "type_": "int16"
@@ -185,10 +199,11 @@
       "meta": {
         "notes": "Verify data type optimization for year is int16."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "83059fa4-26bc-479d-9ce9-5d48d358c616",
+      "id": "49d0ede5-7872-47a1-b5ac-da4744b72a1b",
       "kwargs": {
         "column": "month",
         "type_": "int8"
@@ -196,10 +211,11 @@
       "meta": {
         "notes": "Verify data type optimization for month is int8."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "b2d66e2e-0622-43d8-bf69-a7b4cf37d5a1",
+      "id": "81eeb3f8-14a6-43ae-a87e-bf57c9116b78",
       "kwargs": {
         "column": "day",
         "type_": "int8"
@@ -207,10 +223,11 @@
       "meta": {
         "notes": "Verify data type optimization for day is int8."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "68e0d1d7-3c8b-4b10-a571-2b9b7dab9795",
+      "id": "c4d58c5c-c979-49d4-88d1-fddfd710c338",
       "kwargs": {
         "column": "day_of_week",
         "type_": "int8"
@@ -218,10 +235,11 @@
       "meta": {
         "notes": "Verify data type optimization for day_of_week is int8."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "e2a6ebc2-f212-4ec1-9665-37bbd4d4d3c6",
+      "id": "10cafbe3-27b8-47c6-a858-efc6575ca928",
       "kwargs": {
         "column": "day_of_year",
         "type_": "int16"
@@ -229,10 +247,11 @@
       "meta": {
         "notes": "Verify data type optimization for day_of_year is int16."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "02d6de6a-6756-400d-8683-f1bd28f7397f",
+      "id": "5b34573f-b43b-4357-87c1-2c1afdd56cac",
       "kwargs": {
         "column": "week_of_year",
         "type_": "int32"
@@ -240,92 +259,101 @@
       "meta": {
         "notes": "Verify data type optimization for week_of_year is int32."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_be_of_type"
     },
     {
-      "id": "9521a2fe-740f-4230-bed7-74a1342f745c",
+      "id": "e300eb2d-2d2a-4a4b-a1c2-4805a2814abe",
       "kwargs": {
         "column": "from_location"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: from_location."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "72b6f572-0780-450c-ad69-8b25fd183b69",
+      "id": "4ddefa4a-90a0-41c0-81b7-131ff272b3fa",
       "kwargs": {
         "column": "to_location"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: to_location."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "3741c211-b694-4e31-9c95-def317f0da3a",
+      "id": "ee6fd15d-e0d7-4863-ac9f-2d49c7a74c89",
       "kwargs": {
         "column": "flight_type"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: flight_type."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "fa1b3e0f-5389-42a4-829c-85f7192923cc",
+      "id": "e848c1ce-b660-4ad1-acfa-7f897dfe2c5b",
       "kwargs": {
         "column": "price"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: price."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "d0b3d88e-91b8-4ea9-aa93-9deb9e802981",
+      "id": "2aa2b161-b5ae-4a6d-9c22-8d12e3f26b1c",
       "kwargs": {
         "column": "time"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: time."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "17824b70-02c8-4d78-af11-c5cc343fd26b",
+      "id": "f4d25f2f-8d50-4f4a-800e-142c7fa2c589",
       "kwargs": {
         "column": "distance"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: distance."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "06f208b1-c6fb-46f1-9559-00f31d1be419",
+      "id": "5665cb03-96a9-429c-b66f-1bc2a964e491",
       "kwargs": {
         "column": "agency"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: agency."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     },
     {
-      "id": "45f3eee9-4cfa-4c34-a33e-a466e3b8db5c",
+      "id": "55162f02-70e0-413e-ba8b-169c5cf559ce",
       "kwargs": {
         "column": "date"
       },
       "meta": {
         "notes": "Verify no missing values in critical column: date."
       },
+      "severity": "critical",
       "type": "expect_column_values_to_not_be_null"
     }
   ],
-  "id": "84ab5758-980b-4c1f-b17a-0258c0e57d29",
+  "id": "124a9d58-8097-4f33-9fe1-9ae8ad5b4e1f",
   "meta": {
-    "great_expectations_version": "1.5.5"
+    "great_expectations_version": "1.6.3"
   },
   "name": "silver_df_flights_suite",
   "notes": null

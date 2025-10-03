@@ -83,15 +83,15 @@ data_docs_sites:
 fluent_datasources:
   pandas_temp_datasource:
     type: pandas
-    id: 64f459e2-89a3-42ea-ac8a-73a2cc691cfd
+    id: 7348af76-117d-4b93-8bbe-bf73a919866e
     assets:
       silver_in_memory_asset:
         type: dataframe
-        id: bdd9d6d1-b598-43da-82c6-a9af1b0a5dd8
+        id: 4410855e-ae1a-4f9b-bd10-7e961e582e9b
         batch_metadata: {}
         batch_definitions:
           silver_batch_definition:
-            id: 0def6126-aa4e-45e4-a2ea-c006de765b3b
+            id: 43d4c69c-1296-43cd-b711-cd2e32518881
             partitioner:
 analytics_enabled:
 data_context_id: d82bc453-ddaa-4c1a-b617-7f9307c0017d
