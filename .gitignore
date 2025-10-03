@@ -92,3 +92,4 @@ openapi.yml
 openapi*
 
 .secrets
+/models
