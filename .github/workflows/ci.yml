@@ -27,14 +27,14 @@ jobs:
       # uv pip sync requirements.lock --system
       - name: Lint with Ruff
         run: |
-          ruff check .
-          ruff format --check .
+          uv run ruff check .
+          uv run ruff format --check .
 
       - name: Execute Pytest Suite
         env:
           PYTHONPATH: src
         run: |
-          pytest
+          uv run pytest
 
   validate_dvc_pipeline:
     runs-on: ubuntu-latest
@@ -77,13 +77,13 @@ jobs:
 
       - name: Pull DVC Data
         run: |
-          dvc pull
+          uv run dvc pull
 
       - name: Reproduce DVC Pipeline
         env:
           PYTHONPATH: src
         run: |
-          dvc repro
+          uv run dvc repro
 
   build_prediction_server:
     runs-on: ubuntu-latest
