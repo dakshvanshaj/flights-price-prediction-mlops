@@ -2,6 +2,8 @@
 
 This project is a comprehensive, end-to-end MLOps pipeline for predicting flight prices. It leverages a modern stack of data and machine learning tools to build a reproducible, automated, and robust system that covers the entire lifecycle, from data ingestion and validation to model training, explainability, and serving.
 
+*for a detailed documentation please visit [View Documentation]()*
+
 ## ✨ Features
 
 -   **Data & Pipeline Versioning:** Uses **[DVC](docs/MLOps/dvc.md)** to version control data, models, and intermediate artifacts, ensuring full reproducibility.
