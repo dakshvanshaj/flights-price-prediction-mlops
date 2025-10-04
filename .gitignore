@@ -24,6 +24,10 @@ build/
 env/
 venv/
 
+# Ignore old requirements files
+requirements.txt
+requirements.lock
+
 # --- DVC Data Directory ---
 # This folder is managed by DVC
 
