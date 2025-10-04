@@ -2,7 +2,7 @@
 
 This project is a comprehensive, end-to-end MLOps pipeline for predicting flight prices. It leverages a modern stack of data and machine learning tools to build a reproducible, automated, and robust system that covers the entire lifecycle, from data ingestion and validation to model training, explainability, and serving.
 
-*for a detailed documentation please visit [View Documentation]()*
+*for a detailed documentation please visit [View Documentation](https://dakshvanshaj.github.io/flights-price-prediction-mlops/)*
 
 ## ✨ Features
 
