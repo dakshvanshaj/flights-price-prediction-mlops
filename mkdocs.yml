@@ -74,8 +74,8 @@ nav:
   - CI-CD:
       - "Continuous Integration": CI/ci.md
       - "Continuous Deployment": CD/cd.md
-repo_url: https://github.com/dakshvanshaj/Flights-Price--Prediction-MLOPs
-repo_name: Flights-Price-Prediction-MLOPs
+repo_url: https://github.com/dakshvanshaj/flights-price-prediction-mlops
+repo_name: flights-price-prediction-mlops
 
 extra:
   social:
