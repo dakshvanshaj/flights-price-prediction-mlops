@@ -70,10 +70,10 @@ jobs:
           B2_ACCESS_KEY_ID: ${{ secrets.B2_ACCESS_KEY_ID }}
           B2_SECRET_ACCESS_KEY: ${{ secrets.B2_SECRET_ACCESS_KEY }}
         run: |
-          dvc remote modify --local "$DVC_REMOTE_NAME" endpointurl "$DVC_S3_ENDPOINT_URL"
-          dvc remote modify --local "$DVC_REMOTE_NAME" region "$DVC_S3_ENDPOINT_REGION"
-          dvc remote modify --local "$DVC_REMOTE_NAME" access_key_id "$B2_ACCESS_KEY_ID"
-          dvc remote modify --local "$DVC_REMOTE_NAME" secret_access_key "$B2_SECRET_ACCESS_KEY"
+          uv run dvc remote modify --local "$DVC_REMOTE_NAME" endpointurl "$DVC_S3_ENDPOINT_URL"
+          uv run dvc remote modify --local "$DVC_REMOTE_NAME" region "$DVC_S3_ENDPOINT_REGION"
+          uv run dvc remote modify --local "$DVC_REMOTE_NAME" access_key_id "$B2_ACCESS_KEY_ID"
+          uv run dvc remote modify --local "$DVC_REMOTE_NAME" secret_access_key "$B2_SECRET_ACCESS_KEY"
 
       - name: Pull DVC Data
         run: |
