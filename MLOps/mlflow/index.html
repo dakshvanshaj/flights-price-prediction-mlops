@@ -1,0 +1,2449 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MLOps project for flight price prediction.">
+      
+      
+        <meta name="author" content="Daksh Vanshaj">
+      
+      
+        <link rel="canonical" href="https://mydomain.org/Flights_Price_Prediction_MLOPS/MLOps/mlflow/">
+      
+      
+        <link rel="prev" href="../dvc_pipeline/">
+      
+      
+        <link rel="next" href="../docker/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>MLflow - Flight Prices</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mlflow-integration-and-deployment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Flight Prices" class="md-header__button md-logo" aria-label="Flight Prices" data-md-component="logo">
+      
+  <img src="../../img/favicon.ico" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Flight Prices
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MLflow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dakshvanshaj/flights-price-prediction-mlops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flights-price-prediction-mlops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  QuickStart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../EDA/flights_eda/" class="md-tabs__link">
+          
+  
+  
+  Data Journey
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Modeling/training_pipeline/" class="md-tabs__link">
+          
+  
+  
+  Modeling
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../LGBM_summary/LGBMR_production_model_details/" class="md-tabs__link">
+          
+  
+  
+  Production Model Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../API/api_reference/" class="md-tabs__link">
+          
+  
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  MLOps
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Testing/testing_strategy/" class="md-tabs__link">
+          
+  
+  
+  Testing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../CI/ci/" class="md-tabs__link">
+          
+  
+  
+  CI-CD
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Flight Prices" class="md-nav__button md-logo" aria-label="Flight Prices" data-md-component="logo">
+      
+  <img src="../../img/favicon.ico" alt="logo">
+
+    </a>
+    Flight Prices
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dakshvanshaj/flights-price-prediction-mlops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flights-price-prediction-mlops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    QuickStart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Data Journey
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Data Journey
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDA/flights_eda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧭 Exploratory Data Analysis (EDA): Flights Dataset
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../EDA/flights_training_eda_report.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Automated EDA Report
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Data Pipelines
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Data Pipelines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data%20Pipelines/data_pipelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data%20Pipelines/bronze_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bronze Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data%20Pipelines/silver_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Silver Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Data%20Pipelines/gold_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gold Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Modeling
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Modeling
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Modeling/training_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Training & Evaluation Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Modeling/tuning_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HyperParameter Tuning Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Modeling/model_selection_report/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Selection & Evaluation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Modeling/model_explainability_lgbm_champ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Explanability (Champion)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Modeling/model_explainability_lgbm_vs_xgb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Model Comparison (Archived)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Production Model Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Production Model Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LGBM_summary/LGBMR_production_model_details/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LightGBM Details
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/api_reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    MLOps
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            MLOps
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tooling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dvc_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DVC Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    MLflow
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    MLflow
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-connecting-a-client-to-mlflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 1. Connecting a Client to MLflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 1. Connecting a Client to MLflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-connection-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ 1.1. The Connection Mechanism
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-automatic-credential-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕵️ 1.2. Automatic Credential Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-production-best-practice-environment-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 1.3. Production Best Practice: Environment Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-deploying-an-mlflow-tracking-server-on-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ 2. Deploying an MLflow Tracking Server on AWS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="☁️ 2. Deploying an MLflow Tracking Server on AWS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-step-1-create-an-s3-bucket-for-artifacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪣 2.1. Step 1: Create an S3 Bucket for Artifacts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-step-2-create-a-postgresql-database-with-rds" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐘 2.2. Step 2: Create a PostgreSQL Database with RDS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-step-3-launch-an-ec2-virtual-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥️ 2.3. Step 3: Launch an EC2 Virtual Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-step-4-connecting-the-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 2.4. Step 4: Connecting the Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤝 2.4. Step 4: Connecting the Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-connect-ec2-and-rds-security-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1. Connect EC2 and RDS Security Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-connect-to-your-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2. Connect to Your EC2 Instance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-create-and-attach-an-iam-role-for-s3-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.3. Create and Attach an IAM Role for S3 Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#244-ubuntu-server-setup-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.4. Ubuntu Server Setup Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-step-5-install-mlflow-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ 2.5. Step 5: Install MLflow Software
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-step-6-launch-the-mlflow-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      ▶️ 2.6. Step 6: Launch the MLflow Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-step-7-local-machine-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 2.7. Step 7: Local Machine Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 2.7. Step 7: Local Machine Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#271-connect-your-local-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7.1. Connect Your Local Project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#272-aws-cli-configuration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7.2. AWS CLI Configuration Guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-step-8-persistent-server-operation-with-systemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 2.8. Step 8: Persistent Server Operation with systemd
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-using-a-static-ip-with-aws-elastic-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      📍 3. Using a Static IP with AWS Elastic IP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📍 3. Using a Static IP with AWS Elastic IP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-eip-intuition-a-permanent-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏠 3.1. EIP Intuition: A Permanent Address
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-step-by-step-eip-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗺️ 3.2. Step-by-Step EIP Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-eip-cost-and-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚠️ 3.3. EIP Cost and Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dvc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DVC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../airflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Airflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Testing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Testing/testing_strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CI-CD
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            CI-CD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CI/ci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Continuous Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CD/cd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Continuous Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-connecting-a-client-to-mlflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔗 1. Connecting a Client to MLflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 1. Connecting a Client to MLflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-the-connection-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚙️ 1.1. The Connection Mechanism
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-automatic-credential-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      🕵️ 1.2. Automatic Credential Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-production-best-practice-environment-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔒 1.3. Production Best Practice: Environment Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-deploying-an-mlflow-tracking-server-on-aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      ☁️ 2. Deploying an MLflow Tracking Server on AWS
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="☁️ 2. Deploying an MLflow Tracking Server on AWS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-step-1-create-an-s3-bucket-for-artifacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      🪣 2.1. Step 1: Create an S3 Bucket for Artifacts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-step-2-create-a-postgresql-database-with-rds" class="md-nav__link">
+    <span class="md-ellipsis">
+      🐘 2.2. Step 2: Create a PostgreSQL Database with RDS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-step-3-launch-an-ec2-virtual-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥️ 2.3. Step 3: Launch an EC2 Virtual Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-step-4-connecting-the-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🤝 2.4. Step 4: Connecting the Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🤝 2.4. Step 4: Connecting the Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#241-connect-ec2-and-rds-security-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.1. Connect EC2 and RDS Security Groups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#242-connect-to-your-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.2. Connect to Your EC2 Instance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#243-create-and-attach-an-iam-role-for-s3-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.3. Create and Attach an IAM Role for S3 Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#244-ubuntu-server-setup-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4.4. Ubuntu Server Setup Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-step-5-install-mlflow-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      🛠️ 2.5. Step 5: Install MLflow Software
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-step-6-launch-the-mlflow-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      ▶️ 2.6. Step 6: Launch the MLflow Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-step-7-local-machine-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      💻 2.7. Step 7: Local Machine Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💻 2.7. Step 7: Local Machine Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#271-connect-your-local-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7.1. Connect Your Local Project
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#272-aws-cli-configuration-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7.2. AWS CLI Configuration Guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-step-8-persistent-server-operation-with-systemd" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔄 2.8. Step 8: Persistent Server Operation with systemd
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-using-a-static-ip-with-aws-elastic-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      📍 3. Using a Static IP with AWS Elastic IP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📍 3. Using a Static IP with AWS Elastic IP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-eip-intuition-a-permanent-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      🏠 3.1. EIP Intuition: A Permanent Address
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-step-by-step-eip-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      🗺️ 3.2. Step-by-Step EIP Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-eip-cost-and-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚠️ 3.3. EIP Cost and Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mlflow-integration-and-deployment">🚀 MLflow Integration and Deployment</h1>
+<p>This document provides a comprehensive guide to integrating MLflow for experiment tracking and model management. It covers connecting a client application to a remote MLflow server and deploying a robust tracking server on AWS.</p>
+<h2 id="1-connecting-a-client-to-mlflow">🔗 1. Connecting a Client to MLflow</h2>
+<p>This section explains how a client application (e.g., a prediction API in a Docker container) securely connects to a remote MLflow server to fetch models and artifacts.</p>
+<h3 id="11-the-connection-mechanism">⚙️ 1.1. The Connection Mechanism</h3>
+<p>The client connection is a two-step process managed by environment variables.</p>
+<ol>
+<li>
+<p><strong>Initial Connection to the Tracking Server:</strong></p>
+<ul>
+<li>The client application needs the address of the MLflow tracking server on the EC2 instance.</li>
+<li>This is set using the <code>MLFLOW_TRACKING_URI</code> environment variable.</li>
+<li>The MLflow client library automatically uses this variable to initiate a network request to the server.</li>
+</ul>
+</li>
+<li>
+<p><strong>Fetching Artifacts from S3:</strong></p>
+<ul>
+<li>After connecting, the tracking server tells the client where the model files are located (typically an S3 bucket path).</li>
+<li>The client then needs permissions to access S3, which are provided via AWS credentials.</li>
+<li>These are set using the <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, and <code>AWS_DEFAULT_REGION</code> environment variables.</li>
+</ul>
+</li>
+</ol>
+<h3 id="12-automatic-credential-detection">🕵️ 1.2. Automatic Credential Detection</h3>
+<blockquote>
+<p>You do <strong>not</strong> need to install the AWS CLI or run <code>aws configure</code> inside the Docker container. The AWS SDK for Python (<code>boto3</code>), used by MLflow, automatically finds and uses credentials from environment variables.</p>
+</blockquote>
+<p>When <code>boto3</code> detects <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> in the container's environment, it authenticates with AWS services like S3 automatically.</p>
+<h3 id="13-production-best-practice-environment-files">🔒 1.3. Production Best Practice: Environment Files</h3>
+<p>The most secure and standard method for providing credentials to a Docker container is using an environment file (e.g., <code>prediction_app.env</code>).</p>
+<blockquote>
+<p><strong>Warning:</strong> This file contains sensitive credentials and must <strong>never</strong> be committed to version control. Add it to your <code>.gitignore</code> file.</p>
+</blockquote>
+<p><strong>1. Create the <code>.env</code> file:</strong></p>
+<pre><code class="language-env"># ----------------------------------
+# MLflow Production Configuration
+# ----------------------------------
+# The public IP or domain of your EC2 instance running the MLflow server.
+MLFLOW_TRACKING_URI=&quot;http://&lt;YOUR_EC2_IP_ADDRESS&gt;:5000&quot;
+
+# ----------------------------------
+# AWS Credentials for MLflow Artifacts
+# ----------------------------------
+# Credentials for an IAM user with read-only access to your S3 artifact bucket.
+AWS_ACCESS_KEY_ID=&quot;&lt;YOUR_AWS_ACCESS_KEY_ID&gt;&quot;
+AWS_SECRET_ACCESS_KEY=&quot;&lt;YOUR_AWS_SECRET_ACCESS_KEY&gt;&quot;
+AWS_DEFAULT_REGION=&quot;&lt;YOUR_S3_BUCKET_REGION&gt;&quot;
+</code></pre>
+<p><strong>2. Run the container with the <code>--env-file</code> flag:</strong></p>
+<p>This command injects the variables into the container at runtime.</p>
+<pre><code class="language-bash">docker run --env-file ./src/prediction_server/prediction_app.env -p 8000:8000 your-image-name
+</code></pre>
+<h2 id="2-deploying-an-mlflow-tracking-server-on-aws">☁️ 2. Deploying an MLflow Tracking Server on AWS</h2>
+<p>This section provides a step-by-step guide to setting up a robust MLflow Tracking Server using <strong>EC2</strong> (server), <strong>S3</strong> (artifact storage), and <strong>RDS</strong> (backend database).</p>
+<h3 id="21-step-1-create-an-s3-bucket-for-artifacts">🪣 2.1. Step 1: Create an S3 Bucket for Artifacts</h3>
+<ol>
+<li><strong>Navigate to S3:</strong> Log into your AWS account and go to the <strong>S3</strong> service.</li>
+<li><strong>Create Bucket:</strong> Click <strong>"Create bucket"</strong> and configure the following:<ul>
+<li><strong>Bucket name</strong>: Must be <strong>globally unique</strong> (e.g., <code>yourname-mlflow-artifacts-2025</code>).</li>
+<li><strong>AWS Region</strong>: Choose a region (e.g., <code>ap-south-1</code>). <strong>Important:</strong> Launch all other services (EC2, RDS) in the <em>same region</em>.</li>
+<li><strong>Block Public Access</strong>: Keep <strong>"Block all public access"</strong> checked for security.</li>
+<li><strong>Bucket Versioning</strong>: <strong>Enable</strong> to protect against accidental data loss.</li>
+<li><strong>Tags (Recommended)</strong>: Add a tag for cost tracking (e.g., <code>Key: Project</code>, <code>Value: mlflow-server</code>).</li>
+<li><strong>Default encryption</strong>: Keep the default (<code>SSE-S3</code>).</li>
+</ul>
+</li>
+<li><strong>Finalize:</strong> Review your settings and click <strong>"Create bucket"</strong>.</li>
+</ol>
+<h3 id="22-step-2-create-a-postgresql-database-with-rds">🐘 2.2. Step 2: Create a PostgreSQL Database with RDS</h3>
+<ol>
+<li><strong>Navigate to RDS:</strong> In the AWS Console, go to the <strong>RDS</strong> service.</li>
+<li><strong>Create Database:</strong> Click <strong>"Create database"</strong> and follow the wizard:<ul>
+<li><strong>Creation method</strong>: Select <strong>"Standard Create"</strong>.</li>
+<li><strong>Engine</strong>: Choose <strong>"PostgreSQL"</strong>.</li>
+<li><strong>Templates</strong>: Select the <strong>"Free tier"</strong> template.</li>
+<li><strong>Settings</strong>:<ul>
+<li><strong>DB instance identifier</strong>: <code>mlflow-db</code>.</li>
+<li><strong>Master username</strong>: <code>mlflow_user</code>.</li>
+<li><strong>Master password</strong>: Create a strong password and <strong>store it securely</strong>.</li>
+</ul>
+</li>
+<li><strong>Connectivity</strong>:<ul>
+<li><strong>Public access</strong>: Select <strong>"No"</strong>.</li>
+<li><strong>VPC security group</strong>: Choose <strong>"Create new"</strong> and name it <code>mlflow-db-security-group</code>.</li>
+</ul>
+</li>
+<li><strong>Additional configuration</strong>:<ul>
+<li><strong>Initial database name</strong>: Enter <code>mlflow_db</code>. This is crucial.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Finalize:</strong> Review the settings and click <strong>"Create database"</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Note:</strong> Database creation can take 10-15 minutes.</p>
+</blockquote>
+<h3 id="23-step-3-launch-an-ec2-virtual-server">🖥️ 2.3. Step 3: Launch an EC2 Virtual Server</h3>
+<ol>
+<li><strong>Navigate to EC2:</strong> Go to the <strong>EC2</strong> service in the AWS Console.</li>
+<li><strong>Launch Instance:</strong> Click <strong>"Launch instance"</strong> and configure:<ul>
+<li><strong>Name</strong>: <code>mlflow-server</code>.</li>
+<li><strong>AMI</strong>: Select <strong>Ubuntu</strong> (Free tier eligible).</li>
+<li><strong>Instance type</strong>: Choose <code>t2.micro</code> (Free Tier eligible).</li>
+<li><strong>Key pair (login)</strong>:<ul>
+<li>Click <strong>"Create new key pair"</strong>, name it <code>mlflow-key</code>, and keep the defaults.</li>
+<li>The <code>.pem</code> file will download. <strong>Store this file securely.</strong></li>
+</ul>
+</li>
+<li><strong>Network settings</strong>:<ul>
+<li>Click <strong>"Edit"</strong>.</li>
+<li>Create a new security group (<code>mlflow-server-sg</code>) with these <strong>inbound rules</strong>:<ol>
+<li><strong>SSH</strong>: <code>Type: SSH</code>, <code>Source: My IP</code> (for better security).</li>
+<li><strong>HTTP</strong>: <code>Type: HTTP</code>, <code>Source: Anywhere</code>.</li>
+<li><strong>Custom TCP</strong>: <code>Type: Custom TCP</code>, <code>Port: 5000</code>, <code>Source: Anywhere</code>.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Launch:</strong> Review the summary and click <strong>"Launch instance"</strong>.</li>
+</ol>
+<h3 id="24-step-4-connecting-the-components">🤝 2.4. Step 4: Connecting the Components</h3>
+<h4 id="241-connect-ec2-and-rds-security-groups">2.4.1. Connect EC2 and RDS Security Groups</h4>
+<p>Create a firewall rule to allow the EC2 instance to communicate with the RDS database.</p>
+<ol>
+<li>Navigate to the <strong>RDS</strong> dashboard, select your <code>mlflow-db</code>, and go to the <strong>"Connectivity &amp; security"</strong> tab.</li>
+<li>Click on the active <strong>VPC security group</strong> (<code>mlflow-db-security-group</code>).</li>
+<li>Go to the <strong>"Inbound rules"</strong> tab and click <strong>"Edit inbound rules"</strong>.</li>
+<li>Add a new rule:<ul>
+<li><strong>Type</strong>: <code>PostgreSQL</code>.</li>
+<li><strong>Source</strong>: Select your EC2 security group (<code>mlflow-server-sg</code>).</li>
+</ul>
+</li>
+<li>Click <strong>"Save rules"</strong>.</li>
+</ol>
+<h4 id="242-connect-to-your-ec2-instance">2.4.2. Connect to Your EC2 Instance</h4>
+<ol>
+<li>Go to the <strong>EC2</strong> dashboard, select your <code>mlflow-server</code>, and copy the <strong>"Public IPv4 address"</strong>.</li>
+<li>Open a terminal and make your key file private:</li>
+</ol>
+<pre><code class="language-bash">chmod 400 /path/to/your/mlflow-key.pem
+</code></pre>
+<ol>
+<li>Connect via SSH:</li>
+</ol>
+<pre><code class="language-bash">ssh -i /path/to/your/mlflow-key.pem ubuntu@&lt;YOUR_PUBLIC_IP_ADDRESS&gt;
+</code></pre>
+<h4 id="243-create-and-attach-an-iam-role-for-s3-access">2.4.3. Create and Attach an IAM Role for S3 Access</h4>
+<p>Grant your EC2 instance permissions to access the S3 bucket.</p>
+<ol>
+<li>
+<p><strong>Create an IAM Policy</strong>:</p>
+<ul>
+<li>Go to <strong>IAM</strong> &gt; <strong>Policies</strong> &gt; <strong>"Create policy"</strong>.</li>
+<li>Use the visual editor:<ul>
+<li><strong>Service</strong>: <code>S3</code>.</li>
+<li><strong>Actions</strong>: <code>ListBucket</code>, <code>GetObject</code>, <code>PutObject</code>, <code>DeleteObject</code>.</li>
+<li><strong>Resources</strong>: Specify the ARN for your bucket (<code>arn:aws:s3:::your-bucket-name</code>) and the objects within it (<code>arn:aws:s3:::your-bucket-name/*</code>).</li>
+</ul>
+</li>
+<li>Name the policy <code>MLflowS3AccessPolicy</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Create an IAM Role</strong>:</p>
+<ul>
+<li>Go to <strong>IAM</strong> &gt; <strong>Roles</strong> &gt; <strong>"Create role"</strong>.</li>
+<li><strong>Trusted entity</strong>: <code>AWS service</code>.</li>
+<li><strong>Use case</strong>: <code>EC2</code>.</li>
+<li>Attach the <code>MLflowS3AccessPolicy</code> you just created.</li>
+<li>Name the role <code>MLflowEC2Role</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Attach the Role to EC2</strong>:</p>
+<ul>
+<li>In the <strong>EC2</strong> dashboard, select your <code>mlflow-server</code>.</li>
+<li>Go to <strong>"Actions"</strong> &gt; <strong>"Security"</strong> &gt; <strong>"Modify IAM role"</strong>.</li>
+<li>Select <code>MLflowEC2Role</code> and save.</li>
+</ul>
+</li>
+</ol>
+<h4 id="244-ubuntu-server-setup-best-practices">2.4.4. Ubuntu Server Setup Best Practices</h4>
+<ol>
+<li><strong>Update Your System</strong>:</li>
+</ol>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
+<ol>
+<li><strong>Create a New User</strong>:</li>
+</ol>
+<pre><code class="language-bash"># Replace 'your_username' with a chosen name
+sudo adduser your_username
+sudo usermod -aG sudo your_username
+</code></pre>
+<pre><code>&gt; Log out and log back in as the new, non-root user for daily work.
+</code></pre>
+<ol>
+<li><strong>Set Up a Basic Firewall</strong>:</li>
+</ol>
+<pre><code class="language-bash">sudo ufw allow OpenSSH
+sudo ufw allow 80/tcp
+sudo ufw allow 5000/tcp
+sudo ufw enable
+</code></pre>
+<h3 id="25-step-5-install-mlflow-software">🛠️ 2.5. Step 5: Install MLflow Software</h3>
+<ol>
+<li><strong>Install Tools</strong>:</li>
+</ol>
+<pre><code class="language-bash">sudo apt update
+sudo apt install python3-pip python3-venv -y
+</code></pre>
+<ol>
+<li><strong>Create a Virtual Environment and Install Packages</strong>:</li>
+</ol>
+<pre><code class="language-bash">python3 -m venv mlflow-env
+source mlflow-env/bin/activate
+pip install mlflow boto3 psycopg2-binary
+</code></pre>
+<h3 id="26-step-6-launch-the-mlflow-server">▶️ 2.6. Step 6: Launch the MLflow Server</h3>
+<p>This command connects all the components. You will need your <strong>RDS Endpoint</strong>, <strong>RDS Password</strong>, and <strong>S3 Bucket Name</strong>.</p>
+<blockquote>
+<p><strong>SQLAlchemy Connection String</strong></p>
+<p>The required format is <code>postgresql://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;database&gt;</code>.</p>
+</blockquote>
+<p>Execute the following, replacing all placeholders:</p>
+<pre><code class="language-bash">mlflow server \
+    --backend-store-uri postgresql://mlflow_user:&lt;YOUR_RDS_PASSWORD&gt;@&lt;YOUR_RDS_ENDPOINT&gt;/mlflow_db \
+    --default-artifact-root s3://&lt;your-s3-bucket-name&gt;/
+    --host 0.0.0.0 \
+    --port 5000
+</code></pre>
+<blockquote>
+<p><strong><code>--host 0.0.0.0</code> Explained:</strong> This tells the server to listen on all available network interfaces, making the UI accessible via the instance's public IP address.</p>
+</blockquote>
+<p>To keep the server running after you disconnect, use a <code>screen</code> session:</p>
+<pre><code class="language-bash"># Start a new named session
+screen -S mlflow
+
+# Activate environment and run the mlflow server command
+source mlflow-env/bin/activate
+mlflow server ... # (paste the full command from above)
+
+# Detach from the session by pressing Ctrl+A, then D.
+</code></pre>
+<h3 id="27-step-7-local-machine-setup">💻 2.7. Step 7: Local Machine Setup</h3>
+<h4 id="271-connect-your-local-project">2.7.1. Connect Your Local Project</h4>
+<p>Configure your local machine to log experiments to the remote server.</p>
+<ul>
+<li><strong>Set the Tracking URI</strong>:</li>
+</ul>
+<pre><code class="language-bash"># In your local terminal (macOS/Linux)
+export MLFLOW_TRACKING_URI=&quot;http://&lt;YOUR_EC2_PUBLIC_IP&gt;:5000&quot;
+</code></pre>
+<ul>
+<li><strong>Configure AWS Credentials</strong>: Grant your local machine S3 upload permissions.</li>
+</ul>
+<h4 id="272-aws-cli-configuration-guide">2.7.2. AWS CLI Configuration Guide</h4>
+<ol>
+<li><strong>Install the AWS CLI</strong>:</li>
+</ol>
+<pre><code class="language-bash">pip install awscli
+</code></pre>
+<ol>
+<li><strong>Run Configure</strong>:</li>
+</ol>
+<pre><code class="language-bash">aws configure
+</code></pre>
+<ol>
+<li><strong>Enter Your Credentials</strong>:<ul>
+<li><strong>AWS Access Key ID</strong>: Paste your key.</li>
+<li><strong>AWS Secret Access Key</strong>: Paste your secret key.</li>
+<li><strong>Default region name</strong>: Enter your S3 bucket's region (e.g., <code>ap-south-1</code>).</li>
+<li><strong>Default output format</strong>: Press Enter for <code>json</code>.</li>
+</ul>
+</li>
+</ol>
+<p>The CLI securely stores these credentials, and MLflow will automatically use them.</p>
+<h3 id="28-step-8-persistent-server-operation-with-systemd">🔄 2.8. Step 8: Persistent Server Operation with <code>systemd</code></h3>
+<p>To run the MLflow server as a background service that starts on boot, use <code>systemd</code>.</p>
+<ol>
+<li><strong>SSH into your EC2 server</strong>.</li>
+<li><strong>Create a <code>systemd</code> service file</strong>:</li>
+</ol>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/mlflow-server.service
+</code></pre>
+<ol>
+<li><strong>Paste the following configuration</strong>, replacing all placeholders.</li>
+</ol>
+<pre><code class="language-ini">[Unit]
+Description=MLflow Tracking Server
+After=network.target
+
+[Service]
+User=&lt;your_user&gt;
+Restart=on-failure
+# Note: Use the absolute path to the mlflow executable in your venv
+ExecStart=/home/&lt;your_user&gt;/mlflow-env/bin/mlflow server \
+    --backend-store-uri postgresql://mlflow_user:&lt;YOUR_RDS_PASSWORD&gt;@&lt;YOUR_RDS_ENDPOINT&gt;/mlflow_db \
+    --default-artifact-root s3://&lt;your-s3-bucket-name&gt;/
+    --host 127.0.0.1 \
+    --port 5000
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<pre><code>&gt; **Security Note:** `--host` is set to `127.0.0.1`, meaning the server only accepts connections from the machine itself. A reverse proxy like Nginx should be used to handle public traffic securely.
+</code></pre>
+<ol>
+<li><strong>Enable and Start the Service</strong>:</li>
+</ol>
+<pre><code class="language-bash"># Reload systemd to recognize the new file
+sudo systemctl daemon-reload
+
+# Enable the service to start on boot
+sudo systemctl enable mlflow-server.service
+
+# Start the service now
+sudo systemctl start mlflow-server.service
+
+# Check its status
+sudo systemctl status mlflow-server.service
+</code></pre>
+<h2 id="3-using-a-static-ip-with-aws-elastic-ip">📍 3. Using a Static IP with AWS Elastic IP</h2>
+<p>An EC2 instance's public IP changes on every restart, which breaks the <code>MLFLOW_TRACKING_URI</code>. An <strong>Elastic IP (EIP)</strong> provides a permanent, static IP address to solve this problem.</p>
+<h3 id="31-eip-intuition-a-permanent-address">🏠 3.1. EIP Intuition: A Permanent Address</h3>
+<p>An EIP is a static public IPv4 address you allocate to your AWS account. You can attach it to your EC2 instance, and it will persist across all stop/start cycles, ensuring permanent connectivity.</p>
+<h3 id="32-step-by-step-eip-implementation">🗺️ 3.2. Step-by-Step EIP Implementation</h3>
+<ol>
+<li>
+<p><strong>Allocate an Elastic IP</strong>:</p>
+<ul>
+<li>Go to the <strong>EC2 Dashboard</strong> &gt; <strong>Elastic IPs</strong>.</li>
+<li>Click <strong>"Allocate Elastic IP address"</strong> and confirm by clicking <strong>"Allocate"</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Associate the EIP with Your EC2 Instance</strong>:</p>
+<ul>
+<li>On the <strong>Elastic IPs</strong> screen, select the new IP.</li>
+<li>Click <strong>"Actions"</strong> &gt; <strong>"Associate Elastic IP address"</strong>.</li>
+<li>Choose <strong>Instance</strong> as the resource type and select your <code>mlflow-server</code> instance.</li>
+<li>Click <strong>"Associate"</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Update the <code>MLFLOW_TRACKING_URI</code></strong>:</p>
+<ul>
+<li>Replace the old dynamic IP in your <code>prediction_app.env</code> file and any other configurations with the new Elastic IP.</li>
+<li>Example: <code>MLFLOW_TRACKING_URI="http://&lt;Your_Elastic_IP&gt;:5000"</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="33-eip-cost-and-security-considerations">⚠️ 3.3. EIP Cost and Security Considerations</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Consideration</th>
+<th style="text-align: left;">Detail</th>
+<th style="text-align: left;">Best Practice/Tip</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Cost</strong> 💰</td>
+<td style="text-align: left;"><strong>EIPs are free only when associated with a <em>running</em> EC2 instance.</strong> AWS charges a small hourly fee for EIPs that are allocated but unassociated or on a <em>stopped</em> instance.</td>
+<td style="text-align: left;">Since your server may stop/start, you will incur a minimal charge during the <strong>stopped</strong> period. This is usually worth the operational stability.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Security</strong> 🛡️</td>
+<td style="text-align: left;">The EIP is just an address. Your EC2 <strong>Security Group</strong> (<code>mlflow-server-sg</code>) must still allow inbound traffic on port <code>5000</code>.</td>
+<td style="text-align: left;"><strong>No change is needed</strong> if you configured the security group correctly in Step 2.3.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Advanced DNS</strong> 🏷️</td>
+<td style="text-align: left;">For maximum flexibility, use <strong>Route 53</strong> to create a friendly domain name (e.g., <code>mlflow.yourproject.com</code>) that points to the EIP.</td>
+<td style="text-align: left;">If you ever change the EIP, you only need to update the DNS record, not every client configuration. This decouples your clients from the specific IP address.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Daksh Vanshaj
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/dakshvanshaj" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "content.code.annotate", "navigation.top", "search.highlight", "search.suggest"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
