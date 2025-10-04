@@ -93,3 +93,6 @@ openapi*
 
 .secrets
 /models
+
+
+.ruff_cache
