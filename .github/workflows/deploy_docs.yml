@@ -29,7 +29,7 @@ jobs:
             - name: install dependencies
               run: |
                   uv venv
-                  uv pip sync requirements.lock
+                  uv sync --locked
                   uv pip install -e .
 
             - name: Deploy with MkDocs
