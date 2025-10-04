@@ -33,4 +33,4 @@ jobs:
                   uv pip install -e .
 
             - name: Deploy with MkDocs
-              run: mkdocs gh-deploy --force
+              run: python -m mkdocs gh-deploy --force
