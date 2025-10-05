@@ -30,6 +30,7 @@ st.sidebar.info(
     "This is a web app to predict flight prices using a machine learning model. "
     "It's built with Streamlit for the frontend and FastAPI for the backend API."
 )
+
 st.sidebar.markdown("---")
 st.sidebar.subheader("Links")
 st.sidebar.markdown(
@@ -177,8 +178,10 @@ if submit_button:
 
         try:
             # Send the request to the API
-            with st.spinner("LightGBM at the speed of light..."):
-                response = requests.post(API_URL, json=payload, timeout=10)
+            with st.spinner(
+                "🤖 Waking up the AI model... The first prediction of the day may take a moment..."
+            ):
+                response = requests.post(API_URL, json=payload, timeout=60)
 
             # Check the response from the server
             if response.status_code == 200:
@@ -197,3 +200,8 @@ if submit_button:
             st.error(
                 f"Could not connect to the prediction API. Please ensure the server is running. Error: {e}"
             )
+
+st.info(
+    "**Heads up!** The first prediction can take a moment as the model wakes up. Subsequent predictions will be lightning fast.",
+    icon="🤖",
+)
