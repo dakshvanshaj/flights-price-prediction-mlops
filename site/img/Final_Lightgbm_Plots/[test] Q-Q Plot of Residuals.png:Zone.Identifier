@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=http://52.66.243.240:5000/
+HostUrl=http://52.66.243.240:5000/get-artifact?path=plots%2F%5Btest%5D%20Q-Q%20Plot%20of%20Residuals.png&run_uuid=5967ba62934b4b978d30aa50a7ee308a
