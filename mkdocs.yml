@@ -40,6 +40,7 @@ plugins:
 
 nav:
   - Home: index.md
+  - About Me: about.md
   - QuickStart: quickstart.md
   - Data Journey:
       - "Exploratory Data Analysis": EDA/flights_eda.ipynb
@@ -83,4 +84,6 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/dakshvanshaj
 
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/daksh-vanshaj-9a9650344/
 copyright: Copyright &copy; 2025 Daksh Vanshaj
