@@ -222,4 +222,4 @@ Navigate to `http://127.0.0.1:8000` in your browser.
 
 
 Todo:
-- Project Todo's and `in progress` is tracked in the `Projects` section of the repository.
+- Project Todos and `in progress` is tracked in the `Projects` section of the repository.

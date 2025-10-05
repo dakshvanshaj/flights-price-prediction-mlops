@@ -55,7 +55,7 @@ AWS_DEFAULT_REGION="<YOUR_S3_BUCKET_REGION>"
 This command injects the variables into the container at runtime.
 
 ```bash
-docker run --env-file ./src/prediction_server/prediction_app.env -p 8000:8000 your-image-name
+docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:9000 your-image-name
 ```
 
 ## ☁️ 2. Deploying an MLflow Tracking Server on AWS

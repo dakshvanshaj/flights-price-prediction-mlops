@@ -7,7 +7,7 @@ This project leverages a modern stack of MLOps tools to ensure reproducibility, 
 | **GitHub** | Source Code Management | Manages the source code repository, facilitates collaboration, and hosts the CI/CD workflows via GitHub Actions. |
 | **DVC (Data Version Control)** | Data & Model Versioning | Versions large data files, models, and intermediate artifacts. It works alongside Git to ensure every experiment is fully reproducible. |
 | **Conda** | Environment Management | Creates isolated Python environments to ensure consistency across development and execution stages. |
-| **uv** | Dependency Management | A fast Python package installer and resolver, used for virtual environment, installation and managment of dependencies using `uv.lock`. |
+| **uv** | Dependency Management | A fast Python package installer and resolver, used for virtual environment, installation and management of dependencies using `uv.lock`. |
 | **DVC Pipelines** | Pipeline Orchestration | The primary tool for orchestrating the multi-stage data pipeline (`dvc.yaml`). It automatically tracks dependencies and manages execution. |
 | **Great Expectations** | Data Quality & Validation | Acts as the primary data quality gate. It defines and runs "expectation suites" to validate data at the Bronze, Silver, and Gold stages. |
 | **MLflow** | Experiment Tracking & Model Registry | Serves as the central hub for MLOps. It tracks experiments, logs parameters and metrics, and manages the lifecycle of trained models in the Model Registry. |
