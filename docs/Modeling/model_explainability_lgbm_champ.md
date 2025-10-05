@@ -68,7 +68,7 @@ The data for these instances can be found in the accompanying CSV file: [Final_m
 ![Waterfall Plot for Instance 0](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Waterfall%20Plot%20for%20Instance%200.png)
 
 *   **Insights:** The model correctly predicts a **high price**. The primary drivers are the long flight `time` and the `flight_type` (first class). The specific `day_of_week` also contributes positively to the price, demonstrating the model's use of temporal features.
-*   `agency` also contributes here some agencies are more expensive then others which aligns with the findings during EDA.
+*   `agency` also contributes here some agencies are more expensive than others which aligns with the findings during EDA.
 #### Instance 1
 
 ![Waterfall Plot for Instance 1](../img/Final_Lightgbm_Plots/[test]%20SHAP%20Waterfall%20Plot%20for%20Instance%201.png)

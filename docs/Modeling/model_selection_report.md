@@ -40,7 +40,7 @@ This left a feature set that included `route` (a combination of origin and desti
 | **XGBoost** | **$6.47** | **$0.72** | **~89%** |
 
 * The scores for LightGBM dropped to a reasonable range but the performance on the combined model is very overfitting for both.
-* However, this time there was some level of importance given to `temporal` features which didnt happen before.
+* However, this time there was some level of importance given to `temporal` features which didn't happen before.
 ### 3.2. Diagnosis: Severe Overfitting
 
 The results were clear: both models were **severely overfitting**. The error on the combined training and validation data (`Final Model RMSE`) was an order of magnitude lower than the average error during cross-validation (`CV RMSE`). This indicates the models were memorizing the training data and failing to generalize.

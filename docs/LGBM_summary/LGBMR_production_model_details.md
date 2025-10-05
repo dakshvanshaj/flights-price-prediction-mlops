@@ -58,7 +58,7 @@ Our final preprocessing pipeline is optimized for tree-based models by using the
 
 -   **No Scaling or Power Transforms**: LightGBM is not sensitive to the scale or distribution of numerical features, so these steps were removed.
 -   **Integer Encoding**: We use integer-based encoding for categorical features, which is handled natively and efficiently by LightGBM.
--   **Feature Selection**: The engineered `interation features` and later `route` feature was **explicitly removed** after being identified as a source of data leakage and overfitting. The model now relies on the fundamental `from_location` and `to_location` features.
+-   **Feature Selection**: The engineered `interaction features` and later `route` feature was **explicitly removed** after being identified as a source of data leakage and overfitting. The model now relies on the fundamental `from_location` and `to_location` features.
 -   **Temporal Features**: Cyclical features for `month`, `day`, and `day_of_week` are included, as their signal is no longer masked by other features.
 
 #### Optimized Pipeline Workflow

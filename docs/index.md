@@ -56,8 +56,8 @@ This project is documented across several key areas. Here’s a recommended read
     *   **[MLOps Architecture](MLOps/architecture.md)**: A high-level look at the tools and workflows that power this project.
     *   **[Data Pipelines](Data Pipelines/data_pipelines.md)**: Learn about the Medallion architecture (Bronze, Silver, Gold) used to process and validate the data.
     *   **[Modeling Pipelines](Modeling/training_pipeline.md)**: See how models are trained, tuned, and evaluated systematically.
-    *   **[Continuous Integration (CI)](MLOps/ci.md)**: See how the project is automatically tested and validated.
-    *   **[Continuous Deployment (CD)](MLOps/cd.md)**: Learn how the model is automatically deployed to production.
+    *   **[Continuous Integration (CI)](CI/ci.md)**: See how the project is automatically tested and validated.
+    *   **[Continuous Deployment (CD)](CD/cd.md)**: Learn how the model is automatically deployed to production.
 
 3.  **The "What": Model & API**
     *   **[Model Selection Report](Modeling/model_selection_report.md)**: Follow the journey of how the champion model was chosen, including the investigation into an over-performing initial model.

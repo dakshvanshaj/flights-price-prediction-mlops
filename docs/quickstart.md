@@ -4,20 +4,20 @@ This project is a comprehensive, end-to-end MLOps pipeline for predicting flight
 
 ## ✨ Features
 
--   **Data & Pipeline Versioning:** Uses **[DVC](docs/MLOps/dvc.md)** to version control data, models, and intermediate artifacts, ensuring full reproducibility.
--   **Declarative Pipeline Orchestration:** The entire ML pipeline is defined as code in **[`dvc.yaml`](docs/MLOps/dvc_pipeline.md)**, allowing for robust, dependency-aware execution.
--   **Automated Data Validation:** Integrates **[Great Expectations](docs/Data%20Pipelines/data_pipelines.md)** at each pipeline stage to enforce data quality.
--   **Experiment Tracking & Model Management:** Integrates **[MLflow](docs/MLOps/mlflow.md)** for comprehensive experiment tracking, parameter logging, and model registration.
--   **Automated CI/CD**: Implements **[GitHub Actions](docs/MLOps/ci.md)** for automated linting, testing, pipeline validation, and **[deployment](docs/MLOps/cd.md)** to Google Cloud.
--   **Production-Ready API**: Includes a high-performance **[FastAPI](docs/API/api_reference.md)** server to serve the champion model, containerized with **[Docker](docs/MLOps/docker.md)**.
--   **Reproducible Environment:** Project dependencies are managed with **`uv`** and locked in `requirements.lock` for fast, deterministic setups.
+-   **Data & Pipeline Versioning:** Uses **[DVC](MLOps/dvc.md)** to version control data, models, and intermediate artifacts, ensuring full reproducibility.
+-   **Declarative Pipeline Orchestration:** The entire ML pipeline is defined as code in **[`dvc.yaml`](MLOps/dvc_pipeline.md)**, allowing for robust, dependency-aware execution.
+-   **Automated Data Validation:** Integrates **[Great Expectations](Data%20Pipelines/data_pipelines.md)** at each pipeline stage to enforce data quality.
+-   **Experiment Tracking & Model Management:** Integrates **[MLflow](MLOps/mlflow.md)** for comprehensive experiment tracking, parameter logging, and model registration.
+-   **Automated CI/CD**: Implements **[GitHub Actions](CI/ci.md)** for automated linting, testing, pipeline validation, and **[deployment](CD/cd.md)** to Google Cloud.
+-   **Production-Ready API**: Includes a high-performance **[FastAPI](API/api_reference.md)** server to serve the champion model, containerized with **[Docker](MLOps/docker.md)**.
+-   **Reproducible Environment:** Project dependencies are managed with **`uv`** and locked in `uv.lock` for fast, deterministic setups.
 
 
 ## 🖥️ User Interface
 
 This project includes an interactive web application built with **Streamlit** that serves as a user-friendly interface for the flight price prediction API.
 
-![Streamlit UI Screenshot](docs/img/streamlit_frontend.png)
+![Streamlit UI Screenshot](img/streamlit_frontend.png)
 
 ### Running the Frontend
 
@@ -31,7 +31,7 @@ This project includes an interactive web application built with **Streamlit** th
     ```bash
     streamlit run frontend_streamlit/app.py
     ```
-*For more details, see the [Frontend Documentation](docs/frontend.md).*
+*For more details, see the [Frontend Documentation](frontend.md).*
 
 ## 🚀 Quickstart: Local Setup
 
@@ -77,12 +77,12 @@ This is the fastest way to get started. This project includes a Git-tracked arch
 
 ```bash
 # Unzip the archive to get the initial flights.csv
-unzip data/archieve-git-tracked/raw.zip -d data/raw/
+unzip data/archive-git-tracked/raw.zip -d data/raw/
 ```
 
 #### Option B: Full DVC Setup (Recommended)
 
-To get all versioned data, models, and artifacts, you must configure DVC to connect to the remote S3-compatible storage. See the [**DVC Integration Guide &raquo;**](docs/MLOps/dvc.md) for more details.
+To get all versioned data, models, and artifacts, you must configure DVC to connect to the remote S3-compatible storage. See the [**DVC Integration Guide &raquo;**](MLOps/dvc.md) for more details.
 
 ```bash
 # Configure the DVC remote endpoint URL and credentials.
@@ -107,11 +107,11 @@ MLFLOW_AWS_SECRET_ACCESS_KEY=your_mlflow_s3_secret_key
 MLFLOW_AWS_DEFAULT_REGION=your_s3_bucket_region
 ```
 
-*For a complete guide on deploying a production-grade MLflow server, see the [**MLflow Deployment Documentation &raquo;**](docs/MLOps/mlflow.md).*
+*For a complete guide on deploying a production-grade MLflow server, see the [**MLflow Deployment Documentation &raquo;**](MLOps/mlflow.md).*
 
 ### 5. Running the Pipelines
 
-You can run the project's pipelines in several ways. See the [**DVC Pipeline Documentation &raquo;**](docs/MLOps/dvc_pipeline.md) for a full breakdown.
+You can run the project's pipelines in several ways. See the [**DVC Pipeline Documentation &raquo;**](MLOps/dvc_pipeline.md) for a full breakdown.
 
 #### Method 1: Automated DAG Execution with DVC (Recommended)
 
@@ -151,7 +151,7 @@ The behavior of the pipelines can be customized without changing the source code
 
 ## 🤖 Local CI/CD Testing with `act`
 
-You can run the GitHub Actions workflows locally using [act](https://github.com/nektos/act). This is incredibly useful for testing changes to your CI/CD pipeline without pushing to GitHub. See the [**CI**](docs/MLOps/ci.md) and [**CD**](docs/MLOps/cd.md) docs for more details.
+You can run the GitHub Actions workflows locally using [act](https://github.com/nektos/act). This is incredibly useful for testing changes to your CI/CD pipeline without pushing to GitHub. See the [**CI**](CI/ci.md) and [**CD**](CD/cd.md) docs for more details.
 
 ### Setup
 

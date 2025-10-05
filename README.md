@@ -10,9 +10,10 @@ This project is a comprehensive, end-to-end MLOps pipeline for predicting flight
 -   **Declarative Pipeline Orchestration:** The entire ML pipeline is defined as code in **[`dvc.yaml`](docs/MLOps/dvc_pipeline.md)**, allowing for robust, dependency-aware execution.
 -   **Automated Data Validation:** Integrates **[Great Expectations](docs/Data%20Pipelines/data_pipelines.md)** at each pipeline stage to enforce data quality.
 -   **Experiment Tracking & Model Management:** Integrates **[MLflow](docs/MLOps/mlflow.md)** for comprehensive experiment tracking, parameter logging, and model registration.
--   **Automated CI/CD**: Implements **[GitHub Actions](docs/MLOps/ci.md)** for automated linting, testing, pipeline validation, and **[deployment](docs/MLOps/cd.md)** to Google Cloud.
+-   **Automated CI/CD**: Implements **[GitHub Actions](docs/CI/ci.md)** for automated linting, testing, pipeline validation, and **[deployment](docs/CD/cd.md)** to Google Cloud.
 -   **Production-Ready API**: Includes a high-performance **[FastAPI](docs/API/api_reference.md)** server to serve the champion model, containerized with **[Docker](docs/MLOps/docker.md)**.
--   **Reproducible Environment:** Project dependencies are managed with **`uv`** and locked in `requirements.lock` for fast, deterministic setups.
+-   **Frontend**: Uses **[streamlit](docs/frontend.md)** as frontend and backend for price prediction and SHAP explanations.
+-   **Reproducible Environment:** Project dependencies are managed with **`uv`** and locked in `uv.lock` for fast, deterministic setups.
 
 ## 🏛️ Project Architecture
 
@@ -114,7 +115,7 @@ This is the fastest way to get started. This project includes a Git-tracked arch
 
 ```bash
 # Unzip the archive to get the initial flights.csv
-unzip data/archieve-git-tracked/raw.zip -d data/raw/
+unzip data/archive-git-tracked/raw.zip -d data/raw/
 ```
 
 #### Option B: Full DVC Setup (Recommended)
@@ -188,7 +189,7 @@ The behavior of the pipelines can be customized without changing the source code
 
 ## 🤖 Local CI/CD Testing with `act`
 
-You can run the GitHub Actions workflows locally using [act](https://github.com/nektos/act). This is incredibly useful for testing changes to your CI/CD pipeline without pushing to GitHub. See the [**CI**](docs/MLOps/ci.md) and [**CD**](docs/MLOps/cd.md) docs for more details.
+You can run the GitHub Actions workflows locally using [act](https://github.com/nektos/act). This is incredibly useful for testing changes to your CI/CD pipeline without pushing to GitHub. See the [**CI**](docs/CI/ci.md) and [**CD**](docs/CD/cd.md) docs for more details.
 
 ### Setup
 

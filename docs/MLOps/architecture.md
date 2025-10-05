@@ -67,6 +67,6 @@ graph TD
 ### 🚀 4. CI/CD & Deployment
 
 -   **GitHub Actions**: The automation engine for CI/CD.
-    -   **Continuous Integration**: On every push/PR to `main`, workflows automatically lint, test, and validate the entire DVC pipeline. See the [CI Documentation](ci.md) for details.
-    -   **Continuous Deployment**: On git tags (e.g., `v1.0`), workflows automatically build the prediction server image and deploy it to Google Cloud Run. See the [CD Documentation](cd.md) for details.
+    -   **Continuous Integration**: On every push/PR to `main`, workflows automatically lint, test, and validate the entire DVC pipeline. See the [CI Documentation](../CI/ci.md) for details.
+    -   **Continuous Deployment**: On git tags (e.g., `v1.0`), workflows automatically build the prediction server image and deploy it to Google Cloud Run. See the [CD Documentation](../CD/cd.md) for details.
 -   **FastAPI & Docker**: The final, champion model from the MLflow Registry is served via a high-performance FastAPI application. This application is containerized with Docker for portability and scalable deployment on Google Cloud Run.

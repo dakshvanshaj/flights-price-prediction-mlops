@@ -123,7 +123,7 @@ docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:9000 pr
 
 ## ☁️ Cloud Deployment: Google Cloud Run
 
-Deploying to Google Cloud Run provides a secure, scalable, and cost-effective serverless environment. The primary deployment is automated via the [CD workflow](cd.md).
+Deploying to Google Cloud Run provides a secure, scalable, and cost-effective serverless environment. The primary deployment is automated via the [CD workflow](../CD/cd.md).
 
 ### 🔑 Step 1: Secure Credentials with Google Secret Manager
 

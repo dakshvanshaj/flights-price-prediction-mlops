@@ -6,7 +6,7 @@ This document outlines the project's containerization strategy, explaining how D
 
 Docker is a cornerstone of this project, used to solve two primary challenges:
 
-1.  **Orchestration Environment`(WIP)`**: It provides a self-contained, reproducible environment for running the **Apache Airflow** scheduler and webserver, ensuring that the data pipeline orchestration is consistent across all systems.
+1.  **Orchestration Environment `(WIP)`**: It provides a self-contained, reproducible environment for running the **Apache Airflow** scheduler and webserver, ensuring that the data pipeline orchestration is consistent across all systems.
 2.  **Deployment Environment**: It packages the **FastAPI prediction server** into a lightweight, secure, and portable image that can be deployed anywhere—from a local machine to a serverless cloud platform like Google Cloud Run.
 
 ## ⚙️ 2. Use Case 1: Orchestration with Airflow(`WIP`)

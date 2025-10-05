@@ -104,8 +104,6 @@ This ensures full reproducibility of any experiment or model version.
 
 For the prediction server, DVC plays a critical role during container startup. The `docker-entrypoint.sh` script is configured to pull the necessary models before the FastAPI application launches. This ensures the server always starts with the correct model version.
 
-> For the full script and its context, refer to the [API Reference documentation](../API/api_reference.md#5-containerization-and-deployment).
-
 ### 4.2. DVC Pipelines
 
 This project also utilizes DVC pipelines to define and manage the data processing and model training workflows. The entire end-to-end pipeline is defined in `dvc.yaml`.
