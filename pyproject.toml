@@ -86,6 +86,7 @@ tuning = [
 linting = [
     "ruff>=0.13"
 ]
+
 # 'dev' group: A convenient bundle for local development
 dev = [
     "flight_price_prediction_mlops[test]",
@@ -98,6 +99,10 @@ dev = [
 all = [
     "flight_price_prediction_mlops[dev]",
     "flight_price_prediction_mlops[airflow]",
+]
+
+frontend = [
+    "streamlit>=1.50.0",
 ]
 
 
@@ -133,3 +138,5 @@ testpaths = ["tests"]
 
 [tool.uv.workspace]
 members = []
+
+
