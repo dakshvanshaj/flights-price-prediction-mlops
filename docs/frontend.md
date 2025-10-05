@@ -18,17 +18,18 @@ To run the Streamlit application locally, follow these steps:
 
 2.  **Configure the API URL**: The Streamlit app is configured using an environment variable. Create a file named `.env` in the `frontend_streamlit/` directory:
 
-    ```ini
-    # frontend_streamlit/.env
-    API_URL=http://127.0.0.1:9000/prediction
-    ```
-    *Replace the URL with your deployed API endpoint if you are not running it locally.*
+```ini
+# frontend_streamlit/.env
+API_URL=http://127.0.0.1:9000/prediction
+```
+
+*Replace the URL with your deployed API endpoint if you are not running it locally.*
 
 3.  **Run the App**: From the project's root directory, execute the following command:
 
-    ```bash
-    streamlit run frontend_streamlit/app.py
-    ```
+```bash
+streamlit run frontend_streamlit/app.py
+```
 
 The application will open in your web browser.
 

@@ -56,7 +56,7 @@ graph TD
 
 This project includes an interactive web application built with **Streamlit** that serves as a user-friendly interface for the flight price prediction API.
 
-![Streamlit UI Screenshot](docs/img/frontend_streamlit.png)
+![Streamlit UI Screenshot](docs/img/streamlit_frontend.png)
 
 ### Running the Frontend
 
