@@ -12,6 +12,27 @@ This project is a comprehensive, end-to-end MLOps pipeline for predicting flight
 -   **Production-Ready API**: Includes a high-performance **[FastAPI](docs/API/api_reference.md)** server to serve the champion model, containerized with **[Docker](docs/MLOps/docker.md)**.
 -   **Reproducible Environment:** Project dependencies are managed with **`uv`** and locked in `requirements.lock` for fast, deterministic setups.
 
+
+## 🖥️ User Interface
+
+This project includes an interactive web application built with **Streamlit** that serves as a user-friendly interface for the flight price prediction API.
+
+![Streamlit UI Screenshot](docs/img/streamlit_frontend.png)
+
+### Running the Frontend
+
+1.  **Ensure the API is running** either locally via Docker or as a deployed service.
+2.  **Configure the API URL** by creating a `.env` file in the `frontend_streamlit/` directory.
+    ```ini
+    # frontend_streamlit/.env
+    API_URL=http://127.0.0.1:9000/prediction
+    ```
+3.  **Run the Streamlit app** from the project root:
+    ```bash
+    streamlit run frontend_streamlit/app.py
+    ```
+*For more details, see the [Frontend Documentation](docs/frontend.md).*
+
 ## 🚀 Quickstart: Local Setup
 
 Follow these steps to get the project running on your local machine.
@@ -40,7 +61,7 @@ source .venv/bin/activate
 # On Windows: .\.venv\Scripts\activate
 
 # Sync the environment with the lock file for a reproducible setup
-uv pip sync requirements.lock
+uv sync --all-extras --locked
 
 # Install the project in editable mode
 uv pip install -e .
@@ -103,6 +124,11 @@ dvc repro -f
 
 # Or, run the pipeline up to a specific stage
 dvc repro gold_pipeline
+
+# Alternatively using experiment tracking
+dvc exp run
+
+dvc exp show
 ```
 
 #### Method 2: Manual Script Execution (For Debugging)

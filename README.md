@@ -98,7 +98,7 @@ source .venv/bin/activate
 # On Windows: .\.venv\Scripts\activate
 
 # Sync the environment with the lock file for a reproducible setup
-uv pip sync requirements.lock
+uv sync --all-extras --locked 
 
 # Install the project in editable mode
 uv pip install -e .
@@ -161,6 +161,11 @@ dvc repro -f
 
 # Or, run the pipeline up to a specific stage
 dvc repro gold_pipeline
+
+#  Alternatively Newer method using experiment tracking
+dvc exp run 
+
+dvc exp show
 ```
 
 #### Method 2: Manual Script Execution (For Debugging)
