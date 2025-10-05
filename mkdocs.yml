@@ -58,8 +58,9 @@ nav:
 
   - Production Model Guide:
       - "LightGBM Details": LGBM_summary/LGBMR_production_model_details.md
-  - API:
+  - UI & API:
       - "API Reference": API/api_reference.md
+      - "Frontend UI": frontend.md
   - MLOps:
       - "Project Architecture": MLOps/architecture.md
       - "Tooling": MLOps/tools.md
