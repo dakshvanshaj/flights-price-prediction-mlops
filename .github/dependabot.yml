@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: "poetry" # Project uses pyproject.toml so poetry will work even if we use uv.lock
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
