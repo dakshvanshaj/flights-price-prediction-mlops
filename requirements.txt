@@ -57,7 +57,7 @@ shap==0.48.0
 mermaid-py==0.8.0
 mkdocs-mermaid2-plugin==1.2.2
 
-fastapi==0.116.1
+fastapi==0.118.0
 uvicorn==0.35.0
 # Your custom package from GitHub
 # This format allows pip to install directly from a specific commit
