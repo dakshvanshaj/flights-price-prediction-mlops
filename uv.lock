@@ -1193,7 +1193,7 @@ wheels = [
 
 [[package]]
 name = "flight-price-prediction-mlops"
-version = "1.5"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "awscli" },
