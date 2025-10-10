@@ -9,7 +9,7 @@ pyarrow==20.0.0
 altair==4.2.2
 
 # Data Quality & Validation
-great-expectations==1.5.5
+great-expectations==1.6.4
 openpyxl==3.1
 
 # Data Versioning
