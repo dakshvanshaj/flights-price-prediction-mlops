@@ -16,15 +16,15 @@ load_dotenv()
 
 # page tile & layout
 st.set_page_config(
-    page_title="Flight Price Predictor",
+    page_title="Flight Price Predictor with Explainable AI",
     page_icon="frontend_streamlit/img/favicon.ico",
     layout="wide",
 )
 st.logo("frontend_streamlit/img/logo.png")
-st.title("✈️ Flight Price Predictor")
+st.title("✈️ AI-Powered Flight Price Predictor")
 
 st.markdown(
-    "Enter the flight details below to get a price prediction from our AI model."
+    "Enter the flight details below to get a price prediction from our AI model and its explanation."
 )
 
 
@@ -32,6 +32,7 @@ st.markdown(
 st.sidebar.title("About")
 st.sidebar.info(
     "This is a web app to predict flight prices using a machine learning model. "
+    "It also provides AI-powered explanations (using SHAP) for how the model arrives at its predictions. "
     "It's built with Streamlit for the frontend and FastAPI for the backend API."
 )
 
@@ -194,6 +195,11 @@ if submit_button:
                 st.success(f"**Predicted Flight Price: ${price:,.2f}**")
                 st.balloons()
 
+                st.info(
+                    "**Heads up!** To save compute costs, the first prediction can take a moment as the model wakes up. Subsequent predictions will be lightning fast.",
+                    icon="🤖",
+                )
+
                 # --- SHAP Explanation ---
                 st.subheader("✨ Prediction Explanation")
                 st.markdown(
@@ -215,11 +221,16 @@ if submit_button:
                         feature_names,
                     ]
                 ):
-                    # Create a SHAP explanation object
+                    # Create a SHAP explanation object for a single prediction
+                    # We wrap the values and data in a list to create a 2D array shape
                     explanation = shap.Explanation(
-                        values=np.array(shap_values),
+                        values=np.array(
+                            [shap_values]
+                        ),  # Becomes a 2D array, e.g., [[v1, v2, ...]]
                         base_values=shap_base_value,
-                        data=np.array(feature_values),
+                        data=np.array(
+                            [feature_values]
+                        ),  # Becomes a 2D array, e.g., [[d1, d2, ...]]
                         feature_names=feature_names,
                     )
 
@@ -239,13 +250,16 @@ if submit_button:
                         "This plot provides a dynamic view of feature contributions. Features pushing the prediction higher are in red, and those pushing it lower are in blue."
                     )
 
-                    # Initialize javascript for SHAP
-                    shap.initjs()
+                    # Generate the force plot for the first explanation
+                    force_plot = shap.force_plot(explanation[0], matplotlib=False)
 
-                    # Force plot as html embed
-                    components.v1.html(
-                        shap.force_plot(explanation[0]).html(), height=160
+                    # Save the plot to an HTML string with the necessary JS library
+                    shap_html = (
+                        f"<head>{shap.getjs()}</head><body>{force_plot.html()}</body>"
                     )
+
+                    # Display the self-contained HTML
+                    components.html(shap_html, height=160)
 
                 else:
                     st.info("SHAP explanations are not available for this prediction.")
@@ -261,8 +275,3 @@ if submit_button:
             st.error(
                 f"Could not connect to the prediction API. Please ensure the server is running. Error: {e}"
             )
-
-st.info(
-    "**Heads up!** The first prediction can take a moment as the model wakes up. Subsequent predictions will be lightning fast.",
-    icon="🤖",
-)
