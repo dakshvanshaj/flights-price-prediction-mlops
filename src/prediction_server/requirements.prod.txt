@@ -11,3 +11,5 @@ numpy==1.26.4
 python-dotenv==1.1.0
 pyyaml==6.0.2
 python-json-logger==3.3.0
+
+shap==0.48.0

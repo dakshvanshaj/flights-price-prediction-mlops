@@ -1,8 +1,12 @@
 import streamlit as st
-from enum import Enum
-from datetime import date, timedelta
 import requests
 import os
+import matplotlib.pyplot as plt
+import shap
+import streamlit.components.v1 as components
+import numpy as np
+from enum import Enum
+from datetime import date, timedelta
 from dotenv import load_dotenv
 
 # Load environment variables from a .env file( API url)
@@ -189,6 +193,63 @@ if submit_button:
                 price = prediction.get("predicted_price")
                 st.success(f"**Predicted Flight Price: ${price:,.2f}**")
                 st.balloons()
+
+                # --- SHAP Explanation ---
+                st.subheader("✨ Prediction Explanation")
+                st.markdown(
+                    "Our AI model provides explanations for its predictions using SHAP (SHapley Additive exPlanations)."
+                    "The plots below show how each feature contributed to the final price prediction."
+                )
+
+                shap_base_value = prediction.get("shap_base_value")
+                shap_values = prediction.get("shap_values")
+                feature_values = prediction.get("feature_values")
+                feature_names = prediction.get("feature_names")
+
+                if all(
+                    v is not None
+                    for v in [
+                        shap_base_value,
+                        shap_values,
+                        feature_values,
+                        feature_names,
+                    ]
+                ):
+                    # Create a SHAP explanation object
+                    explanation = shap.Explanation(
+                        values=np.array(shap_values),
+                        base_values=shap_base_value,
+                        data=np.array(feature_values),
+                        feature_names=feature_names,
+                    )
+
+                    # --- Waterfall Plot ---
+                    st.markdown("#### Feature Impact Waterfall")
+                    st.markdown(
+                        "This plot breaks down the prediction, showing how each feature pushed the price up (red) or down (blue) from the base value."
+                    )
+                    fig, ax = plt.subplots(figsize=(10, 5))
+                    shap.waterfall_plot(explanation[0], show=False)
+                    st.pyplot(fig)
+                    plt.close(fig)
+
+                    # --- Force Plot ---
+                    st.markdown("#### Prediction Force Plot")
+                    st.markdown(
+                        "This plot provides a dynamic view of feature contributions. Features pushing the prediction higher are in red, and those pushing it lower are in blue."
+                    )
+
+                    # Initialize javascript for SHAP
+                    shap.initjs()
+
+                    # Force plot as html embed
+                    components.v1.html(
+                        shap.force_plot(explanation[0]).html(), height=160
+                    )
+
+                else:
+                    st.info("SHAP explanations are not available for this prediction.")
+
             else:
                 error_details = response.json().get("detail", "No details provided.")
                 st.error(

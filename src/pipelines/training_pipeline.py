@@ -1,10 +1,12 @@
 import argparse
 import logging
+import pickle
 import sys
 from typing import Any, Dict, Optional, List
 
 import mlflow
 import pandas as pd
+import shap
 import yaml
 from dotenv import load_dotenv
 
@@ -17,7 +19,7 @@ from model_evaluation.evaluation import (
 from gold_data_preprocessing.power_transformer import PowerTransformer
 from gold_data_preprocessing.scaler import Scaler
 from model_training.train import get_model, train_model
-from shared.config import config_gold, config_logging, config_training
+from shared.config import core_paths, config_gold, config_logging, config_training
 from shared.utils import flatten_params, setup_logging_from_yaml
 from model_evaluation.evaluation_plots import (
     scatter_plot,
@@ -50,6 +52,43 @@ def get_model_library(model_class_name: str) -> Optional[str]:
 
     logger.warning(f"Could not determine ML library for model '{model_class_name}'.")
     return None
+
+
+def _create_and_log_shap_explainer(
+    model: Any, X_train: pd.DataFrame, artifact_path: str = "shap_explainer"
+):
+    """
+    Creates a SHAP explainer, saves it as a pickle file, and logs it to MLflow.
+
+    Args:
+        model: The trained model for which to create the explainer.
+        X_train: The background dataset to use for the explainer.
+        artifact_path: The directory path within MLflow artifacts to save the explainer.
+
+    """
+    logger.info(
+        f"Creating and logging SHAP explainer for model: {type(model).__name__}..."
+    )
+    try:
+        # Create the SHAP explainer
+        explainer = shap.Explainer(model, X_train)
+
+        # Save the explainer to models folder as pickle file(tracked by both dvc and git)
+        explainer_loc = core_paths.MODELS_DIR / "shap_explainer.pkl"
+        with open(explainer_loc, "wb") as f:
+            pickle.dump(explainer, f)
+
+        # Log the file as an artifact to he current MLflow run
+        mlflow.log_artifact(explainer_loc, artifact_path=artifact_path)
+        logger.info(
+            f"SHAP explainer successfully logged to MLflow at artifact path: '{artifact_path}'."
+        )
+
+    except Exception as e:
+        logger.info(
+            f"An unexpected error occurred while creating or logging the SHAP explainer: {e}",
+            exc_info=True,
+        )
 
 
 def _calculate_and_log_metrics(
@@ -249,6 +288,9 @@ def _run_simple_validation(
     should_log_interpretability = model_config.get(
         "log_interpretability_artifacts", True
     )
+
+    _create_and_log_shap_explainer(model, train_x)
+
     should_log_shap_plots = model_config.get("log_shap_plots", True)
     _evaluate_and_log_set(
         model,
@@ -350,6 +392,9 @@ def _run_cross_validation(
         model_instance,
         categorical_features=categorical_features,
     )
+
+    # Save model explainer using shap
+    _create_and_log_shap_explainer(final_model, combined_x)
 
     # --- 4. Evaluate and Log Final Model Performance on Training Data---
     _evaluate_and_log_set(

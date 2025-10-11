@@ -9,6 +9,7 @@ It uses Pydantic for robust data validation, conversion, and documentation.
 from datetime import date
 from enum import Enum
 from pydantic import BaseModel, Field, ConfigDict
+from typing import Any, List
 
 
 class LocationEnum(str, Enum):
@@ -78,4 +79,21 @@ class OutputSchema(BaseModel):
 
     predicted_price: float = Field(
         ..., description="The predicted price of the flight."
+    )
+
+    shap_base_value: float = Field(
+        ..., description="The base value(average prediction) from the SHAP explainer."
+    )
+
+    shap_values: List[float] = Field(
+        ..., description="The SHAP values for each feature for this prediction."
+    )
+
+    feature_values: List[float] = Field(
+        ..., description="The values fo the features used for this prediction."
+    )
+
+    feature_names: List[str] = Field(
+        ...,
+        description="The names of the features, in order, corresponding to the SHAP and feature values.",
     )
