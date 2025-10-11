@@ -6,9 +6,10 @@ import json
 import logging
 import pickle
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import mlflow
+from mlflow.exceptions import MlflowException
 from dotenv import load_dotenv
 
 from gold_data_preprocessing.categorical_encoder import CategoricalEncoder
@@ -62,45 +63,38 @@ def load_production_model(
     return model
 
 
-def load_shap_explainer(model_name: str, model_version_alias: str) -> Any:
+def load_shap_explainer(
+    model_name: str, model_version_alias: str, run_id: str
+) -> Optional[Any]:
     """
     Downloads and loads the SHAP explainer artifact associated with a model version.
+    This function is resilient and will return None if the model version or
+    the explainer artifact is not found, instead of crashing.
 
     Args:
         model_name: The registered name of the MLflow model.
-        model_version_alias: The alias of the model version (e.g. , 'production').
-
+        model_version_alias: The alias of the model version (e.g., 'production').
+        run_id: The run id of experiment containing shap explainer object
     Returns:
-        The loaded SHAP explainer object.
-
-    Raises:
-        FileNotFoundError: If the explainer artifact is not found.
-        Exception: For other loading errors.
+        The loaded SHAP explainer object, or None if not found.
     """
     logger.info(
-        f"Loading SHAP explainer for model {model_name}@{model_version_alias}'..."
+        f"Attempting to load SHAP explainer for model '{model_name}@{model_version_alias}'..."
     )
 
-    # URI for directory containing the explainer artifact
-    artifact_uri = f"models:/{model_name}@{model_version_alias}/shap_explainer"
-
     try:
-        # Download the artifact directory from MLflow
-        # download_artifacts returns the location of downloaded artifact
-        local_artifact_path = mlflow.artifacts.download_artifacts(
-            artifact_uri=artifact_uri
+        # Download the explainer artifact from the specific run
+        explainer_path = mlflow.artifacts.download_artifacts(
+            run_id=run_id, artifact_path="shap_explainer"
         )
 
-        # Construct the full path to pickled file
-        explainer_file_path = Path(local_artifact_path) / "shap_explainer.pkl"
+        explainer_file_path = Path(explainer_path) / "shap_explainer.pkl"
 
         if not explainer_file_path.exists():
-            logger.critical(
+            logger.warning(
                 f"SHAP explainer file not found at '{explainer_file_path}' after download."
             )
-            raise FileNotFoundError(
-                "Could not find 'shap_explainer.pkl' in the downloaded artifacts."
-            )
+            return None
 
         with open(explainer_file_path, "rb") as f:
             explainer = pickle.load(f)
@@ -108,12 +102,22 @@ def load_shap_explainer(model_name: str, model_version_alias: str) -> Any:
         logger.info("SHAP explainer loaded successfully.")
         return explainer
 
-    except Exception as e:
-        logger.critical(
-            f"Fatal error loading SHAP explainer from MLflow: {e}", exc_info=True
+    except MlflowException as e:
+        # This catches errors like "NOT_FOUND" if the model/alias doesn't exist
+        # or if the artifact path is not found in the run (HTTP 404).
+        logger.warning(
+            f"Could not load SHAP explainer from MLflow for '{model_name}@{model_version_alias}'. "
+            f"Explainability will be disabled. Error: {e}"
         )
-        # Re-raise the exception to prevent the application from starting in a bad state
-        raise
+        return None
+
+    except Exception as e:
+        # Catch any other unexpected errors
+        logger.error(
+            f"An unexpected error occurred while loading the SHAP explainer: {e}",
+            exc_info=True,
+        )
+        return None
 
 
 def load_preprocessing_artifacts() -> Dict[str, Any]:
