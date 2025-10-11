@@ -71,7 +71,7 @@ def _create_and_log_shap_explainer(
     )
     try:
         # Create the SHAP explainer
-        explainer = shap.Explainer(model, X_train)
+        explainer = shap.Explainer(model)
 
         # Save the explainer to models folder as pickle file(tracked by both dvc and git)
         explainer_loc = core_paths.MODELS_DIR / "shap_explainer.pkl"
@@ -258,6 +258,10 @@ def _run_simple_training(
         train_x, train_y, model_instance, categorical_features=categorical_features
     )
     logger.info("Model training completed...")
+
+    # generate and log shap_explainer
+    _create_and_log_shap_explainer(model, train_x)
+
     return model
 
 
