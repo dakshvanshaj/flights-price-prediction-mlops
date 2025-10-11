@@ -358,9 +358,9 @@ stages:
       nfiles: 3
     - path: models
       hash: md5
-      md5: b785d1e98bebda0961c4c2b31de90cdd.dir
-      size: 4565
-      nfiles: 3
+      md5: 91709d98967e665f8e8c99326b329d1c.dir
+      size: 1013458
+      nfiles: 4
   training_pipeline:
     cmd: python src/pipelines/training_pipeline.py train.parquet 
       validation.parquet --test_file_name test.parquet
