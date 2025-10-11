@@ -9,7 +9,7 @@ It uses Pydantic for robust data validation, conversion, and documentation.
 from datetime import date
 from enum import Enum
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Any, List
+from typing import List
 
 
 class LocationEnum(str, Enum):
