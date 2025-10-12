@@ -14,10 +14,16 @@ from contextlib import asynccontextmanager
 import pandas as pd
 from fastapi import FastAPI, HTTPException
 
-from prediction_server.config_app import MODEL_FLAVOR, MODEL_NAME, MODEL_VERSION_ALIAS
+from prediction_server.config_app import (
+    MODEL_FLAVOR,
+    MODEL_NAME,
+    MODEL_VERSION_ALIAS,
+    RUN_ID,
+)
 from prediction_server.model_loader import (
     load_preprocessing_artifacts,
     load_production_model,
+    load_shap_explainer,
 )
 from prediction_server.predict import (
     postprocessing_for_target,
@@ -54,6 +60,12 @@ async def lifespan(app: FastAPI):
         model_version_alias=MODEL_VERSION_ALIAS,
         model_flavor=MODEL_FLAVOR,
     )
+    ml_artifacts["shap_explainer"] = load_shap_explainer(
+        model_name=MODEL_NAME,
+        model_version_alias=MODEL_VERSION_ALIAS,
+        run_id=RUN_ID,
+    )
+
     logger.info("Successfully loaded and cached ML artifacts.")
     yield
     logger.info("Application shutdown: Clearing ML artifacts...")
@@ -80,7 +92,8 @@ async def health_check():
 @app.post("/prediction", response_model=OutputSchema, tags=["Prediction"])
 async def predict(request_body: InputSchema):
     """
-    Receives flight data, preprocesses it, and returns a price prediction.
+    Receives flight data, preprocesses it, and returns a price prediction
+    along with SHAP values for explainability.
     """
     try:
         logger.info(f"Received prediction request: {request_body.model_dump()}")
@@ -88,6 +101,7 @@ async def predict(request_body: InputSchema):
         # Retrieve the cached model and preprocessors
         preprocessors = ml_artifacts["preprocessors"]
         model = ml_artifacts["model"]
+        shap_explainer = ml_artifacts.get("shap_explainer")  # Use .get() for safety
 
         # Convert the Pydantic model to a DataFrame for processing
         input_df = pd.DataFrame([request_body.model_dump()])
@@ -108,7 +122,23 @@ async def predict(request_body: InputSchema):
         final_price = final_prediction_df[config_training.TARGET_COLUMN].iloc[0]
 
         logger.info(f"Prediction successful. Final price: {final_price:.2f}")
-        return OutputSchema(predicted_price=round(final_price, 2))
+
+        # --- SHAP Value Calculation (if explainer is available) ---
+        if shap_explainer:
+            logger.info("Calculating SHAP values...")
+            shap_explanation = shap_explainer(preprocessed_df)
+            logger.info("SHAP values calculated successfully.")
+            return OutputSchema(
+                predicted_price=round(final_price, 2),
+                shap_base_value=shap_explanation.base_values[0],
+                shap_values=shap_explanation.values[0].tolist(),
+                feature_values=shap_explanation.data[0].tolist(),
+                feature_names=preprocessed_df.columns.tolist(),
+            )
+        else:
+            # Return response without SHAP values if explainer is not available
+            logger.info("SHAP explainer not available, returning prediction only.")
+            return OutputSchema(predicted_price=round(final_price, 2))
 
     except Exception as e:
         logger.error(f"An error occurred during prediction: {e}", exc_info=True)

@@ -45,6 +45,21 @@ graph TD
 
 ---
 
+## 🖥️ Interactive Frontend with Real-Time Explainability
+
+This project features a user-friendly web application built with **Streamlit**. It not only provides flight price predictions but also offers real-time explanations for each prediction using **SHAP (SHapley Additive exPlanations)**.
+
+When a user inputs flight details, the application:
+1.  Calls the backend API to get a prediction.
+2.  Receives the prediction and the corresponding SHAP values.
+3.  Displays the predicted price and a **SHAP force plot**, visually breaking down which features contributed to pushing the price higher or lower.
+
+This transparency helps build trust in the model and provides users with deeper insights into the factors that influence flight prices.
+
+![Streamlit UI Screenshot](img/streamlit_frontend.png)
+
+*Explore the [Frontend UI Documentation](frontend.md) for more details.*
+
 ## 🗺️ Navigating the Documentation
 
 This project is documented across several key areas. Here’s a recommended reading path to understand the project from the ground up:

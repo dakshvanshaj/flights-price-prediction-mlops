@@ -3,6 +3,7 @@
 This project is a comprehensive, end-to-end MLOps pipeline for predicting flight prices. It leverages a modern stack of data and machine learning tools to build a reproducible, automated, and robust system that covers the entire lifecycle, from data ingestion and validation to model training, explainability, and serving.
 
 *for a detailed documentation please visit [View Documentation](https://dakshvanshaj.github.io/flights-price-prediction-mlops/)*
+[Visit Application](https://flight-price-predictor-explainer.streamlit.app/)
 
 ## ✨ Features
 
@@ -52,28 +53,6 @@ graph TD
 ```
 
 *For a deeper dive, see the full [**Architecture Documentation &raquo;**](docs/MLOps/architecture.md)*
-
-## 🖥️ User Interface
-
-This project includes an interactive web application built with **Streamlit** that serves as a user-friendly interface for the flight price prediction API.
-
-[Visit Application](https://flight-price-predictor-explainer.streamlit.app/)
-
-![Streamlit UI Screenshot](docs/img/streamlit_frontend.png)
-
-### Running the Frontend
-
-1.  **Ensure the API is running** either locally via Docker or as a deployed service.
-2.  **Configure the API URL** by creating a `.env` file in the `frontend_streamlit/` directory.
-    ```ini
-    # frontend_streamlit/.env
-    API_URL=http://127.0.0.1:9000/prediction
-    ```
-3.  **Run the Streamlit app** from the project root:
-    ```bash
-    streamlit run frontend_streamlit/app.py
-    ```
-*For more details, see the [Frontend Documentation](docs/frontend.md).*
 
 ## 🚀 Quickstart: Local Setup
 
@@ -181,6 +160,59 @@ run-silver-pipeline train.csv
 run-gold-pipeline
 run-training-pipeline
 ```
+
+### 6. Serving the API and Running the UI
+
+Once the pipelines have been run and a model is trained, you can serve it via a FastAPI application and interact with it through a Streamlit UI.
+
+#### Step 1: Run the Prediction Server
+
+You have two options to run the server.
+
+##### Option A: Run with Docker (Recommended)
+
+The project is configured to run the prediction server in a Docker container. This is the recommended approach for a production-like environment.
+
+1.  **Build the image:**
+    ```bash
+    docker build -t prediction-server:latest -f src/prediction_server/Dockerfile .
+    ```
+2.  **Run the container:**
+    Create a `prediction_app.env` file in `src/prediction_server/` with your credentials (see `docs/MLOps/mlflow.md` for details) and run:
+    ```bash
+    docker run --env-file ./src/prediction_server/prediction_app.env -p 9000:9000 prediction-server:latest
+    ```
+
+##### Option B: Run Locally with Uvicorn
+
+For quick testing and development, you can run the server directly with `uvicorn`.
+
+```bash
+uvicorn src.prediction_server.main:app --host 0.0.0.0 --port 9000
+```
+The API documentation will be available at `http://localhost:9000/docs`.
+
+#### Step 2: Run the User Interface
+
+This project includes an interactive web application built with **Streamlit**.
+
+[Visit Deployed Application](https://flight-price-predictor-explainer.streamlit.app/)
+
+![Streamlit UI Screenshot](docs/img/streamlit_frontend.png)
+
+To run it locally:
+
+1.  **Ensure the API is running** using one of the methods described above.
+2.  **Configure the API URL** by creating a `.env` file in the `frontend_streamlit/` directory.
+    ```ini
+    # frontend_streamlit/.env
+    API_URL=http://127.0.0.1:9000/prediction
+    ```
+3.  **Run the Streamlit app** from the project root:
+    ```bash
+    streamlit run frontend_streamlit/app.py
+    ```
+*For more details, see the [Frontend Documentation](docs/frontend.md).*
 
 ### 🔧 Configuring the Pipelines
 

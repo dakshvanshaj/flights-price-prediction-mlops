@@ -41,6 +41,14 @@ This module is responsible for loading all ML assets.
 -   `load_production_model()`: Connects to the **MLflow Tracking Server** using environment variables, and pulls the model specified by `MODEL_NAME` and `MODEL_VERSION_ALIAS` from the Model Registry.
 -   `load_preprocessing_artifacts()`: Loads all the data transformers (imputer, encoder, scaler, etc.) that were fitted during the `gold_pipeline` run and saved by DVC.
 
+### Real-time Model Explainability
+
+To provide transparency and build trust in the model's predictions, the server integrates real-time explainability using **SHAP (SHapley Additive exPlanations)**.
+
+-   **`load_shap_explainer`**: On startup, this function loads a pre-calculated SHAP `Explainer` object from the MLflow run artifacts. This object is optimized for the LightGBM model, allowing for fast explanation generation.
+-   **On-the-fly SHAP Values**: When a prediction is made, the preprocessed input is passed to the loaded SHAP explainer.
+-   **Enriched API Response**: The `/prediction` endpoint's response is enriched with the SHAP `base_value`, the `shap_values` for each feature, and the corresponding `feature_names` and `feature_values`. This provides a complete breakdown of how the model arrived at its prediction, which can be visualized in a frontend application as a force plot.
+
 ## 📡 API Endpoints
 
 ### Health Check
@@ -81,7 +89,44 @@ The request body must be a JSON object conforming to the `InputSchema`.
 
 ```json
 {
-  "predicted_price": 1434.35
+  "predicted_price": 1434.35,
+  "shap_base_value": 946.55,
+  "shap_values": [
+    326.61,
+    206.51,
+    56.8,
+    -47.27,
+    57.48,
+    21.36,
+    -0.79,
+    -0.48,
+    0.06,
+    0.09
+  ],
+  "feature_values": [
+    2.08,
+    2,
+    6,
+    2,
+    1,
+    806.48,
+    -0.9,
+    2022,
+    0.68,
+    0
+  ],
+  "feature_names": [
+    "time",
+    "flight_type",
+    "from_location",
+    "to_location",
+    "agency",
+    "distance",
+    "day_of_week",
+    "year",
+    "day",
+    "month"
+  ]
 }
 ```
 
